@@ -1,22 +1,22 @@
-var midi = require('./node_modules/jsmidgen/lib/jsmidgen');
+var Midi = require('./node_modules/jsmidgen/lib/jsmidgen');
 var fs = require('fs');
+var _ = require('lodash');
 
 //init file to write to
-var file = new midi.File();
-//init midi track
-var track = new midi.Track();
+var file = new Midi.File();
+//init Midi track
+var track = new Midi.Track();
 //add track to file
 file.addTrack(track);
 
-//add some sixteenth notes to generate a one bar C scale
-track.addNote(0, 'c4', 64);
-track.addNote(0, 'd4', 64);
-track.addNote(0, 'e4', 64);
-track.addNote(0, 'f4', 64);
-track.addNote(0, 'g4', 64);
-track.addNote(0, 'a4', 64);
-track.addNote(0, 'b4', 64);
-track.addNote(0, 'c5', 64);
+var Modes = require('./lib/modes');
+var mode = Modes.get('a', 3, 'dorian');
 
-//write to midi file
-fs.writeFileSync('cscale.mid', file.toBytes(), 'binary');
+_.map(mode, function(note){
+	track.addNote(0, note, 64);	//params = track, note with octave, ticks/interval/noteLength
+});
+
+
+
+//write to Midi file
+fs.writeFileSync('mode.mid', file.toBytes(), 'binary');

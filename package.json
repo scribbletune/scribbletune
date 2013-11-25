@@ -6,6 +6,7 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "jsmidgen": "https://github.com/walmik/jsmidgen/tarball/master"
+    "jsmidgen": "https://github.com/walmik/jsmidgen/tarball/master",
+    "lodash": "~2.3.0"
   }
 }
