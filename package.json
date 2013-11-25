@@ -1,0 +1,11 @@
+{
+  "name": "musicjs",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "jsmidgen": "https://github.com/walmik/jsmidgen/tarball/master"
+  }
+}
