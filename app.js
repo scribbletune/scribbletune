@@ -10,13 +10,18 @@ var track = new Midi.Track();
 file.addTrack(track);
 
 var Modes = require('./lib/modes');
-var mode = Modes.get('a', 3, 'dorian');
+var mode = Modes.get('c', 3, 'lydian');
 
+//add a filter (counterpoint)
+var Filters = require('./lib/filters');
+mode = Filters.counterpoint(mode);
+//add another filter (randomize)
+mode = Filters.randomize(mode);
+
+//write track
 _.map(mode, function(note){
 	track.addNote(0, note, 64);	//params = track, note with octave, ticks/interval/noteLength
 });
 
-
-
-//write to Midi file
+//write track to Midi file
 fs.writeFileSync('mode.mid', file.toBytes(), 'binary');
