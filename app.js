@@ -3,6 +3,7 @@ var fs = require('fs');
 var _ = require('lodash');
 
 var Modes = require('./lib/modes');
+var Generate = require('./lib/generate');
 var Filters = require('./lib/filters');
 var Patterns = require('./lib/patterns');
 
@@ -25,16 +26,17 @@ var Patterns = require('./lib/patterns');
 
 */
 
-//generate a melody
-var melody = Modes.get('f', 2, 'phrygian');
-melody = Filters.randomize(melody);
-melody = melody.concat(melody);
-melody = Filters.patternize(melody, Patterns.triplets1);
+//var notes = Modes.get('f', 2, 'phrygian');
+var notes = ['c3', 'd3'];
+console.log(notes);
 
+bar = Generate.bars(notes);
+//bar = Filters.patternize(bar, Patterns.triplets1);
 
+console.log(bar);
 
 //write track
-writeTrackToFile(melody, 'melody.mid');
+//writeTrackToFile(bar, 'bar.mid');
 
 
 function writeTrackToFile(notesArr, fileName, noteLength) {
