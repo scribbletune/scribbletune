@@ -16,11 +16,11 @@ var Utils = require('./lib/utils');
 	- Render track to a Midi file
 */
 
-//var notes = Modes.get('f', 2, 'phrygian');
-var notes = ['c3', 'd3'];
-console.log(notes);
+//var palette = Modes.get('f', 2, 'phrygian');
+var palette = ['c3', 'd3'];
+console.log(palette);
 
-bar = Generate.bars(notes);
+bar = Generate.bars(palette);
 //bar = Filters.patternize(bar, Patterns.triplets1);
 
 console.log(bar);
