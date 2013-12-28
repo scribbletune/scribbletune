@@ -25,16 +25,16 @@ var Patterns = require('./lib/patterns');
 
 */
 
-//generate a mode
-var mode = Modes.get('f', 2, 'phrygian');
-mode = Filters.randomize(mode);
-mode = mode.concat(mode);
-mode = Filters.patternize(mode, Patterns.triplets1);
+//generate a melody
+var melody = Modes.get('f', 2, 'phrygian');
+melody = Filters.randomize(melody);
+melody = melody.concat(melody);
+melody = Filters.patternize(melody, Patterns.triplets1);
 
 
 
 //write track
-writeTrackToFile(mode, 'mode.mid');
+writeTrackToFile(melody, 'melody.mid');
 
 
 function writeTrackToFile(notesArr, fileName, noteLength) {
