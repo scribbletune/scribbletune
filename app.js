@@ -16,16 +16,21 @@ var Utils = require('./lib/utils');
 	- Render track to a Midi file
 */
 
-//var palette = Modes.get('f', 2, 'phrygian');
-var palette = ['c3', 'd3'];
-console.log(palette);
+var palette = Modes.get('f', 2, 'phrygian');
+//var palette = ['c3', 'd3', 'e3', 'f3'];
+console.log('palette:', palette);
 
-bar = Generate.bars(palette);
-//bar = Filters.patternize(bar, Patterns.triplets1);
+bar = Generate.bars({
+	notesArr: palette,
+	numberOfBars: 2
+});
 
-console.log(bar);
+bar = Filters.patternize(bar, Patterns.triplets1);
+bar = Filters.randomize(bar);
+bar = Filters.patternize(bar, Patterns.triplets1);
+console.log('bar:', bar);
 
 //write track
-//Utils.writeTrackToFile(bar, 'bar.mid');
+Utils.writeTrackToFile(bar, 'bar.mid');
 
 
