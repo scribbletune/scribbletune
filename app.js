@@ -7,20 +7,20 @@ var Utils = require('./lib/utils');
 /*
 	Process:
 	--------
-	- Use the Modes module to get a bunch of notes or Manually set an array of notes which act as the palette
-	- Generate the required number of bars/beats from this palette
-	- Apply a pattern 
+	- Use the Modes module to get a bunch of notes or Manually set an array of notes
+	- Generate a bar of music of the required number of bars/beats from the notes array
+	- Specify a pattern
 	- Apply filter(s)
 	- Render track to a Midi file
 */
 
-var palette = Modes.get('f', 2, 'phrygian');
-//var palette = ['c3', 'd3', 'e3', 'f3'];
+var notes = Modes.get('f', 2, 'phrygian');
+//var notes = ['c3', 'd3', 'e3', 'f3'];
 
 bar = Generate.bars({
-	notesArr: palette,
+	notesArr: notes,
 	randomize: true,
-	pattern: '-x-x-'
+	bars: 4
 });
 
 //bar = Filters.patternize(bar, Patterns.triplets);
