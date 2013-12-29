@@ -1,5 +1,3 @@
-
-
 var Modes = require('./lib/modes');
 var Generate = require('./lib/generate');
 var Filters = require('./lib/filters');
@@ -12,7 +10,7 @@ var Utils = require('./lib/utils');
 	- Use the Modes module to get a bunch of notes or Manually set an array of notes which act as the palette
 	- Generate the required number of bars/beats from this palette
 	- Apply a pattern 
-	- Apply filters
+	- Apply filter(s)
 	- Render track to a Midi file
 */
 
@@ -27,5 +25,5 @@ bar = Generate.bars({
 bar = Filters.patternize(bar, Patterns.triplets);
 console.log('bar:', bar);
 
-//write track
+//write track to midi file
 Utils.writeTrackToFile(bar, 'bar.mid');
