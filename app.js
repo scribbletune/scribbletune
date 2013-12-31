@@ -27,4 +27,4 @@ bar = Generate.bars({
 console.log('bar:', bar);
 
 //write track to midi file
-Utils.writeTrackToFile(bar, 'bar.mid');
+Utils.writeTrackToFile(bar);
