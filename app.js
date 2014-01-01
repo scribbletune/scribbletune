@@ -23,7 +23,7 @@ bar = Generate.bars({
 	bars: 4
 });
 
-//bar = Filters.patternize(bar, Patterns.triplets);
+bar = Filters.patternize(bar, Patterns.triplets);
 console.log('bar:', bar);
 
 //write track to midi file
