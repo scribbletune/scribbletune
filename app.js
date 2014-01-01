@@ -14,8 +14,8 @@ var Utils = require('./lib/utils');
 	- Render track to a Midi file
 */
 
-var notes = Modes.get('f', 2, 'phrygian');
 //var notes = ['c3', 'd3', 'e3', 'f3'];
+var notes = Modes.get('f', 2, 'phrygian');
 
 bar = Generate.bars({
 	notesArr: notes,
@@ -23,8 +23,9 @@ bar = Generate.bars({
 	bars: 4
 });
 
-bar = Filters.counterpoint(bar);
-console.log('bar:', bar);
+//Apply a filter
+//bar = Filters.counterpoint(bar);
+console.log(bar);
 
 //write track to midi file
 Utils.writeTrackToFile(bar);
