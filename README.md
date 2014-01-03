@@ -1,8 +1,8 @@
-JavaScript in Dance music! (WIP)
-==========================
+Scribbletune (WIP)
+==================
 
-Generate musical patterns and beats for dance music and export as midi files with Node.js and [jsmidgen](https://github.com/dingram/jsmidgen).
+Generate musical patterns and export as MIDI files with Javascript
 
-Run:
-npm install
+Run:  
+npm install  
 node app.js
