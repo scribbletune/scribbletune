@@ -19,7 +19,8 @@ var notes = Modes.get('f', 2, 'phrygian');
 
 bar = Generate.bars({
 	notesArr: notes,
-	randomize: true
+	randomize: true,
+	pattern: Patterns.fancy[1]
 });
 
 //Apply a filter
