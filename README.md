@@ -5,7 +5,9 @@ Generate musical patterns using Javascript and export them as MIDI files with No
 ####Run:  
 npm install  
 node app.js
+
 ---
+
 ###Process
 - Use the Modes module to get a bunch of notes from a particular mode (Aeolian, Dorian etc) or Manually set an array of notes. Examples:
   - Modes.get('f', 2, 'phrygian'); //will return the notes of the phrygian mode for the root of F in the second octave
