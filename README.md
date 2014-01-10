@@ -18,4 +18,4 @@ node app.js
   - View module for more options
 - Apply filter(s) (optional)
 - Render track to a Midi file
-- Import the midi file to your favorite music production application like Ableton Live or Reason.
+- Import the midi file to your favorite music production application like Ableton Live, Reason or Cubase.
