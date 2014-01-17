@@ -15,6 +15,20 @@ exports.testZeroArgs = function(test) {
 
 
 /*
+ * Test whether Modes.get returns correct octaves for modes for D onward root notes
+ */
+ exports.testSubsequentOctaves = function(test) {
+ 	var mode = Modes.get('d');
+	test.deepEqual(
+		mode, 
+		[ 'd3', 'e3', 'f#3', 'g3', 'a4', 'b4', 'c#4', 'd4' ],
+		'Octaves are wrong in: ' + mode
+	);
+  test.done();
+}
+
+
+/*
  * Test whether octave is a numeric value
  * Function call with a non numneric value should throw an Error
  */
