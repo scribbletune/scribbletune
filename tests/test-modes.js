@@ -5,7 +5,9 @@ var Modes = require('../lib/modes');
  * Calling Modes.get() should return C Ionian mode (C major scale) by default
  */
 exports.testZeroArgs = function(test) {
-	test.equal(Modes.get().join(','), [ 'c3', 'd3', 'e3', 'f3', 'g3', 'a3', 'b3', 'c4' ].join(','));
+	test.throws(function() { 
+		Modes.get().join(','), [ 'c3', 'd3', 'e3', 'f3', 'g3', 'a3', 'b3', 'c4' ].join(',')
+	}, Error);
 	test.ok(true);
   test.done();
 }
@@ -40,6 +42,17 @@ exports.testOctaveRange = function(test) {
  */
 exports.testValidMode = function(test) {
 	test.throws(function() { Modes.get('c', 3, 'non_existent_mode') }, Error, 'Wrong mode!');
+	test.ok(true);
+  test.done();
+}
+
+
+/*
+ * Test whether a valid root node was specified
+ * Valid root notes are c,d,e,f,g,a,b
+ */
+exports.testValidRootNote = function(test) {
+	test.throws(function() { Modes.get('h') }, Error, 'Wrong root note!');
 	test.ok(true);
   test.done();
 }
