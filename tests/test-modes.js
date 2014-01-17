@@ -5,10 +5,10 @@ var Modes = require('../lib/modes');
  * Calling Modes.get() should return C Ionian mode (C major scale) by default
  */
 exports.testZeroArgs = function(test) {
-	test.throws(function() { 
-		Modes.get().join(','), [ 'c3', 'd3', 'e3', 'f3', 'g3', 'a3', 'b3', 'c4' ].join(',')
-	}, Error);
-	test.ok(true);
+	test.deepEqual(
+		Modes.get(), 
+		[ 'c3', 'd3', 'e3', 'f3', 'g3', 'a3', 'b3', 'c4' ]
+	);
   test.done();
 }
 
@@ -20,7 +20,6 @@ exports.testZeroArgs = function(test) {
  */
 exports.testIsOctaveNumeric = function(test) {
 	test.throws(function() { Modes.get('c', 's') }, Error, 'Failed Assertion!');
-	test.ok(true);
   test.done();
 }
 
@@ -31,7 +30,6 @@ exports.testIsOctaveNumeric = function(test) {
  */
 exports.testOctaveRange = function(test) {
 	test.throws(function() { Modes.get('c', 10) }, Error);
-	test.ok(true);
   test.done();
 }
 
@@ -42,7 +40,6 @@ exports.testOctaveRange = function(test) {
  */
 exports.testValidMode = function(test) {
 	test.throws(function() { Modes.get('c', 3, 'non_existent_mode') }, Error);
-	test.ok(true);
   test.done();
 }
 
@@ -53,6 +50,5 @@ exports.testValidMode = function(test) {
  */
 exports.testValidRootNote = function(test) {
 	test.throws(function() { Modes.get('h') }, Error);
-	test.ok(true);
   test.done();
 }
