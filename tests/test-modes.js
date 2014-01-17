@@ -19,7 +19,7 @@ exports.testZeroArgs = function(test) {
  * Function call with a non numneric value should throw an Error
  */
 exports.testIsOctaveNumeric = function(test) {
-	test.throws(function() { Modes.get('c', 's') }, Error);
+	test.throws(function() { Modes.get('c', 's') }, Error, 'Failed Assertion!');
 	test.ok(true);
   test.done();
 }
@@ -41,7 +41,7 @@ exports.testOctaveRange = function(test) {
  * Valid modes are listed in modes.js
  */
 exports.testValidMode = function(test) {
-	test.throws(function() { Modes.get('c', 3, 'non_existent_mode') }, Error, 'Wrong mode!');
+	test.throws(function() { Modes.get('c', 3, 'non_existent_mode') }, Error);
 	test.ok(true);
   test.done();
 }
@@ -52,7 +52,7 @@ exports.testValidMode = function(test) {
  * Valid root notes are c,d,e,f,g,a,b
  */
 exports.testValidRootNote = function(test) {
-	test.throws(function() { Modes.get('h') }, Error, 'Wrong root note!');
+	test.throws(function() { Modes.get('h') }, Error);
 	test.ok(true);
   test.done();
 }
