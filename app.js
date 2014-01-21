@@ -10,13 +10,14 @@ var Utils = require('./lib/utils');
 	Please see the README file
 */
 
-var notes = ['g1', 'a#1', 'c2', 'a1', 'a#1', 'd2', 'g1', 'c2', 'f#1', 'a#1'];
+var notes = ['c4', 'd#4', 'f4', 'g4', 'b4', 'c5', 'g#4', 'g4'];
 //var notes = Modes.get('f', 2, 'phrygian');
 
 bar = Generate.bars({
 	notesArr: notes,
-	pattern: Patterns.fancy[2],
-	bars: 8
+	pattern: Patterns.fancy[1],
+	bars: 8,
+	randomize: true
 });
 
 //Apply a filter
