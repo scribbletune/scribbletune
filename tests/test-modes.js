@@ -66,3 +66,12 @@ exports.testValidRootNote = function(test) {
 	test.throws(function() { Modes.get('h') }, Error);
   test.done();
 }
+
+/*
+ * Test whether a valid root node was specified
+ * Valid root notes are c,d,e,f,g,a,b
+ */
+exports.testValidRootNote2 = function(test) {
+	test.throws(function() { Modes.get('#') }, Error);
+  test.done();
+}
