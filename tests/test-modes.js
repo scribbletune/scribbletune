@@ -21,7 +21,7 @@ exports.testZeroArgs = function(test) {
  	var mode = Modes.get('d');
 	test.deepEqual(
 		mode, 
-		[ 'd3', 'e3', 'f#3', 'g3', 'a4', 'b4', 'c#4', 'd4' ],
+		[ 'd3', 'e3', 'f#3', 'g3', 'a3', 'b3', 'c#4', 'd4' ],
 		'Octaves are wrong in: ' + mode
 	);
   test.done();
