@@ -15,13 +15,13 @@ var notes = ['c4', 'd#4', 'f4', 'g4', 'b4', 'c5', 'g#4', 'g4'];
 
 bar = Generate.bars({
 	notesArr: notes,
-	pattern: Patterns.fancy[1],
+	pattern: Patterns.fancy[0],
 	bars: 8,
 	randomize: true
 });
 
 //Apply a filter
-//bar = Filters.counterpoint(bar);
+bar = Filters.mergeDuplicates(bar);
 console.log(bar);
 
 //write track to midi file
