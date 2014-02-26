@@ -15,7 +15,7 @@ exports.testZeroArgs = function(test) {
 
 
 /*
- * Test whether Modes.get returns correct octaves for modes for D onward root notes
+ * Test whether Modes.get returns next octave of the root note
  */
  exports.testSubsequentOctaves = function(test) {
  	var mode = Modes.get('d');
@@ -73,5 +73,28 @@ exports.testValidRootNote = function(test) {
  */
 exports.testValidRootNote2 = function(test) {
 	test.throws(function() { Modes.get('#') }, Error);
+  test.done();
+}
+
+
+/**
+ * Test Ionian Mode for C
+ */
+exports.testIonianModeC = function(test) {
+	test.deepEqual(
+		Modes.get('c', 3, 'ionian'),
+		['c3', 'd3', 'e3', 'f3', 'g3', 'a3', 'b3', 'c4']
+	);
+  test.done();
+}
+
+/**
+ * Test Ionian Mode for D
+ */
+exports.testIonianModeD = function(test) {
+	test.deepEqual(
+		Modes.get('d', 3, 'ionian'),
+		['d3', 'e3', 'f#3', 'g3', 'a3', 'b3', 'c#4', 'd4']
+	);
   test.done();
 }
