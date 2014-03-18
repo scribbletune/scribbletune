@@ -10,12 +10,13 @@ var Utils = require('./lib/utils');
 	Please see the README file
 */
 
+
 //var notes = ['d#4', 'd4', 'd#4', 'c4', 'f4', 'f#4'];
-var notes = Modes.get('c', 2, 'phrygian');
+var notes = Modes.get('d#', 3, 'phrygian');
 
 bar = Generate.bars({
 	notesArr: notes,
-	pattern: Patterns.generic[3],
+	pattern: Patterns.generate(),
 	bars: 8,
 	randomize: true
 });
