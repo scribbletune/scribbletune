@@ -22,35 +22,15 @@ var bar1 = Generate.bars({
 });
 
 var bar2 = Generate.bars({
-	notesArr: notes2,
-	pattern: Patterns.fancy[1],
-	bars: 2,
-	randomize: true
-});
-
-var bar3 = Generate.bars({
 	notesArr: notes1,
-	pattern: Patterns.fancy[2],
+	pattern: Patterns.fancy[0],
 	bars: 2,
 	randomize: true
 });
 
-var bar4 = Generate.bars({
-	notesArr: notes2,
-	pattern: Patterns.fancy[3],
-	bars: 2 ,
-	randomize: true
-});
 
-var notes3 = Modes.get('f#', 3 , 'mixolydian');
-var bar5 = Generate.bars({
-	notesArr: notes3,
-	pattern: Patterns.fancy[2],
-	bars: 2,
-	randomize: true
-});
 
-bar = bar1.concat(bar2,bar3,bar4,bar5);
+bar = bar1.concat(bar2);
 
 
 
