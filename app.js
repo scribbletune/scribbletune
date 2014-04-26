@@ -1,3 +1,5 @@
+'use strict';
+
 var Modes = require('./lib/modes');
 var Generate = require('./lib/generate');
 var Filters = require('./lib/filters');
@@ -30,7 +32,7 @@ var bar2 = Generate.bars({
 
 
 
-bar = bar1.concat(bar2);
+var bar = bar1.concat(bar2);
 
 
 
