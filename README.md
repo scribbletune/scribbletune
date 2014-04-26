@@ -19,3 +19,7 @@ node app.js
 - Apply filter(s) (optional)
 - Render track to a Midi file
 - Import the midi file to your favorite music production application like Ableton Live, Reason or Cubase.
+
+
+####Note
+Currently the application expects flattened notes in their sharp notations. For example, you'd need to specify A# for a B flat note.
