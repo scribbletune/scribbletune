@@ -4,22 +4,19 @@ Generate musical patterns using Javascript and export them as MIDI files with No
 
 ####Run:  
 npm install  
-node app.js
+node melody.js [params]
 
 ---
 
-###Process
-- Use the Modes module to get a bunch of notes from a particular mode (Aeolian, Dorian etc) or Manually set an array of notes. Examples:
-  - Modes.get('f', 2, 'phrygian'); //will return the notes of the phrygian mode for the root of F in the second octave
-  - OR Manually set notes array: var notes = ['c3', 'd3', 'e3', 'f3'];
-- Use the built-in Generator module to generate a bar of music of the required number of bars/beats from the notes array
-- Specify a pattern in the Generator.bars method or use a pattern from the Patterns module. Example of Generator:
-  - bar = Generate.bars({ notesArr: notes }); 
-  - View module for more options
-- Apply filter(s) (optional)
-- Render track to a Midi file
-- Import the midi file to your favorite music production application like Ableton Live, Reason or Cubase.
+###Parameters
+- -r Root note (Example: node melody.js -r d#. Default: c)
+- -o Octave (Example: node melody.js -o 2. Default: 3)
+- -m or --mode Mode (Example: node melody.js -m dorian OR node melody.js --mode phrygian. Default: ionian, which is a major scale)
+- --bars Number of bars to generate (Example: node melody.js --bars 3. Default: 2)
+- --notes Provide notes with octaves instead of generating them via Mode generator (Example: node --notes c3,d3,f#2. Do not use spaces.)
+- --pattern Provide a pattern for the melody. (Example: node melody.js --pattern x---x---x---x___  Each x is note on. Each - is note off. Each _ is sustain and determines note duration. You can use the pattern generator or Pattern.generic[index] or Pattern.fancy[index] to get a pattern)
+- --randomize Randomize the notes of the melody generated (Example node melody.js --randomize true. Default: true)
+- --visualize Visualize the generated notes (Example node melody.js --visualize true. Default: false)
 
-
-####Note
+####Please Note
 Currently the application expects flattened notes in their sharp notations. For example, you'd need to specify A# for a B flat note.
