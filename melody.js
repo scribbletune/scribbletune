@@ -24,9 +24,11 @@ var defaultOctave 							= argv.octave || argv.o || 3;
 var defaultMode 								= argv.mode || argv.m || 'ionian';
 //the following take arguments in the long form only
 var defaultNumberOfBars 				= argv.bars || 2;
-var defaultNotesArr 						= argv.notes || Modes.get(rootNote, defaultOctave, defaultMode);
+var defaultNotesArr 						= argv.notes.split(',') || Modes.get(rootNote, defaultOctave, defaultMode);
 var defaultPattern 							= argv.pattern || argv.p || Patterns.fancy[0];
 var defaultRandomize 						= argv.randomize || true;
+//show notes in a table after generating em
+var showVisualization 					= argv.visualize || false;
 
 
 
@@ -42,7 +44,7 @@ var bar = Generate.bars({
 //bar = Filters.mergeDuplicates(bar);
 
 //show what the generated bar looks like
-Utils.visualize(bar);
+showVisualization && Utils.visualize(bar);
 
 //write track to midi file
 Utils.writeTrackToFile(bar);
