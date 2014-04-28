@@ -24,7 +24,7 @@ var defaultOctave 							= argv.octave || argv.o || 3;
 var defaultMode 								= argv.mode || argv.m || 'ionian';
 //the following take arguments in the long form only
 var defaultNumberOfBars 				= argv.bars || 2;
-var defaultNotesArr 						= argv.notes.split(',') || Modes.get(rootNote, defaultOctave, defaultMode);
+var defaultNotesArr 						= argv.notes && argv.notes.split(',') || Modes.get(rootNote, defaultOctave, defaultMode);
 var defaultPattern 							= argv.pattern || argv.p || Patterns.fancy[0];
 var defaultRandomize 						= argv.randomize || true;
 //show notes in a table after generating em
