@@ -4,16 +4,22 @@ var mode = require('../lib/ext/mode')(obj);	//the mode module expects an object 
 describe('Scribbletune:Mode', function(){
 	describe('get()', function(){
 		
-		it('should check if provided root note is valid', function(){
+		it('should check if provided root note is valid: fail h', function(){
 			(function(){
-        obj.mode.get('h');
-      }).should.throw();
+		    	obj.mode.get('h');
+			}).should.throw();
+		});
+
+		it('should check if provided root note is valid: pass c#', function(){
+			(function(){
+		    	obj.mode.get('c#');
+			}).should.not.throw();
 		});
 
 		it('should check if provided mode is valid', function(){
 			(function(){
-        obj.mode.get('c', 'rubbish');
-      }).should.throw();
+				obj.mode.get('c', 'rubbish');
+			}).should.throw();
 		});
 
 		it('should return [c, d, e, f, g, a, b] when root is C and mode is ionian', function(){
