@@ -7,7 +7,7 @@ var Utils = require('./lib/utils');
 
 
 
-var rythm = 'x-xxx-xx-x--x_xx';
+var rythm = 'x-x-x-x-x-x-x-x-';
 var rythmFillers = [
 	'x-xxx---x---x-xx',
 	'x__xx---x---x_x_'
@@ -27,7 +27,7 @@ _(2).times(function(n){
 });
 
 var bar = Generate.bars({
-	notesArr: Modes.get('f#', 2, 'aeolian'),
+	notesArr: Modes.get('c', 3, 'altered'),
 	pattern: ptn,
 	bars: 32
 });
