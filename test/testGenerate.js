@@ -17,7 +17,7 @@ describe('Scribbletune:Generate', function(){
 			'should use a default pattern if one is not provided', 
 			function(){
 				(function(){
-
+					st.generate.clip();
 				}).should.not.throw();
 			}
 		);
