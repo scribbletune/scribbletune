@@ -32,6 +32,15 @@ describe('Scribbletune:Generate', function(){
 			}
 		);
 
+		it(
+			'should validate provided pattern', 
+			function(){
+				(function(){
+					st.generate.clip({pattern: 'kkjd'});
+				}).should.throw();
+			}
+		);
+
 		
 		it(
 			'should use a default set of notes if notes are not provided', 
@@ -49,6 +58,16 @@ describe('Scribbletune:Generate', function(){
 					notes: ['d3']
 				});
 				clip[0].should.have.property('note', 'd3');
+			}
+		);
+
+
+		it(
+			'should validate provided notes', 
+			function(){
+				(function(){
+					st.generate.clip({notes: ['k1']});
+				}).should.throw();
 			}
 		);
 
