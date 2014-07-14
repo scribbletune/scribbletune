@@ -14,11 +14,21 @@ describe('Scribbletune:Generate', function(){
 	describe('clip()', function(){
 
 		it(
-			'should use a default pattern if one is not provided', 
+			'should use a default pattern, notes and note length if no params are passed', 
 			function(){
-				(function(){
-					st.generate.clip();
-				}).should.not.throw();
+				var clip = st.generate.clip();
+				clip[0].should.have.property('length', 512);
+			}
+		);
+
+		it(
+			'should use provided pattern', 
+			function(){
+				var clip = st.generate.clip({
+					notes: ['d3'], 
+					pattern: 'x_______x_______'
+				});
+				clip[0].should.have.property('length', 256);
 			}
 		);
 
@@ -26,15 +36,19 @@ describe('Scribbletune:Generate', function(){
 		it(
 			'should use a default set of notes if notes are not provided', 
 			function(){
-			
+				var clip = st.generate.clip();
+				clip[0].should.have.property('note', 'c3');
 			}
 		);
 
 
 		it(
-			'should check if a valid set of notes is provided', 
+			'should use provided notes', 
 			function(){
-
+				var clip = st.generate.clip({
+					notes: ['d3']
+				});
+				clip[0].should.have.property('note', 'd3');
 			}
 		);
 
