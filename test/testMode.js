@@ -49,7 +49,7 @@ describe('Scribbletune:Mode', function(){
 			'should return [c3, d3, e3, f3, g3, a3, b3] when root is C and mode is ionian', 
 			function(){
 				var cIonian = st.mode.get('c', 'ionian');
-				cIonian.join('').should.equal('c3d3e3f3g3a4b4');
+				cIonian.join('').should.equal('c3d3e3f3g3a3b3');
 			}
 		);
 
@@ -58,7 +58,7 @@ describe('Scribbletune:Mode', function(){
 			'should return [d3, e3, f3, g3, a3, b3, c3] when root is D and mode is dorian', 
 			function(){
 				var dDorain = st.mode.get('d', 'dorian');
-				dDorain.join('').should.equal('d3e3f3g3a4b4c4');
+				dDorain.join('').should.equal('d3e3f3g3a3b3c4');
 			}
 		);
 
