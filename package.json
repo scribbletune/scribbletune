@@ -1,17 +1,35 @@
 {
   "name": "scribbletune",
-  "version": "0.0.1",
-  "private": true,
+  "version": "0.0.2",
+  "description": "Generate musical patterns with JavaScript",
+  "main": "index.js",
   "scripts": {
-    "start": "node app.js"
+    "test": "node_modules/.bin/mocha -w"
   },
   "dependencies": {
     "jsmidgen": "https://github.com/walmik/jsmidgen/tarball/master",
-    "lodash": "~2.3.0",
-    "chalk": "~0.4.0",
-    "minimist": "0.0.8"
+    "lodash": "~2.3.0"
   },
   "devDependencies": {
-    "nodeunit": "~0.8.2"
+    "mocha": "*",
+    "should": "~4.0.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/walmik/scribbletune.git"
+  },
+  "keywords": [
+    "javascript",
+    "node.js",
+    "music",
+    "midi"
+  ],
+  "author": "Walmik Deshpande",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/walmik/scribbletune/issues"
+  },
+  "engines": {
+    "node": "*"
   }
 }
