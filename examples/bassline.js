@@ -6,7 +6,7 @@ var st = require('../lib/scribbletune');
 
 var clip = 
 	st.generate.clip({
-		notes: st.mode.get('d', 'melodic minor'), 
+		notes: ['c2'], 
 		pattern: '--x---x---x---x-'
 	});
 
