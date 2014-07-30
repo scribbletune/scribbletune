@@ -1,4 +1,4 @@
-var scribbletune = require('../src/lib/scribbletune');
+var scribbletune = require('../lib/scribbletune');
 
 /**
  * Generate a bassline by joining a bunch of clips

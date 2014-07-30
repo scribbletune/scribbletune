@@ -4,7 +4,7 @@
  */
 'use strict';
 
-var st = require('../src/lib/scribbletune');
+var st = require('../lib/scribbletune');
 
 describe('Scribbletune:Generate', function(){
 
