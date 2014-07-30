@@ -4,6 +4,7 @@
 
 var path = require('path');
 var fs = require('fs');
+var _ = require('lodash');
 var lib = path.join(path.dirname(fs.realpathSync(__filename)), '../lib');
 
 var scribbletune = require(lib + '/scribbletune.js');
@@ -12,15 +13,20 @@ var scribbletune = require(lib + '/scribbletune.js');
 var argv = require('minimist')(process.argv.slice(2));
 
 //setup defaults
-var _root = argv.root || 'c3';
+var _root = argv.root || 'c';
 var _mode = argv.mode || argv.scale || 'ionian';
+var _octave = argv.octave || 3;
 var _pattern = argv.pattern || 'x-x-x-x-x-x-x-x-';
+var _notes = argv.notes || scribbletune.mode.get(_root, _mode, _octave);
 
+if(argv.shuffle === 'true') {
+	_notes = _.shuffle(_notes);
+}
 
 //create a clip
 var clip = 
 	scribbletune.generate.clip({
-		notes: argv.notes || scribbletune.mode.get(_root, _mode), 
+		notes: _notes, 
 		pattern: _pattern
 	});
 
