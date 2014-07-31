@@ -17,9 +17,9 @@ Generate a MIDI file with the C Phrygian mode in the second octave
 
 `./node_modules/scribbletune/bin/scribbletune --root c --octave 2 --mode phrygian`
 
-Generate a MIDI file with the pattern: x---x---x___x---
+Generate a MIDI file with the pattern: x---x---x___x--- (note the 'equal to' sign - This is to allow for patterns that start with hyphens)
 
-`./node_modules/scribbletune/bin/scribbletune --pattern x---x---x___x---`
+`./node_modules/scribbletune/bin/scribbletune --pattern=x---x---x___x---`
 
 
 ### Patterns
