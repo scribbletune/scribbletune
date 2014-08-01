@@ -17,17 +17,25 @@ var _root = argv.root || 'c';
 var _mode = argv.mode || argv.scale || 'ionian';
 var _octave = argv.octave || 3;
 var _pattern = argv.pattern || 'x-x-x-x-x-x-x-x-';
-var _notes = argv.notes || scribbletune.mode.get(_root, _mode, _octave);
+var _notes = argv.notes && argv.notes.split(',') || scribbletune.mode.get(_root, _mode, _octave);
+
 
 if(argv.shuffle === 'true') {
 	_notes = _.shuffle(_notes);
 }
 
+var _sizzle = false;
+if(argv.sizzle === 'true') {
+	_sizzle = true;
+}
+
+
 //create a clip
 var clip = 
 	scribbletune.generate.clip({
 		notes: _notes, 
-		pattern: _pattern
+		pattern: _pattern,
+		sizzle: true
 	});
 
 scribbletune.midi.writeToFile(clip);
