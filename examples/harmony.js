@@ -24,7 +24,8 @@ var clip =
 		notes: notesArr, 
 		pattern: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
 		sizzle: true,
-		sizzleMap: 'x--------x--------x----x----x---'
+		sizzleMap: 'x--------x--------x----x----x---',
+		shuffle: true
 	});
 
 
