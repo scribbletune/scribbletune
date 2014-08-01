@@ -35,7 +35,7 @@ var clip =
 	scribbletune.generate.clip({
 		notes: _notes, 
 		pattern: _pattern,
-		sizzle: true
+		sizzle: _sizzle
 	});
 
 scribbletune.midi.writeToFile(clip);
