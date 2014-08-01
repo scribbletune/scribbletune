@@ -20,22 +20,29 @@ var _pattern = argv.pattern || 'x-x-x-x-x-x-x-x-';
 var _notes = argv.notes && argv.notes.split(',') || scribbletune.mode.get(_root, _mode, _octave);
 
 
-if(argv.shuffle === 'true') {
-	_notes = _.shuffle(_notes);
-}
-
 var _sizzle = false;
 if(argv.sizzle === 'true') {
 	_sizzle = true;
 }
 
+var _sizzleMap = '';
+if(argv.sizzleMap) {
+	_sizzleMap = argv.sizzleMap;
+}
+
+var _shuffle = false;
+if(argv.shuffle === 'true') {
+	_shuffle = true;
+}
 
 //create a clip
 var clip = 
 	scribbletune.generate.clip({
 		notes: _notes, 
 		pattern: _pattern,
-		sizzle: _sizzle
+		sizzle: _sizzle,
+		sizzleMap: _sizzleMap,
+		shuffle: _shuffle
 	});
 
 scribbletune.midi.writeToFile(clip);

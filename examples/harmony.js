@@ -1,18 +1,18 @@
 var _ = require('lodash');
 var scribbletune = require('../lib/scribbletune');
 
-//start with a bunch of notes from the c major scale
-var notes = 'dga'.split('');
+//start with a bunch of notes
+var notes = 'cfg'.split('');
 
 //set a mode to be used
-var mode = 'ionian';
+var modesArr= ['ionian', 'dorian'];
 
 //set an octave
 var octave = 3;
 
 //generate an array of arrays of ionian modes of the notes
 var modesArr = notes.map(function(el, idx){
-	return scribbletune.mode.get(el, mode);
+	return scribbletune.mode.get(el, modesArr[_.random(0, modesArr.length - 1)]);
 });
 
 //identify the common notes in the modes generated
@@ -27,7 +27,8 @@ var clip =
 		notes: notesArr, 
 		pattern: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
 		//sizzle: true,
-		sizzleMap: 'x--------x--------x----x----x---'
+		//sizzleMap: 'x--------x--------x----x----x---'
+		sizzleMap: 'x-------x-----x-x-------------x-'
 		//shuffle: true
 	});
 
