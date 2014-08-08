@@ -2,13 +2,13 @@ var _ = require('lodash');
 var scribbletune = require('../lib/scribbletune');
 
 //start with a bunch of notes
-var notes = 'cfg'.split('');
+var notes = 'c#,f#,g#'.split(',');
 
 //set a mode to be used
 var modesArr= ['ionian', 'dorian'];
 
 //set an octave
-var octave = 3;
+var octave = 2;
 
 //generate an array of arrays of ionian modes of the notes
 var modesArr = notes.map(function(el, idx){
@@ -24,11 +24,12 @@ var notesArr = _.union(notesWithOctaves, intersectedModes);
 
 var clip = 
 	scribbletune.generate.clip({
-		notes: notesArr, 
-		pattern: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+		notes: ['c2'], 
+		//pattern: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+		pattern: 'x-------x-----x-x-------------x-',
 		//sizzle: true,
 		//sizzleMap: 'x--------x--------x----x----x---'
-		sizzleMap: 'x-------x-----x-x-------------x-'
+		//sizzleMap: 'x-------x-----x-x-------------x-'
 		//shuffle: true
 	});
 
