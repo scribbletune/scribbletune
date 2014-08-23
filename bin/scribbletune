@@ -19,6 +19,7 @@ var _mode = argv.mode || argv.scale || 'ionian';
 var _octave = argv.octave || 3;
 var _pattern = argv.pattern || 'x-x-x-x-x-x-x-x-';
 var _notes = argv.notes && argv.notes.split(',') || scribbletune.mode.get(_root, _mode, _octave);
+var _noteLength = argv.noteLength || 1/16;
 
 
 var _sizzle = false;
@@ -44,7 +45,8 @@ var clip =
 		pattern: _pattern,
 		sizzle: _sizzle,
 		sizzleMap: _sizzleMap,
-		shuffle: _shuffle
+		shuffle: _shuffle,
+		noteLength: _noteLength
 	});
 
 scribbletune.midi.writeToFile(clip);
