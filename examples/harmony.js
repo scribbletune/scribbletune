@@ -4,8 +4,8 @@ var scribbletune = require('../lib/scribbletune');
 //start with a bunch of notes
 var notes = 'd#,g,f#'.split(',');
 
-//set a mode to be used
-var modesArr= ['dorian', 'aeolian'];
+//set a coupla modes to be used
+var modesArr= ['dorian', 'phrygian'];
 
 //set an octave
 var octave = 3;
@@ -25,12 +25,9 @@ var notesArr = _.union(notesWithOctaves, intersectedModes);
 var clip = 
 	scribbletune.generate.clip({
 		notes: notesArr, 
-		//pattern: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-		//pattern: 'x-------x-----x-x-------------x-',
 		pattern: 'xxxxx-x--xx-xx-xxxx---x-xx-xxxxx'.replace(/-/g, '_'),
 		sizzle: true,
 		sizzleMap: 'x--------x--------x----x----x---',
-		//sizzleMap: 'x-------x-----x-x-------------x-'
 		shuffle: true
 	});
 

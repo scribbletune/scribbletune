@@ -6,11 +6,32 @@ var scribbletune = require('../lib/scribbletune');
 
 var clip = 
 	scribbletune.generate.clip({
-		notes: scribbletune.mode.get('c', 'phrygian', 2).slice(0, 3), 
-		pattern: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+		notes: scribbletune.mode.get('c', 'dorian', 2).slice(0, 3), 
+		pattern: 'xxxxxxxx',
 		sizzle: true,
-		sizzleMap: 'x-------x-----x-x-------------x-x-------x-----x-x-------------x-',
-		shuffle: true
+		sizzleMap: 'x-------',
+		//shuffle: true,
+		ticks: 512
 	});
 
-scribbletune.midi.writeToFile(clip);
+var clip2 = 
+	scribbletune.generate.clip({
+		notes: scribbletune.mode.get('c', 'dorian', 2).slice(1, 3), 
+		pattern: 'xxxxxxxx',
+		sizzle: true,
+		sizzleMap: 'x-----x-',
+		//shuffle: true,
+		ticks: 1024
+	});
+
+var clip3 = 
+	scribbletune.generate.clip({
+		notes: scribbletune.mode.get('c', 'dorian', 2).slice(0, 3), 
+		pattern: 'xxxxxxxx',
+		sizzle: true,
+		sizzleMap: 'x-------',
+		//shuffle: true,
+		ticks: 512
+	});
+
+scribbletune.midi.writeToFile(clip.concat(clip2,clip3));
