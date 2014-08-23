@@ -13,6 +13,7 @@ var scribbletune = require(lib + '/scribbletune.js');
 var argv = require('minimist')(process.argv.slice(2));
 
 //setup defaults
+var _ticks = argv.ticks || 512;
 var _root = argv.root || 'c';
 var _mode = argv.mode || argv.scale || 'ionian';
 var _octave = argv.octave || 3;
@@ -38,6 +39,7 @@ if(argv.shuffle === 'true') {
 //create a clip
 var clip = 
 	scribbletune.generate.clip({
+		ticks: _ticks,
 		notes: _notes, 
 		pattern: _pattern,
 		sizzle: _sizzle,
