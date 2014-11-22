@@ -1,5 +1,5 @@
 var _ = require('lodash');
-var scribbletune = require('../lib/scribbletune');
+var scribble = require('../lib/scribbletune');
 
 //start with a bunch of notes
 var notes = 'd#,g,f#'.split(',');
@@ -12,7 +12,7 @@ var octave = 3;
 
 //generate an array of arrays of ionian modes of the notes
 var modesArr = notes.map(function(el, idx){
-	return scribbletune.mode.get(el, modesArr[_.random(0, modesArr.length - 1)]);
+	return scribble.mode(el, modesArr[_.random(0, modesArr.length - 1)]);
 });
 
 //identify the common notes in the modes generated
@@ -23,7 +23,7 @@ var notesArr = _.union(notesWithOctaves, intersectedModes);
 
 
 var clip = 
-	scribbletune.generate.clip({
+	scribble.clip({
 		notes: notesArr, 
 		pattern: 'xxxxx-x--xx-xx-xxxx---x-xx-xxxxx'.replace(/-/g, '_'),
 		sizzle: true,
@@ -33,4 +33,4 @@ var clip =
 
 
 
-scribbletune.midi.writeToFile(clip);
+scribble.render(clip);

@@ -1,10 +1,11 @@
 {
   "name": "scribbletune",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "Generate musical patterns with JavaScript",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/.bin/mocha -w"
+    "test": "node_modules/.bin/mocha -w",
+    "scribble": "./bin/scribbletune"
   },
   "dependencies": {
     "jsmidgen": "https://github.com/walmik/jsmidgen/tarball/master",

@@ -1,12 +1,12 @@
-var scribbletune = require('../lib/scribbletune');
+var scribble = require('../lib/scribbletune');
 
 /**
  * Generate a bassline by joining a bunch of clips
  */
 
 var clip = 
-	scribbletune.generate.clip({
-		notes: scribbletune.mode.get('c', 'dorian', 2).slice(0, 3), 
+	scribble.clip({
+		notes: scribble.mode('c', 'dorian', 2).slice(0, 3), 
 		pattern: 'xxxxxxxx',
 		sizzle: true,
 		sizzleMap: 'x-------',
@@ -15,8 +15,8 @@ var clip =
 	});
 
 var clip2 = 
-	scribbletune.generate.clip({
-		notes: scribbletune.mode.get('c', 'dorian', 2).slice(1, 3), 
+	scribble.clip({
+		notes: scribble.mode('c', 'dorian', 2).slice(1, 3), 
 		pattern: 'xxxxxxxx',
 		sizzle: true,
 		sizzleMap: 'x-----x-',
@@ -25,8 +25,8 @@ var clip2 =
 	});
 
 var clip3 = 
-	scribbletune.generate.clip({
-		notes: scribbletune.mode.get('c', 'dorian', 2).slice(0, 3), 
+	scribble.clip({
+		notes: scribble.mode('c', 'dorian', 2).slice(0, 3), 
 		pattern: 'xxxxxxxx',
 		sizzle: true,
 		sizzleMap: 'x-------',
@@ -34,4 +34,4 @@ var clip3 =
 		ticks: 512
 	});
 
-scribbletune.midi.writeToFile(clip.concat(clip2,clip3));
+scribble.render(clip.concat(clip2,clip3));
