@@ -5,7 +5,7 @@ var scribble = require('../lib/scribbletune');
  */
 
 var clip = scribble.clip({
-	notes: ['c3'], 
+	notes: ['c3'],
 	pattern: 'x-x_-xx_x-x_-xx_x-x_-xx_x-x_-xx_',
 	sizzle: true
 });

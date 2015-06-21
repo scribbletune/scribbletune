@@ -12,9 +12,9 @@ var st = require('../lib/scribbletune');
  * Scribbletune.mode()
  */
 describe('Scribbletune::mode()', function(){
-	
+
 	it(
-		'should check if provided root note is valid: fail h', 
+		'should check if provided root note is valid: fail h',
 		function(){
 			(function(){
 				st.mode('h');
@@ -25,7 +25,7 @@ describe('Scribbletune::mode()', function(){
 
 
 	it(
-		'should check if provided root note is valid: pass c#', 
+		'should check if provided root note is valid: pass c#',
 		function(){
 			(function(){
 				st.mode('c#');
@@ -36,7 +36,7 @@ describe('Scribbletune::mode()', function(){
 
 
 	it(
-		'should check if provided mode is valid', 
+		'should check if provided mode is valid',
 		function(){
 			(function(){
 				st.mode('c', 'rubbish');
@@ -46,7 +46,7 @@ describe('Scribbletune::mode()', function(){
 
 
 	it(
-		'should return [c3, d3, e3, f3, g3, a3, b3] when root is C and mode is ionian', 
+		'should return [c3, d3, e3, f3, g3, a3, b3] when root is C and mode is ionian',
 		function(){
 			var cIonian = st.mode('c', 'ionian');
 			cIonian.join('').should.equal('c3d3e3f3g3a3b3');
@@ -55,7 +55,7 @@ describe('Scribbletune::mode()', function(){
 
 
 	it(
-		'should return [d3, e3, f3, g3, a3, b3, c3] when root is D and mode is dorian', 
+		'should return [d3, e3, f3, g3, a3, b3, c3] when root is D and mode is dorian',
 		function(){
 			var dDorain = st.mode('d', 'dorian');
 			dDorain.join('').should.equal('d3e3f3g3a3b3c4');

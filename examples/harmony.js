@@ -22,9 +22,9 @@ var notesWithOctaves = notes.map(function(el){ return el + octave });
 var notesArr = _.union(notesWithOctaves, intersectedModes);
 
 
-var clip = 
+var clip =
 	scribble.clip({
-		notes: notesArr, 
+		notes: notesArr,
 		pattern: 'xxxxx-x--xx-xx-xxxx---x-xx-xxxxx'.replace(/-/g, '_'),
 		sizzle: true,
 		sizzleMap: 'x--------x--------x----x----x---',
