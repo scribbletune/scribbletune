@@ -17,5 +17,5 @@ describe('Scribbletune::render', function() {
 				st.render(clip);
 			}).should.not.throw();
 		}
-	)
+	);
 });

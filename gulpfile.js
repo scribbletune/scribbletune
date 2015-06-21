@@ -9,3 +9,8 @@ gulp.task('scripts', function() {
 		.pipe(jshint.reporter('default'))
 		.pipe(jscs());
 });
+
+gulp.task('test', function() {
+	return gulp.src('./test/*.js', {read: false})
+		.pipe(mocha({reporter: 'nyan'}));
+});

@@ -3,7 +3,8 @@
  * -----------------------------------
  */
 'use strict';
-var st = require('../lib/scribbletune');
+var st = require('../lib/scribbletune'),
+	should = require('should');
 
 describe('Scribbletune::clip()', function() {
 	it(
