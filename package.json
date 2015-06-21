@@ -13,6 +13,8 @@
     "minimist": "~0.2.0"
   },
   "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-jshint": "^1.11.0",
     "mocha": "*",
     "should": "~4.0.4"
   },
