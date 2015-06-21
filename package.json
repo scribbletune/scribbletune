@@ -14,6 +14,7 @@
   },
   "devDependencies": {
     "gulp": "^3.9.0",
+    "gulp-jscs": "^1.6.0",
     "gulp-jshint": "^1.11.0",
     "mocha": "*",
     "should": "~4.0.4"
