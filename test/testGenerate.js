@@ -3,15 +3,12 @@
  * -----------------------------------
  */
 'use strict';
-
 var st = require('../lib/scribbletune');
 
-
-describe('Scribbletune::clip()', function(){
-
+describe('Scribbletune::clip()', function() {
 	it(
 		'should use a default pattern, notes and note length if no params are passed',
-		function(){
+		function() {
 			var clip = st.clip();
 			clip[0].should.have.property('length', 512);
 		}
@@ -19,7 +16,7 @@ describe('Scribbletune::clip()', function(){
 
 	it(
 		'should use provided pattern',
-		function(){
+		function() {
 			var clip = st.clip({
 				notes: ['d3'],
 				pattern: 'x_______x_______'
@@ -30,26 +27,24 @@ describe('Scribbletune::clip()', function(){
 
 	it(
 		'should validate provided pattern',
-		function(){
-			(function(){
+		function() {
+			(function() {
 				st.clip({pattern: 'kkjd'});
 			}).should.throw();
 		}
 	);
 
-
 	it(
 		'should use a default set of notes if notes are not provided',
-		function(){
+		function() {
 			var clip = st.clip();
 			clip[0].should.have.property('note', 'c3');
 		}
 	);
 
-
 	it(
 		'should use provided notes',
-		function(){
+		function() {
 			var clip = st.clip({
 				notes: ['d3']
 			});
@@ -57,14 +52,12 @@ describe('Scribbletune::clip()', function(){
 		}
 	);
 
-
 	it(
 		'should validate provided notes',
-		function(){
-			(function(){
+		function() {
+			(function() {
 				st.clip({notes: ['k1']});
 			}).should.throw();
 		}
 	);
-
 });

@@ -3,14 +3,13 @@
  * -----------------------------------
  */
 'use strict';
-
 var st = require('../lib/scribbletune');
 
-describe('Scribbletune::render', function(){
+describe('Scribbletune::render', function() {
 	it(
 		'should write provided notes data to a Midi file',
 		function() {
-			(function(){
+			(function() {
 				var clip = st.clip({
 					notes: st.mode(),
 					pattern: 'x-x-x-x-x_x_x___'
