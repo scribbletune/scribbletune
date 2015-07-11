@@ -4,7 +4,7 @@
   "description": "Generate musical patterns with JavaScript",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/.bin/mocha -w",
+    "test": "gulp test",
     "scribble": "./bin/scribbletune"
   },
   "dependencies": {
