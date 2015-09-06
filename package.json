@@ -8,7 +8,7 @@
     "scribble": "./bin/scribbletune"
   },
   "dependencies": {
-    "jsmidgen": "https://github.com/walmik/jsmidgen/tarball/master",
+    "jsmidgen": "~0.1.2",
     "lodash": "~2.3.0",
     "minimist": "~0.2.0"
   },
