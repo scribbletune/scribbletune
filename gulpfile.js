@@ -1,7 +1,6 @@
-var gulp = require('gulp'),
-	jshint = require('gulp-jshint'),
-	jscs = require('gulp-jscs'),
-	mocha = require('gulp-mocha');
+var gulp = require('gulp');
+var jshint = require('gulp-jshint');
+var jscs = require('gulp-jscs');
 
 gulp.task('clean', function() {
 	return gulp.src(['./lib/scribbletune.js', './lib/ext/*.js', './test/*.js'])
@@ -10,9 +9,4 @@ gulp.task('clean', function() {
 		.pipe(jscs());
 });
 
-gulp.task('test', function() {
-	return gulp.src('./test/*.js', {read: false})
-		.pipe(mocha({reporter: 'nyan'}));
-});
-
-gulp.task('default', ['clean', 'test']);
+gulp.task('default', ['clean']);
