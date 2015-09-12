@@ -1,7 +1,9 @@
+'use strict';
+
 var test = require('tape'),
 	st = require('../lib/scribbletune');
 
-test('Scribbletune::modes', function(t) {
+test('Scribbletune::modes Common', function(t) {
 	t.equal(
 		st.mode('c', 'ionian').join(''),
 		'c3d3e3f3g3a3b3',
@@ -37,6 +39,9 @@ test('Scribbletune::modes', function(t) {
 		'b3c4d4e4f4g4a4',
 		'B Locrian is b c d e f g a'
 	);
+});
+
+test('Scribbletune::modes Melodic Minor scales', function(t) {
 	t.equal(
 		st.mode('c', 'melodic minor').join(''),
 		'c3d3d#3f3g3a3b3',
@@ -72,6 +77,9 @@ test('Scribbletune::modes', function(t) {
 		'c3c#3d#3e3f#3g#3a#3',
 		'C Altered is c c# d# e f# g# a#'
 	);
+});
+
+test('Scribbletune::modes Blues/Jazz/Harmonic', function(t) {
 	t.equal(
 		st.mode('c', 'whole tone').join(''),
 		'c3d3e3f#3g#3a#3',
@@ -147,6 +155,9 @@ test('Scribbletune::modes', function(t) {
 		'c3c#3e3f3g3g#3b3',
 		'C Double Harmonic Minor is c c# e f g g# b'
 	);
+});
+
+test('Scribbletune::modes Exotic', function(t) {
 	t.equal(
 		st.mode('c', 'hungarian gypsy').join(''),
 		'c3d3d#3f#3g3g#3a#3',
@@ -217,6 +228,9 @@ test('Scribbletune::modes', function(t) {
 		'c3d3e3f3f#3g#3a#3',
 		'C Major Locrian is c d e f f# g# a#'
 	);
+});
+
+test('Scribbletune::modes Miscellaneous', function(t) {
 	t.equal(
 		st.mode('c', 'augmented').join(''),
 		'c3d3e3f#3g#3a3b3',
