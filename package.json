@@ -1,6 +1,6 @@
 {
   "name": "scribbletune",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Generate musical patterns with JavaScript",
   "main": "index.js",
   "scripts": {

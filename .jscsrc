@@ -6,7 +6,6 @@
 	"validateIndentation": "\t",
 	"requireCamelCaseOrUpperCaseIdentifiers": null,
 	"disallowMultipleVarDecl": null,
-	"requireMultipleVarDecl": true,
 	"safeContextKeyword": ["that"],
 	"requireBlocksOnNewline": true,
 	"disallowSpaceAfterObjectKeys": true,
