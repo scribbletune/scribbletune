@@ -1,1 +1,1 @@
-module.exports = require('./lib/scribbletune');
+'use strict';exports = module.exports = (function() {	return {		mode: require('./lib/mode'),		pattern: require('./lib/pattern'),		clip: require('./lib/clip'),		render: require('./lib/render')	};}());

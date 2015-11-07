@@ -1,7 +1,7 @@
 'use strict';
 
 var test = require('tape'),
-	st = require('../lib/scribbletune');
+	st = require('../');
 
 test('clip should use provided notes', function(t) {
 	t.equal(

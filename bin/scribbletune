@@ -5,9 +5,8 @@
 var path = require('path');
 var fs = require('fs');
 var _ = require('lodash');
-var lib = path.join(path.dirname(fs.realpathSync(__filename)), '../lib');
 
-var st = require(lib + '/scribbletune.js');
+var st = require('../');
 
 //get the commandline arguments
 var argv = require('minimist')(process.argv.slice(2));
@@ -18,7 +17,7 @@ var _root = argv.root || 'c';
 var _mode = argv.mode || argv.scale || 'ionian';
 var _octave = argv.octave || 3;
 var _pattern = argv.pattern || 'x-x-x-x-x-x-x-x-';
-var _notes = argv.notes && argv.notes.split(',') || st.mode.get(_root, _mode, _octave);
+var _notes = argv.notes && argv.notes.split(',') || st.mode(_root, _mode, _octave);
 var _noteLength = argv.noteLength || 1/16;
 
 
@@ -38,10 +37,10 @@ if(argv.shuffle === 'true') {
 }
 
 //create a clip
-var clip = 
+var clip =
 	st.clip({
 		ticks: _ticks,
-		notes: _notes, 
+		notes: _notes,
 		pattern: _pattern,
 		sizzle: _sizzle,
 		sizzleMap: _sizzleMap,
