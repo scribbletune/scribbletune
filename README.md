@@ -28,6 +28,22 @@ This will create a MIDI file called bass.mid in the same location as the above f
 
 Patterns are denoted by a string made up of x, - and \_ where `x` stands for noteOn, `-` stand for noteOff and `_` stands for sustain. Patterns can be used to create sizzle maps (which are basically accent maps to hit some notes harder than others)
 
+### Chords
+
+You can add chords to the `notes` array while creating a clip to render chords. 
+
+```
+var scribble = require('../');
+
+var clip = scribble.clip({
+	notes: ['c3,e3,g3', 'f3,c4,g4', 'e3,g3,c4', 'f3,c4,g4'],
+	pattern: 'x_x_x_x_x_x_x_x_',
+	sizzle: true    // this will add a rhythmic accent to the generated notes
+});
+
+scribble.render(clip);
+```
+
 ### Note
 
 You will need an application like Ableton Live or Reason or Garage Band to use the generated MIDI file. The file will be generated in the same directory as `music.mid`
