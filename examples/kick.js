@@ -1,5 +1,5 @@
 var _ = require('lodash');
-var scribble = require('../lib/scribbletune');
+var scribble = require('../');
 
 clip0 = scribble.clip({
 	notes: ['c1'],

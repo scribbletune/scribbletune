@@ -1,4 +1,4 @@
-var scribble = require('../lib/scribbletune');
+var scribble = require('../');
 
 var clip = scribble.clip({
 	notes: scribble.mode('c', 'major', 3),
