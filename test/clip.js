@@ -7,7 +7,7 @@ test('clip should use provided notes', function(t) {
 	t.equal(
 		st.clip({
 			notes: ['d3']
-		})[0].note,
+		})[0].note[0],
 		'd3',
 		'Clip function uses the provided notes'
 	);
@@ -15,7 +15,7 @@ test('clip should use provided notes', function(t) {
 	t.end();
 });
 
-test('clip show throw an error in case of invalid notes', function(t) {
+test('clip should throw an error in case of invalid notes', function(t) {
 	t.throws(function() {
 		st.clip({notes: ['k1']});
 	});
@@ -34,11 +34,11 @@ test('clip should validate provided notes & pattern using default notes and patt
 	clip = st.clip({pattern: 'x_______x-------'}),
 	t.equal(clip[0].length, 256, 'Clip uses provided pattern');
 	t.equal(clip[8].length, 32, 'Clip uses provided pattern');
-	t.equal(clip[0].note, 'c3', 'Clip uses default note and octave');
+	t.equal(clip[0].note[0], 'c3', 'Clip uses default note and octave');
 
 	clip = st.clip();
 	t.equal(clip[0].length, 512, 'Clip uses a default pattern');
-	t.equal(clip[0].note, 'c3', 'Clip uses default note and octave');
+	t.equal(clip[0].note[0], 'c3', 'Clip uses default note and octave');
 
 	t.end();
 });

@@ -39,6 +39,7 @@ test('Scribbletune::modes Common', function(t) {
 		'b3c4d4e4f4g4a4',
 		'B Locrian is b c d e f g a'
 	);
+	t.end();
 });
 
 test('Scribbletune::modes Melodic Minor scales', function(t) {
@@ -77,6 +78,7 @@ test('Scribbletune::modes Melodic Minor scales', function(t) {
 		'c3c#3d#3e3f#3g#3a#3',
 		'C Altered is c c# d# e f# g# a#'
 	);
+	t.end();
 });
 
 test('Scribbletune::modes Blues/Jazz/Harmonic', function(t) {
@@ -155,6 +157,7 @@ test('Scribbletune::modes Blues/Jazz/Harmonic', function(t) {
 		'c3c#3e3f3g3g#3b3',
 		'C Double Harmonic Minor is c c# e f g g# b'
 	);
+	t.end();
 });
 
 test('Scribbletune::modes Exotic', function(t) {
@@ -228,6 +231,7 @@ test('Scribbletune::modes Exotic', function(t) {
 		'c3d3e3f3f#3g#3a#3',
 		'C Major Locrian is c d e f f# g# a#'
 	);
+	t.end();
 });
 
 test('Scribbletune::modes Miscellaneous', function(t) {
