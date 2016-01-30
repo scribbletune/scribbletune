@@ -24,21 +24,6 @@ scribble.render(clip, 'bass.mid');
 ```
 This will create a MIDI file called bass.mid in the same location as the above file.
 
-### Binary
-
-You can use the scribbletune binary to create tunes as well. To generate a Midi file with the C Major scale using the binary:
-
-`./node_modules/scribbletune/bin/scribbletune`
-
-Generate a MIDI file with the C Phrygian mode in the second octave
-
-`./node_modules/scribbletune/bin/scribbletune --root c --octave 2 --mode phrygian`
-
-Generate a MIDI file with the pattern: x---x---x___x--- (note the 'equal to' sign - This is to allow for patterns that start with hyphens)
-
-`./node_modules/scribbletune/bin/scribbletune --pattern=x---x---x___x---`
-
-
 ### Patterns
 
 Patterns are denoted by a string made up of x, - and \_ where `x` stands for noteOn, `-` stand for noteOff and `_` stands for sustain. Patterns can be used to create sizzle maps (which are basically accent maps to hit some notes harder than others)
