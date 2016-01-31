@@ -1,7 +1,8 @@
 Scribbletune (WIP)
 ------------------
 
-Generate musical patterns with JavaScript and export as MIDI files using node.js
+Generate musical patterns with JavaScript and export as MIDI files using node.js 
+[![Build Status](https://api.travis-ci.org/walmik/scribbletune.svg)](http://travis-ci.org/walmik/scribbletune)
 
 ### Install
 
