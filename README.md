@@ -30,13 +30,17 @@ Patterns are denoted by a string made up of x, - and \_ where `x` stands for not
 
 ### Chords
 
-You can add chords to the `notes` array while creating a clip to render chords. 
+You can add chords to the `notes` array while creating a clip to render chords. Either provide the notes of the chords you want separated by commas or use Scribbletune's chord generator.
 
 ```
 var scribble = require('../');
 
 var clip = scribble.clip({
-	notes: ['c3,e3,g3', 'f3,c4,g4', 'e3,g3,c4', 'f3,c4,g4'],
+	notes: [
+		'c3e3g3',
+		scribble.chord('f', 'minor', 3),
+		scribble.chord('g', 'major', 3)
+	],
 	pattern: 'x_x_x_x_x_x_x_x_',
 	sizzle: true    // this will add a rhythmic accent to the generated notes
 });
