@@ -15,7 +15,7 @@ test('Scribbletune::chord', function(t) {
 	t.equal(
 		scribble.chord('a', 'minor', 3),
 		'a3,c4,e4',
-		'C major is a c e'
+		'A minor is a c e'
 	);
 
 	// Major 7th
