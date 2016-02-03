@@ -8,26 +8,30 @@ Generate musical patterns with JavaScript and export as MIDI files using node.js
 
 `npm install scribbletune`
 
-### Generate
+### Let's C how this work
+You can get started by requiring the `scribbletune` module and create a `clip` that contains just the middle C note. A clip is like a 16 beat bar.
+```
+var scribble = require('scribbletune');
+var clip = scribble.clip({
+    notes: ['c3']
+});
+scribble.render(clip);
+```
+Save this file as _c.js_ and run it from the terminal with `node c.js`. This will create a file called _music.mid_ at the same location as the _c.js_ file. If you import the MIDI file into your favorite MIDI music editing software (Garage Band / Cubase / Ableton Live / Reason etc), you ll hear the beautiful middle C played across a single bar.
 
-You can `require` the scribbletune module and use it to generate modes and patterns to create melodies. For example, to create a 16 beat simple bass line comprising of the first 3 notes of the C phrygian mode on the second octave, you could create a new file and add some code like this:
-
+### Create a simple melody
+You can do more than render a single note. You can `require` the scribbletune module and use it to generate scales(modes), chords and patterns to create melodies. For example, to create a MIDI file comprising just the C Major scale (Ionian mode), you could create a new file and add some code like this:
 ```
 var scribble = require('scribbletune');
 
 var clip = scribble.clip({
-    notes: scribble.mode('c', 'phrygian', 2).slice(0, 3),
-	pattern: '-xxx-xxx-xxx-xxx',
-	sizzle: true
+    notes: scribble.mode('c', 'major', 3), // this works too ['c3', 'd3', 'e3', 'f3', 'g3', 'a3', 'b3']
+	pattern: 'x_x_x_x_x_x_x_x_'
 });
 
-scribble.render(clip, 'bass.mid');
+scribble.render(clip, 'cscale.mid');
 ```
-This will create a MIDI file called bass.mid in the same location as the above file.
-
-### Patterns
-
-Patterns are denoted by a string made up of x, - and \_ where `x` stands for noteOn, `-` stand for noteOff and `_` stands for sustain. Patterns can be used to create sizzle maps (which are basically accent maps to hit some notes harder than others)
+Save this as _cscale.js_ and run it from the terminal `node cscale.js`. This will create a MIDI file called _cscale.mid_ in the same location as the above file.
 
 ### Chords
 
@@ -49,6 +53,8 @@ var clip = scribble.clip({
 scribble.render(clip);
 ```
 
-### Note
+### Patterns
 
-You will need an application like Ableton Live or Reason or Garage Band to use the generated MIDI file. The file will be generated in the same directory as `music.mid`
+You may wonder what are those weird looking, but enticing `x`, `-` and `_`. Well, those are patterns! `x` means _note on_, `-` (hyphen) means `note off` and `_` (underscore) means _sustain_. Patterns can be used to tell Scribble tune which beat in a 16 beat pattern would you like to be on or off or sustained. Patterns can also be used to create sizzle maps (which are basically accent maps to hit some notes harder than others).
+
+As you can clearly see, now you can use any JavaScript library that works on Collections, such as `underscore` or `lodash` and compute melodies using Scribbletune! Ok then, get on with it :)
