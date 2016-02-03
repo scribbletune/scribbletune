@@ -1,10 +1,10 @@
 {
   "name": "scribbletune",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Generate musical patterns with JavaScript",
   "main": "index.js",
   "scripts": {
-    "test": "gulp && node ./test/*.js",
+    "test": "gulp",
     "scribble": "./bin/scribbletune"
   },
   "dependencies": {
@@ -17,7 +17,7 @@
     "gulp-istanbul": "^0.10.3",
     "gulp-jscs": "^1.6.0",
     "gulp-jshint": "^1.11.0",
-    "gulp-mocha": "^2.2.0",
+    "gulp-tape": "0.0.7",
     "tape": "^4.2.0"
   },
   "repository": {
