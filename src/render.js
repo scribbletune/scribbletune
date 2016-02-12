@@ -24,9 +24,9 @@ export default (notes, fileName = 'music.mid') => {
 		if (noteObj.note) {
 			noteObj.note.forEach((n, idx) => {
 				if (idx === 0) {
-					track.noteOn(0, n, null, level) // channel, pitch(note), length, velocity
+					track.noteOn(0, n, null, level); // channel, pitch(note), length, velocity
 				} else {
-					track.noteOn(0, n) // channel, pitch(note)
+					track.noteOn(0, n); // channel, pitch(note)
 				}
 			});
 			noteObj.note.forEach((n, idx) => {

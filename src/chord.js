@@ -1,7 +1,5 @@
-'use strict';
-
 import * as getMode from './mode';
-const mode = getMode();
+let mode = getMode();
 
 export default (root, mode, octave, add7) => {
 	return mode(root, mode, octave).filter(function(note, idx) {

@@ -43,5 +43,4 @@ export default (root, mode, octave) => {
 		.filter(function(el, idx) {
 			return modes[mode][idx] === 1;
 		});
-
 }
