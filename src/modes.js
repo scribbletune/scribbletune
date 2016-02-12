@@ -4,10 +4,7 @@
  */
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-var modePatterns = {
+const modePatterns = {
 
 	// Common
 	'ionian': [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1],
@@ -89,4 +86,4 @@ modePatterns['mixolydian b6'] = modePatterns['fifth mode'];
 // Locrian #2(sharp second) is also known as Aeolian b5 (flat fifth)
 modePatterns['aeolian b5'] = modePatterns['locrian #2'];
 
-exports.default = modePatterns;
+export default modePatterns;

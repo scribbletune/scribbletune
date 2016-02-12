@@ -1,23 +1,23 @@
 {
   "name": "scribbletune",
-  "version": "0.2.5",
+  "version": "0.3.0",
   "description": "Generate musical patterns with JavaScript",
-  "main": "index.js",
+  "main": "./lib/index.js",
   "scripts": {
-    "test": "gulp",
-    "scribble": "./bin/scribbletune"
+    "test": "gulp"
   },
   "dependencies": {
-    "jsmidgen": "~0.1.2",
-    "lodash": "~2.3.0",
-    "minimist": "~0.2.0"
+    "jsmidgen": "~0.1.2"
   },
   "devDependencies": {
+    "babel-cli": "^6.5.1",
+    "babel-preset-es2015": "^6.5.0",
     "gulp": "^3.9.0",
+    "gulp-babel": "^6.1.2",
+    "gulp-eslint": "^1.1.1",
     "gulp-istanbul": "^0.10.3",
-    "gulp-jscs": "^1.6.0",
-    "gulp-jshint": "^1.11.0",
     "gulp-tape": "0.0.7",
+    "lodash": "^4.3.0",
     "tape": "^4.2.0"
   },
   "repository": {
@@ -26,7 +26,6 @@
   },
   "keywords": [
     "javascript",
-    "node.js",
     "music",
     "midi"
   ],

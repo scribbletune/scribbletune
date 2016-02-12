@@ -1,17 +1,8 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _lodash = require('lodash');
-
-var __ = _interopRequireWildcard(_lodash);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var defaultParams = {
-	ticks: 512, // A single 4x4 ticks is 512 ticks
+import * as __ from 'lodash';
+const defaultParams = {
+	ticks: 512,			// A single 4x4 ticks is 512 ticks
 	notes: ['c3'],
 	pattern: 'x_______________',
 	noteLength: 1 / 16,
@@ -20,36 +11,34 @@ var defaultParams = {
 	sizzle: false
 };
 
-exports.default = function () {
-	var params = arguments.length <= 0 || arguments[0] === undefined ? defaultParams : arguments[0];
-
+export default (params = defaultParams) => {
 
 	// Maybe a params is passed but it misses something
-	var ticks = params.ticks || defaultParams.ticks;
-	var notes = params.notes || defaultParams.notes;
-	var pattern = params.pattern || defaultParams.pattern;
-	var noteLength = params.noteLength || defaultParams.noteLength;
-	var sizzle = params.sizzle || false;
-	var sizzleMap = params.sizzleMap || defaultParams.sizzleMap;
-	var shuffle = params.shuffle || defaultParams.shuffle;
-	var level = 127;
+	let ticks = params.ticks || defaultParams.ticks;
+	let notes = params.notes || defaultParams.notes;
+	let pattern = params.pattern || defaultParams.pattern;
+	let noteLength = params.noteLength || defaultParams.noteLength;
+	let sizzle = params.sizzle || false;
+	let sizzleMap = params.sizzleMap || defaultParams.sizzleMap;
+	let shuffle = params.shuffle || defaultParams.shuffle;
+	let level = 127;
 
 	// Check if the note length is a fraction
 	// If so convert it to decimal without using eval
 	if (typeof noteLength === 'string' && noteLength.indexOf('/') > 0) {
-		var a = noteLength.split('/');
+		let a = noteLength.split('/');
 		noteLength = a[0] / a[1];
 	}
 
 	// Validate provided notes
-	notes.map(function (el) {
+	notes.map((el) => {
 		if (el.match(/[abcdefg]#?[0-9]/g) === null) {
 			throw new Error(el + 'is not a valid note!');
 		}
 	});
 
 	// Validate provided pattern
-	pattern.split('').map(function (el) {
+	pattern.split('').map((el) => {
 		if (el.match(/x|-|_/g) === null) {
 			throw new Error(pattern + 'is not a valid pattern!');
 		}
@@ -73,17 +62,16 @@ exports.default = function () {
 	}
 
 	// Use string.replace on pattern to derive an array of note objects
-	var clipNotes = [],
-	    step = 0;
+	let clipNotes = [], step = 0;
 
 	/**
-  * Look for a note followed by a interval or sustain
-  * @param  {Regex} match The pattern to match (-, x, x-, x_, x__, x____ etc)
-  * @param  {String} noteOn   Note on (denoted by x) with or without sustain (denoted by underscore)
-  * @param  {String} noteOff   Interval (denoted by hyphen)
-  */
-	pattern.replace(/(x_*)|(-)/g, function (match, noteOn, noteOff) {
-		var sizzleVal = level;
+	 * Look for a note followed by a interval or sustain
+	 * @param  {Regex} match The pattern to match (-, x, x-, x_, x__, x____ etc)
+	 * @param  {String} noteOn   Note on (denoted by x) with or without sustain (denoted by underscore)
+	 * @param  {String} noteOff   Interval (denoted by hyphen)
+	 */
+	pattern.replace(/(x_*)|(-)/g, (match, noteOn, noteOff) => {
+		let sizzleVal = level;
 		if (sizzle) {
 			sizzleVal = Math.round(Math.abs(Math.cos(step) * 127));
 		}
@@ -124,4 +112,4 @@ exports.default = function () {
 	});
 
 	return clipNotes;
-};
+}

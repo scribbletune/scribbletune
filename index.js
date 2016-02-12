@@ -1,1 +1,0 @@
-'use strict';exports = module.exports = (function() {	return {		mode: require('./lib/mode'),		chord: require('./lib/chord'),		pattern: require('./lib/pattern'),		clip: require('./lib/clip'),		render: require('./lib/render')	};}());
