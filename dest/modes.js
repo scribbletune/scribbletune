@@ -1,12 +1,13 @@
-/**
- * Modes and scales along with their alternate names where applicable
- * @type {Object}
- */
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+/**
+ * Modes and scales along with their alternate names where applicable
+ * @type {Object}
+ */
+
 var modes = {
 
 	// Common

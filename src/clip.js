@@ -1,5 +1,3 @@
-'use strict';
-
 import * as __ from 'lodash';
 const getdefaultParams = () => {
 	return {

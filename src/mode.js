@@ -1,5 +1,3 @@
-'use strict';
-
 import modes from './modes';
 const chromaticNotes = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'];
 

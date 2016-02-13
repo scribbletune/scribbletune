@@ -2,7 +2,6 @@
  * Modes and scales along with their alternate names where applicable
  * @type {Object}
  */
-'use strict';
 
 const modes = {
 

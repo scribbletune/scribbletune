@@ -1,8 +1,4 @@
 'use strict';
-/**
- * Scribbletune: Render an array of notes to a midi file
- * -----------------------------------------------------
- */
 
 Object.defineProperty(exports, "__esModule", {
 	value: true

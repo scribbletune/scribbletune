@@ -1,9 +1,3 @@
-'use strict';
-/**
- * Scribbletune: Render an array of notes to a midi file
- * -----------------------------------------------------
- */
-
 import * as fs from 'fs';
 import * as jsmidgen from 'jsmidgen';
 

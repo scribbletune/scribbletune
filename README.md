@@ -15,7 +15,7 @@ var scribble = require('scribbletune');
 var clip = scribble.clip({
     notes: ['c3']
 });
-scribble.render(clip);
+scribble.midi(clip);
 ```
 Save this file as _c.js_ and run it from the terminal with `node c.js`. This will create a file called _music.mid_ at the same location as the _c.js_ file. If you import the MIDI file into your favorite MIDI music editing software (Garage Band / Cubase / Ableton Live / Reason etc), you ll hear the beautiful middle C played across a single bar.
 
@@ -29,7 +29,7 @@ var clip = scribble.clip({
 	pattern: 'x_x_x_x_x_x_x_x_'
 });
 
-scribble.render(clip, 'cscale.mid');
+scribble.midi(clip, 'cscale.mid');
 ```
 Save this as _cscale.js_ and run it from the terminal `node cscale.js`. This will create a MIDI file called _cscale.mid_ in the same location as the above file.
 
@@ -50,7 +50,7 @@ var clip = scribble.clip({
 	sizzle: true    // this will add a rhythmic accent to the generated notes
 });
 
-scribble.render(clip);
+scribble.midi(clip);
 ```
 
 ### Patterns

@@ -24,6 +24,7 @@ exports = module.exports = function () {
     scale: _mode2.default,
     chord: _chord2.default,
     clip: _clip2.default,
-    render: _render2.default
+    render: _render2.default,
+    midi: _render2.default
   };
 }();
