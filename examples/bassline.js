@@ -1,4 +1,4 @@
-var scribble = require('../');
+var scribble = require('../lib/');
 
 /**
  * Generate a bassline by joining a bunch of clips

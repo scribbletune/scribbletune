@@ -7,7 +7,7 @@
 import * as fs from 'fs';
 import * as jsmidgen from 'jsmidgen';
 
-export default (notes, fileName = 'music.mid') => {
+const render = (notes, fileName = 'music.mid') => {
 	if (notes === undefined || typeof notes === 'string') {
 		throw new Error('You must provide an array of notes to write!');
 	}
@@ -44,3 +44,5 @@ export default (notes, fileName = 'music.mid') => {
 
 	fs.writeFileSync(fileName, file.toBytes(), 'binary');
 }
+
+export { render };

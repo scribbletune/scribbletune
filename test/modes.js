@@ -1,7 +1,7 @@
 'use strict';
 
 var test = require('tape');
-var scribble = require('../');
+var scribble = require('../lib/index');
 
 test('Scribbletune::modes Common', function(t) {
 	t.equal(

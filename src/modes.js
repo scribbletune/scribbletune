@@ -86,4 +86,4 @@ modePatterns['mixolydian b6'] = modePatterns['fifth mode'];
 // Locrian #2(sharp second) is also known as Aeolian b5 (flat fifth)
 modePatterns['aeolian b5'] = modePatterns['locrian #2'];
 
-export default modePatterns;
+export { modePatterns };

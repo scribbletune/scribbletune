@@ -1,1 +1,1 @@
-'use strict';import * as mode from './mode';import * as chord from './chord';import * as clip from './clip';import * as render from './render';export {	mode,	chord,	clip,	render};
+'use strict';import { mode } from './mode';import { chord } from './chord';import { clip } from './clip';import { render } from './render';exports = module.exports = (() => {	return {		mode: mode,		chord: chord,		clip: clip,		render: render	};})();

@@ -11,7 +11,7 @@ const defaultParams = {
 	sizzle: false
 };
 
-export default (params = defaultParams) => {
+const clip = (params = defaultParams) => {
 	// Maybe a params is passed but it misses something
 	let ticks = params.ticks || defaultParams.ticks;
 	let notes = params.notes || defaultParams.notes;
@@ -112,3 +112,5 @@ export default (params = defaultParams) => {
 
 	return clipNotes;
 }
+
+export { clip };

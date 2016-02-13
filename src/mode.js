@@ -1,15 +1,9 @@
 'use strict';
 
-import * as getModes from './modes';
-const modes = getModes();
+import { modePatterns } from './modes';
 const chromaticNotes = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'];
 
-export default (root, mode, octave) => {
-	root = root && root.toLowerCase() || 'c';
-	mode = mode && mode.toLowerCase() || 'ionian';
-
-	octave = octave || 3;
-
+const mode = (root = 'c', mode = 'ionian', octave = 3) => {
 	// Append octave to chromatic notes
 	let chromatic =
 		chromaticNotes
@@ -30,7 +24,7 @@ export default (root, mode, octave) => {
 	}
 
 	// Make sure if the provided mode is valid
-	if (!modes.hasOwnProperty(mode)) {
+	if (!modePatterns.hasOwnProperty(mode)) {
 		throw new Error('Invalid mode!');
 	}
 
@@ -41,6 +35,8 @@ export default (root, mode, octave) => {
 	return chromatic
 		.slice(chromatic.indexOf(root + octave))
 		.filter(function(el, idx) {
-			return modes[mode][idx] === 1;
+			return modePatterns[mode][idx] === 1;
 		});
 }
+
+export { mode };
