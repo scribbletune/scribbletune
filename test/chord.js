@@ -1,7 +1,7 @@
 'use strict';
 
 var test = require('tape');
-var scribble = require('../lib/index');
+var scribble = require('../dest/index');
 
 test('Scribbletune::chord', function(t) {
 	// Major

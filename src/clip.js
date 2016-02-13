@@ -1,63 +1,60 @@
 'use strict';
 
 import * as __ from 'lodash';
-const defaultParams = {
-	ticks: 512,			// A single 4x4 ticks is 512 ticks
-	notes: ['c3'],
-	pattern: 'x_______________',
-	noteLength: 1 / 16,
-	sizzleMap: '',
-	shuffle: false,
-	sizzle: false
+const getdefaultParams = () => {
+	return {
+		ticks: 512,			// By default a single 4x4 bar is 512 ticks (this is known as HDR_SPEED)
+		notes: ['c3'],
+		pattern: 'x_______________',
+		noteLength: 1 / 16,
+		accentMap: '',
+		accentHi: 127,
+		accentLow: 70,
+		shuffle: false,
+		sizzle: false
+	}
 };
 
-const clip = (params = defaultParams) => {
-	// Maybe a params is passed but it misses something
-	let ticks = params.ticks || defaultParams.ticks;
-	let notes = params.notes || defaultParams.notes;
-	let pattern = params.pattern || defaultParams.pattern;
-	let noteLength = params.noteLength || defaultParams.noteLength;
-	let sizzle = params.sizzle || false;
-	let sizzleMap = params.sizzleMap || defaultParams.sizzleMap;
-	let shuffle = params.shuffle || defaultParams.shuffle;
-	let level = 127;
+const clip = (params = {}) => {	
+	params = __.extend(getdefaultParams(), params);
+	let level = params.accentHi;
 
 	// Check if the note length is a fraction
 	// If so convert it to decimal without using eval
-	if (typeof noteLength === 'string' && noteLength.indexOf('/') > 0) {
-		let a = noteLength.split('/');
-		noteLength = a[0] / a[1];
+	if (typeof params.noteLength === 'string' && params.noteLength.indexOf('/') > 0) {
+		let a = params.noteLength.split('/');
+		params.noteLength = a[0] / a[1];
 	}
 
 	// Validate provided notes
-	notes.map((el) => {
+	params.notes.map((el) => {
 		if (el.match(/[abcdefg]#?[0-9]/g) === null) {
 			throw new Error(el + 'is not a valid note!');
 		}
 	});
 
 	// Validate provided pattern
-	pattern.split('').map((el) => {
+	params.pattern.split('').map((el) => {
 		if (el.match(/x|-|_/g) === null) {
 			throw new Error(pattern + 'is not a valid pattern!');
 		}
 	});
 
 	// Ensure notes array has at least as many elements as pattern
-	while (notes.length < pattern.length) {
-		notes = notes.concat(notes);
+	while (params.notes.length < params.pattern.length) {
+		params.notes = params.notes.concat(params.notes);
 	}
 
 	// Ensure sizzle map is as long as the pattern
-	if (sizzle && sizzleMap) {
-		while (sizzleMap.length < pattern.length) {
-			sizzleMap = sizzleMap.concat(sizzleMap);
+	if (params.sizzle && params.accentMap) {
+		while (params.accentMap.length < params.pattern.length) {
+			params.accentMap = params.accentMap.concat(params.accentMap);
 		}
 	}
 
 	// Check if we need to shuffle the notes
-	if (shuffle) {
-		notes = __.shuffle(notes);
+	if (params.shuffle) {
+		params.notes = __.shuffle(params.notes);
 	}
 
 	// Use string.replace on pattern to derive an array of note objects
@@ -69,22 +66,22 @@ const clip = (params = defaultParams) => {
 	 * @param  {String} noteOn   Note on (denoted by x) with or without sustain (denoted by underscore)
 	 * @param  {String} noteOff   Interval (denoted by hyphen)
 	 */
-	pattern.replace(/(x_*)|(-)/g, (match, noteOn, noteOff) => {
+	params.pattern.replace(/(x_*)|(-)/g, (match, noteOn, noteOff) => {
 		let sizzleVal = level;
-		if (sizzle) {
-			sizzleVal = Math.round(Math.abs(Math.cos(step) * 127));
+		if (params.sizzle) {
+			sizzleVal = Math.round(Math.abs(Math.cos(step) * params.accentHi));
 		}
 
-		if (sizzleMap !== '') {
-			if (sizzleMap[step] === 'x') {
+		if (params.accentMap !== '') {
+			if (params.accentMap[step] === 'x') {
 				// this is an accent
-				level = 127;
+				level = params.accentHi;
 
-				// also affect the sizzleVal so that the sizzleMap is carried forward in case of a sizzle
-				sizzleVal = 127;
+				// also affect the sizzleVal so that the accentMap is carried forward in case of a sizzle
+				sizzleVal = level;
 			} else {
 				// since this is not an accent, lower the level to implement accents
-				level = 70;
+				level = params.accentLow;
 			}
 		}
 
@@ -92,9 +89,9 @@ const clip = (params = defaultParams) => {
 			// Found x OR x- OR x__
 			clipNotes.push({
 				// A note can be a single note like c3 or comma separated string to denote chords c3,e3,g3
-				note: notes[step].split(','),
-				length: noteLength * noteOn.length * ticks,
-				level: sizzle ? sizzleVal : level
+				note: params.notes[step].split(','),
+				length: params.noteLength * noteOn.length * params.ticks,
+				level: params.sizzle ? sizzleVal : level
 			});
 
 			// Increment step to proceed in the notes array
@@ -105,7 +102,7 @@ const clip = (params = defaultParams) => {
 			// Found - (hyphen) - note off
 			clipNotes.push({
 				note: null,
-				length: noteLength * ticks
+				length: params.noteLength * params.ticks
 			});
 		}
 	});
@@ -113,4 +110,4 @@ const clip = (params = defaultParams) => {
 	return clipNotes;
 }
 
-export { clip };
+export default clip;

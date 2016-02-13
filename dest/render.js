@@ -7,7 +7,6 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.render = undefined;
 
 var _fs = require('fs');
 
@@ -58,4 +57,4 @@ var render = function render(notes) {
 	fs.writeFileSync(fileName, file.toBytes(), 'binary');
 };
 
-exports.render = render;
+exports.default = render;

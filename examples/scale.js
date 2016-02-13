@@ -1,4 +1,4 @@
-var scribble = require('../lib/');
+var scribble = require('../dest/');
 var clip = scribble.clip({
 	notes: scribble.mode('c', 'major', 3),
 	pattern: 'x_x_x_x_x_x_x_x_'

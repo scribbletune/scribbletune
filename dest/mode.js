@@ -3,9 +3,12 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.mode = undefined;
 
 var _modes = require('./modes');
+
+var _modes2 = _interopRequireDefault(_modes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var chromaticNotes = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'];
 
@@ -31,7 +34,7 @@ var mode = function mode() {
 	}
 
 	// Make sure if the provided mode is valid
-	if (!_modes.modePatterns.hasOwnProperty(_mode)) {
+	if (!_modes2.default.hasOwnProperty(_mode)) {
 		throw new Error('Invalid mode!');
 	}
 
@@ -40,8 +43,8 @@ var mode = function mode() {
   * filter it by mode pattern to return the correct notes
   */
 	return chromatic.slice(chromatic.indexOf(root + octave)).filter(function (el, idx) {
-		return _modes.modePatterns[_mode][idx] === 1;
+		return _modes2.default[_mode][idx] === 1;
 	});
 };
 
-exports.mode = mode;
+exports.default = mode;

@@ -1,4 +1,4 @@
-import { mode } from './mode';
+import mode from './mode';
 
 const chord = (root, scale, octave, add7) => {
 	return mode(root, scale, octave).filter((note, idx) => {
@@ -8,4 +8,4 @@ const chord = (root, scale, octave, add7) => {
 	}).join(',');
 }
 
-export { chord };
+export default chord;

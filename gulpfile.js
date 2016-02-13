@@ -26,11 +26,11 @@ gulp.task('build', function () {
 		.pipe(babel({
 			presets: ['es2015']
 		}))
-		.pipe(gulp.dest('lib'))
+		.pipe(gulp.dest('dest'))
 });
 
 gulp.task('pre-coverage', function() {
-	return gulp.src(['lib/*.js'])
+	return gulp.src(['dest/*.js'])
 		.pipe(istanbul())
 		// This overwrites `require` so it returns covered files
 		.pipe(istanbul.hookRequire());

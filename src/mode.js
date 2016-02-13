@@ -1,6 +1,6 @@
 'use strict';
 
-import { modePatterns } from './modes';
+import modes from './modes';
 const chromaticNotes = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'];
 
 const mode = (root = 'c', mode = 'ionian', octave = 3) => {
@@ -24,7 +24,7 @@ const mode = (root = 'c', mode = 'ionian', octave = 3) => {
 	}
 
 	// Make sure if the provided mode is valid
-	if (!modePatterns.hasOwnProperty(mode)) {
+	if (!modes.hasOwnProperty(mode)) {
 		throw new Error('Invalid mode!');
 	}
 
@@ -35,8 +35,8 @@ const mode = (root = 'c', mode = 'ionian', octave = 3) => {
 	return chromatic
 		.slice(chromatic.indexOf(root + octave))
 		.filter(function(el, idx) {
-			return modePatterns[mode][idx] === 1;
+			return modes[mode][idx] === 1;
 		});
 }
 
-export { mode };
+export default mode;

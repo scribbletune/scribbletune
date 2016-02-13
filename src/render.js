@@ -45,4 +45,4 @@ const render = (notes, fileName = 'music.mid') => {
 	fs.writeFileSync(fileName, file.toBytes(), 'binary');
 }
 
-export { render };
+export default render;
