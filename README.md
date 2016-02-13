@@ -25,7 +25,7 @@ You can do more than render a single note. You can `require` the scribbletune mo
 var scribble = require('scribbletune');
 
 var clip = scribble.clip({
-    notes: scribble.mode('c', 'major', 3), // this works too ['c3', 'd3', 'e3', 'f3', 'g3', 'a3', 'b3']
+    notes: scribble.scale('c', 'major', 3), // this works too ['c3', 'd3', 'e3', 'f3', 'g3', 'a3', 'b3']
 	pattern: 'x_x_x_x_x_x_x_x_'
 });
 
@@ -55,6 +55,6 @@ scribble.render(clip);
 
 ### Patterns
 
-You may wonder what are those weird looking, but enticing `x`, `-` and `_`. Well, those are patterns! `x` means _note on_, `-` (hyphen) means `note off` and `_` (underscore) means _sustain_. Patterns can be used to tell Scribble tune which beat in a 16 beat pattern would you like to be on or off or sustained. Patterns can also be used to create sizzle maps (which are basically accent maps to hit some notes harder than others).
+You may wonder what are those weird looking, but enticing `x`, `-` and `_`. Well, those are patterns! `x` means _note on_, `-` (hyphen) means `note off` and `_` (underscore) means _sustain_. Patterns can be used to tell Scribble tune which beat in a 16 beat pattern would you like to be on or off or sustained. Patterns can also be used to create accent maps (which allow some notes to be played louder than others).
 
 As you can clearly see, now you can use any JavaScript library that works on Collections, such as `underscore` or `lodash` and compute melodies using Scribbletune! Ok then, get on with it :)

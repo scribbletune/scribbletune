@@ -42,39 +42,39 @@ test('Scribbletune::modes Common', function(t) {
 	t.end();
 });
 
-test('Scribbletune::modes Melodic Minor scales', function(t) {
+test('Scribbletune::scale Melodic Minor scales', function(t) {
 	t.equal(
-		scribble.mode('c', 'melodic minor').join(''),
+		scribble.scale('c', 'melodic minor').join(''),
 		'c3d3d#3f3g3a3b3',
 		'C Melodic Minor is c d d# f g a b'
 	);
 	t.equal(
-		scribble.mode('c', 'phrygian #6').join(''),
+		scribble.scale('c', 'phrygian #6').join(''),
 		'c3c#3d#3f3g3a3a#3',
 		'C Phrygian #6 is c c# d# f g a a#'
 	);
 	t.equal(
-		scribble.mode('c', 'lydian augmented').join(''),
+		scribble.scale('c', 'lydian augmented').join(''),
 		'c3d3e3f#3g#3a3b3',
 		'C Lyidan Augmented is c d e f# g# a b'
 	);
 	t.equal(
-		scribble.mode('c', 'lydian dominant').join(''),
+		scribble.scale('c', 'lydian dominant').join(''),
 		'c3d3e3f#3g3a3a#3',
 		'C Lydian Dominant is c d e f# g a a#'
 	);
 	t.equal(
-		scribble.mode('c', 'fifth mode').join(''),
+		scribble.scale('c', 'fifth mode').join(''),
 		'c3d3e3f3g3g#3a#3',
 		'C Fifth mode is c d e f g g# a#'
 	);
 	t.equal(
-		scribble.mode('c', 'locrian #2').join(''),
+		scribble.scale('c', 'locrian #2').join(''),
 		'c3d3d#3f3f#3g#3a#3',
 		'C Locrian #2 is c d d# f f# g# a#'
 	);
 	t.equal(
-		scribble.mode('c', 'altered').join(''),
+		scribble.scale('c', 'altered').join(''),
 		'c3c#3d#3e3f#3g#3a#3',
 		'C Altered is c c# d# e f# g# a#'
 	);

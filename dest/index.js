@@ -21,6 +21,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports = module.exports = function () {
   return {
     mode: _mode2.default,
+    scale: _mode2.default,
     chord: _chord2.default,
     clip: _clip2.default,
     render: _render2.default
