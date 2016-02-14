@@ -1,5 +1,5 @@
-Scribbletune (WIP)
-------------------
+Scribbletune
+------------
 [![Build Status](https://api.travis-ci.org/walmik/scribbletune.svg)](http://travis-ci.org/walmik/scribbletune)
 
 Use simple __JavaScript__ `Strings` and `Arrays` to generate rhythms and musical patterns. Directly use the names of scales and chords and mash them up using JavaScript libraries like `underscore` or `lodash` in ways you hadn't imagined before! Then, export them as MIDI files and import these in Ableton Live, Reason, Fruity Loops, Cubase, Garage Band or whichever music creation software you like!
@@ -115,9 +115,11 @@ scribble.midi(hats, 'hats.mid');
 ```
 Here we created a 16 beat bar with all its 16 notes set to `x` (which means _Note On_) and added a `sizzle` to it. This applies a `Math.Sin` wave to the accents on that clip, giving it a bouncier feel.
 
-Import the 3 MIDI files thus generated into your favorite music creation software. I used Ableton Live and used a fancy Virtual Instrument for each of the imported clips and here's what I got!
+Import the 3 MIDI files thus generated into your favorite music creation software. I used Garage Band and added some delay on the bass and here's what I got:
 
-As you can clearly see, now you can use any JavaScript library (or not) to compute melodies using Scribbletune! Ok then, get on with it :)
+[Simple beat with a bassline](https://soundcloud.com/walmik/loop) 
+
+There's a lot more to this humble beginning. But I ll let you explore it for yourself. As you can see, now you can use any JavaScript library (or not) to compute melodies using Scribbletune! Ok then, get on with it :)
 
 ```
 npm install scribbletune
