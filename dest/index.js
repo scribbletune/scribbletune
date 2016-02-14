@@ -19,12 +19,5 @@ var _render2 = _interopRequireDefault(_render);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports = module.exports = function () {
-  return {
-    mode: _mode2.default,
-    scale: _mode2.default,
-    chord: _chord2.default,
-    clip: _clip2.default,
-    render: _render2.default,
-    midi: _render2.default
-  };
+  return { mode: _mode2.default, scale: _mode2.default, chord: _chord2.default, clip: _clip2.default, render: _render2.default, midi: _render2.default };
 }();
