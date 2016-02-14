@@ -33,25 +33,39 @@ scribble.midi(clip, 'cscale.mid');
 ```
 Save this as _cscale.js_ and run it from the terminal `node cscale.js`. This will create a MIDI file called _cscale.mid_ in the same location as the above file.
 
+[C Major Scale](https://soundcloud.com/walmik/c-major) 
+
 ### Chords
 
 You can add chords to the `notes` array while creating a clip to render chords. Either provide the notes (with octave) of the chords you want separated by commas or use Scribbletune's chord generator.
 
 ```
-var scribble = require('../');
-
-var clip = scribble.clip({
+var scribble = require('scribbletune');
+var chords = scribble.clip({
 	notes: [
-		'c3,e3,g3',
-		scribble.chord('f', 'minor', 3),
-		scribble.chord('g', 'major', 3)
+		scribble.chord('f#', 'minor', 3),
+		scribble.chord('c#', 'minor', 3),
+		scribble.chord('d', 'major', 3),
+		scribble.chord('f#', 'minor', 3),
+		scribble.chord('c#', 'minor', 3),
+		scribble.chord('b', 'minor', 3),
+		scribble.chord('f#', 'minor', 3),
+		scribble.chord('c#', 'minor', 3),
+		scribble.chord('e', 'major', 3),
+		scribble.chord('f#', 'minor', 3),
+		scribble.chord('c#', 'minor', 3),
+		scribble.chord('d', 'major', 3)
 	],
-	pattern: 'x_x_x_x_x_x_x_x_',
-	sizzle: true    // this will add a rhythmic accent to the generated notes
-});
+	pattern: 'x_x_x_--'.repeat(8),
+	sizzle: true
+});  
 
-scribble.midi(clip);
+scribble.render(chords, 'chords.mid');
 ```
+
+I imported that into Garage Band and applied Synthesize -> EDM Chord ->Sunrise Chords to it and here is how it sounds:
+
+[Chords](https://soundcloud.com/walmik/loop) 
 
 ### Patterns
 
@@ -76,17 +90,18 @@ That will return,
 ```
 --x---x---x---x-
 ```
-Hmmm, that can be a very simple bass line for a simple dance music loop. Let's feed that into __Scribbletune's__ clip function and try something different while generating the notes:
+Hmmm, that can be a very simple bass line for a simple dance music loop. Let's feed that into __Scribbletune's__ clip function and try something different while generating the notes, shall we?
+
+### An excessively simple Kick Drum and Bass loop
 
 ```
-var scribble = require('../');
+var scribble = require('scribbletune');
 var kick, bass;
 
 // 4 by 4 kick
 kick = scribble.clip({
-	notes: scribble.scale('a', 'minor', 2).slice(0, 3),
-	pattern: '--x-'.repeat(4),
-	shuffle: true
+	notes: ['c2'],
+	pattern: 'x---'.repeat(4)
 });
 scribble.midi(kick, 'kick.mid');
 
@@ -100,10 +115,11 @@ scribble.midi(clip, 'bass.mid');
 ```
 Up there, we first created a 4 by 4 kick drum loop and then decided to use the first 3 notes of a _A minor_ scale on the second octave to create a simple bass line. We created a simple pattern using __JavaScript's__ `String.repeat` and then added the `shuffle` parameter to shuffle those 3 notes. Finally, we exported it as a MIDI file called _bass.mid_
 
+### High Hats
 Let s just take this one teeny weeny step further and create a simple hi hats loop as well,
 
 ```
-var scribble = require('../');
+var scribble = require('scribbletune');
 
 var hats = scribble.clip({
 	notes: ['a#4'],
@@ -115,9 +131,9 @@ scribble.midi(hats, 'hats.mid');
 ```
 Here we created a 16 beat bar with all its 16 notes set to `x` (which means _Note On_) and added a `sizzle` to it. This applies a `Math.Sin` wave to the accents on that clip, giving it a bouncier feel.
 
-Import the 3 MIDI files thus generated into your favorite music creation software. I used Garage Band and added some delay on the bass and here's what I got:
+Import the 3 MIDI files thus generated into your favorite music creation software and add them to 3 different tracks. I used Garage Band and added some delay on the bass and here's what I got:
 
-[Simple beat with a bassline](https://soundcloud.com/walmik/loop) 
+[Simple kick drum with bass and some hats](https://soundcloud.com/walmik/loop) 
 
 There's a lot more to this humble beginning. But I ll let you explore it for yourself. As you can see, now you can use any JavaScript library (or not) to compute melodies using Scribbletune! Ok then, get on with it :)
 
