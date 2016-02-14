@@ -4,7 +4,8 @@
   "description": "Generate musical patterns with JavaScript",
   "main": "./dest/index.js",
   "scripts": {
-    "test": "gulp"
+    "test": "gulp",
+    "build": "gulp build"
   },
   "dependencies": {
     "jsmidgen": "~0.1.2"
