@@ -1,5 +1,5 @@
 var _ = require('lodash');
-var scribble = require('../');
+var scribble = require('../dest/');
 var clip = scribble.clip({
 	notes: [
 		scribble.chord('f#', 'minor', 3),

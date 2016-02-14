@@ -1,7 +1,7 @@
 'use strict';
 
 var test = require('tape');
-var scribble = require('../');
+var scribble = require('../dest/index');
 
 test('clip should use provided notes', function(t) {
 	t.equal(

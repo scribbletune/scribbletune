@@ -2,9 +2,8 @@
  * Modes and scales along with their alternate names where applicable
  * @type {Object}
  */
-'use strict';
 
-var modePatterns = {
+const modes = {
 
 	// Common
 	'ionian': [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1],
@@ -71,22 +70,19 @@ var modePatterns = {
 };
 
 // Ionian and Aeloian modes are also known as Major and Minor scales
-modePatterns['major'] = modePatterns['ionian'];
-modePatterns['minor'] = modePatterns['aeolian'];
+modes['major'] = modes['ionian'];
+modes['minor'] = modes['aeolian'];
 
 // Diminished half whole is the same as diminished whole half
-modePatterns['diminished half whole'] = modePatterns['diminished whole half'];
+modes['diminished half whole'] = modes['diminished whole half'];
 
 // Lydian Dominant is also known as Mixolydian #4 (sharp fourth)
-modePatterns['mixolydian #4'] = modePatterns['lydian dominant'];
+modes['mixolydian #4'] = modes['lydian dominant'];
 
 // Fifth mode is also known as Mixolydian b6 (flat sixth)
-modePatterns['mixolydian b6'] = modePatterns['fifth mode'];
+modes['mixolydian b6'] = modes['fifth mode'];
 
 // Locrian #2(sharp second) is also known as Aeolian b5 (flat fifth)
-modePatterns['aeolian b5'] = modePatterns['locrian #2'];
+modes['aeolian b5'] = modes['locrian #2'];
 
-// ok to send it to the world
-module.exports = function() {
-	return modePatterns;
-};
+export default modes;

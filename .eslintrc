@@ -1,0 +1,16 @@
+{
+	"rules": {
+		"quotes": [2, "single", "avoid-escape"],
+		"eqeqeq": 0,
+		"eol-last": 0,
+		"no-nested-ternary": 1,
+		"padded-blocks": [1, "never"],
+		"space-before-blocks": [1, "always"]
+	},
+	"ecmaFeatures": {
+		"modules": true
+	},
+	env: { 
+		"es6": true
+	}
+}

@@ -1,18 +1,9 @@
-'use strict';
+import modes from './modes';
+const chromaticNotes = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'];
 
-var modes = require('./modes')();
-var chromaticNotes = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'];
-
-function getMode(root, mode, octave) {
-	var chromatic;
-
-	root = root && root.toLowerCase() || 'c';
-	mode = mode && mode.toLowerCase() || 'ionian';
-
-	octave = octave || 3;
-
+const mode = (root = 'c', mode = 'ionian', octave = 3) => {
 	// Append octave to chromatic notes
-	chromatic =
+	let chromatic =
 		chromaticNotes
 			.map(function(el, idx) {
 				return el + octave;
@@ -44,7 +35,6 @@ function getMode(root, mode, octave) {
 		.filter(function(el, idx) {
 			return modes[mode][idx] === 1;
 		});
-
 }
 
-module.exports = getMode;
+export default mode;

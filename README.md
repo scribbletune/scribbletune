@@ -1,8 +1,8 @@
-Scribbletune (WIP)
-------------------
-
-Generate musical patterns with JavaScript and export as MIDI files using node.js 
+Scribbletune
+------------
 [![Build Status](https://api.travis-ci.org/walmik/scribbletune.svg)](http://travis-ci.org/walmik/scribbletune)
+
+Use simple __JavaScript__ `Strings` and `Arrays` to generate rhythms and musical patterns. Directly use the names of scales and chords and mash them up using JavaScript libraries like `underscore` or `lodash` in ways you hadn't imagined before! Then, export them as MIDI files and import these in Ableton Live, Reason, Fruity Loops, Cubase, Garage Band or whichever music creation software you like!
 
 ### Install
 
@@ -15,21 +15,21 @@ var scribble = require('scribbletune');
 var clip = scribble.clip({
     notes: ['c3']
 });
-scribble.render(clip);
+scribble.midi(clip);
 ```
 Save this file as _c.js_ and run it from the terminal with `node c.js`. This will create a file called _music.mid_ at the same location as the _c.js_ file. If you import the MIDI file into your favorite MIDI music editing software (Garage Band / Cubase / Ableton Live / Reason etc), you ll hear the beautiful middle C played across a single bar.
 
 ### Create a simple melody
-You can do more than render a single note. You can `require` the scribbletune module and use it to generate scales(modes), chords and patterns to create melodies. For example, to create a MIDI file comprising just the C Major scale (Ionian mode), you could create a new file and add some code like this:
+You can do more than render a single note! You can `require` the scribbletune module and use it to generate scales(modes), chords and patterns to create melodies. For example, to create a MIDI file comprising just the C Major scale (Ionian mode), you could create a new file and add some code like this:
 ```
 var scribble = require('scribbletune');
 
 var clip = scribble.clip({
-    notes: scribble.mode('c', 'major', 3), // this works too ['c3', 'd3', 'e3', 'f3', 'g3', 'a3', 'b3']
+    notes: scribble.scale('c', 'major', 3), // this works too ['c3', 'd3', 'e3', 'f3', 'g3', 'a3', 'b3']
 	pattern: 'x_x_x_x_x_x_x_x_'
 });
 
-scribble.render(clip, 'cscale.mid');
+scribble.midi(clip, 'cscale.mid');
 ```
 Save this as _cscale.js_ and run it from the terminal `node cscale.js`. This will create a MIDI file called _cscale.mid_ in the same location as the above file.
 
@@ -50,11 +50,77 @@ var clip = scribble.clip({
 	sizzle: true    // this will add a rhythmic accent to the generated notes
 });
 
-scribble.render(clip);
+scribble.midi(clip);
 ```
 
 ### Patterns
 
-You may wonder what are those weird looking, but enticing `x`, `-` and `_`. Well, those are patterns! `x` means _note on_, `-` (hyphen) means `note off` and `_` (underscore) means _sustain_. Patterns can be used to tell Scribble tune which beat in a 16 beat pattern would you like to be on or off or sustained. Patterns can also be used to create sizzle maps (which are basically accent maps to hit some notes harder than others).
+You may wonder what are those weird looking, but enticing `x`, `-` and `_`. Well, those are patterns! `x` means _note on_, `-` (hyphen) means `note off` and `_` (underscore) means _sustain_. Patterns can be used to tell Scribble tune which beat in a 16 beat pattern would you like to be on or off or sustained. Patterns can also be used to create accent maps (which allow some notes to be played louder than others).
 
-As you can clearly see, now you can use any JavaScript library that works on Collections, such as `underscore` or `lodash` and compute melodies using Scribbletune! Ok then, get on with it :)
+### Create a simple beat
+With the new String.repeat function, you can quickly generate interesting patterns for note on/off as well as accent maps. For instance,
+
+```
+let pattern = 'x---'.repeat(4);
+```
+That will return,
+```
+x---x---x---x---
+```
+
+What can you use that pattern for? Well, it looks like a standard 4 by 4 kick drum pattern to me! What about this:
+```
+let pattern = '--x-'.repeat(4);
+```
+That will return,
+```
+--x---x---x---x-
+```
+Hmmm, that can be a very simple bass line for a simple dance music loop. Let's feed that into __Scribbletune's__ clip function and try something different while generating the notes:
+
+```
+var scribble = require('../');
+var kick, bass;
+
+// 4 by 4 kick
+kick = scribble.clip({
+	notes: scribble.scale('a', 'minor', 2).slice(0, 3),
+	pattern: '--x-'.repeat(4),
+	shuffle: true
+});
+scribble.midi(kick, 'kick.mid');
+
+// A simple bass line
+bass = scribble.clip({
+	notes: scribble.scale('a', 'minor', 2).slice(0, 3),
+	pattern: '--x-'.repeat(4),
+	shuffle: true
+});
+scribble.midi(clip, 'bass.mid');
+```
+Up there, we first created a 4 by 4 kick drum loop and then decided to use the first 3 notes of a _A minor_ scale on the second octave to create a simple bass line. We created a simple pattern using __JavaScript's__ `String.repeat` and then added the `shuffle` parameter to shuffle those 3 notes. Finally, we exported it as a MIDI file called _bass.mid_
+
+Let s just take this one teeny weeny step further and create a simple hi hats loop as well,
+
+```
+var scribble = require('../');
+
+var hats = scribble.clip({
+	notes: ['a#4'],
+	pattern: 'x'.repeat(16),
+	sizzle: true
+});
+
+scribble.midi(hats, 'hats.mid');
+```
+Here we created a 16 beat bar with all its 16 notes set to `x` (which means _Note On_) and added a `sizzle` to it. This applies a `Math.Sin` wave to the accents on that clip, giving it a bouncier feel.
+
+Import the 3 MIDI files thus generated into your favorite music creation software. I used Garage Band and added some delay on the bass and here's what I got:
+
+[Simple beat with a bassline](https://soundcloud.com/walmik/loop) 
+
+There's a lot more to this humble beginning. But I ll let you explore it for yourself. As you can see, now you can use any JavaScript library (or not) to compute melodies using Scribbletune! Ok then, get on with it :)
+
+```
+npm install scribbletune
+```

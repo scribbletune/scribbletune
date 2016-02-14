@@ -1,5 +1,5 @@
 var _ = require('lodash');
-var scribble = require('../');
+var scribble = require('../dest/');
 
 //start with a bunch of notes
 var notes = 'd#,g,f#'.split(',');
