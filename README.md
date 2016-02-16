@@ -33,7 +33,7 @@ scribble.midi(clip, 'cscale.mid');
 ```
 Save this as _cscale.js_ and run it from the terminal `node cscale.js`. This will create a MIDI file called _cscale.mid_ in the same location as the above file.
 
-[C Major Scale](https://soundcloud.com/walmik/c-major) 
+[C Major Scale generated with Scribbletune](https://soundcloud.com/walmik/c-major) 
 
 ### Chords
 
@@ -65,7 +65,7 @@ scribble.render(chords, 'chords.mid');
 
 I imported that into Garage Band and applied Synthesize -> EDM Chord ->Sunrise Chords to it and here is how it sounds:
 
-[Chords](https://soundcloud.com/walmik/chords) 
+[Chords generated with Scribbletune](https://soundcloud.com/walmik/chords) 
 
 ### Patterns
 

@@ -18,9 +18,9 @@ var getdefaultParams = function getdefaultParams() {
 };
 
 var extendObject = function extendObject(original, updated) {
-	for (var i in updated) {
-		if (original[i]) {
-			original[i] = updated[i];
+	for (var prop in updated) {
+		if (original.hasOwnProperty(prop)) {
+			original[prop] = updated[prop];
 		}
 	}
 

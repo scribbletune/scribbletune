@@ -13,9 +13,9 @@ const getdefaultParams = () => {
 };
 
 const extendObject = (original, updated) => {
-	for (var i in updated) {
-		if (original[i]) {
-			original[i] = updated[i];
+	for (let prop in updated) {
+		if (original.hasOwnProperty(prop)) {
+			original[prop] = updated[prop];
 		}
 	}
 
@@ -23,9 +23,9 @@ const extendObject = (original, updated) => {
 }
 
 const shuffle = (arr) => {
-	var lastIndex = arr.length - 1;
+	let lastIndex = arr.length - 1;
 	arr.map(function(el, idx) {
-		var rnd = Math.round(Math.random() * lastIndex);
+		let rnd = Math.round(Math.random() * lastIndex);
 		arr[idx] = arr[rnd];
 		arr[rnd] = el;
 	});

@@ -45,11 +45,26 @@ test('clip should validate provided notes & pattern using default notes and patt
 
 test('clip should shuffle provided notes', function(t) {
 	var clip = scribble.clip({
-		notes: scribble.scale('c', 'major', 3)
+		notes: scribble.scale('c', 'major', 3),
+		pattern: 'xxxx',
+		shuffle: true
 	})
-	t.notEqual(
+	t.equal(
 		clip[0].note[0] === 'c3' && clip[0].note[1] === 'd3',
-		'd3',
+		false,
+		'Clip function uses the provided notes'
+	);
+
+	t.end();
+});
+
+test('clip should override default params with provided params', function(t) {
+	var clip = scribble.clip({
+		accentHi: 100
+	})
+	t.equal(
+		clip[0].level,
+		100,
 		'Clip function uses the provided notes'
 	);
 
