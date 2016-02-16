@@ -1,4 +1,3 @@
-import * as __ from 'lodash';
 const getdefaultParams = () => {
 	return {
 		ticks: 512,			// By default a single 4x4 bar is 512 ticks (this is known as HDR_SPEED)
@@ -13,8 +12,29 @@ const getdefaultParams = () => {
 	}
 };
 
+const extendObject = (original, updated) => {
+	for (var i in updated) {
+		if (original[i]) {
+			original[i] = updated[i];
+		}
+	}
+
+	return original;
+}
+
+const shuffle = (arr) => {
+	var lastIndex = arr.length - 1;
+	arr.map(function(el, idx) {
+		var rnd = Math.round(Math.random() * lastIndex);
+		arr[idx] = arr[rnd];
+		arr[rnd] = el;
+	});
+
+	return arr;
+}
+
 const clip = (params = {}) => {	
-	params = __.extend(getdefaultParams(), params);
+	params = extendObject(getdefaultParams(), params);
 	let level = params.accentHi;
 
 	// Check if the note length is a fraction
@@ -52,7 +72,7 @@ const clip = (params = {}) => {
 
 	// Check if we need to shuffle the notes
 	if (params.shuffle) {
-		params.notes = __.shuffle(params.notes);
+		params.notes = shuffle(params.notes);
 	}
 
 	// Use string.replace on pattern to derive an array of note objects

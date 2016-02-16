@@ -3,13 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-
-var _lodash = require('lodash');
-
-var __ = _interopRequireWildcard(_lodash);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
 var getdefaultParams = function getdefaultParams() {
 	return {
 		ticks: 512, // By default a single 4x4 bar is 512 ticks (this is known as HDR_SPEED)
@@ -24,10 +17,31 @@ var getdefaultParams = function getdefaultParams() {
 	};
 };
 
+var extendObject = function extendObject(original, updated) {
+	for (var i in updated) {
+		if (original[i]) {
+			original[i] = updated[i];
+		}
+	}
+
+	return original;
+};
+
+var shuffle = function shuffle(arr) {
+	var lastIndex = arr.length - 1;
+	arr.map(function (el, idx) {
+		var rnd = Math.round(Math.random() * lastIndex);
+		arr[idx] = arr[rnd];
+		arr[rnd] = el;
+	});
+
+	return arr;
+};
+
 var clip = function clip() {
 	var params = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-	params = __.extend(getdefaultParams(), params);
+	params = extendObject(getdefaultParams(), params);
 	var level = params.accentHi;
 
 	// Check if the note length is a fraction
@@ -65,7 +79,7 @@ var clip = function clip() {
 
 	// Check if we need to shuffle the notes
 	if (params.shuffle) {
-		params.notes = __.shuffle(params.notes);
+		params.notes = shuffle(params.notes);
 	}
 
 	// Use string.replace on pattern to derive an array of note objects

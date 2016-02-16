@@ -43,3 +43,15 @@ test('clip should validate provided notes & pattern using default notes and patt
 	t.end();
 });
 
+test('clip should shuffle provided notes', function(t) {
+	var clip = scribble.clip({
+		notes: scribble.scale('c', 'major', 3)
+	})
+	t.notEqual(
+		clip[0].note[0] === 'c3' && clip[0].note[1] === 'd3',
+		'd3',
+		'Clip function uses the provided notes'
+	);
+
+	t.end();
+});

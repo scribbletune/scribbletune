@@ -1,6 +1,6 @@
 {
   "name": "scribbletune",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Generate musical patterns with JavaScript",
   "main": "./dest/index.js",
   "scripts": {
@@ -8,8 +8,7 @@
     "build": "gulp build"
   },
   "dependencies": {
-    "jsmidgen": "~0.1.3",
-    "lodash": "^4.3.0"
+    "jsmidgen": "~0.1.3"
   },
   "devDependencies": {
     "babel-cli": "^6.5.1",
