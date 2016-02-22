@@ -18,6 +18,15 @@ var _render2 = _interopRequireDefault(_render);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var Scribbletune = function Scribbletune() {
+  this.mode = _mode2.default;
+  this.scale = _mode2.default;
+  this.chord = _chord2.default;
+  this.clip = _clip2.default;
+  this.render = _render2.default;
+  this.midi = _render2.default;
+};
+
 exports = module.exports = function () {
-  return { mode: _mode2.default, scale: _mode2.default, chord: _chord2.default, clip: _clip2.default, render: _render2.default, midi: _render2.default };
+  return new Scribbletune();
 }();
