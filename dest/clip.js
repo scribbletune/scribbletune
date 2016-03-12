@@ -3,6 +3,13 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+
+var _utils = require('./utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var getdefaultParams = function getdefaultParams() {
 	return {
 		ticks: 512, // By default a single 4x4 bar is 512 ticks (this is known as HDR_SPEED)
@@ -17,31 +24,10 @@ var getdefaultParams = function getdefaultParams() {
 	};
 };
 
-var extendObject = function extendObject(original, updated) {
-	for (var prop in updated) {
-		if (original.hasOwnProperty(prop)) {
-			original[prop] = updated[prop];
-		}
-	}
-
-	return original;
-};
-
-var shuffle = function shuffle(arr) {
-	var lastIndex = arr.length - 1;
-	arr.map(function (el, idx) {
-		var rnd = Math.round(Math.random() * lastIndex);
-		arr[idx] = arr[rnd];
-		arr[rnd] = el;
-	});
-
-	return arr;
-};
-
 var clip = function clip() {
 	var params = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-	params = extendObject(getdefaultParams(), params);
+	params = _utils2.default.extendObject(getdefaultParams(), params);
 	var level = params.accentHi;
 
 	// Check if the note length is a fraction
@@ -77,7 +63,7 @@ var clip = function clip() {
 
 	// Check if we need to shuffle the notes
 	if (params.shuffle) {
-		params.notes = shuffle(params.notes);
+		params.notes = _utils2.default.shuffle(params.notes);
 	}
 
 	// Use string.replace on pattern to derive an array of note objects

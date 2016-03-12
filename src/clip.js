@@ -1,3 +1,5 @@
+import utils from './utils';
+
 const getdefaultParams = () => {
 	return {
 		ticks: 512,			// By default a single 4x4 bar is 512 ticks (this is known as HDR_SPEED)
@@ -12,29 +14,8 @@ const getdefaultParams = () => {
 	}
 };
 
-const extendObject = (original, updated) => {
-	for (let prop in updated) {
-		if (original.hasOwnProperty(prop)) {
-			original[prop] = updated[prop];
-		}
-	}
-
-	return original;
-}
-
-const shuffle = (arr) => {
-	let lastIndex = arr.length - 1;
-	arr.map(function(el, idx) {
-		let rnd = Math.round(Math.random() * lastIndex);
-		arr[idx] = arr[rnd];
-		arr[rnd] = el;
-	});
-
-	return arr;
-}
-
 const clip = (params = {}) => {	
-	params = extendObject(getdefaultParams(), params);
+	params = utils.extendObject(getdefaultParams(), params);
 	let level = params.accentHi;
 
 	// Check if the note length is a fraction
@@ -70,7 +51,7 @@ const clip = (params = {}) => {
 
 	// Check if we need to shuffle the notes
 	if (params.shuffle) {
-		params.notes = shuffle(params.notes);
+		params.notes = utils.shuffle(params.notes);
 	}
 
 	// Use string.replace on pattern to derive an array of note objects
