@@ -52,11 +52,9 @@ const clip = (params = {}) => {
 	});
 
 	// Validate provided pattern
-	params.pattern.split('').map((el) => {
-		if (el.match(/x|-|_/g) === null) {
-			throw new Error(pattern + 'is not a valid pattern!');
-		}
-	});
+	if (params.pattern.match(/[^x\-_]+/)) {
+		throw new Error(pattern + 'is not a valid pattern!');
+	}
 
 	// Ensure notes array has at least as many elements as pattern
 	while (params.notes.length < params.pattern.length) {
