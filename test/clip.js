@@ -23,6 +23,14 @@ test('clip should throw an error in case of invalid notes', function(t) {
 	t.end();
 });
 
+test('clip should throw an error in case of invalid notes type', function(t) {
+	t.throws(function() {
+		scribble.clip({notes: 'c3'});
+	});
+
+	t.end();
+});
+
 test('clip should validate provided notes & pattern using default notes and patterns in their absence', function(t) {
 	var clip;
 	t.throws(function() {
@@ -48,7 +56,7 @@ test('clip should shuffle provided notes', function(t) {
 		notes: scribble.scale('c', 'major', 3),
 		pattern: 'xxxx',
 		shuffle: true
-	})
+	});
 	t.equal(
 		clip[0].note[0] === 'c3' && clip[0].note[1] === 'd3',
 		false,
@@ -61,11 +69,26 @@ test('clip should shuffle provided notes', function(t) {
 test('clip should override default params with provided params', function(t) {
 	var clip = scribble.clip({
 		accentHi: 100
-	})
+	});
 	t.equal(
 		clip[0].level,
 		100,
 		'Clip function uses the provided notes'
+	);
+
+	t.end();
+});
+
+test('clip should extend notes in case of a longer pattern', function(t) {
+	var longerPattern = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+	var clip = scribble.clip({
+		notes: ['c3', 'd3'],
+		pattern: longerPattern
+	});
+	t.equal(
+		clip.length,
+		longerPattern.length,
+		'Clip function extends notes in case of longer pattern'
 	);
 
 	t.end();
