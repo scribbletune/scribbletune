@@ -16,7 +16,7 @@ var pattern = function pattern() {
 	var shuffle = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
 
 	if (shuffle) {
-		chars = _utils2.default.shuffle(chars);
+		chars = _utils2.default.shuffle(chars.split('')).join('');
 	}
 	return chars.repeat(len);
 };

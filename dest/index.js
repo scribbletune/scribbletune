@@ -1,5 +1,7 @@
 'use strict';
 
+require('babel-polyfill');
+
 var _mode = require('./mode');
 
 var _mode2 = _interopRequireDefault(_mode);
@@ -30,7 +32,8 @@ var Scribbletune = function Scribbletune() {
   this.pattern = _pattern2.default;
   this.render = _render2.default;
   this.midi = _render2.default;
-};
+}; // ES6 standard library
+
 
 exports = module.exports = function () {
   return new Scribbletune();
