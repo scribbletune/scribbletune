@@ -14,9 +14,7 @@ var chromaticNotes = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#'
 
 var mode = function mode() {
 	var root = arguments.length <= 0 || arguments[0] === undefined ? 'c' : arguments[0];
-
-	var _mode = arguments.length <= 1 || arguments[1] === undefined ? 'ionian' : arguments[1];
-
+	var mode = arguments.length <= 1 || arguments[1] === undefined ? 'ionian' : arguments[1];
 	var octave = arguments.length <= 2 || arguments[2] === undefined ? 3 : arguments[2];
 
 	// Append octave to chromatic notes
@@ -34,7 +32,7 @@ var mode = function mode() {
 	}
 
 	// Make sure if the provided mode is valid
-	if (!_modes2.default.hasOwnProperty(_mode)) {
+	if (!_modes2.default.hasOwnProperty(mode)) {
 		throw new Error('Invalid mode!');
 	}
 
@@ -43,7 +41,7 @@ var mode = function mode() {
   * filter it by mode pattern to return the correct notes
   */
 	return chromatic.slice(chromatic.indexOf(root + octave)).filter(function (el, idx) {
-		return _modes2.default[_mode][idx] === 1;
+		return _modes2.default[mode][idx] === 1;
 	});
 };
 
