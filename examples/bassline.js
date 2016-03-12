@@ -1,12 +1,7 @@
 var scribble = require('../dest/');
-
-/**
- * Generate a bassline by joining a bunch of clips
- */
-
 var clip = scribble.clip({
 	notes: ['c3'],
-	pattern: 'x-x_-xx_x-x_-xx_x-x_-xx_x-x_-xx_',
+	pattern: scribble.pattern(4, 'x-x_-xx_'),
 	sizzle: true
 });
 

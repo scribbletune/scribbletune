@@ -1,8 +1,8 @@
 var scribble = require('../dest/');
 
 var clip = scribble.clip({
-	notes: ['c2'],
-	pattern: 'x---x---x---x---'
+	notes: ['c3'],
+	pattern: scribble.pattern(4, 'x---')
 });
 
 scribble.render(clip);
