@@ -29,6 +29,10 @@ var clip = function clip() {
 
 	params = _utils2.default.extendObject(getdefaultParams(), params);
 	var level = params.accentHi;
+	var sizzleArr;
+	if (params.sizzle) {
+		sizzleArr = _utils2.default.sizzleMap(level);
+	}
 
 	// Check if the note length is a fraction
 	// If so convert it to decimal without using eval
@@ -79,7 +83,7 @@ var clip = function clip() {
 	params.pattern.replace(/(x_*)|(-)/g, function (match, noteOn, noteOff) {
 		var sizzleVal = level;
 		if (params.sizzle) {
-			sizzleVal = Math.round(Math.abs(Math.cos(step) * params.accentHi));
+			sizzleVal = sizzleArr[step];
 		}
 
 		if (params.accentMap !== '') {

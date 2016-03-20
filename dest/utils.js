@@ -23,6 +23,22 @@ var utils = {
 		}
 
 		return original;
+	},
+
+	sizzleMap: function sizzleMap() {
+		var maxLevel = arguments.length <= 0 || arguments[0] === undefined ? 127 : arguments[0];
+
+		var sizzleArr = [];
+		var pi = Math.PI;
+		var piArr = [pi / 6, pi / 4, pi / 3, pi / 2, 2 * pi / 3, 3 * pi / 4, 5 * pi / 6, pi];
+		var piArrRev = [0, pi / 6, pi / 4, pi / 3, pi / 2, 2 * pi / 3, 3 * pi / 4, 5 * pi / 6];
+		piArrRev.reverse();
+		var arr = piArr.concat(piArrRev);
+		arr.map(function (element) {
+			sizzleArr.push(Math.round(Math.sin(element) * maxLevel));
+		});
+
+		return sizzleArr;
 	}
 };
 

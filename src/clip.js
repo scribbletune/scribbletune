@@ -17,6 +17,10 @@ const getdefaultParams = () => {
 const clip = (params = {}) => {	
 	params = utils.extendObject(getdefaultParams(), params);
 	let level = params.accentHi;
+	var sizzleArr;
+	if (params.sizzle) {
+		sizzleArr = utils.sizzleMap(level);
+	}
 
 	// Check if the note length is a fraction
 	// If so convert it to decimal without using eval
@@ -66,7 +70,7 @@ const clip = (params = {}) => {
 	params.pattern.replace(/(x_*)|(-)/g, (match, noteOn, noteOff) => {
 		let sizzleVal = level;
 		if (params.sizzle) {
-			sizzleVal = Math.round(Math.abs(Math.cos(step) * params.accentHi));
+			sizzleVal = sizzleArr[step];
 		}
 
 		if (params.accentMap !== '') {
