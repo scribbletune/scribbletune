@@ -10,7 +10,7 @@ Use simple __JavaScript__ `Strings` and `Arrays` to generate rhythms and musical
 
 ### Let's C how this works
 You can get started by requiring the `scribbletune` module and create a `clip` that contains just the middle C note. A clip is like a 16 beat bar.
-```
+```js
 var scribble = require('scribbletune');
 var clip = scribble.clip({
     notes: ['c3']
@@ -21,7 +21,7 @@ Save this file as _c.js_ and run it from the terminal with `node c.js`. This wil
 
 ### Create a simple melody
 You can do more than render a single note! You can `require` the scribbletune module and use it to generate scales(modes), chords and patterns to create melodies. For example, to create a MIDI file comprising just the C Major scale (Ionian mode), you could create a new file and add some code like this:
-```
+```js
 var scribble = require('scribbletune');
 
 var clip = scribble.clip({
@@ -39,7 +39,7 @@ Save this as _cscale.js_ and run it from the terminal `node cscale.js`. This wil
 
 You can add chords to the `notes` array while creating a clip to render chords. Either provide the notes (with octave) of the chords you want separated by commas or use Scribbletune's chord generator.
 
-```
+```js
 var scribble = require('scribbletune');
 var chords = scribble.clip({
 	notes: [
@@ -74,7 +74,7 @@ You may wonder what are those weird looking, but enticing `x`, `-` and `_`. Well
 ### Create a simple beat
 With the new String.repeat function, you can quickly generate interesting patterns for note on/off as well as accent maps. For instance,
 
-```
+```js
 let pattern = 'x---'.repeat(4);
 ```
 That will return,
@@ -83,7 +83,7 @@ x---x---x---x---
 ```
 
 What can you use that pattern for? Well, it looks like a standard 4 by 4 kick drum pattern to me! What about this:
-```
+```js
 let pattern = '--x-'.repeat(4);
 ```
 That will return,
@@ -94,7 +94,7 @@ Hmmm, that can be a very simple bass line for a simple dance music loop. Let's f
 
 ### An excessively simple Kick Drum and Bass loop
 
-```
+```js
 var scribble = require('scribbletune');
 var kick, bass;
 
@@ -111,14 +111,14 @@ bass = scribble.clip({
 	pattern: '--x-'.repeat(4),
 	shuffle: true
 });
-scribble.midi(clip, 'bass.mid');
+scribble.midi(bass, 'bass.mid');
 ```
 Up there, we first created a 4 by 4 kick drum loop and then decided to use the first 3 notes of a _A minor_ scale on the second octave to create a simple bass line. We created a simple pattern using __JavaScript's__ `String.repeat` and then added the `shuffle` parameter to shuffle those 3 notes. Finally, we exported it as a MIDI file called _bass.mid_
 
 ### High Hats
 Let s just take this one teeny weeny step further and create a simple hi hats loop as well,
 
-```
+```js
 var scribble = require('scribbletune');
 
 var hats = scribble.clip({
