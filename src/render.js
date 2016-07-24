@@ -1,16 +1,15 @@
-import * as fs from 'fs';
-import * as jsmidgen from 'jsmidgen';
+const fs = require('fs');
+const assert = require('assert');
+const jsmidgen = require('jsmidgen');
 
 const render = (notes, fileName = 'music.mid') => {
-	if (notes === undefined || typeof notes === 'string') {
-		throw new Error('You must provide an array of notes to write!');
-	}
+	assert(notes !== undefined && typeof notes !== 'string', 'You must provide an array of notes to write!');
 
 	let file = new jsmidgen.File();
 	let track = new jsmidgen.Track();
 	file.addTrack(track);
 
-	notes.map(function(noteObj) {
+	notes.forEach(function(noteObj) {
 		let level = noteObj.level || 127;
 		// While writing chords (multiple notes per tick)
 		// only the first noteOn (or noteOff) needs the complete arity of the function call

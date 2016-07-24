@@ -1,3 +1,4 @@
+const assert = require('assert');
 import modes from './modes';
 const chromaticNotes = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'];
 
@@ -17,14 +18,10 @@ const mode = (root = 'c', mode = 'ionian', octave = 3) => {
 			);
 
 	// Make sure the root is valid [abcdefg] optionally followed by #
-	if (!root.match(/[abcdefg]#?/)) {
-		throw new Error('Invalid root note!');
-	}
+	assert(root.match(/[abcdefg]#?/), 'Invalid root note: ' + root);
 
 	// Make sure if the provided mode is valid
-	if (!modes.hasOwnProperty(mode)) {
-		throw new Error('Invalid mode!');
-	}
+	assert(modes.hasOwnProperty(mode), 'Invalid mode: ' + mode);
 
 	/**
 	 * Slice the chromatic notes from the root note onward &

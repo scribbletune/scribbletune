@@ -10,6 +10,9 @@ var _utils2 = _interopRequireDefault(_utils);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var assert = require('assert');
+
+
 var getdefaultParams = function getdefaultParams() {
 	return {
 		ticks: 512, // By default a single 4x4 bar is 512 ticks (this is known as HDR_SPEED)
@@ -27,7 +30,7 @@ var getdefaultParams = function getdefaultParams() {
 var clip = function clip() {
 	var params = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-	params = _utils2.default.extendObject(getdefaultParams(), params);
+	params = Object.assign(getdefaultParams(), params);
 	var level = params.accentHi;
 	var sizzleArr;
 	if (params.sizzle) {
@@ -42,16 +45,12 @@ var clip = function clip() {
 	}
 
 	// Validate provided notes
-	params.notes.map(function (el) {
-		if (el.match(/[abcdefg]#?[0-9]/g) === null) {
-			throw new Error(el + 'is not a valid note!');
-		}
+	params.notes.forEach(function (el) {
+		assert(el.match(/[abcdefg]#?[0-9]/g) !== null, el + 'is not a valid note!');
 	});
 
-	// Validate provided pattern
-	if (params.pattern.match(/[^x\-_]+/)) {
-		throw new Error(pattern + 'is not a valid pattern!');
-	}
+	// Validate provided pattern does not include anything other that x, - OR _
+	assert(params.pattern.match(/[^x\-_]+/) === null, params.pattern + 'is not a valid pattern!');
 
 	// Ensure notes array has at least as many elements as pattern
 	while (params.notes.length < params.pattern.length) {

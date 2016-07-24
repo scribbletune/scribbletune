@@ -22,7 +22,7 @@ test('Scribbletune::chord', function(t) {
 	t.equal(
 		scribble.chord('f', 'major', 3, true),
 		'f3,a3,c4,e4',
-		'F major7 f a c e'
+		'F major7 is f a c e'
 	);
 
 	t.end();

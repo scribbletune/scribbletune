@@ -10,6 +10,8 @@ var _modes2 = _interopRequireDefault(_modes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var assert = require('assert');
+
 var chromaticNotes = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'];
 
 var mode = function mode() {
@@ -27,14 +29,10 @@ var mode = function mode() {
 	}));
 
 	// Make sure the root is valid [abcdefg] optionally followed by #
-	if (!root.match(/[abcdefg]#?/)) {
-		throw new Error('Invalid root note!');
-	}
+	assert(root.match(/[abcdefg]#?/), 'Invalid root note: ' + root);
 
 	// Make sure if the provided mode is valid
-	if (!_modes2.default.hasOwnProperty(mode)) {
-		throw new Error('Invalid mode!');
-	}
+	assert(_modes2.default.hasOwnProperty(mode), 'Invalid mode: ' + mode);
 
 	/**
   * Slice the chromatic notes from the root note onward &

@@ -1,3 +1,4 @@
+const assert = require('assert');
 import utils from './utils';
 
 const getdefaultParams = () => {
@@ -15,7 +16,7 @@ const getdefaultParams = () => {
 };
 
 const clip = (params = {}) => {	
-	params = utils.extendObject(getdefaultParams(), params);
+	params = Object.assign(getdefaultParams(), params);
 	let level = params.accentHi;
 	var sizzleArr;
 	if (params.sizzle) {
@@ -30,16 +31,12 @@ const clip = (params = {}) => {
 	}
 
 	// Validate provided notes
-	params.notes.map((el) => {
-		if (el.match(/[abcdefg]#?[0-9]/g) === null) {
-			throw new Error(el + 'is not a valid note!');
-		}
+	params.notes.forEach((el) => {
+		assert(el.match(/[abcdefg]#?[0-9]/g) !== null, el + 'is not a valid note!');
 	});
 
-	// Validate provided pattern
-	if (params.pattern.match(/[^x\-_]+/)) {
-		throw new Error(pattern + 'is not a valid pattern!');
-	}
+	// Validate provided pattern does not include anything other that x, - OR _
+	assert(params.pattern.match(/[^x\-_]+/) === null, params.pattern + 'is not a valid pattern!');
 
 	// Ensure notes array has at least as many elements as pattern
 	while (params.notes.length < params.pattern.length) {
