@@ -1,4 +1,7 @@
+const minorChords = ['m', 'min', 'Min', 'Minor', 'minor'];
+
 const utils = {
+	chordPtn: /^([a-gA-G][#|b]?)(maj|major|Maj|Major|m|min|Min|Minor|minor|7)(7)?(\-[0-8])?/,
 	shuffle: (arr) => {
 		let lastIndex = arr.length - 1;
 		arr.forEach(function(el, idx) {
@@ -19,6 +22,36 @@ const utils = {
 		return arr.map(function(element) {
 			return Math.round(Math.sin(element) * maxLevel);
 		});
+	},
+
+	stringToChordArr: (str) => {
+		let scribbleChordArr = [];
+		if (str.match(utils.chordPtn)) {
+			let str = 'major';
+			str.replace(utils.chordPtn, (match, root, scale, seventh, octave) => {
+				scribbleChordArr.push(root);
+
+				if (scale == 7) {
+					mode = 'fifth mode';
+				}
+
+				if (minorChords.indexOf(scale) > -1) {
+					mode = 'minor';
+				}
+
+				scribbleChordArr.push(mode);
+				if (octave) {
+					scribbleChordArr.push(+octave.substring(1));
+				} else {
+					scribbleChordArr.push(4);
+				}
+				if (seventh) {
+					scribbleChordArr.push(7);
+				}
+			});
+		}
+
+		return scribbleChordArr;
 	}
 };
 

@@ -2,3 +2,5 @@ node_modules
 coverage
 .DS_Store
 *.mid
+.idea/
+test-scribble.js

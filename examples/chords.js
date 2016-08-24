@@ -1,16 +1,6 @@
 var scribble = require('../dest/');
 var clip = scribble.clip({
-	notes: [
-		scribble.chord('f#', 'minor', 3),
-		scribble.chord('c#', 'minor', 3),
-		scribble.chord('d', 'major', 3),
-		scribble.chord('b', 'minor', 3),
-		scribble.chord('e', 'major', 3),
-		scribble.chord('a', 'major', 3),
-		scribble.chord('d', 'major', 3),
-		scribble.chord('c#', 'minor', 3),
-		scribble.chord('a', 'major', 3)
-	],
+	notes: ['f#m', 'c#m', 'DMaj', 'Bm', 'EMajor', 'AMaj', 'dmaj', 'c#m', 'AMaj'],
 	pattern: 'x_______x_______x_______________x_______x_______x_______________________________________________x_______x_______x_______________',
 	sizzle: true
 });  

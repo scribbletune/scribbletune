@@ -1,5 +1,6 @@
 const assert = require('assert');
 import utils from './utils';
+import chord from './chord';
 
 const getdefaultParams = () => {
 	return {
@@ -29,6 +30,15 @@ const clip = (params = {}) => {
 		let a = params.noteLength.split('/');
 		params.noteLength = a[0] / a[1];
 	}
+
+	// Convert chords if any to notes array
+	params.notes = params.notes.map((el) => {
+		if (el.match(utils.chordPtn)) {
+			return chord.apply(null, utils.stringToChordArr(el));
+		} else {
+			return el;
+		}
+	});
 
 	// Validate provided notes
 	params.notes.forEach((el) => {

@@ -2,6 +2,7 @@
 
 var test = require('tape');
 var scribble = require('../dest/index');
+var utils = require('../dest/utils');
 
 test('Scribbletune::chord', function(t) {
 	// Major

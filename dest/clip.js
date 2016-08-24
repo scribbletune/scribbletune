@@ -8,6 +8,10 @@ var _utils = require('./utils');
 
 var _utils2 = _interopRequireDefault(_utils);
 
+var _chord = require('./chord');
+
+var _chord2 = _interopRequireDefault(_chord);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var assert = require('assert');
@@ -43,6 +47,15 @@ var clip = function clip() {
 		var a = params.noteLength.split('/');
 		params.noteLength = a[0] / a[1];
 	}
+
+	// Convert chords if any to notes array
+	params.notes = params.notes.map(function (el) {
+		if (el.match(_utils2.default.chordPtn)) {
+			return _chord2.default.apply(null, _utils2.default.stringToChordArr(el));
+		} else {
+			return el;
+		}
+	});
 
 	// Validate provided notes
 	params.notes.forEach(function (el) {

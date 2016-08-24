@@ -1,9 +1,12 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+var minorChords = ['m', 'min', 'Min', 'Minor', 'minor'];
+
 var utils = {
+	chordPtn: /^([a-gA-G][#|b]?)(maj|major|Maj|Major|m|min|Min|Minor|minor|7)(7)?(\-[0-8])?/,
 	shuffle: function shuffle(arr) {
 		var lastIndex = arr.length - 1;
 		arr.forEach(function (el, idx) {
@@ -26,6 +29,36 @@ var utils = {
 		return arr.map(function (element) {
 			return Math.round(Math.sin(element) * maxLevel);
 		});
+	},
+
+	stringToChordArr: function stringToChordArr(str) {
+		var scribbleChordArr = [];
+		if (str.match(utils.chordPtn)) {
+			var _str = 'major';
+			_str.replace(utils.chordPtn, function (match, root, scale, seventh, octave) {
+				scribbleChordArr.push(root);
+
+				if (scale == 7) {
+					mode = 'fifth mode';
+				}
+
+				if (minorChords.indexOf(scale) > -1) {
+					mode = 'minor';
+				}
+
+				scribbleChordArr.push(mode);
+				if (octave) {
+					scribbleChordArr.push(+octave.substring(1));
+				} else {
+					scribbleChordArr.push(4);
+				}
+				if (seventh) {
+					scribbleChordArr.push(7);
+				}
+			});
+		}
+
+		return scribbleChordArr;
 	}
 };
 
