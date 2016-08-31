@@ -24,11 +24,11 @@ const utils = {
 		});
 	},
 
-	stringToChordArr: (str) => {
+	stringToChordArr: (el) => {
 		let scribbleChordArr = [];
-		if (str.match(utils.chordPtn)) {
-			let str = 'major';
-			str.replace(utils.chordPtn, (match, root, scale, seventh, octave) => {
+		if (el.match(utils.chordPtn)) {
+			el.replace(utils.chordPtn, (match, root, scale, seventh, octave) => {
+				let mode = 'major';
 				scribbleChordArr.push(root);
 
 				if (scale == 7) {

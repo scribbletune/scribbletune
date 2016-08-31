@@ -18,7 +18,7 @@ const mode = (root = 'c', mode = 'ionian', octave = 3) => {
 			);
 
 	// Make sure the root is valid [abcdefg] optionally followed by #
-	assert(root.match(/[abcdefg]#?/), 'Invalid root note: ' + root);
+	assert(root.match(/[abcdefg]#?/i), 'Invalid root note: ' + root);
 
 	// Make sure if the provided mode is valid
 	assert(modes.hasOwnProperty(mode), 'Invalid mode: ' + mode);
