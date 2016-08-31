@@ -1,14 +1,14 @@
 'use strict';
 
-var fs = require('fs');
-var test = require('tape');
-var scribble = require('../dest/index');
+const fs = require('fs');
+const test = require('tape');
+const scribble = require('../src/index');
 
-test('Scribbletune::midi', function(t) {
-	var fileExists = false;
+test('Scribbletune::midi', (t) => {
+	let fileExists = false;
 	scribble.midi(scribble.clip());
 
-	fs.access('./music.mid', fs.F_OK, function(err) {
+	fs.access('./music.mid', fs.F_OK, (err) => {
 		if (!err) {
 			fileExists = true;
 		}

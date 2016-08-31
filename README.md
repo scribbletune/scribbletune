@@ -11,8 +11,8 @@ Use simple __JavaScript__ `Strings` and `Arrays` to generate rhythms and musical
 ### Let's C how this works
 You can get started by requiring the `scribbletune` module and create a `clip` that contains just the middle C note. A clip is like a 16 beat bar.
 ```js
-var scribble = require('scribbletune');
-var clip = scribble.clip({
+let scribble = require('scribbletune');
+let clip = scribble.clip({
     notes: ['c3']
 });
 scribble.midi(clip);
@@ -22,9 +22,9 @@ Save this file as _c.js_ and run it from the terminal with `node c.js`. This wil
 ### Create a simple melody
 You can do more than render a single note! You can `require` the scribbletune module and use it to generate scales(modes), chords and patterns to create melodies. For example, to create a MIDI file comprising just the C Major scale (Ionian mode), you could create a new file and add some code like this:
 ```js
-var scribble = require('scribbletune');
+let scribble = require('scribbletune');
 
-var clip = scribble.clip({
+let clip = scribble.clip({
     notes: scribble.scale('c', 'major', 3), // this works too ['c3', 'd3', 'e3', 'f3', 'g3', 'a3', 'b3']
 	pattern: 'x_x_x_x_x_x_x_x_'
 });
@@ -40,22 +40,9 @@ Save this as _cscale.js_ and run it from the terminal `node cscale.js`. This wil
 You can add chords to the `notes` array while creating a clip to render chords. Either provide the notes (with octave) of the chords you want separated by commas or use Scribbletune's chord generator.
 
 ```js
-var scribble = require('scribbletune');
-var chords = scribble.clip({
-	notes: [
-		scribble.chord('f#', 'minor', 3),
-		scribble.chord('c#', 'minor', 3),
-		scribble.chord('d', 'major', 3),
-		scribble.chord('f#', 'minor', 3),
-		scribble.chord('c#', 'minor', 3),
-		scribble.chord('b', 'minor', 3),
-		scribble.chord('f#', 'minor', 3),
-		scribble.chord('c#', 'minor', 3),
-		scribble.chord('e', 'major', 3),
-		scribble.chord('f#', 'minor', 3),
-		scribble.chord('c#', 'minor', 3),
-		scribble.chord('d', 'major', 3)
-	],
+let scribble = require('scribbletune');
+let chords = scribble.clip({
+	notes: ['f#m', 'c#m', 'DMaj', 'Bm', 'EMajor', 'AMaj', 'dmaj', 'c#m', 'AMaj'],
 	pattern: 'x_x_x_--'.repeat(8),
 	sizzle: true
 });  
@@ -95,8 +82,8 @@ Hmmm, that can be a very simple bass line for a simple dance music loop. Let's f
 ### An excessively simple Kick Drum and Bass loop
 
 ```js
-var scribble = require('scribbletune');
-var kick, bass;
+let scribble = require('scribbletune');
+let kick, bass;
 
 // 4 by 4 kick
 kick = scribble.clip({
@@ -119,9 +106,9 @@ Up there, we first created a 4 by 4 kick drum loop and then decided to use the f
 Let s just take this one teeny weeny step further and create a simple hi hats loop as well,
 
 ```js
-var scribble = require('scribbletune');
+let scribble = require('scribbletune');
 
-var hats = scribble.clip({
+let hats = scribble.clip({
 	notes: ['a#4'],
 	pattern: 'x'.repeat(16),
 	sizzle: true

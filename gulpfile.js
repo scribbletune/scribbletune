@@ -1,10 +1,9 @@
-var gulp = require('gulp');
-var tape = require('gulp-tape');
-var istanbul = require('gulp-istanbul');
-var babel = require('gulp-babel');
-var eslint = require('gulp-eslint');
+const gulp = require('gulp');
+const tape = require('gulp-tape');
+const istanbul = require('gulp-istanbul');
+const eslint = require('gulp-eslint');
 
-gulp.task('lint', function () {
+gulp.task('lint', () => {
 	// ESLint ignores files with "node_modules" paths.
 	// So, it's best to have gulp ignore the directory as well.
 	// Also, Be sure to return the stream from the task;
@@ -21,16 +20,8 @@ gulp.task('lint', function () {
 		.pipe(eslint.failAfterError());
 });
 
-gulp.task('build', function () {
-	return gulp.src(['src/*.js'])
-		.pipe(babel({
-			presets: ['es2015']
-		}))
-		.pipe(gulp.dest('dest'))
-});
-
 gulp.task('pre-coverage', function() {
-	return gulp.src(['dest/*.js'])
+	return gulp.src(['src/*.js'])
 		.pipe(istanbul())
 		// This overwrites `require` so it returns covered files
 		.pipe(istanbul.hookRequire());

@@ -1,9 +1,9 @@
 'use strict';
 
-var test = require('tape');
-var scribble = require('../dest/index');
+const test = require('tape');
+const scribble = require('../src/index');
 
-test('clip should use provided notes', function(t) {
+test('clip should use provided notes', (t) => {
 	t.equal(
 		scribble.clip({
 			notes: ['d3']
@@ -15,7 +15,7 @@ test('clip should use provided notes', function(t) {
 	t.end();
 });
 
-test('clip should throw an error in case of invalid notes', function(t) {
+test('clip should throw an error in case of invalid notes', (t) => {
 	t.throws(function() {
 		scribble.clip({notes: ['k1']});
 	});
@@ -23,7 +23,7 @@ test('clip should throw an error in case of invalid notes', function(t) {
 	t.end();
 });
 
-test('clip should throw an error in case of invalid notes type', function(t) {
+test('clip should throw an error in case of invalid notes type', (t) => {
 	t.throws(function() {
 		scribble.clip({notes: 'c3'});
 	});
@@ -31,8 +31,8 @@ test('clip should throw an error in case of invalid notes type', function(t) {
 	t.end();
 });
 
-test('clip should validate provided notes & pattern using default notes and patterns in their absence', function(t) {
-	var clip;
+test('clip should validate provided notes & pattern using default notes and patterns in their absence', (t) => {
+	let clip;
 	t.throws(function() {
 		scribble.clip({pattern: 'kkjd'});
 	});
@@ -51,8 +51,8 @@ test('clip should validate provided notes & pattern using default notes and patt
 	t.end();
 });
 
-test('clip should shuffle provided notes', function(t) {
-	var clip = scribble.clip({
+test('clip should shuffle provided notes', (t) => {
+	let clip = scribble.clip({
 		notes: scribble.scale('c', 'major', 3),
 		pattern: 'xxxx',
 		shuffle: true
@@ -66,8 +66,8 @@ test('clip should shuffle provided notes', function(t) {
 	t.end();
 });
 
-test('clip should override default params with provided params', function(t) {
-	var clip = scribble.clip({
+test('clip should override default params with provided params', (t) => {
+	let clip = scribble.clip({
 		accentHi: 100
 	});
 	t.equal(
@@ -79,9 +79,9 @@ test('clip should override default params with provided params', function(t) {
 	t.end();
 });
 
-test('clip should extend notes in case of a longer pattern', function(t) {
-	var longerPattern = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx';
-	var clip = scribble.clip({
+test('clip should extend notes in case of a longer pattern', (t) => {
+	let longerPattern = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+	let clip = scribble.clip({
 		notes: ['c3', 'd3'],
 		pattern: longerPattern
 	});

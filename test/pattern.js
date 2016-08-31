@@ -1,9 +1,9 @@
 'use strict';
 
-var test = require('tape');
-var scribble = require('../dest/index');
+const test = require('tape');
+const scribble = require('../src/index');
 
-test('Scribbletune::pattern should return a default pattern', function(t) {
+test('Scribbletune::pattern should return a default pattern', (t) => {
 	t.equal(
 		scribble.pattern(),
 		'x_x_x_x_x_x_x_x_',
@@ -12,7 +12,7 @@ test('Scribbletune::pattern should return a default pattern', function(t) {
 	t.end();
 });
 
-test('Scribbletune::pattern should return the correct pattern based on params', function(t) {
+test('Scribbletune::pattern should return the correct pattern based on params', (t) => {
 	t.equal(
 		scribble.pattern(4, 'xxxx'),
 		'xxxxxxxxxxxxxxxx',
@@ -26,8 +26,8 @@ test('Scribbletune::pattern should return the correct pattern based on params', 
 	t.end();
 });
 
-test('Scribbletune::pattern should shuffle the pattern', function(t) {
-	var shuffledPattern = scribble.pattern(4, 'x---', true);
+test('Scribbletune::pattern should shuffle the pattern', (t) => {
+	let shuffledPattern = scribble.pattern(4, 'x---', true);
 	t.equal(
 		shuffledPattern[0] === 'x',
 		false,

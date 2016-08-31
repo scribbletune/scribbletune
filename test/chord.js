@@ -1,10 +1,10 @@
 'use strict';
 
-var test = require('tape');
-var scribble = require('../dest/index');
-var utils = require('../dest/utils');
+const test = require('tape');
+const scribble = require('../src/index');
+const utils = require('../src/utils');
 
-test('Scribbletune::chord', function(t) {
+test('Scribbletune::chord', (t) => {
 	// Major
 	t.equal(
 		scribble.chord('c', 'major', 3),

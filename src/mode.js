@@ -1,5 +1,5 @@
 const assert = require('assert');
-import modes from './modes';
+const modes = require('./modes');
 const chromaticNotes = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'];
 
 const mode = (root = 'c', mode = 'ionian', octave = 3) => {
@@ -34,4 +34,4 @@ const mode = (root = 'c', mode = 'ionian', octave = 3) => {
 		});
 }
 
-export default mode;
+module.exports = mode;

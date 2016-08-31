@@ -1,9 +1,9 @@
 'use strict';
 
-var test = require('tape');
-var scribble = require('../dest/index');
+const test = require('tape');
+const scribble = require('../src/index');
 
-test('Scribbletune::modes Common', function(t) {
+test('Scribbletune::modes Common', (t) => {
 	t.equal(
 		scribble.mode('c', 'ionian').join(''),
 		'c3d3e3f3g3a3b3',
@@ -42,7 +42,7 @@ test('Scribbletune::modes Common', function(t) {
 	t.end();
 });
 
-test('Scribbletune::scale Melodic Minor scales', function(t) {
+test('Scribbletune::scale Melodic Minor scales', (t) => {
 	t.equal(
 		scribble.scale('c', 'melodic minor').join(''),
 		'c3d3d#3f3g3a3b3',
@@ -81,7 +81,7 @@ test('Scribbletune::scale Melodic Minor scales', function(t) {
 	t.end();
 });
 
-test('Scribbletune::modes Blues/Jazz/Harmonic', function(t) {
+test('Scribbletune::modes Blues/Jazz/Harmonic', (t) => {
 	t.equal(
 		scribble.mode('c', 'whole tone').join(''),
 		'c3d3e3f#3g#3a#3',
@@ -160,7 +160,7 @@ test('Scribbletune::modes Blues/Jazz/Harmonic', function(t) {
 	t.end();
 });
 
-test('Scribbletune::modes Exotic', function(t) {
+test('Scribbletune::modes Exotic', (t) => {
 	t.equal(
 		scribble.mode('c', 'hungarian gypsy').join(''),
 		'c3d3d#3f#3g3g#3a#3',
@@ -234,7 +234,7 @@ test('Scribbletune::modes Exotic', function(t) {
 	t.end();
 });
 
-test('Scribbletune::modes Miscellaneous', function(t) {
+test('Scribbletune::modes Miscellaneous', (t) => {
 	t.equal(
 		scribble.mode('c', 'augmented').join(''),
 		'c3d3e3f#3g#3a3b3',

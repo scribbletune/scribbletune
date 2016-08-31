@@ -85,4 +85,4 @@ modes['mixolydian b6'] = modes['fifth mode'];
 // Locrian #2(sharp second) is also known as Aeolian b5 (flat fifth)
 modes['aeolian b5'] = modes['locrian #2'];
 
-export default modes;
+module.exports = modes;

@@ -1,6 +1,6 @@
 const assert = require('assert');
-import utils from './utils';
-import chord from './chord';
+const utils = require('./utils');
+const chord = require('./chord');
 
 const getdefaultParams = () => {
 	return {
@@ -118,4 +118,4 @@ const clip = (params = {}) => {
 	return clipNotes;
 }
 
-export default clip;
+module.exports = clip;

@@ -1,5 +1,5 @@
-var scribble = require('../dest/');
-var clip = scribble.clip({
+const scribble = require('../src/');
+let clip = scribble.clip({
 	notes: scribble.mode('c', 'major', 3),
 	pattern: scribble.pattern(8, 'x_')
 });

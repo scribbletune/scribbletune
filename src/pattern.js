@@ -1,4 +1,4 @@
-import utils from './utils';
+const utils = require('./utils');
 
 const pattern = (len = 4, chars = 'x_x_', shuffle = false) => {
 	if (shuffle) {
@@ -7,4 +7,4 @@ const pattern = (len = 4, chars = 'x_x_', shuffle = false) => {
 	return chars.repeat(len);
 }
 
-export default pattern;
+module.exports = pattern;
