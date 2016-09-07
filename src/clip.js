@@ -19,7 +19,7 @@ const getdefaultParams = () => {
 const clip = (params = {}) => {	
 	params = Object.assign(getdefaultParams(), params);
 	let level = params.accentHi;
-	var sizzleArr;
+	let sizzleArr;
 	if (params.sizzle) {
 		sizzleArr = utils.sizzleMap(level);
 	}
@@ -53,10 +53,17 @@ const clip = (params = {}) => {
 		params.notes = params.notes.concat(params.notes);
 	}
 
-	// Ensure sizzle map is as long as the pattern
+	// Ensure accent map is as long as the pattern
 	if (params.sizzle && params.accentMap) {
 		while (params.accentMap.length < params.pattern.length) {
 			params.accentMap = params.accentMap.concat(params.accentMap);
+		}
+	}
+
+	// Ensure sizzle array is as long as the pattern
+	if (params.sizzle && sizzleArr) {
+		while (sizzleArr.length < params.pattern.length) {
+			sizzleArr = sizzleArr.concat(sizzleArr);
 		}
 	}
 
