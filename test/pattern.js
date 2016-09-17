@@ -25,13 +25,3 @@ test('Scribbletune::pattern should return the correct pattern based on params', 
 	);
 	t.end();
 });
-
-test('Scribbletune::pattern should shuffle the pattern', (t) => {
-	let shuffledPattern = scribble.pattern(4, 'x---', true);
-	t.equal(
-		shuffledPattern[0] === 'x',
-		false,
-		'Pattern was shuffled'
-	);
-	t.end();
-});

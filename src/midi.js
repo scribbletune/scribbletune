@@ -2,7 +2,7 @@ const fs = require('fs');
 const assert = require('assert');
 const jsmidgen = require('jsmidgen');
 
-const render = (notes, fileName = 'music.mid') => {
+const midi = (notes, fileName = 'music.mid') => {
 	assert(notes !== undefined && typeof notes !== 'string', 'You must provide an array of notes to write!');
 
 	let file = new jsmidgen.File();
@@ -30,4 +30,4 @@ const render = (notes, fileName = 'music.mid') => {
 	fs.writeFileSync(fileName, file.toBytes(), 'binary');
 }
 
-module.exports = render;
+module.exports = midi;
