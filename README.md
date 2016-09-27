@@ -13,7 +13,7 @@ You can get started by requiring the `scribbletune` module and create a `clip` t
 ```js
 let scribble = require('scribbletune');
 let clip = scribble.clip({
-    notes: ['c3']
+    notes: ['c4']
 });
 scribble.midi(clip);
 ```
@@ -26,7 +26,7 @@ let scribble = require('scribbletune');
 
 let clip = scribble.clip({
     notes: scribble.scale('c', 'major', 3), // this works too ['c3', 'd3', 'e3', 'f3', 'g3', 'a3', 'b3']
-	pattern: 'x_x_x_x_x_x_x_x_'
+	pattern: 'x-'.repeat(8)
 });
 
 scribble.midi(clip, 'cscale.mid');
@@ -109,9 +109,9 @@ Let s just take this one teeny weeny step further and create a simple hi hats lo
 let scribble = require('scribbletune');
 
 let hats = scribble.clip({
-	notes: ['a#4'],
+	notes: ['c4'],
 	pattern: 'x'.repeat(16),
-	sizzle: true
+	accentMap: 'x---x---x-x---x-'
 });
 
 scribble.midi(hats, 'hats.mid');
