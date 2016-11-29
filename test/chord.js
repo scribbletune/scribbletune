@@ -26,5 +26,12 @@ test('Scribbletune::chord', (t) => {
 		'F major7 is f a c e'
 	);
 
+	// Diminished
+	t.equal(
+		scribble.chord('c', 'locrian #2', 3),
+		'c3,d#3,f#3',
+		'C Diminished is c d# f#'
+	);
+
 	t.end();
 });

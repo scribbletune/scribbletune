@@ -1,5 +1,5 @@
-Scribbletune
-------------
+Scribbletune (WIP currently works in node 6+)
+------------------------------------------------
 [![Build Status](https://api.travis-ci.org/walmik/scribbletune.svg)](http://travis-ci.org/walmik/scribbletune)
 
 Use simple __JavaScript__ `Strings` and `Arrays` to generate rhythms and musical patterns. Directly use the names of scales and chords and mash them up using JavaScript libraries like `underscore` or `lodash` in ways you hadn't imagined before! Then, export them as MIDI files and import these in Ableton Live, Reason, Fruity Loops, Cubase, Garage Band or whichever music creation software you like!

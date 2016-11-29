@@ -1,7 +1,7 @@
 const minorChords = ['m', 'min', 'Min', 'Minor', 'minor'];
 
 const utils = {
-	chordPtn: /^([a-gA-G][#|b]?)(maj|major|Maj|Major|m|min|Min|Minor|minor|7)(7)?(\-[0-8])?/,
+	chordPtn: /^([a-gA-G][#|b]?)(maj|major|Maj|Major|m|min|Min|Minor|minor|dim|diminished|7)(7)?(\-[0-8])?/,
 	shuffle: (arr) => {
 		let lastIndex = arr.length - 1;
 		arr.forEach(function(el, idx) {
@@ -33,6 +33,10 @@ const utils = {
 
 				if (scale == 7) {
 					mode = 'fifth mode';
+				}
+
+				if (scale === 'dim' || scale === 'diminished') {
+					mode = 'locrian #2';
 				}
 
 				if (minorChords.indexOf(scale) > -1) {
