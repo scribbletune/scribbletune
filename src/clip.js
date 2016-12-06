@@ -1,3 +1,5 @@
+'use strict';
+
 const assert = require('assert');
 const utils = require('./utils');
 const chord = require('./chord');
@@ -16,8 +18,8 @@ const getdefaultParams = () => {
 	}
 };
 
-const clip = (params = {}) => {	
-	params = Object.assign(getdefaultParams(), params);
+const clip = (params) => {	
+	params = Object.assign(getdefaultParams(), params || {});
 	let level = params.accentHi;
 	let sizzleArr;
 	if (params.sizzle) {

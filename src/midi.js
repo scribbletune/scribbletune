@@ -1,10 +1,12 @@
+'use strict';
+
 const fs = require('fs');
 const assert = require('assert');
 const jsmidgen = require('jsmidgen');
 
-const midi = (notes, fileName = 'music.mid') => {
+const midi = (notes, fileName) => {
 	assert(notes !== undefined && typeof notes !== 'string', 'You must provide an array of notes to write!');
-
+	fileName = fileName || 'music.mid';
 	let file = new jsmidgen.File();
 	let track = new jsmidgen.Track();
 	file.addTrack(track);

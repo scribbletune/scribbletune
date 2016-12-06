@@ -1,4 +1,4 @@
-Scribbletune (WIP currently works in node 6+)
+Scribbletune (WIP currently works in node 4+)
 ------------------------------------------------
 [![Build Status](https://api.travis-ci.org/walmik/scribbletune.svg)](http://travis-ci.org/walmik/scribbletune)
 

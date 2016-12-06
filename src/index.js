@@ -1,1 +1,1 @@
-const scale = require('./mode');const chord = require('./chord');const clip = require('./clip');const pattern = require('./pattern');const midi = require('./midi');// Allow scale to be denoted by mode as wellmodule.exports = {mode: scale, scale, chord, clip, pattern, midi};
+'use strict';const scale = require('./mode');const chord = require('./chord');const clip = require('./clip');const pattern = require('./pattern');const midi = require('./midi');// Allow scale to be denoted by mode as wellmodule.exports = {mode: scale, scale, chord, clip, pattern, midi};

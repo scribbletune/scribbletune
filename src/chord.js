@@ -1,3 +1,5 @@
+'use strict';
+
 const mode = require('./mode');
 
 const chord = (root, scale, octave, add7) => {

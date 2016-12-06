@@ -1,3 +1,5 @@
+'use strict';
+
 const assert = require('assert');
 const modes = require('./modes');
 const chromaticNotes = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'];
@@ -10,7 +12,11 @@ const chromaticNotes = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a
  * @param  {Boolean} addRootFromNextOctave Append the root note in the next octave before returning the mode/scale
  * @return {[type]}                        Returns the mode as an array, e.g. ['c3', 'd3', 'e3', 'f3', 'g3', 'a3', 'b3', 'c4']
  */
-const mode = (root = 'c', mode = 'ionian', octave = 3, addRootFromNextOctave = true) => {
+const mode = (root, mode, octave, addRootFromNextOctave) => {
+	root = root || 'c';
+	mode = mode || 'ionian';
+	octave = octave || 3;
+	addRootFromNextOctave = addRootFromNextOctave === false ? false : true;
 	// Make sure the root is valid [abcdefg] optionally followed by #
 	assert(root.match(/[abcdefg]#?/i), 'Invalid root note: ' + root);
 
