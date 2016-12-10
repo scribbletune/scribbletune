@@ -93,3 +93,27 @@ test('clip should extend notes in case of a longer pattern', (t) => {
 
 	t.end();
 });
+
+test('clip should allow using chords', (t) => {
+	let clip = scribble.clip({
+		notes: ['Cmaj', 'Cmin', 'a3'],
+		pattern: 'xxx'
+	});
+	t.equal(
+		clip[0].note.join(),
+		'c4,e4,g4',
+		'Clip allows usage of chords'
+	);
+	t.equal(
+		clip[1].note.join(),
+		'c4,d#4,g4',
+		'Clip allows usage of chords'
+	);
+	t.equal(
+		clip[2].note.join(),
+		'a3',
+		'Clip allows usage of chords'
+	);
+
+	t.end();
+});

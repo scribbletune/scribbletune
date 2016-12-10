@@ -287,3 +287,22 @@ test('Scribbletune::modes Miscellaneous', (t) => {
 	);
 	t.end();
 });
+
+test('Available modes', function(t) {
+	t.equal(
+		Array.isArray(scribble.modes),
+		true,
+		'Scribbletune exposes available modes'
+	);
+	t.equal(
+		scribble.modes.indexOf('ionian') > -1,
+		true,
+		'Scribbletune exposes available modes, for eg Ionian mode'
+	);
+	t.equal(
+		scribble.scales.indexOf('minor') > -1,
+		true,
+		'Scribbletune exposes available modes as scales, for eg Minor scale'
+	);
+	t.end();
+});
