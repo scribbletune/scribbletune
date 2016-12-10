@@ -90,4 +90,4 @@ const getChord = function(str) {
 	return arr;
 }
 
-module.exports = {isChord, getChord};
+module.exports = {isChord, getChord, chords: Object.keys(chordModeMap)};

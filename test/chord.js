@@ -72,3 +72,22 @@ test('Scribbletune::chord', (t) => {
 	);
 	t.end();
 });
+
+test('Available chords', function(t) {
+	t.equal(
+		Array.isArray(scribble.chords),
+		true,
+		'Scribbletune exposes available chords'
+	);
+	t.equal(
+		scribble.chords.indexOf('maj') > -1,
+		true,
+		'Scribbletune exposes available chords, for eg maj chord'
+	);
+	t.equal(
+		scribble.chords.indexOf('min') > -1,
+		true,
+		'Scribbletune exposes available chords, for eg min chord'
+	);
+	t.end();
+});

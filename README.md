@@ -1,4 +1,4 @@
-Scribbletune (WIP currently works in node 4+)
+Scribbletune (Requires Node 4+)
 ------------------------------------------------
 [![Build Status](https://api.travis-ci.org/walmik/scribbletune.svg)](http://travis-ci.org/walmik/scribbletune)
 
@@ -11,7 +11,7 @@ Use simple __JavaScript__ `Strings` and `Arrays` to generate rhythms and musical
 ### Let's C how this works
 You can get started by requiring the `scribbletune` module and create a `clip` that contains just the middle C note. A clip is like a 16 beat bar.
 ```js
-let scribble = require('scribbletune');
+const scribble = require('scribbletune');
 let clip = scribble.clip({
     notes: ['c4']
 });
@@ -22,7 +22,7 @@ Save this file as _c.js_ and run it from the terminal with `node c.js`. This wil
 ### Create a simple melody
 You can do more than render a single note! You can `require` the scribbletune module and use it to generate scales(modes), chords and patterns to create melodies. For example, to create a MIDI file comprising just the C Major scale (Ionian mode), you could create a new file and add some code like this:
 ```js
-let scribble = require('scribbletune');
+const scribble = require('scribbletune');
 
 let clip = scribble.clip({
     notes: scribble.scale('c', 'major', 3), // this works too ['c3', 'd3', 'e3', 'f3', 'g3', 'a3', 'b3']
@@ -35,14 +35,21 @@ Save this as _cscale.js_ and run it from the terminal `node cscale.js`. This wil
 
 [C Major Scale generated with Scribbletune](https://soundcloud.com/walmik/c-major) 
 
+To get a list of all the modes and scales that Scribbletune can generate, you can do this,
+```js
+const scribble = require('scribbletune');
+console.log(scribble.scales);
+```
+Here is a [list of modes and scales](https://github.com/walmik/scribbletune/blob/master/src/modes.js) that Scribbletune recognizes.
+
 ### Chords
 
 You can add chords to the `notes` array while creating a clip to render chords. Either provide the notes (with octave) of the chords you want separated by commas or use Scribbletune's chord generator.
 
 ```js
-let scribble = require('scribbletune');
+const scribble = require('scribbletune');
 let chords = scribble.clip({
-	notes: ['f#m', 'c#m', 'DMaj', 'Bm', 'EMajor', 'AMaj', 'dmaj', 'c#m', 'AMaj'],
+	notes: ['F#min', 'C#min', 'Dmaj', 'Bmin', 'Emaj', 'Amaj', 'Dmaj', 'C#min', 'Amaj'],
 	pattern: 'x_x_x_--'.repeat(8),
 	sizzle: true
 });  
@@ -53,6 +60,12 @@ scribble.render(chords, 'chords.mid');
 I imported that into Garage Band and applied Synthesize -> EDM Chord ->Sunrise Chords to it and here is how it sounds:
 
 [Chords generated with Scribbletune](https://soundcloud.com/walmik/chords) 
+
+To get a list of all the chords that Scribbletune can generate, you can do this,
+```js
+const scribble = require('scribbletune');
+console.log(scribble.chords);	// [ 'maj', 'min', 'sus2', 'sus4', 'maj7', 'min7', 'dom7', 'dim', 'dim7', 'aug', 'sixth']
+```
 
 ### Patterns
 
@@ -82,7 +95,7 @@ Hmmm, that can be a very simple bass line for a simple dance music loop. Let's f
 ### An excessively simple Kick Drum and Bass loop
 
 ```js
-let scribble = require('scribbletune');
+const scribble = require('scribbletune');
 let kick, bass;
 
 // 4 by 4 kick
@@ -106,7 +119,7 @@ Up there, we first created a 4 by 4 kick drum loop and then decided to use the f
 Let s just take this one teeny weeny step further and create a simple hi hats loop as well,
 
 ```js
-let scribble = require('scribbletune');
+const scribble = require('scribbletune');
 
 let hats = scribble.clip({
 	notes: ['c4'],
