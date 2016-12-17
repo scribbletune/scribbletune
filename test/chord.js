@@ -4,7 +4,7 @@ const test = require('tape');
 const scribble = require('../src/index');
 const chord = require('../src/chord');
 
-test('Scribbletune::chord', (t) => {
+test('Scribbletune::chord', t => {
 	t.equal(
 		chord.getChord('Cmaj').join(),
 		'c4,e4,g4',
@@ -62,7 +62,7 @@ test('Scribbletune::chord', (t) => {
 	t.equal(
 		chord.getChord('Csixth').join(),
 		'c4,e4,g4,a4',
-		'C Augmented is C E G A'
+		'C sixth is C E G A'
 	);
 
 	t.equal(
@@ -73,7 +73,7 @@ test('Scribbletune::chord', (t) => {
 	t.end();
 });
 
-test('Available chords', function(t) {
+test('Scribbletune::Available chords', t => {
 	t.equal(
 		Array.isArray(scribble.chords),
 		true,
@@ -89,5 +89,75 @@ test('Available chords', function(t) {
 		true,
 		'Scribbletune exposes available chords, for eg min chord'
 	);
+	t.end();
+});
+
+test('Scribbletune::Alternative names for chords', t => {
+	t.equal(
+		chord.getChord('CMaj').join(),
+		'c4,e4,g4',
+		'C Major is C E G'
+	);
+
+	t.equal(
+		chord.getChord('CMin').join(),
+		'c4,d#4,g4',
+		'C Minor is C D# G'
+	);
+
+	t.equal(
+		chord.getChord('Cm').join(),
+		'c4,d#4,g4',
+		'C Minor is C D# G'
+	);
+
+	t.equal(
+		chord.getChord('CDim').join(),
+		'c4,d#4,f#4',
+		'C Diminished is C D# F#'
+	);
+
+	t.equal(
+		chord.getChord('CDim7').join(),
+		'c4,d#4,f#4,a4',
+		'C Diminished 7th is C D# F# A'
+	);
+
+	t.equal(
+		chord.getChord('CSus2').join(),
+		'c4,d4,g4',
+		'C Sus2 is C D G'
+	);
+
+	t.equal(
+		chord.getChord('CSus4').join(),
+		'c4,f4,g4',
+		'C Sus4 is C F G'
+	);
+
+	t.equal(
+		chord.getChord('CAug').join(),
+		'c4,e4,g#4',
+		'C Augmented is C E G#'
+	);
+
+	t.equal(
+		chord.getChord('CDom7').join(),
+		'c4,e4,g4,a#4',
+		'C Augmented is C E G A#'
+	);
+
+	t.equal(
+		chord.getChord('C7').join(),
+		'c4,e4,g4,a#4',
+		'C Augmented is C E G A#'
+	);
+
+	t.equal(
+		chord.getChord('CAug').join(),
+		'c4,e4,g#4',
+		'C Augmented is C E G#'
+	);
+
 	t.end();
 });

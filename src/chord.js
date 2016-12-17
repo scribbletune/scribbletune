@@ -2,9 +2,9 @@
 
 const mode = require('./mode');
 
-const chordPtn = /^([a-gA-G][#|b]?)(maj|min|dim7|dim|dom7|maj7|min7|sus2|sus4|aug|sixth)\-?([0-8])?/;
+const chordPtn = /^([a-gA-G][#|b]?)(maj|Maj|min|m|Min|dim7|Dim7|dim|Dim|dom7|Dom7|7|maj7|Maj7|min7|Min7|sus2|Sus2|sus4|Sus4|aug|Aug|sixth|Sixth)\-?([0-8])?/;
 
-const chordModeMap = {
+const modeMap = {
 	// c e g
 	maj: {
 		mode: 'ionian',
@@ -72,6 +72,18 @@ const chordModeMap = {
 	}
 };
 
+modeMap.Maj = modeMap.maj;
+modeMap.Min = modeMap.m = modeMap.min;
+modeMap.Dim = modeMap.dim;
+modeMap.Dim7 = modeMap.dim7;
+modeMap.Maj7 = modeMap.maj7;
+modeMap.Min7 = modeMap.min7;
+modeMap.Dom7 = modeMap[7] = modeMap.dom7;
+modeMap.Sus2 = modeMap.sus2;
+modeMap.Sus4 = modeMap.sus4;
+modeMap.Aug = modeMap.aug;
+modeMap.Sixth = modeMap[6] = modeMap['6th'] = modeMap.sixth;
+
 const isChord = function(str) {
 	return str.match(chordPtn);
 }
@@ -81,8 +93,8 @@ const getChord = function(str) {
 	
 	str.replace(chordPtn, (match, root, scale, octave) => {
 		octave = octave || 4;
-		let m = mode(root.toLowerCase(), chordModeMap[scale].mode, octave);
-		chordModeMap[scale].int.forEach(i => {
+		let m = mode(root.toLowerCase(), modeMap[scale].mode, octave);
+		modeMap[scale].int.forEach(i => {
 			arr.push(m[i]);
 		});
 	});
@@ -90,4 +102,4 @@ const getChord = function(str) {
 	return arr;
 }
 
-module.exports = {isChord, getChord, chords: Object.keys(chordModeMap)};
+module.exports = {isChord, getChord, chords: Object.keys(modeMap)};
