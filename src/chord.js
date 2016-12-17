@@ -2,7 +2,7 @@
 
 const mode = require('./mode');
 
-const chordPtn = /^([a-gA-G][#|b]?)(maj|Maj|min|m|Min|dim7|Dim7|dim|Dim|dom7|Dom7|7|maj7|Maj7|min7|Min7|sus2|Sus2|sus4|Sus4|aug|Aug|sixth|Sixth)\-?([0-8])?/;
+const chordPtn = /^([a-gA-G][#|b]?)(maj|Maj|min|m|Min|dim7|Dim7|dim|Dim|dom7|Dom7|7|maj7|Maj7|min7|Min7|sus2|Sus2|sus4|Sus4|aug|Aug|sixth|Sixth|6th|6)\-?([0-8])?/;
 
 const modeMap = {
 	// c e g

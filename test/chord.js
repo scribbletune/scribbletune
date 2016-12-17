@@ -159,5 +159,22 @@ test('Scribbletune::Alternative names for chords', t => {
 		'C Augmented is C E G#'
 	);
 
+	t.equal(
+		chord.getChord('CSixth').join(),
+		'c4,e4,g4,a4',
+		'C sixth is C E G A'
+	);
+
+	t.equal(
+		chord.getChord('C6th').join(),
+		'c4,e4,g4,a4',
+		'C sixth is C E G A'
+	);
+
+	t.equal(
+		chord.getChord('C6').join(),
+		'c4,e4,g4,a4',
+		'C sixth is C E G A'
+	);
 	t.end();
 });
