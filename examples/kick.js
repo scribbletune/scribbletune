@@ -1,3 +1,5 @@
+'use strict';
+
 const scribble = require('../src/');
 
 let clip = scribble.clip({
@@ -5,4 +7,4 @@ let clip = scribble.clip({
 	pattern: scribble.pattern(4, 'x---')
 });
 
-scribble.render(clip);
+scribble.midi(clip);

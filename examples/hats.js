@@ -1,3 +1,5 @@
+'use strict';
+
 const scribble = require('../src/');
 let clip = scribble.clip({
 	notes: ['c4'],
@@ -5,4 +7,4 @@ let clip = scribble.clip({
 	sizzle: true
 });
 
-scribble.render(clip);
+scribble.midi(clip);
