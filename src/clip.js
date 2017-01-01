@@ -60,6 +60,20 @@ const clip = (params) => {
 		while (params.accentMap.length < params.pattern.length) {
 			params.accentMap = params.accentMap.concat(params.accentMap);
 		}
+
+		// accentMap can be a string (x---x--xx---x) or an Array of numbers (0 to 127)
+		// If it s a string, convert it to an array of numbers to be used later while
+		// assigning individual volume for each note
+		if (typeof params.accentMap === 'string') {
+			params.accentMap = params.accentMap.split('');
+			params.accentMap = params.accentMap.map(function(a, i) {
+				if (a === 'x') {
+					return  params.accentHi;
+				} else {
+					return params.accentLow;
+				}
+			});
+		}
 	}
 
 	// Ensure sizzle array is as long as the pattern
@@ -89,17 +103,10 @@ const clip = (params) => {
 			sizzleVal = sizzleArr[step];
 		}
 
-		if (params.accentMap !== '') {
-			if (params.accentMap[step] === 'x') {
-				// this is an accent
-				level = params.accentHi;
-
-				// also affect the sizzleVal so that the accentMap is carried forward in case of a sizzle
-				sizzleVal = level;
-			} else {
-				// since this is not an accent, lower the level to implement accents
-				level = params.accentLow;
-			}
+		if (params.accentMap) {
+			level = params.accentMap[step];
+			// Affect the sizzleVal so that the accentMap is carried forward in case of a sizzle
+			sizzleVal = level;
 		}
 
 		if (noteOn) {

@@ -66,6 +66,46 @@ test('clip should shuffle provided notes', (t) => {
 	t.end();
 });
 
+test('clip should allow setting accentMap with a x-_ string', (t) => {
+	let clip = scribble.clip({
+		notes: ['c4'],
+		accentMap: 'x-x-',
+		pattern: 'xxxx'
+	});
+	t.equal(
+		clip[0].level,
+		127,
+		'Clip function uses the provided number Array as accentMap'
+	);
+
+	t.equal(
+		clip[1].level,
+		70,
+		'Clip function uses the provided number Array as accentMap'
+	);
+	t.end();
+});
+
+test('clip should allow setting accentMap with a number Array', (t) => {
+	let clip = scribble.clip({
+		notes: ['c4'],
+		accentMap: [12, 24, 36, 48],
+		pattern: 'xxxx'
+	});
+	t.equal(
+		clip[0].level,
+		12,
+		'Clip function uses the provided number Array as accentMap'
+	);
+
+	t.equal(
+		clip[3].level,
+		48,
+		'Clip function uses the provided number Array as accentMap'
+	);
+	t.end();
+});
+
 test('clip should override default params with provided params', (t) => {
 	let clip = scribble.clip({
 		accentHi: 100
