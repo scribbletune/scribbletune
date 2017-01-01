@@ -56,7 +56,7 @@ const clip = (params) => {
 	}
 
 	// Ensure accent map is as long as the pattern
-	if (params.sizzle && params.accentMap) {
+	if (params.accentMap) {
 		while (params.accentMap.length < params.pattern.length) {
 			params.accentMap = params.accentMap.concat(params.accentMap);
 		}
