@@ -26,15 +26,10 @@ const mode = (root, mode, octave, addRootFromNextOctave) => {
 	// Append octave to chromatic notes
 	let chromatic =
 		chromaticNotes
-			.map(function(note) {
-				return note + octave;
-			})
+			.map(note => note + octave)
 			// Double up with the next octave to be able to bleed over
 			.concat(
-				chromaticNotes
-					.map(function(note) {
-						return note + (octave + 1);
-					})
+				chromaticNotes.map(note => note + (octave + 1))
 			);
 
 	/**
@@ -43,9 +38,7 @@ const mode = (root, mode, octave, addRootFromNextOctave) => {
 	 */
 	let modeArr = chromatic
 		.slice(chromatic.indexOf(root + octave))
-		.filter(function(note, idx) {
-			return modes[mode][idx] === 1;
-		});
+		.filter((note, idx) => modes[mode][idx] === 1);
 
 	// Add root from the next octave before returning (default)
 	if (addRootFromNextOctave) {

@@ -11,7 +11,7 @@ const midi = (notes, fileName) => {
 	let track = new jsmidgen.Track();
 	file.addTrack(track);
 
-	notes.forEach(function(noteObj) {
+	notes.forEach((noteObj) => {
 		let level = noteObj.level || 127;
 		// While writing chords (multiple notes per tick)
 		// only the first noteOn (or noteOff) needs the complete arity of the function call

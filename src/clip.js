@@ -4,21 +4,19 @@ const assert = require('assert');
 const utils = require('./utils');
 const chord = require('./chord');
 
-const getdefaultParams = () => {
-	return {
-		ticks: 512,			// By default a single 4x4 bar is 512 ticks (this is known as HDR_SPEED)
-		notes: ['c3'],
-		pattern: 'x_______________',
-		noteLength: 1 / 16,
-		accentMap: '',
-		accentHi: 127,
-		accentLow: 70,
-		shuffle: false,
-		sizzle: false
-	}
-};
+const getdefaultParams = () => ({
+	ticks: 512,			// By default a single 4x4 bar is 512 ticks (this is known as HDR_SPEED)
+	notes: ['c3'],
+	pattern: 'x_______________',
+	noteLength: 1 / 16,
+	accentMap: '',
+	accentHi: 127,
+	accentLow: 70,
+	shuffle: false,
+	sizzle: false
+});
 
-const clip = (params) => {	
+const clip = params => {	
 	params = Object.assign(getdefaultParams(), params || {});
 	let level = params.accentHi;
 	let sizzleArr;
@@ -66,13 +64,7 @@ const clip = (params) => {
 		// assigning individual volume for each note
 		if (typeof params.accentMap === 'string') {
 			params.accentMap = params.accentMap.split('');
-			params.accentMap = params.accentMap.map(function(a, i) {
-				if (a === 'x') {
-					return  params.accentHi;
-				} else {
-					return params.accentLow;
-				}
-			});
+			params.accentMap = params.accentMap.map(a => a === 'x' ? params.accentHi : params.accentLow);
 		}
 	}
 
