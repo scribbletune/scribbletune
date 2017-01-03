@@ -4,7 +4,7 @@ const scribble = require('../src/');
 
 let clip = scribble.clip({
 	notes: ['c3'],
-	pattern: scribble.pattern(4, 'x---')
+	pattern: 'x---'.repeat(4)
 });
 
 scribble.midi(clip);

@@ -64,7 +64,7 @@ I imported that into Garage Band and applied Synthesize -> EDM Chord ->Sunrise C
 To get a list of all the chords that Scribbletune can generate, you can do this,
 ```js
 const scribble = require('scribbletune');
-console.log(scribble.chords);	// [ 'maj', 'min', 'sus2', 'sus4', 'maj7', 'min7', 'dom7', 'dim', 'dim7', 'aug', 'sixth']
+console.log(scribble.listChords());	// [ 'maj', 'min', 'sus2', 'sus4', 'maj7', 'min7', 'dom7', 'dim', 'dim7', 'aug', 'sixth']
 ```
 
 ### Patterns

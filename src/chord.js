@@ -2,8 +2,13 @@
 
 const mode = require('./mode');
 
+// Regex for identifying chords
 const chordPtn = /^([a-gA-G][#|b]?)(dim7|Dim7|dim|Dim|dom7|Dom7|7|maj7|Maj7|min7|Min7|maj|Maj|min|m|Min|sus2|Sus2|sus4|Sus4|aug|Aug|sixth|Sixth|6th|6)\-?([0-8])?/;
 
+/**
+ * Scales and integer notation to derive chords
+ * @type {Object}
+ */
 const modeMap = {
 	// c e g
 	maj: {
@@ -72,6 +77,7 @@ const modeMap = {
 	}
 };
 
+// Alternate names for chords
 modeMap.Maj = modeMap.maj;
 modeMap.Min = modeMap.m = modeMap.min;
 modeMap.Dim = modeMap.dim;
@@ -84,11 +90,19 @@ modeMap.Sus4 = modeMap.sus4;
 modeMap.Aug = modeMap.aug;
 modeMap.Sixth = modeMap[6] = modeMap['6th'] = modeMap.sixth;
 
-const isChord = function(str) {
-	return str.match(chordPtn);
-}
+/**
+ * Use the chord regex to identify if the passed string is a chord
+ * @param  {String}  str [examples: CMaj Cmaj cmaj Cm cmin f#maj7 etc]
+ * @return {Boolean}
+ */
+const isChord = str => str.match(chordPtn);
 
-const getChord = function(str) {
+/**
+ * Derive a chord from the given string. Exposed as simply `chord` in Scribbletune
+ * @param  {String} str [example: CMaj]
+ * @return {Array}     [example output: ['c4', 'e4', 'g4']]
+ */
+const getChord = str => {
 	let arr = [];
 	
 	str.replace(chordPtn, (match, root, scale, octave) => {
@@ -102,4 +116,6 @@ const getChord = function(str) {
 	return arr;
 }
 
-module.exports = {isChord, getChord, chords: Object.keys(modeMap)};
+const listChords = () => Object.keys(modeMap);
+
+module.exports = {isChord, getChord, listChords};
