@@ -54,7 +54,7 @@ let chords = scribble.clip({
 	sizzle: true
 });  
 
-scribble.render(chords, 'chords.mid');
+scribble.midi(chords, 'chords.mid');
 ```
 
 I imported that into Garage Band and applied Synthesize -> EDM Chord ->Sunrise Chords to it and here is how it sounds:
