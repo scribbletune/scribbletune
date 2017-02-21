@@ -157,3 +157,20 @@ test('clip should allow using chords', (t) => {
 
 	t.end();
 });
+
+test('clip should allow passing arrays of notes as individual notes', (t) => {
+	let clip = scribble.clip({
+		notes: [['c4', 'e4', 'g4']]
+	});
+	t.equal(clip[0].note.join(), 'c4,e4,g4', 'Clip allows passing array of notes as individual notes');
+	t.end();
+});
+
+test('clip should not allow passing arrays of invalid notes as individual notes', (t) => {
+	t.throws(function() {
+		scribble.clip({
+			notes: [['m', 'p', true]]
+		});
+	});
+	t.end();
+});

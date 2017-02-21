@@ -31,9 +31,11 @@ const clip = params => {
 		params.noteLength = a[0] / a[1];
 	}
 
-	// Convert chords if any to notes array
-	params.notes = params.notes.map((el) => {
-		if (chord.isChord(el)) {
+	// Convert chords if any to notes
+	params.notes = params.notes.map(el => {
+		if (Array.isArray(el)) {
+			return el.join();
+		} else if (chord.isChord(el)) {
 			return chord.getChord(el).join();
 		} else {
 			return el;
@@ -41,7 +43,7 @@ const clip = params => {
 	});
 
 	// Validate provided notes
-	params.notes.forEach((el) => {
+	params.notes.forEach(el => {
 		assert(el.match(/[abcdefg]#?[0-9]/g) !== null, el + 'is not a valid note!');
 	});
 
