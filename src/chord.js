@@ -3,7 +3,7 @@
 const mode = require('./mode');
 
 // Regex for identifying chords
-const chordPtn = /^([a-gA-G][#|b]?)(dim7|Dim7|dim|Dim|dom7|Dom7|7|maj7|Maj7|min7|Min7|maj|Maj|min|m|Min|sus2|Sus2|sus4|Sus4|aug|Aug|sixth|Sixth|6th|6)\-?([0-8])?/;
+const chordPtn = /^([a-gA-G][#|b]?)(dim7|Dim7|dim|Dim|dom7|Dom7|7|maj7|Maj7|min7|Min7|m7|maj|Maj|min|m|Min|sus2|Sus2|sus4|Sus4|aug|Aug|sixth|Sixth|6th|6)\-?([0-8])?/;
 
 /**
  * Scales and integer notation to derive chords
@@ -84,6 +84,7 @@ modeMap.Dim = modeMap.dim;
 modeMap.Dim7 = modeMap.dim7;
 modeMap.Maj7 = modeMap.maj7;
 modeMap.Min7 = modeMap.min7;
+modeMap.m7 = modeMap.min7;
 modeMap.Dom7 = modeMap[7] = modeMap.dom7;
 modeMap.Sus2 = modeMap.sus2;
 modeMap.Sus4 = modeMap.sus4;

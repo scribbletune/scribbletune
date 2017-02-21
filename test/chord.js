@@ -36,6 +36,18 @@ test('Scribbletune::chord', t => {
 	);
 
 	t.equal(
+		scribble.chord('Cm7').join(),
+		'c4,d#4,g4,a#4',
+		'C Minor is C D# G A#'
+	);
+
+	t.equal(
+		scribble.chord('Cm7-5').join(),
+		'c5,d#5,g5,a#5',
+		'C Minor is C D# G A#'
+	);
+
+	t.equal(
 		scribble.chord('Csus2').join(),
 		'c4,d4,g4',
 		'C Sus2 is C D G'
