@@ -31,6 +31,6 @@
     "url": "https://github.com/walmik/scribbletune/issues"
   },
   "engines": {
-    "node": "6.x.x"
+    "node": ">6.x.x"
   }
 }
