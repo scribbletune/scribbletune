@@ -94,6 +94,13 @@ test('Scribbletune::chord', t => {
 		'c4,e4,g4,a#4',
 		'C Augmented is C E G A#'
 	);
+
+	t.equal(
+		scribble.chord('fmin5').join(),
+		'f5,g#5,c6',
+		'F minor is F, G#, C'
+	);
+
 	t.end();
 });
 

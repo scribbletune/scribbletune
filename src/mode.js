@@ -15,7 +15,7 @@ const chromaticNotes = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a
 const mode = (root, mode, octave, addRootFromNextOctave) => {
 	root = root || 'c';
 	mode = mode || 'ionian';
-	octave = octave || 3;
+	octave = octave ? Number(octave) : 3;
 	addRootFromNextOctave = addRootFromNextOctave === false ? false : true;
 	// Make sure the root is valid [abcdefg] optionally followed by #
 	assert(root.match(/[abcdefg]#?/i), 'Invalid root note: ' + root);
