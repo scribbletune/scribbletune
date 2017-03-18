@@ -194,11 +194,5 @@ test('Scribbletune::Alternative names for chords', t => {
 		'c4,e4,g4,a4',
 		'C sixth is C E G A'
 	);
-
-	t.equal(
-		scribble.chord('C6').join(),
-		'c4,e4,g4,a4',
-		'C sixth is C E G A'
-	);
 	t.end();
 });
