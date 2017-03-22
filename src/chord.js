@@ -16,7 +16,7 @@ const modeMap = {
 		int: [0, 2, 4]
 	},
 
-	// c d# g
+	// c e♭ g
 	min: {
 		mode: 'aeolian',
 		int: [0, 2, 4]
@@ -40,31 +40,31 @@ const modeMap = {
 		int: [0, 2, 4, 6]
 	},
 
-	// c d# g a#
+	// c e♭ g b♭
 	min7: {
 		mode: 'minor',
 		int: [0, 2, 4, 6]
 	},
 
-	// c e g a#
+	// c e g b♭
 	dom7: {
 		mode: 'mixolydian',
 		int: [0, 2, 4, 6]
 	},
 
-	// c d# f#
+	// c e♭ g♭
 	dim: {
 		mode: 'diminished whole half',
 		int: [0, 2, 4]
 	},
 
-	// c d# f# a
+	// c e♭ g♭ b𝄫
 	dim7: {
 		mode: 'diminished whole half',
 		int: [0, 2, 4, 6]
 	},
 
-	// c e g#
+	// c e g♯
 	aug: {
 		mode: 'fifth mode',
 		int: [0, 2, 5]
