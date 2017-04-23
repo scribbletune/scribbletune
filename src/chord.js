@@ -117,6 +117,10 @@ const getChord = str => {
 	return arr;
 }
 
+/**
+ * Get a list of chords available in Scribbletune.
+ * @return {Array}     [example output: ['maj', 'min', 'dim']]
+ */
 const listChords = () => Object.keys(modeMap);
 
 module.exports = {isChord, getChord, listChords};
