@@ -4,6 +4,10 @@ const assert = require('assert');
 const utils = require('./utils');
 const chord = require('./chord');
 
+/**
+ * Get defauly params for a clip, such as root note, pattern etc
+ * @return {Object}
+ */
 const getdefaultParams = () => ({
 	ticks: 512,			// By default a single 4x4 bar is 512 ticks (this is known as HDR_SPEED)
 	notes: ['c3'],
@@ -16,6 +20,11 @@ const getdefaultParams = () => ({
 	sizzle: false
 });
 
+/**
+ * A clip is a container of a musical idea based on the params passed to it
+ * @param  {Object} params Extend base parans object derived from getdefaultParams
+ * @return {Object} The return object is used with the `midi` method to generate a MIDI file
+ */
 const clip = params => {	
 	params = Object.assign(getdefaultParams(), params || {});
 	let level = params.accentHi;
