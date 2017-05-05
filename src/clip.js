@@ -56,12 +56,26 @@ const clip = params => {
 		assert(el.match(/[abcdefg]#?[0-9]/g) !== null, el + 'is not a valid note!');
 	});
 
-	// Validate provided pattern does not include anything other that x, - OR _
+	// Validate provided pattern does not include anything other than x, - OR _
 	assert(params.pattern.match(/[^x\-_]+/) === null, params.pattern + 'is not a valid pattern!');
 
 	// Ensure notes array has at least as many elements as pattern
-	while (params.notes.length < params.pattern.length) {
-		params.notes = params.notes.concat(params.notes);
+	if (params.notes.length < params.pattern.length) {
+		while (params.notes.length < params.pattern.length) {
+			params.notes = params.notes.concat(params.notes);
+		}
+		// Clip off extra notes
+		params.notes = params.notes.slice(0, params.pattern.length);
+	}
+
+	// Ensure pattern is as long as number of notes
+	if (params.pattern.length < params.notes.length) {
+		let originalPattern = params.pattern;
+		while (params.pattern.length < params.notes.length) {
+			params.pattern = params.pattern + originalPattern;
+		}
+		// Clip off extra chars
+		params.pattern = params.pattern.slice(0, params.notes.length);
 	}
 
 	// Ensure accent map is as long as the pattern

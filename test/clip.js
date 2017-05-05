@@ -134,6 +134,20 @@ test('clip should extend notes in case of a longer pattern', (t) => {
 	t.end();
 });
 
+test('clip should extend notes in case of a longer pattern but retain length of pattern', (t) => {
+	let clip = scribble.clip({
+		notes: ['c3'],
+		pattern: 'xxxxx'
+	});
+	t.equal(
+		clip.length,
+		5,
+		'Clip function extends notes only up till the length of the pattern'
+	);
+
+	t.end();
+});
+
 test('clip should allow using chords', (t) => {
 	let clip = scribble.clip({
 		notes: ['Cmaj', 'Cmin', 'a3'],
@@ -172,5 +186,14 @@ test('clip should not allow passing arrays of invalid notes as individual notes'
 			notes: [['m', 'p', true]]
 		});
 	});
+	t.end();
+});
+
+test('clip should increase pattern length if shorter than number of notes', (t) => {
+	let clip = scribble.clip({
+		notes: ['c4', 'e4', 'g4', 'b4'],
+		pattern: 'x'
+	});
+	t.equal(clip.length, 4, 'Clip adjusts pattern lenght if less than number of notes');
 	t.end();
 });
