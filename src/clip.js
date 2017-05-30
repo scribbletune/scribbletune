@@ -3,6 +3,7 @@
 const assert = require('assert');
 const utils = require('./utils');
 const chord = require('./chord');
+const jsmUtils = require('jsmidgen').Util;
 
 /**
  * Get defauly params for a clip, such as root note, pattern etc
@@ -17,8 +18,31 @@ const getdefaultParams = () => ({
 	accentHi: 127,
 	accentLow: 70,
 	shuffle: false,
-	sizzle: false
+	sizzle: false,
+	arpegiate: false
 });
+
+/**
+ * Get default params for the arpegiate property
+ * @return {Object}
+ */
+const getDefaultArpegiateParams = () => ({
+	distance: 12,
+	steps: 1
+});
+
+/**
+ * Get arpegiated (transposed by distance) notes
+ * @return {Object}
+ */
+const getArpedNotes = (notes, distance) => {
+	return notes.map(note => {
+		let noteMidiNum = jsmUtils.midiPitchFromNote(note);
+		let transposedMidiNum = noteMidiNum + distance;
+		return jsmUtils.noteFromMidiPitch(transposedMidiNum);
+	});
+};
+
 
 /**
  * A clip is a container of a musical idea based on the params passed to it
@@ -58,6 +82,26 @@ const clip = params => {
 
 	// Validate provided pattern does not include anything other than x, - OR _
 	assert(params.pattern.match(/[^x\-_]+/) === null, params.pattern + 'is not a valid pattern!');
+
+	// Update notes array in case of arpegiate
+	if (params.arpegiate) {
+		if (typeof params.arpegiate === 'object') {
+			params.arpegiate = Object.assign(getDefaultArpegiateParams(), params.arpegiate);
+		} else {
+			params.arpegiate = getDefaultArpegiateParams();
+		}
+
+		// If the notes are c3 and f3 and the steps are 2 and distance is 12 (octave)
+		// Then, make 2 arrays of notes that 12 semitones more than the given notes
+		// So in this example, the 2 arrays would be [c4, f4] and [c5, f5]
+		// Concatentate these 2 new arrays with the existing notes to create an arpegiated sequence
+		let tmpNotes = params.notes;
+		for (var i = 0; i < params.arpegiate.steps; i++) {
+			let arpedNotes = getArpedNotes(tmpNotes, params.arpegiate.distance);
+			params.notes = params.notes.concat(arpedNotes);
+			tmpNotes = arpedNotes;
+		}
+	}
 
 	// Ensure notes array has at least as many elements as pattern
 	if (params.notes.length < params.pattern.length) {

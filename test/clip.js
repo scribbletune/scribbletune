@@ -194,6 +194,31 @@ test('clip should increase pattern length if shorter than number of notes', (t) 
 		notes: ['c4', 'e4', 'g4', 'b4'],
 		pattern: 'x'
 	});
-	t.equal(clip.length, 4, 'Clip adjusts pattern lenght if less than number of notes');
+	t.equal(clip.length, 4, 'Clip adjusts pattern length if less than number of notes');
+	t.end();
+});
+
+test('clip should arpegiate notes with default settings', (t) => {
+	let clip = scribble.clip({
+		notes: ['c4', 'e4'],
+		pattern: 'x'.repeat(4),
+		arpegiate: true
+	});
+	// The third note in the clip array should be c5 (Note: `clip[n].note` itself is an array for chord support)
+	t.equal(clip[2].note[0], 'c5', 'Clip arpegiates notes with default settings');
+	t.end();
+});
+
+test('clip should arpegiate notes with provided settings', (t) => {
+	let clip = scribble.clip({
+		notes: ['c4', 'e4'],
+		pattern: 'x'.repeat(4),
+		arpegiate: {
+			steps: 2,
+			distance: 1
+		}
+	});
+	// The third note in the clip array should be c#4 (Note: `clip[n].note` itself is an array for chord support)
+	t.equal(clip[2].note[0], 'c#4', 'Clip arpegiates notes with provided settings');
 	t.end();
 });
