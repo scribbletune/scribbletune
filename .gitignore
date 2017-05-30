@@ -3,4 +3,4 @@ coverage
 .DS_Store
 *.mid
 .idea/
-test-scribble.js
+.npmrc
