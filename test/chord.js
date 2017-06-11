@@ -179,7 +179,7 @@ test('Scribbletune::Alternative names for chords', t => {
 	);
 
 	t.equal(
-		scribble.chord('C7').join(),
+		scribble.chord('C7th').join(),
 		'c4,e4,g4,a#4',
 		'C Augmented is C E G A#'
 	);
