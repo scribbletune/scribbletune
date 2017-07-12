@@ -37,9 +37,6 @@ const mode = (root, mode, octave, addRootFromNextOctave) => {
 	// Make sure if the provided mode is valid
 	assert(modes.hasOwnProperty(mode), 'Invalid mode: ' + mode);
 
-	// Make sure the octave is a valid number
-	assert(octave.match(/[0-8]/), 'Invalid octave: ' + octave);
-
 	root = root || 'c';
 	mode = mode || 'ionian';
 	octave = octave ? Number(octave) : 4;
