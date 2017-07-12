@@ -13,12 +13,12 @@ const chromaticNotes = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a
  * @return {[type]}                        Returns the mode as an array, e.g. ['c3', 'd3', 'e3', 'f3', 'g3', 'a3', 'b3', 'c4']
  */
 const mode = (root, mode, octave, addRootFromNextOctave) => {
-	if (root.match(/^[A-Za-z]\|[A-Za-z]+/)) {
+	if (root.includes("|")) {
 		var args = root.split('|');
 		root = args[0];
 		mode = args[1];
 		octave = args[2];
-		addRootFromNextOctave = args[3] === undefined ? true : args[3] === 'true' ? true : false;
+		addRootFromNextOctave = args[3] == 'false' ? false : true;
 	}
 
 	// Make sure the root is valid [abcdefg] optionally followed by #
