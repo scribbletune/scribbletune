@@ -39,7 +39,7 @@ const mode = (root, mode, octave, addRootFromNextOctave) => {
 	root = root || 'c';
 	mode = mode || 'ionian';
 	octave = octave ? Number(octave) : 4;
-	addRootFromNextOctave = addRootFromNextOctave === 'false' ? false : true;
+	addRootFromNextOctave = addRootFromNextOctave == 'false' ? false : true;
 
 	// Append octave to chromatic notes
 	let chromatic =
