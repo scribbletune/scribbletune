@@ -15,7 +15,7 @@ const chromaticNotes = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a
 const mode = (root, mode, octave, addRootFromNextOctave) => {
 
 	if (root.match(/^[A-Za-z]\s[A-Za-z]+/)) {
-		var args = root.split(" ");
+		var args = root.split(' ');
 
 		// Remove any extra spaces they accidentally added
 		for (var i = 0; i < args.length; i++) {
