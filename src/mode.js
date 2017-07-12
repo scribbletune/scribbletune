@@ -13,7 +13,7 @@ const chromaticNotes = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a
  * @return {[type]}                        Returns the mode as an array, e.g. ['c3', 'd3', 'e3', 'f3', 'g3', 'a3', 'b3', 'c4']
  */
 const mode = (root, mode, octave, addRootFromNextOctave) => {
-	if (root.includes("|")) {
+	if (root.includes('|')) {
 		var args = root.split('|');
 		root = args[0];
 		mode = args[1];
