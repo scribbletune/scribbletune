@@ -13,21 +13,12 @@ const chromaticNotes = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a
  * @return {[type]}                        Returns the mode as an array, e.g. ['c3', 'd3', 'e3', 'f3', 'g3', 'a3', 'b3', 'c4']
  */
 const mode = (root, mode, octave, addRootFromNextOctave) => {
-	if (root.match(/^[A-Za-z]\s[A-Za-z]+/)) {
-		var args = root.split(' ');
-
-		// Remove any extra spaces they accidentally added
-		for (var i = 0; i < args.length; i++) {
-			if (args[i] == '') {
-				args.splice(i, 1);
-				i--;
-			}
-		}
-
+	if (root.match(/^[A-Za-z]\|[A-Za-z]+/)) {
+		var args = root.split('|');
 		root = args[0];
 		mode = args[1];
 		octave = args[2];
-		addRootFromNextOctave = args[3];
+		addRootFromNextOctave = args[3] === undefined ? true : args[3] === 'true' ? true : false;
 	}
 
 	// Make sure the root is valid [abcdefg] optionally followed by #
@@ -39,7 +30,7 @@ const mode = (root, mode, octave, addRootFromNextOctave) => {
 	root = root || 'c';
 	mode = mode || 'ionian';
 	octave = octave ? Number(octave) : 4;
-	addRootFromNextOctave = addRootFromNextOctave == 'false' ? false : true;
+	addRootFromNextOctave = addRootFromNextOctave == false ? false : true;
 
 	// Append octave to chromatic notes
 	let chromatic =
@@ -62,7 +53,6 @@ const mode = (root, mode, octave, addRootFromNextOctave) => {
 	if (addRootFromNextOctave) {
 		modeArr.push(root + (octave + 1));
 	}
-
 	return modeArr;
 }
 

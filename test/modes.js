@@ -10,6 +10,11 @@ test('Scribbletune::modes Common', (t) => {
 		'C Ionian is c d e f g a b'
 	);
 	t.equal(
+		scribble.mode('c|ionian').join(''),
+		'c4d4e4f4g4a4b4c5',
+		'C Ionian is c d e f g a b'
+	);
+	t.equal(
 		scribble.mode('d', 'dorian').join(''),
 		'd4e4f4g4a4b4c5d5',
 		'D Dorian is d e f g a b c'
@@ -207,6 +212,11 @@ test('Scribbletune::modes Exotic', (t) => {
 		'C Oriental is c c# e f f# a a#'
 	);
 	t.equal(
+		scribble.mode('c|oriental').join(''),
+		'c4c#4e4f4f#4a4a#4c5',
+		'C Oriental is c c# e f f# a a#'
+	);
+	t.equal(
 		scribble.mode('c', 'iwato').join(''),
 		'c4c#4f4f#4a#4c5',
 		'C Iwato c c# f f# a#'
@@ -231,12 +241,27 @@ test('Scribbletune::modes Exotic', (t) => {
 		'c4d4e4f4f#4g#4a#4c5',
 		'C Major Locrian is c d e f f# g# a#'
 	);
+	t.equal(
+		scribble.mode('c|major locrian').join(''),
+		'c4d4e4f4f#4g#4a#4c5',
+		'C Major Locrian is c d e f f# g# a#'
+	);
+	t.equal(
+		scribble.mode('c|neapolitan minor').join(''),
+		'c4c#4d#4f4g4g#4b4c5',
+		'C Neopolitan Minor is c c# d# f g g# b'
+	);
 	t.end();
 });
 
 test('Scribbletune::modes Miscellaneous', (t) => {
 	t.equal(
 		scribble.mode('c', 'augmented').join(''),
+		'c4d4e4f#4g#4a4b4c5',
+		'C Augmented is c d e f# g# a b'
+	);
+	t.equal(
+		scribble.mode('c|augmented').join(''),
 		'c4d4e4f#4g#4a4b4c5',
 		'C Augmented is c d e f# g# a b'
 	);
@@ -277,6 +302,11 @@ test('Scribbletune::modes Miscellaneous', (t) => {
 	);
 	t.equal(
 		scribble.mode('c', 'major locrian', 4, false).join(''),
+		'c4d4e4f4f#4g#4a#4',
+		'Add root from next octave is customizable'
+	);
+	t.equal(
+		scribble.mode('c|major locrian|4|false').join(''),
 		'c4d4e4f4f#4g#4a#4',
 		'Add root from next octave is customizable'
 	);
