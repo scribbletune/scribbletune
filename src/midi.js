@@ -9,7 +9,7 @@ var transposition = 0;
  * @param {Integer} octaveIndex		The new octave for middle C.
  */
 function setMiddle(octaveIndex){
-	transposition = octaveIndex;
+	transposition = octaveIndex-4;
 }
 /**
  * Take an array of note objects to generate a MIDI file in the same location as this method is called
