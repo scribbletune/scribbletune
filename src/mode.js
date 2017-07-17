@@ -18,7 +18,7 @@ const mode = (root, mode, octave, addRootFromNextOctave) => {
 		root = args[0];
 		mode = args[1];
 		octave = args[2];
-		addRootFromNextOctave = args[3] == 'false' ? false : true;
+		addRootFromNextOctave = args[3] !== 'false';
 	}
 
 	// Make sure the root is valid [abcdefg] optionally followed by #
@@ -30,7 +30,7 @@ const mode = (root, mode, octave, addRootFromNextOctave) => {
 	root = root || 'c';
 	mode = mode || 'ionian';
 	octave = octave ? Number(octave) : 4;
-	addRootFromNextOctave = addRootFromNextOctave == false ? false : true;
+	addRootFromNextOctave = addRootFromNextOctave !== false;
 
 	// Append octave to chromatic notes
 	let chromatic =
