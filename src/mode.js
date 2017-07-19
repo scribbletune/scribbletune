@@ -13,15 +13,24 @@ const chromaticNotes = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a
  * @return {[type]}                        Returns the mode as an array, e.g. ['c3', 'd3', 'e3', 'f3', 'g3', 'a3', 'b3', 'c4']
  */
 const mode = (root, mode, octave, addRootFromNextOctave) => {
-	root = root || 'c';
-	mode = mode || 'ionian';
-	octave = octave ? Number(octave) : 3;
-	addRootFromNextOctave = addRootFromNextOctave === false ? false : true;
+	if (root.includes('|')) {
+		var args = root.split('|');
+		root = args[0];
+		mode = args[1];
+		octave = args[2];
+		addRootFromNextOctave = args[3] !== 'false';
+	}
+
 	// Make sure the root is valid [abcdefg] optionally followed by #
 	assert(root.match(/[abcdefg]#?/i), 'Invalid root note: ' + root);
 
 	// Make sure if the provided mode is valid
 	assert(modes.hasOwnProperty(mode), 'Invalid mode: ' + mode);
+
+	root = root || 'c';
+	mode = mode || 'ionian';
+	octave = octave ? Number(octave) : 4;
+	addRootFromNextOctave = addRootFromNextOctave !== false;
 
 	// Append octave to chromatic notes
 	let chromatic =
@@ -44,7 +53,6 @@ const mode = (root, mode, octave, addRootFromNextOctave) => {
 	if (addRootFromNextOctave) {
 		modeArr.push(root + (octave + 1));
 	}
-
 	return modeArr;
 }
 
