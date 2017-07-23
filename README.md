@@ -138,10 +138,33 @@ Import the 3 MIDI files thus generated into your favorite music creation softwar
 ### Changing Middle C
 Sometimes Middle C is not C4, but a C in a different octave. To set the octave for middle C use
 ```js
-scribble.setMiddle(octave)
+scribble.setMiddleC(octave)
 ```
-
 This automatically transposes every note to the new key determined by the new middle C.
+So, let's say we're using a music editing software that uses C5 as it's middle C. If we were to use this,
+```js
+const scribble = require("scribbletune");
+
+let clip = scribble.clip({
+	notes: ["c4", "d4", "e4", "f4"],
+	pattern: 'x'.repeat(8)
+});
+
+scribble.midi(clip, "octave.midi");
+```
+then the melody would seem to be one octave higher than it should be.
+If we initialize the middle C octave to 5 like,
+```js
+const scribble = require("scribbletune");
+scribble.setMiddleC(5)
+let clip = scribble.clip({
+	notes: ["c4", "d4", "e4", "f4"],
+	pattern: 'x'.repeat(8)
+});
+
+scribble.midi(clip, "octave.midi");
+```
+then the clip would sound like it should!
 
 
 There's a lot more to this humble beginning. But I ll let you explore it for yourself. As you can see, now you can use any JavaScript library (or not) to compute melodies using Scribbletune! Ok then, get on with it :)
