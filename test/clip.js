@@ -23,11 +23,40 @@ test('clip should throw an error in case of invalid notes', (t) => {
 	t.end();
 });
 
-test('clip should throw an error in case of invalid notes type', (t) => {
-	t.throws(function() {
-		scribble.clip({notes: 'c3'});
+test('clip should allow passing a string of notes', (t) => {
+	let clip = scribble.clip({
+		notes: 'c4 d4 e4',
+		pattern: 'xxx'
 	});
+	t.equal(clip[0].note[0], 'c4', 'Clip uses provided notes as a string');
+	t.equal(clip[1].note[0], 'd4', 'Clip uses provided notes as a string');
+	t.equal(clip[2].note[0], 'e4', 'Clip uses provided notes as a string');
+	t.end();
+});
 
+test('clip should allow passing a string of notes with chords', (t) => {
+	let clip = scribble.clip({
+		notes: 'c4 Dmaj e4',
+		pattern: 'xxx'
+	});
+	t.equal(clip[0].note[0], 'c4', 'Clip uses provided notes as a string');
+	t.equal(clip[1].note[0], 'd4', 'Clip uses provided notes as a string');
+	t.equal(clip[1].note[1], 'f#4', 'Clip uses provided notes as a string');
+	t.equal(clip[1].note[2], 'a4', 'Clip uses provided notes as a string');
+	t.equal(clip[2].note[0], 'e4', 'Clip uses provided notes as a string');
+	t.end();
+});
+
+test('clip should allow passing a string of notes with chords with octave', (t) => {
+	let clip = scribble.clip({
+		notes: 'c4 Dmaj-5 e4',
+		pattern: 'xxx'
+	});
+	t.equal(clip[0].note[0], 'c4', 'Clip uses provided notes as a string');
+	t.equal(clip[1].note[0], 'd5', 'Clip uses provided notes as a string');
+	t.equal(clip[1].note[1], 'f#5', 'Clip uses provided notes as a string');
+	t.equal(clip[1].note[2], 'a5', 'Clip uses provided notes as a string');
+	t.equal(clip[2].note[0], 'e4', 'Clip uses provided notes as a string');
 	t.end();
 });
 
