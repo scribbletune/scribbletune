@@ -146,7 +146,7 @@ So, let's say we're using a music editing software that uses C5 as it's middle C
 const scribble = require("scribbletune");
 
 let clip = scribble.clip({
-	notes: ["c4", "d4", "e4", "f4"],
+	notes: ['c4', 'd4', 'e4', 'f4'],
 	pattern: 'x'.repeat(8)
 });
 
@@ -158,7 +158,7 @@ If we initialize the middle C octave to 5 like,
 const scribble = require("scribbletune");
 scribble.setMiddleC(5)
 let clip = scribble.clip({
-	notes: ["c4", "d4", "e4", "f4"],
+	notes: ['c4', 'd4', 'e4', 'f4'],
 	pattern: 'x'.repeat(8)
 });
 
