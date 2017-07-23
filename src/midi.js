@@ -10,6 +10,7 @@ var transposition = 0;
  * @param {Integer} octaveIndex		The new octave for middle C.
  */
 function setMiddleC(octaveIndex){
+	assert(Number.isInteger(octaveIndex), "Octave Index must be an integer.");
 	transposition = octaveIndex - 4;
 }
 /**
