@@ -3,7 +3,7 @@
 const fs = require('fs');
 const assert = require('assert');
 const jsmidgen = require('jsmidgen');
-var transposition = 0;
+let transposition = 0;
 
 /**
  * Takes an integer and transposes all notes to a different middle C octave.
@@ -31,13 +31,23 @@ const midi = (notes, fileName) => {
 		// only the first noteOn (or noteOff) needs the complete arity of the function call
 		// subsequent calls need only the first 2 args (channel and note)
 		if (noteObj.note) {
-			var note = noteObj.note[0];
+			let note;
+			if(typeof noteObj.note === 'string'){
+				note = noteObj.note;
+			} else{
+				note = noteObj.note[0];
+			}
 			//Get the octave identifier (2 for a2, 5 for e5)
-			var oct = parseInt(note.slice(1,note.length));
+			let index = 1;
+			if(isNaN(note[1])){
+				//Test if note is a single character like 'a5' or if it is like 'ab5'
+				index = 2;
+			}
+			let oct = parseInt(note.slice(index,note.length));
 			//Parse the octave into an integer
 			oct += transposition;
 			//Transpose the octave
-			noteObj.note = note[0]+oct.toString();
+			noteObj.note = note.slice(0,index)+oct.toString();
 			if (typeof noteObj.note === 'string') {
 				track.noteOn(0, noteObj.note, noteObj.length, level); // channel, pitch(note), length, velocity
 				track.noteOff(0, noteObj.note, noteObj.length, level);
