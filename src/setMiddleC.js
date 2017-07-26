@@ -33,7 +33,6 @@ function transposeNote(noteObj){
  * Transposes a single note to the correct octave determined by transposition
  * @param {String} note     Note to be transposed
  * @return {String} Transposed note
- * 
  */
 function transposeSingle(note){
     let index = 1;
