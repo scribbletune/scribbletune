@@ -3,16 +3,8 @@
 const fs = require('fs');
 const assert = require('assert');
 const jsmidgen = require('jsmidgen');
-let transposition = 0;
+const setMiddleC = require('./setMiddleC');
 
-/**
- * Takes an integer and transposes all notes to a different middle C octave.
- * @param {Integer} octaveIndex		The new octave for middle C.
- */
-function setMiddleC(octaveIndex) {
-	assert(Number.isInteger(octaveIndex), 'Octave Index must be an integer.');
-	transposition = octaveIndex - 4;
-}
 /**
  * Take an array of note objects to generate a MIDI file in the same location as this method is called
  * @param  {Array} notes    Notes are in the format: {note: 'c3', level: 127, length: 64}
@@ -31,23 +23,7 @@ const midi = (notes, fileName) => {
 		// only the first noteOn (or noteOff) needs the complete arity of the function call
 		// subsequent calls need only the first 2 args (channel and note)
 		if (noteObj.note) {
-			let note;
-			if(typeof noteObj.note === 'string'){
-				note = noteObj.note;
-			} else{
-				note = noteObj.note[0];
-			}
-			//Get the octave identifier (2 for a2, 5 for e5)
-			let index = 1;
-			if(isNaN(note[1])){
-				//Test if note is a single character like 'a5' or if it is like 'ab5'
-				index = 2;
-			}
-			let oct = parseInt(note.slice(index,note.length));
-			//Parse the octave into an integer
-			oct += transposition;
-			//Transpose the octave
-			noteObj.note = note.slice(0,index)+oct.toString();
+			noteObj.note = setMiddleC.transposeNote(noteObj);
 			if (typeof noteObj.note === 'string') {
 				track.noteOn(0, noteObj.note, noteObj.length, level); // channel, pitch(note), length, velocity
 				track.noteOff(0, noteObj.note, noteObj.length, level);
@@ -62,4 +38,4 @@ const midi = (notes, fileName) => {
 	fs.writeFileSync(fileName, file.toBytes(), 'binary');
 }
 
-module.exports = {midi, setMiddleC};
+module.exports = {midi, setMiddleC: setMiddleC.setMiddleC};

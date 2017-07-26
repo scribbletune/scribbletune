@@ -8,4 +8,7 @@ const scales = require('./modes');
 let modes = Object.keys(scales);
 
 // Allow scale to be denoted by mode as well
-module.exports = {mode: scale, scale, chord: chord.getChord, listChords: chord.listChords, modes, scales: modes, clip, pattern, midi: midi.midi, setMiddleC: midi.setMiddleC};
+module.exports = {mode: scale, scale, chord: chord.getChord, listChords: chord.listChords, modes, scales: modes, clip, pattern, midi: midi.midi, setMiddleC: function(octaveIndex){
+    midi.setMiddleC(octaveIndex);
+    chord.setMiddleC(octaveIndex);
+}};

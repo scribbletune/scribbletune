@@ -1,8 +1,9 @@
 'use strict';
 
 const mode = require('./mode');
-
+const setMiddleC = require('./setMiddleC');
 // Regex for identifying chords
+
 const chordPtn = /^([a-gA-G][#|b]?)(dim7|Dim7|dim|Dim|dom7|Dom7|7th|maj7|Maj7|min7|Min7|m7|maj|Maj|min|m|Min|sus2|Sus2|sus4|Sus4|aug|Aug|sixth|Sixth|6th)\-?([0-8])?/;
 
 /**
@@ -110,10 +111,13 @@ const getChord = str => {
 		octave = octave || 4;
 		let m = mode(root.toLowerCase(), modeMap[scale].mode, octave);
 		modeMap[scale].int.forEach(i => {
-			arr.push(m[i]);
+			const noteObj = {
+				note: m[i]
+			};
+			arr.push(setMiddleC.transposeNote(noteObj));
 		});
 	});
-
+	console.log(arr);
 	return arr;
 }
 
@@ -123,4 +127,4 @@ const getChord = str => {
  */
 const listChords = () => Object.keys(modeMap);
 
-module.exports = {isChord, getChord, listChords};
+module.exports = {isChord, getChord, listChords, setMiddleC: setMiddleC.setMiddleC};
