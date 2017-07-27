@@ -2,6 +2,7 @@
 
 const assert = require('assert');
 const modes = require('./modes');
+const setMiddleC = require('./setMiddleC');
 const chromaticNotes = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'];
 
 /**
@@ -16,6 +17,8 @@ const mode = (root, mode, octave, addRootFromNextOctave) => {
 	root = root || 'c';
 	mode = mode || 'ionian';
 	octave = octave ? Number(octave) : 3;
+	octave = setMiddleC.transposeOctave(octave);
+	//Transpose the octave to the correct octave determined by middle C
 	addRootFromNextOctave = addRootFromNextOctave === false ? false : true;
 	// Make sure the root is valid [abcdefg] optionally followed by #
 	assert(root.match(/[abcdefg]#?/i), 'Invalid root note: ' + root);

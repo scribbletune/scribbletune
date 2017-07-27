@@ -10,6 +10,16 @@ function setMiddleC(octaveIndex) {
 	assert(Number.isInteger(octaveIndex), 'Octave Index must be an integer.');
 	transposition = octaveIndex - 4;
 }
+
+/**
+ * Takes an octave and transposes it to the octave determined by transposition
+ * @param {Integer} initialOctave	The initial octave
+ * @return {Integer} The correctly transposed octave
+ */
+function transposeOctave(initialOctave){
+	assert(Number.isInteger(initialOctave), 'Initial Octave must be an integer.');
+	return initialOctave += transposition;
+}
 /**
  * Takes a noteObj and transposes the note into the octave given by transposition 
  * @param {noteObj} noteObj		The Array/String contaning the note(s)
@@ -19,12 +29,17 @@ function transposeNote(noteObj){
     let note;
 	assert(noteObj.note !== undefined && (typeof noteObj.note == 'string' || typeof noteObj.note == 'object'), 'NoteObj must contain a note that is either an object or a string.');
 	if(typeof noteObj.note === 'string'){
+		//If a single note was passed, transpose the single note
 		note = transposeSingle(noteObj.note);
 	} else{
+		//If an array of notes were passed, transpose every note in the array
 		note = [];
+		//Create an array for the transposed notes to be stores in
 		for(var i = 0; i<noteObj.note.length; i++){
 		    const transposedNote = transposeSingle(noteObj.note[i]);
+		    //Transpose the single note
 		    note.push(transposedNote);
+		    //Push the transposed note into the note array
 		}
 	}
 	return note;
@@ -42,8 +57,6 @@ function transposeSingle(note){
 	}
 	let oct = parseInt(note.slice(index,note.length));
 	//Parse the octave into an integer
-	oct += transposition;
-	//Transpose the octave
-	return note.slice(0,index)+oct.toString();
+	return note.slice(0,index)+transposeOctave(oct).toString();
 }
-module.exports = {setMiddleC, transposeNote};
+module.exports = {setMiddleC, transposeNote, transposeOctave};
