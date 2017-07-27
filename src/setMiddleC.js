@@ -13,11 +13,14 @@ function setMiddleC(octaveIndex) {
 
 /**
  * Takes an octave and transposes it to the octave determined by transposition
- * @param {Integer} initialOctave	The initial octave
+ * @param {Integer/String} initialOctave	The initial octave
  * @return {Integer} The correctly transposed octave
  */
 function transposeOctave(initialOctave){
-	assert(Number.isInteger(initialOctave), 'Initial Octave must be an integer.');
+	assert(Number.isInteger(initialOctave) || typeof initialOctave === 'string', 'Initial Octave must be an integer.');
+	if(typeof initialOctave === 'string'){
+		initialOctave = parseInt(initialOctave);
+	}
 	return initialOctave += transposition;
 }
 /**
@@ -57,6 +60,8 @@ function transposeSingle(note){
 	}
 	let oct = parseInt(note.slice(index,note.length));
 	//Parse the octave into an integer
-	return note.slice(0,index)+transposeOctave(oct).toString();
+	oct += transposition;
+	//Transpose the octave
+	return note.slice(0,index) + oct.toString();
 }
 module.exports = {setMiddleC, transposeNote, transposeOctave};
