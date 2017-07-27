@@ -115,8 +115,8 @@ scribble.midi(bass, 'bass.mid');
 ```
 Up there, we first created a 4 by 4 kick drum loop and then decided to use the first 3 notes of a _A minor_ scale on the second octave to create a simple bass line. We created a simple pattern using __JavaScript's__ `String.repeat` and then added the `shuffle` parameter to shuffle those 3 notes. Finally, we exported it as a MIDI file called _bass.mid_
 
-### High Hats
-Let s just take this one teeny weeny step further and create a simple hi hats loop as well,
+### Hi-Hats
+Let s just take this one teeny weeny step further and create a simple hi-hat loop as well,
 
 ```js
 const scribble = require('scribbletune');

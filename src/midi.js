@@ -7,7 +7,7 @@ const setMiddleC = require('./setMiddleC');
 
 /**
  * Take an array of note objects to generate a MIDI file in the same location as this method is called
- * @param  {Array} notes    Notes are in the format: {note: 'c3', level: 127, length: 64}
+ * @param  {Array} notes    Notes are in the format: {note: ['c3'], level: 127, length: 64}
  * @param  {String} fileName If a filename is not provided, then `music.mid` is used by default
  */
 const midi = (notes, fileName) => {

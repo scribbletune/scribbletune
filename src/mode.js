@@ -51,9 +51,8 @@ const mode = (root, mode, octave, addRootFromNextOctave) => {
 
 	root = root || 'c';
 	mode = mode || 'ionian';
-	octave = octave ? Number(octave) : 4;
-	octave = setMiddleC.transposeOctave(octave);
-	//Transpose octave into correct octave determined by middle C
+	octave = setMiddleC.transposeOctave(octave) ? setMiddleC.transposeOctave(Number(octave)) : setMiddleC.transposeOctave(4);
+  //Transpose octave into correct octave determined by middle C
 	addRootFromNextOctave = addRootFromNextOctave !== false;
 
 	// Append octave to chromatic notes
