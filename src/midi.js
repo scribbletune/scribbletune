@@ -24,6 +24,7 @@ const midi = (notes, fileName) => {
 		// subsequent calls need only the first 2 args (channel and note)
 		if (noteObj.note) {
 			noteObj.note = setMiddleC.transposeNote(noteObj);
+			//Transpose the note to the correct middle C
 			if (typeof noteObj.note === 'string') {
 				track.noteOn(0, noteObj.note, noteObj.length, level); // channel, pitch(note), length, velocity
 				track.noteOff(0, noteObj.note, noteObj.length, level);
@@ -38,4 +39,4 @@ const midi = (notes, fileName) => {
 	fs.writeFileSync(fileName, file.toBytes(), 'binary');
 }
 
-module.exports = {midi, setMiddleC: setMiddleC.setMiddleC};
+module.exports = midi;

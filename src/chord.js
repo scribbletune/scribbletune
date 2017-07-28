@@ -127,4 +127,4 @@ const getChord = str => {
  */
 const listChords = () => Object.keys(modeMap);
 
-module.exports = {isChord, getChord, listChords, setMiddleC: setMiddleC.setMiddleC};
+module.exports = {isChord, getChord, listChords};

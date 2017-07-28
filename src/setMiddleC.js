@@ -34,7 +34,7 @@ function transposeNote(noteObj) {
 	if(typeof noteObj.note === 'string') {
 		//If a single note was passed, transpose the single note
 		note = transposeSingle(noteObj.note);
-	} else{
+	} else {
 		//If an array of notes were passed, transpose every note in the array
 		note = [];
 		//Create an array for the transposed notes to be stores in
