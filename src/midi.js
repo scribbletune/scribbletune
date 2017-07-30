@@ -10,12 +10,18 @@ var getDirName = require('path').dirname;
  * Take an array of note objects to generate a MIDI file in the same location as this method is called
  * @param  {Array} notes    Notes are in the format: {note: ['c3'], level: 127, length: 64}
  * @param  {String} fileName If a filename is not provided, then `music.mid` is used by default
+ * @param  {String} bpm If a filename is not provided, then `music.mid` is used by default
  */
-const midi = (notes, fileName) => {
+const midi = (notes, fileName, bpm) => {
 	assert(notes !== undefined && typeof notes !== 'string', 'You must provide an array of notes to write!');
 	fileName = fileName || 'music.mid';
 	let file = new jsmidgen.File();
 	let track = new jsmidgen.Track();
+	
+	if(bpm !==undefined){
+		track.setTempo(bpm);
+	}
+	
 	file.addTrack(track);
 
 	notes.forEach((noteObj) => {
@@ -36,8 +42,9 @@ const midi = (notes, fileName) => {
 		}
 	});
 
-	writeFile("./output/" + fileName, file.toBytes(), 'binary');
+	writeFile('./Output/' + fileName, file.toBytes(), 'binary');
 }
+
 
 function writeFile(path, contents, cb) {
   mkdirp(getDirName(path), function (err) {
