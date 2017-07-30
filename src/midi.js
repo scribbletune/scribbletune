@@ -1,8 +1,10 @@
 'use strict';
 
 const fs = require('fs');
+const mkdirp = require('mkdirp');
 const assert = require('assert');
 const jsmidgen = require('jsmidgen');
+var getDirName = require('path').dirname;
 
 /**
  * Take an array of note objects to generate a MIDI file in the same location as this method is called
@@ -34,7 +36,16 @@ const midi = (notes, fileName) => {
 		}
 	});
 
-	fs.writeFileSync(fileName, file.toBytes(), 'binary');
+	writeFile("./output/" + fileName, file.toBytes(), 'binary');
 }
+
+function writeFile(path, contents, cb) {
+  mkdirp(getDirName(path), function (err) {
+    if (err) return cb(err);
+
+    fs.writeFileSync(path, contents, cb);
+  });
+}
+
 
 module.exports = midi;
