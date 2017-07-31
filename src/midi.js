@@ -23,7 +23,7 @@ const midi = (notes, fileName) => {
 		// only the first noteOn (or noteOff) needs the complete arity of the function call
 		// subsequent calls need only the first 2 args (channel and note)
 		if (noteObj.note) {
-			noteObj.note = setMiddleC.transposeNote(noteObj);
+			noteObj.note = setMiddleC.transposeNote(noteObj.note);
 			//Transpose the note to the correct middle C
 			if (typeof noteObj.note === 'string') {
 				track.noteOn(0, noteObj.note, noteObj.length, level); // channel, pitch(note), length, velocity

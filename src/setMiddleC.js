@@ -17,7 +17,7 @@ function setMiddleC(octaveIndex) {
  * @return {Integer} The correctly transposed octave
  */
 function transposeOctave(initialOctave) {
-	assert(Number.isInteger(initialOctave) || typeof initialOctave === 'string', 'Initial Octave must be an integer.');
+	assert(Number.isInteger(initialOctave) || (typeof initialOctave === 'string' && Number.isInteger(parseFloat(initialOctave))), 'Initial Octave must be an integer or an integer in a string.');
 	if(typeof initialOctave === 'string') {
 		initialOctave = parseInt(initialOctave);
 	}
@@ -25,21 +25,21 @@ function transposeOctave(initialOctave) {
 }
 /**
  * Takes a noteObj and transposes the note into the octave given by transposition 
- * @param {noteObj} noteObj		The Array/String contaning the note(s)
+ * @param {String/Array} noteArg		The Array/String contaning the note(s)
  * @return {String(s)} 	The correctly transposed note(s)
  */
-function transposeNote(noteObj) {
+function transposeNote(noteArg) {
     let note;
-	assert(noteObj.note !== undefined && (typeof noteObj.note == 'string' || typeof noteObj.note == 'object'), 'NoteObj must contain a note that is either an object or a string.');
-	if(typeof noteObj.note === 'string') {
+	assert(noteArg !== undefined && (typeof noteArg == 'string' || typeof noteArg == 'object') && noteArg.note === undefined && noteArg[0] !== undefined, 'NoteArg must contain a note that is either an array or a string.');
+	if(typeof noteArg === 'string') {
 		//If a single note was passed, transpose the single note
-		note = transposeSingle(noteObj.note);
+		note = transposeSingle(noteArg);
 	} else {
 		//If an array of notes were passed, transpose every note in the array
 		note = [];
 		//Create an array for the transposed notes to be stores in
-		for(var i = 0; i<noteObj.note.length; i++) {
-		    const transposedNote = transposeSingle(noteObj.note[i]);
+		for(var i = 0; i<noteArg.length; i++) {
+		    const transposedNote = transposeSingle(noteArg[i]);
 		    //Transpose the single note
 		    note.push(transposedNote);
 		    //Push the transposed note into the note array
@@ -53,6 +53,7 @@ function transposeNote(noteObj) {
  * @return {String} Transposed note
  */
 function transposeSingle(note) {
+	assert(typeof note === 'string', 'Note must be a string.')
     let index = 1;
 	if(isNaN(note[1])) {
 		//Test if note is a single character like 'a5' or if it is like 'ab5'
