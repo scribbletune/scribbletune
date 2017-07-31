@@ -3,12 +3,13 @@
 const fs = require('fs');
 const test = require('tape');
 const scribble = require('../src/index');
+var workingDir = path.dirname(require.main.filename);
 
 test('Scribbletune::midi', (t) => {
 	let fileExists = false;
 	scribble.midi(scribble.clip());
 
-	fs.access('./output/music.mid', fs.F_OK, (err) => {
+	fs.access(workingDir+'/output/music.mid', fs.F_OK, (err) => {
 		if (!err) {
 			fileExists = true;
 		}

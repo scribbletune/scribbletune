@@ -5,7 +5,7 @@ const mkdirp = require('mkdirp');
 const assert = require('assert');
 const jsmidgen = require('jsmidgen');
 var path = require('path');
-var workingDir = path.dirname(require.main.filename)
+var workingDir = path.dirname(require.main.filename);
 /**
  * Take an array of note objects to generate a MIDI file in the same location as this method is called
  * @param  {Array} notes    Notes are in the format: {note: ['c3'], level: 127, length: 64}
