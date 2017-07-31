@@ -4,8 +4,8 @@ const fs = require('fs');
 const mkdirp = require('mkdirp');
 const assert = require('assert');
 const jsmidgen = require('jsmidgen');
-var getDirName = require('path').dirname;
-
+var path = require('path');
+var workingDir = path.dirname(require.main.filename)
 /**
  * Take an array of note objects to generate a MIDI file in the same location as this method is called
  * @param  {Array} notes    Notes are in the format: {note: ['c3'], level: 127, length: 64}
@@ -42,15 +42,15 @@ const midi = (notes, fileName, bpm) => {
 		}
 	});
 
-	writeFile('./Output/' + fileName, file.toBytes(), 'binary');
+	writeFile('/Output/' + fileName, file.toBytes(), 'binary');
 }
 
 
-function writeFile(path, contents, cb) {
-  mkdirp(getDirName(path), function (err) {
+function writeFile(filepath, contents, cb) {
+  mkdirp(workingDir+path.dirname(filepath), function (err) {
     if (err) return cb(err);
 
-    fs.writeFileSync(path, contents, cb);
+    fs.writeFileSync(workingDir+path, contents, cb);
   });
 }
 
