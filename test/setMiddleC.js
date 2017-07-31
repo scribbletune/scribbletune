@@ -4,9 +4,10 @@ const test = require('tape');
 const scribble = require('../src/index');
 const setMiddleC = require('../src/setMiddleC');
 const AssertionError = require('assert').AssertionError;
-scribble.setMiddleC(5);
-//Initializing middleC for testing purposes
 test('Scribbletune::setMiddleC', t => {
+    scribble.setMiddleC(5);
+    //Initializing middleC for testing purposes
+    
     t.doesNotThrow(
         (() => scribble.setMiddleC(5)),
         TypeError,
@@ -86,7 +87,7 @@ test('Scribbletune::setMiddleC', t => {
     );
     
     //setMiddleC.transposeSingle is automatically tested in setMiddleC.transposeNote
-    scribble.setMiddleC(4);
-    //Revert the scribble package to normal middleC
     t.end();
 })
+scribble.setMiddleC(4);
+//Revert the scribble package to normal middleC
