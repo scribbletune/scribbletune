@@ -18,7 +18,7 @@ const midi = (notes, fileName, bpm) => {
 	let file = new jsmidgen.File();
 	let track = new jsmidgen.Track();
 	
-	if(bpm !==undefined){
+	if (bpm !==undefined) {
 		track.setTempo(bpm);
 	}
 	

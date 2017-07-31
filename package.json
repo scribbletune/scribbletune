@@ -7,7 +7,8 @@
     "test": "gulp"
   },
   "dependencies": {
-    "jsmidgen": "~0.1.4"
+    "jsmidgen": "~0.1.4",
+    "mkdirp": "0.5.1"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
