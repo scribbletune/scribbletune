@@ -8,7 +8,7 @@ test('Scribbletune::midi', (t) => {
 	let fileExists = false;
 	scribble.midi(scribble.clip());
 
-	fs.access('./music.mid', fs.F_OK, (err) => {
+	fs.access('./output/music.mid', fs.F_OK, (err) => {
 		if (!err) {
 			fileExists = true;
 		}
