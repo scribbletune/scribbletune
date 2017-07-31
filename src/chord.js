@@ -117,7 +117,6 @@ const getChord = str => {
 			arr.push(setMiddleC.transposeNote(noteObj));
 		});
 	});
-	console.log(arr);
 	return arr;
 }
 
