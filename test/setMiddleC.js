@@ -86,6 +86,7 @@ test('Scribbletune::setMiddleC', t => {
     );
     
     //setMiddleC.transposeSingle is automatically tested in setMiddleC.transposeNote
-    
+    scribble.setMiddleC(4);
+    //Revert the scribble package to normal middleC
     t.end();
 })
