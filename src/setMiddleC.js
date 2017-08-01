@@ -62,9 +62,9 @@ function transposeSingle(note, octave) {
 	}
 	let oct = parseInt(note.slice(index,note.length));
 	//Parse the octave into an integer
-	if(octave){
+	if(octave) {
 		oct = octave;
-	} else{
+	} else {
 		oct += transposition;
 	}
 	//Transpose the octave

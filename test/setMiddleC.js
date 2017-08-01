@@ -11,7 +11,7 @@ test('Scribbletune::setMiddleC', t => {
     t.doesNotThrow(
         (() => scribble.setMiddleC(5)),
         TypeError,
-        "No error is thrown for valid argument"
+        'No error is thrown for valid argument'
     );
     
     t.throws(
