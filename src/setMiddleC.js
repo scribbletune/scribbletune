@@ -52,8 +52,9 @@ function transposeNote(noteArg) {
  * @param {String} note     Note to be transposed
  * @return {String} Transposed note
  */
-function transposeSingle(note) {
-	assert(typeof note === 'string', 'Note must be a string.')
+function transposeSingle(note, octave) {
+	assert(typeof note === 'string', 'Note must be a string.');
+	assert(Number.isInteger(octave) || octave === undefined, 'If octave is passed, it must be an integer.');
     let index = 1;
 	if(isNaN(note[1])) {
 		//Test if note is a single character like 'a5' or if it is like 'ab5'
@@ -61,8 +62,12 @@ function transposeSingle(note) {
 	}
 	let oct = parseInt(note.slice(index,note.length));
 	//Parse the octave into an integer
-	oct += transposition;
+	if(octave){
+		oct = octave;
+	} else{
+		oct += transposition;
+	}
 	//Transpose the octave
 	return note.slice(0,index) + oct.toString();
 }
-module.exports = {setMiddleC, transposeNote, transposeOctave};
+module.exports = {setMiddleC, transposeNote, transposeOctave, transposeSingle};
