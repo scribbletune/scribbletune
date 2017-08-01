@@ -86,7 +86,29 @@ test('Scribbletune::setMiddleC', t => {
         'transposeNote throws an error with an object argument'
     );
     
-    //setMiddleC.transposeSingle is automatically tested in setMiddleC.transposeNote
+    t.equals(
+        setMiddleC.transposeSingle('a3'),
+        'a4',
+        'transposeSingle with no octave argument works'
+    );
+    
+    t.equals(
+        setMiddleC.transposeSingle('a1', 5),
+        'a5',
+        'transposeSingle with an octave argument works'
+    );
+    
+    t.throws(
+        (() => setMiddleC.transposeSingle('a1', '5')),
+        AssertionError,
+        'transposeSingle throws an error if octave is a string'
+    );
+    
+    t.throws(
+        (() => setMiddleC.transposeSingle('a4', 4.3)),
+        AssertionError,
+        'transposeSingle throws an error if octave is not an integer'
+    );
     t.end();
 })
 scribble.setMiddleC(4);
