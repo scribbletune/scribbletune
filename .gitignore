@@ -4,3 +4,4 @@ coverage
 *.mid
 .idea/
 .npmrc
+/demo/node_modules/
