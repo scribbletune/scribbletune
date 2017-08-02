@@ -64,6 +64,13 @@ const clip = params => {
 		params.noteLength = a[0] / a[1];
 	}
 
+	// If notes is a string, split it into an array
+	if (typeof params.notes === 'string') {
+		// Remove any accidental double spaces
+		params.notes = params.notes.replace(/\s{2,}/g, ' ');
+		params.notes = params.notes.split(' ');
+	}
+
 	// Convert chords if any to notes
 	params.notes = params.notes.map(el => {
 		if (Array.isArray(el)) {

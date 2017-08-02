@@ -2,6 +2,7 @@
 
 const assert = require('assert');
 const modes = require('./modes');
+const setMiddleC = require('./setMiddleC');
 const chromaticNotes = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'];
 
 /**
@@ -13,15 +14,46 @@ const chromaticNotes = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a
  * @return {[type]}                        Returns the mode as an array, e.g. ['c3', 'd3', 'e3', 'f3', 'g3', 'a3', 'b3', 'c4']
  */
 const mode = (root, mode, octave, addRootFromNextOctave) => {
-	root = root || 'c';
-	mode = mode || 'ionian';
-	octave = octave ? Number(octave) : 3;
-	addRootFromNextOctave = addRootFromNextOctave === false ? false : true;
+	if (root.match(/\s/) && !mode && !octave && !addRootFromNextOctave) {
+		let args = root.split(/\s/);
+		root = args.shift();
+		let lastItem = args.pop();
+
+		// Check if the last item is a true/false value for addRootFromNextOctave
+		if (lastItem === 'true' || lastItem === 'false') {
+			addRootFromNextOctave = lastItem !== 'false';
+			lastItem = args.pop();	// lastItem should now be the octave
+		}
+
+		// Check if the last item is a number specified for the octave
+		if (Number.isInteger(+lastItem)) {
+			octave = +lastItem;
+			// Since it was an octave, nullify last time
+			// so that in case it was not a number then it can be assumed to be a mode/scale
+			lastItem = null;
+		}
+
+		// Since we extracted the root, octave and addRootFromNextOctave,
+		// what's left should be part (or whole) name of a mode, push it back into the args
+		if (lastItem) {
+			args.push(lastItem);
+		}
+
+		// Combine whatever is left behind and assume it as the mode or scale name
+		mode = args.join(' ');
+	}
+
 	// Make sure the root is valid [abcdefg] optionally followed by #
 	assert(root.match(/[abcdefg]#?/i), 'Invalid root note: ' + root);
 
 	// Make sure if the provided mode is valid
 	assert(modes.hasOwnProperty(mode), 'Invalid mode: ' + mode);
+
+	root = root || 'c';
+	mode = mode || 'ionian';
+	octave = octave ? setMiddleC.transposeOctave(Number(octave)) : setMiddleC.transposeOctave(4);
+  //Transpose octave into correct octave determined by middle C
+	addRootFromNextOctave = addRootFromNextOctave !== false;
 
 	// Append octave to chromatic notes
 	let chromatic =
@@ -44,7 +76,6 @@ const mode = (root, mode, octave, addRootFromNextOctave) => {
 	if (addRootFromNextOctave) {
 		modeArr.push(root + (octave + 1));
 	}
-
 	return modeArr;
 }
 
