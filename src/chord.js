@@ -89,11 +89,9 @@ modeMap['6th'] = modeMap.sixth;
  * @param  {String}  str [examples: CMaj Cmaj cmaj Cm cmin f#maj7 etc]
  * @return {Boolean}
  */
-const isChord = function(str) {
-	console.log(str);
-	let compStr = str.toLowerCase();
-	console.log(str);
-	compStr.match(chordPtn);	
+function isChord(str) {
+	let compStr = str.toLocaleLowerCase();
+	return compStr.match(chordPtn);	
 };
 
 /**
