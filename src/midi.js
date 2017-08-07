@@ -4,7 +4,7 @@ const fs = require('fs');
 const mkdirp = require('mkdirp');
 const assert = require('assert');
 const jsmidgen = require('jsmidgen');
- 
+const path = require('path') 
  var getDirName = require('path').dirname;
 
 /**
@@ -15,11 +15,11 @@ const jsmidgen = require('jsmidgen');
  */
 const midi = (notes, fileName, bpm) => {
 	assert(notes !== undefined && typeof notes !== 'string', 'You must provide an array of notes to write!');
-	fileName = fileName || 'music.mid';
+	fileName = fileName || 'music';
 	let file = new jsmidgen.File();
 	let track = new jsmidgen.Track();
 	
-	if (bpm !==undefined) {
+	if (bpm !== undefined) {
 		track.setTempo(bpm);
 	}
 	
@@ -42,18 +42,18 @@ const midi = (notes, fileName, bpm) => {
 				.noteOff(0, '', noteObj.length);
 		}
 	});
-
-	writeFile('/Output/' + fileName, file.toBytes(), 'binary');
+	let outputFile = path.join(__dirname, '../Output/', fileName + '.mid');
+	
+	writeFile(outputFile, file.toBytes(), 'binary');
 }
 
 
  
-function writeFile(path, contents, cb) {
-	var workingDir = getDirName(require.main.filename);
-  mkdirp(workingDir+getDirName(path), function (err) {
-    if (err) return cb(err);
+function writeFile(file, contents, options) {
+    mkdirp( getDirName(file), function (err) {
+  if (err) return cb(err);
 
-    fs.writeFileSync(workingDir+path, contents, cb);
+    fs.writeFileSync(file, contents, options);
   });
 }
 
