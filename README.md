@@ -166,6 +166,32 @@ scribble.midi(clip, "octave.midi");
 ```
 then the clip would sound like it should!
 
+### Tranposing notes
+Sometimes a clip might sound better if it was just a couple octaves higher or lower, but how could we transpose it that way?
+Enter `scribble.transposeNote`
+This function will take in any note (or array of notes) and an integer representing the octave you wish to transpose to, and will return a note (or array of notes) correctly transposed. Let's see it in action!
+```js
+const scribble = require("scribbletune");
+let notes = ['c4','c4','e4','e4','g3','c5','c5','c5','e5','g3'];
+let clip = scribble.clip({
+	notes: notes,
+	pattern: 'x_xx_xx_x_x_x_xx'.repeat(4)
+});
+
+scribble.midi(clip, 'transpose.midi');
+```
+Let's run it and hear the results! Hmmmm, this sounds too high to me... How about we transpose it one octave down. It starts off in the 4th octave, so let's start it in the 3rd octave.
+```js
+const scribble = require('scribbletune');
+let notes =  ['c4','c4','e4','e4','g3','c5','c5','c5','e5','g3'];
+let clip = scribble.clip({
+	notes: scribble.transposeNote(notes, 3),
+	pattern: 'x_xx_xx_x_x_x_xx'.repeat(4)
+});
+
+scribble.midi(clip, 'transpose.midi');
+```
+Let's run it again and hear the results! Much better! This works with any number of notes, and any wacky combination of octave. Have fun with it!
 
 There's a lot more to this humble beginning. But I ll let you explore it for yourself. As you can see, now you can use any JavaScript library (or not) to compute melodies using Scribbletune! Ok then, get on with it :)
 

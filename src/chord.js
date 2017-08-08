@@ -4,7 +4,7 @@ const mode = require('./mode');
 const setMiddleC = require('./setMiddleC');
 // Regex for identifying chords
 
-const chordPtn = /^([a-gA-G][#|b]?)(dim7|Dim7|dim|Dim|dom7|Dom7|7th|maj7|Maj7|min7|Min7|m7|maj|Maj|min|m|Min|sus2|Sus2|sus4|Sus4|aug|Aug|sixth|Sixth|6th)\-?([0-8])?/;
+const chordPtn = /^([a-g][#|b]?)(d[io]m7{0,1}|[67]th|maj7{0,1}|min7{0,1}|m7{0,1}|sus[24]|aug|sixth)\-?([0-8])?/;
 
 /**
  * Scales and integer notation to derive chords
@@ -79,25 +79,20 @@ const modeMap = {
 };
 
 // Alternate names for chords
-modeMap.Maj = modeMap.maj;
-modeMap.Min = modeMap.m = modeMap.min;
-modeMap.Dim = modeMap.dim;
-modeMap.Dim7 = modeMap.dim7;
-modeMap.Maj7 = modeMap.maj7;
-modeMap.Min7 = modeMap.min7;
+modeMap.m = modeMap.min;
 modeMap.m7 = modeMap.min7;
-modeMap.Dom7 = modeMap['7th'] = modeMap.dom7;
-modeMap.Sus2 = modeMap.sus2;
-modeMap.Sus4 = modeMap.sus4;
-modeMap.Aug = modeMap.aug;
-modeMap.Sixth = modeMap['6th'] = modeMap.sixth;
+modeMap['7th'] = modeMap.dom7;
+modeMap['6th'] = modeMap.sixth;
 
 /**
  * Use the chord regex to identify if the passed string is a chord
  * @param  {String}  str [examples: CMaj Cmaj cmaj Cm cmin f#maj7 etc]
  * @return {Boolean}
  */
-const isChord = str => str.match(chordPtn);
+const isChord = (str) => {
+	let compStr = str.toLocaleLowerCase();
+	return compStr.match(chordPtn);	
+};
 
 /**
  * Derive a chord from the given string. Exposed as simply `chord` in Scribbletune
@@ -105,6 +100,7 @@ const isChord = str => str.match(chordPtn);
  * @return {Array}     [example output: ['c4', 'e4', 'g4']]
  */
 const getChord = str => {
+	str = str.toLowerCase();
 	let arr = [];
 	
 	str.replace(chordPtn, (match, root, scale, octave) => {
