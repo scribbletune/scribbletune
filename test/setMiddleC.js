@@ -111,5 +111,6 @@ test('Scribbletune::setMiddleC', t => {
     )
     t.end();
 })
+
+// Revert middle C to default middle C (which is 4)
 scribble.setMiddleC(4);
-//Revert the scribble package to normal middleC
