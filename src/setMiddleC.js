@@ -1,15 +1,17 @@
 'use strict';
 const assert = require('assert');
+const defaultMiddleC = 4;
 let transposition = 0;
 let startOctave;
-//Initialzing startOctave for later
+
 /**
  * Takes an integer and transposes all notes to a different middle C octave.
- * @param {Integer} octaveIndex		The new octave for middle C.
+ * @param {Integer} octave		The new octave for middle C.
  */
-function setMiddleC(octaveIndex) {
-	assert(Number.isInteger(octaveIndex), 'Octave Index must be an integer.');
-	transposition = octaveIndex - 4;
+function setMiddleC(octave) {
+	octave = Number(octave);
+	assert(Number.isInteger(octave), 'Octave must be an integer to set middle C.');
+	transposition = octave - defaultMiddleC;
 }
 
 /**
@@ -18,64 +20,60 @@ function setMiddleC(octaveIndex) {
  * @return {Integer} The correctly transposed octave
  */
 function transposeOctave(initialOctave) {
-	assert(Number.isInteger(initialOctave) || (typeof initialOctave === 'string' && Number.isInteger(parseFloat(initialOctave))), 'Initial Octave must be an integer or an integer in a string.');
-	if(typeof initialOctave === 'string') {
-		initialOctave = parseInt(initialOctave);
-	}
+	initialOctave = Number(initialOctave);	// Not using parseInt as it will convert invalid input such as 3.3 to 3
+	assert(Number.isInteger(initialOctave), 'Initial Octave must be an integer.');
 	return initialOctave += transposition;
 }
+
 /**
  * Takes a noteObj and transposes the note into the octave given by transposition 
  * @param {String/Array} noteArg		The Array/String contaning the note(s)
- * @param {Integer} octave Optional octave to transpose to  
+ * @param {Integer} octave The octave to transpose to  
  * @return {String(s)} 	The correctly transposed note(s)
  */
 const transposeNote = (noteArg, octave) => {
-    let note;
-	assert(noteArg !== undefined && (typeof noteArg === 'string' || typeof noteArg === 'object') && noteArg.note === undefined && noteArg[0] !== undefined, 'NoteArg must contain a note that is either an array or a string.');
+	assert(typeof noteArg === 'string' || Array.isArray(noteArg));
 	assert(Number.isInteger(octave) || octave === undefined, 'Octave must be an integer');
 	if(typeof noteArg === 'string') {
 		//If a single note was passed, transpose the single note
-		note = transposeSingle(noteArg, 0, octave);
+		return transposeSingle(noteArg, 0, octave);
 	} else {
-		//If an array of notes were passed, transpose every note in the array
-		note = [];
-		//Create an array for the transposed notes to be stores in
-		for(var i = 0; i<noteArg.length; i++) {
-		    const transposedNote = transposeSingle(noteArg[i], i, octave);
-		    //Transpose the single note
-		    note.push(transposedNote);
-		    //Push the transposed note into the note array
-		}
+		// If an array of notes were passed, transpose every note in the array
+		return noteArg.map((n, i) => transposeSingle(n, i, octave));
 	}
-	return note;
 }
 /**
  * Transposes a single note to the correct octave determined by transposition or octave argument
  * @param {String} note     Note to be transposed
- * @param {Integer} noteIndex   Index in note array
+ * @param {Integer} noteIndex   Index in note array (if noteIndex is 0, we will use the octave of that note as a ref)
  * @param {Integer} octave Optional octave to transpose to  
  * @return {String} Transposed note
  */
 const transposeSingle = (note, noteIndex, octave) => {
 	assert(typeof note === 'string', 'Note must be a string.');
 	assert(Number.isInteger(octave) || octave === undefined, 'If octave is passed, it must be an integer.');
-    let index = 1;
-	if (isNaN(note[1])) {
-		//Test if note is a single character like 'a5' or if it is like 'ab5'
-		index = 2;
-	}
-	let oct = parseInt(note.slice(index,note.length));
+
+	// Get the root from the note, for e.g. get C from C4
+	let root = note.replace(/\d/g, '');
+    
+	// Get the octave from the note, for e.g. get 4 from C4
+	let oct = +note.replace(/[^\d]/g, '');
+
+	// In case of an Array of notes, consider the first note's octave as the relative octave
+	// For e.g. If the input was ['c4', 'd5', 'e6'] with octave set to 6, dont convert it to ['c6', 'd6', 'e6']
+	// Instead convert it to ['c6', 'd7', 'e8'] instead. Basically bump octave relatively
+	// It took the first note 2 octaves to get to 6 from 4, hence move the rest of the notes up by 2 octaves only
+	// This is helpful for transposing chords
 	if (noteIndex === 0) {
 		startOctave = oct;
 	}
-	//Parse the octave into an integer
+
 	if (octave) {
 		oct = octave + (oct - startOctave);
 	} else {
 		oct += transposition;
 	}
-	//Transpose the octave
-	return note.slice(0,index) + oct.toString();
+	// Transpose the octave
+	return root + oct;
 }
-module.exports = {setMiddleC, transposeNote, transposeOctave};
+module.exports = {setMiddleC, transposeNote, transposeOctave, defaultMiddleC};
