@@ -147,7 +147,7 @@ This automatically transposes every note to the new key determined by the new mi
 ```js
 const scribble = require("scribbletune");
 
-scribble.setMiddleC(5); // Ask ScribbleTune to export clips on an octave higher than the default
+scribble.setMiddleC(5); // Ask Scribbletune to export clips on an octave higher than the default
 
 let clip = scribble.clip({
 	notes: ['c4', 'd4', 'e4', 'f4'],
