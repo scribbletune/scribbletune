@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 const modes = require('./modes');
-const setMiddleC = require('./setMiddleC');
+const transpose = require('./transpose');
 const chromaticNotes = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'];
 
 /**
@@ -51,7 +51,7 @@ const mode = (root, mode, octave, addRootFromNextOctave) => {
 
 	root = root || 'c';
 	mode = mode || 'ionian';
-	octave = +octave || setMiddleC.defaultMiddleC;
+	octave = +octave || transpose.defaultMiddleC;
 
   	// Transpose octave into correct octave determined by middle C
 	addRootFromNextOctave = addRootFromNextOctave !== false;
