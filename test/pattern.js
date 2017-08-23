@@ -12,6 +12,17 @@ test('Scribbletune::pattern should return a default pattern', (t) => {
 	t.end();
 });
 
+test('Scribbletune::pattern should be shuffled', (t) => {
+	let initPattern = 'x_x_x_x_';
+
+	t.equal(
+		scribble.pattern(2, initPattern, true),
+		'x_x_x_x_x_x_x_x_',
+		'Default pattern generated'
+	);
+	t.end();
+});
+
 test('Scribbletune::pattern should return the correct pattern based on params', (t) => {
 	t.equal(
 		scribble.pattern(4, 'xxxx'),
