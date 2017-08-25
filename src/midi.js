@@ -31,8 +31,8 @@ const mergeMidiClips = (clipArray) => {
 			}
 
 			// Merge all notes
-			if (clipObj[i].note != null) {
-				if (notes.note == null) notes.note = [];
+			if (clipObj[i].note !== null) {
+				if (notes.note === null) notes.note = [];
 				notes.note = notes.note.concat(clipObj[i].note);
 			}
 
