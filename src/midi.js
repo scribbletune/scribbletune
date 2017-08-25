@@ -3,7 +3,6 @@
 const fs = require('fs');
 const assert = require('assert');
 const jsmidgen = require('jsmidgen');
-const setMiddleC = require('./setMiddleC');
 const transpose = require('./transpose');
 const utils = require('./utils');
 
