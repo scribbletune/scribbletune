@@ -6,7 +6,6 @@ const utils = require('../src/utils');
 test('Utils::sizzle map does not generate higher than maxValue param', (t) => {
 	let maxValue = 60;
 	let sizzledPattern = utils.sizzleMap(60);
-	console.log ('KRIS: ', sizzledPattern);
 	let isUnderMax = sizzledPattern.every((sizz) => {
 		return sizz <= maxValue;
 	});
@@ -14,6 +13,32 @@ test('Utils::sizzle map does not generate higher than maxValue param', (t) => {
 		isUnderMax,
 		true,
 		'No value in sizzled map was over max value'
+	);
+	t.end();
+});
+
+test('Utils::doubleArrayTillMatchLength should double the array until it has reached 12 in length', (t) => {
+	let arr = ['1', '2', '3'];
+	arr = utils.doubleArrayTillMatchLength(arr, 12);
+	
+	t.equal(
+		arr.length == 12,
+		true,
+		'Array was doubled until 12 length'
+	);
+	t.end();
+});
+
+test('Utils::doesArrayContainAnArray return the correct value with both types of arrays', (t) => {
+	let arrTrue  = [['1'], '2'];
+	let arrFalse = ['1', '2'];
+	let yesArray = utils.doesArrayContainAnArray(arrTrue);
+	let noArray  = utils.doesArrayContainAnArray(arrFalse);
+	
+	t.equal(
+		yesArray == true && noArray == false,
+		true,
+		'Array was doubled until 12 length'
 	);
 	t.end();
 });

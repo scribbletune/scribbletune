@@ -4,66 +4,50 @@ const fs = require('fs');
 const assert = require('assert');
 const jsmidgen = require('jsmidgen');
 const setMiddleC = require('./setMiddleC');
-
-function doesArrayContainAnArray(arr){
-  return arr.some(function(ele){
-    return Object.prototype.toString.call( ele ) === '[object Array]'
-  });
-}
+const utils = require('./utils');
 
 /**
- * Takes an array of clips and merges them on the same track. 
+ * Takes an array of clips and merges them into one track
  * @param  {Array} clipArray	Format: [{note: ['c3'], level: 127, length: 64}, [...], ...]
  */
 const mergeMidiClips = (clipArray) => {
-
 	let clip = [];
-	let maxLenght = 0;
-	// Get the length of the final clip to be returned. (longest clip)
-	clipArray.forEach((noteObj) => {
-		if (noteObj.length > maxLenght) {
-			maxLenght = noteObj.length;
-		} 
-	});
-	// loop through all clicks and get the value of each clip.
+	// Get the length of the final clip to be returned (longest clip)
+	const maxLength = Math.max.apply(null, clipArray.map(obj => obj.length));
+	// loop through each beat
 	let finalClip = [];
-	for(let i = 0; i < maxLenght; i++) {
+	for(let i = 0; i < maxLength; i++) {
 		let notes = {
 			note: null,
 			length: 0,
 			level: 0
 		};
-		// Loop through each clip and compile it into the finalClip.
+		// Loop through each clip and compile all notes into one chord
 		clipArray.forEach((clipObj) => {	
-			// This loop is for when you have a uneven clip that doesn't reach the maxLenght. 
-			// So what it does is double smaller clips until it reaches target length.
-			let index = i;
-			while (clipObj[index] === undefined) {
-				index = Math.floor((index - clipObj.length));
-				if (index < 1) {
-					index = 0
-				}
+			// This loop is for when you have a uneven clip that doesn't reach the maxLength
+			// So what it does is double smaller clips until it reaches target length
+			if (clipObj.length < maxLength) {
+				clipObj = utils.doubleArrayTillMatchLength(clipObj, maxLength);
 			}
 
-			// Merge all notes. 
-			if (clipObj[index].note != null) {
+			// Merge all notes
+			if (clipObj[i].note != null) {
 				if (notes.note == null) notes.note = [];
-				notes.note = notes.note.concat(clipObj[index].note);
+				notes.note = notes.note.concat(clipObj[i].note);
 			}
 
-			// Take the highest value of all the clip's lengths.
-			if (notes.length !== undefined && clipObj[index].length > notes.length) {
-				notes.length = clipObj[index].length;
+			// Take the highest value of all the clip's lengths
+			if (notes.length !== undefined && clipObj[i].length > notes.length) {
+				notes.length = clipObj[i].length;
 			}
 
-			// Take the highest value of all the clip's levels.
-			if (notes.level !== undefined && clipObj[index].level > notes.level) {
-				notes.level = clipObj[index].level;
+			// Take the highest value of all the clip's levels
+			if (notes.level !== undefined && clipObj[i].level > notes.level) {
+				notes.level = clipObj[i].level;
 			}
 		});	
 		finalClip.push(notes);
-	} // end for loop that goes per click. 
-
+	} // end for loop that goes per beat
 	return finalClip;
 }
 
@@ -80,7 +64,7 @@ const midi = (notes, fileName) => {
 	file.addTrack(track);
 
 	// If in the array of notes, there are other arrays of notes, then flatten them into one track.
-	if (doesArrayContainAnArray(notes)) {
+	if (utils.doesArrayContainAnArray(notes)) {
 		notes.forEach((item, i, notesArray) => {
 			if (Object.prototype.toString.call( item ) !== '[object Array]') {
 				notesArray[i] = [item]; 

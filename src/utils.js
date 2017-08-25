@@ -20,6 +20,28 @@ const utils = {
 	},
 
 	/**
+	 * Doubles the array values until the desired max length is achieved
+	 * @param  {Array} arr
+	 * @param  {Number} maxLength The max length to be achieved. default 0
+	 * @return {Array} Array at desired length
+	 */
+	doubleArrayTillMatchLength: (arr, maxLength) => {
+		maxLength = maxLength || 8;
+		while (arr.length < maxLength) {
+			arr = arr.concat(arr);
+		}
+		// Clip off extra notes
+		return arr.slice(0, maxLength);
+	},
+
+	/**
+	 * Checks if an Array contains another array
+	 * @param  {Array} arr
+	 * @return {Boolean} true if the object is an Array; otherwise, false.
+	 */
+	doesArrayContainAnArray: arr => arr.some(ele => Array.isArray(ele)),
+
+	/**
 	 * Return an array of numbers relative to maxLevel || 127 ordered in a Sine wave format
 	 * This is used by the `sizzle` param of the `clip` method to add a rudimentary variation to the accent of each note
 	 * e.g. 
