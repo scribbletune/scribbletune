@@ -1,9 +1,6 @@
 'use strict';
 
 const mode = require('./mode');
-const setMiddleC = require('./setMiddleC');
-// Regex for identifying chords
-
 const chordPtn = /^([a-g][#|b]?)(d[io]m7{0,1}|[67]th|maj7{0,1}|min7{0,1}|m7{0,1}|sus[24]|aug|sixth)\-?([0-8])?/;
 
 /**
@@ -89,10 +86,7 @@ modeMap['6th'] = modeMap.sixth;
  * @param  {String}  str [examples: CMaj Cmaj cmaj Cm cmin f#maj7 etc]
  * @return {Boolean}
  */
-const isChord = (str) => {
-	let compStr = str.toLocaleLowerCase();
-	return compStr.match(chordPtn);	
-};
+const isChord = str => str.toLowerCase().match(chordPtn);
 
 /**
  * Derive a chord from the given string. Exposed as simply `chord` in Scribbletune
@@ -107,10 +101,7 @@ const getChord = str => {
 		octave = octave || 4;
 		let m = mode(root.toLowerCase(), modeMap[scale].mode, octave);
 		modeMap[scale].int.forEach(i => {
-			const noteObj = {
-				note: m[i]
-			};
-			arr.push(setMiddleC.transposeNote(noteObj.note));
+			arr.push(m[i]);
 		});
 	});
 	return arr;

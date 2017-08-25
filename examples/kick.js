@@ -3,7 +3,7 @@
 const scribble = require('../src/');
 
 let clip = scribble.clip({
-	notes: ['c3'],
+	notes: 'c4',
 	pattern: 'x---'.repeat(4)
 });
 
