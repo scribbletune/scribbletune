@@ -4,6 +4,7 @@ const fs = require('fs');
 const assert = require('assert');
 const jsmidgen = require('jsmidgen');
 const setMiddleC = require('./setMiddleC');
+const transpose = require('./transpose');
 const utils = require('./utils');
 
 /**
@@ -57,7 +58,7 @@ const mergeMidiClips = (clipArray) => {
  * @param  {String} fileName If a filename is not provided, then `music.mid` is used by default
  */
 const midi = (notes, fileName) => {
-	assert(notes !== undefined && typeof notes !== 'string', 'You must provide an array of notes to write!');
+	assert(Array.isArray(notes), 'You must provide an array of notes to write!');
 	fileName = fileName || 'music.mid';
 	let file = new jsmidgen.File();
 	let track = new jsmidgen.Track();
@@ -80,8 +81,8 @@ const midi = (notes, fileName) => {
 		// only the first noteOn (or noteOff) needs the complete arity of the function call
 		// subsequent calls need only the first 2 args (channel and note)
 		if (noteObj.note) {
-			noteObj.note = setMiddleC.transposeNote(noteObj.note);
-			//Transpose the note to the correct middle C
+			// Transpose the note to the correct middle C (in case middle C was changed)
+			noteObj.note = transpose.transposeNote(noteObj.note);
 			if (typeof noteObj.note === 'string') {
 				track.noteOn(0, noteObj.note, noteObj.length, level); // channel, pitch(note), length, velocity
 				track.noteOff(0, noteObj.note, noteObj.length, level);
