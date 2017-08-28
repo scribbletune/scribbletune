@@ -15,7 +15,6 @@ var getDirName = require('path').dirname;
  * @param  {String} fileName If a filename is not provided, then `music.mid` is used by default
  * @param  {String} bpm bpm of output for the file
  */
-
 const midi = (notes, fileName, bpm) => {
 	assert(Array.isArray(notes), 'You must provide an array of notes to write!');
 	fileName = fileName || 'music';
@@ -53,18 +52,12 @@ const midi = (notes, fileName, bpm) => {
 	writeFile(outputFile, file.toBytes(), 'binary');
 }
 
- 
-
-
 function writeFile(outPath, contents, options) {
-	  let outputPathCreated = mkdirp.sync(getDirName(outPath));
-	   
-	  if (outputPathCreated || outputPathCreated == null) {
+	  let outputPathCreated = mkdirp.sync(getDirName(outPath));	   
+	  if (outputPathCreated || outputPathCreated === null) {
 	  	fs.writeFileSync(outPath, contents, options);
 	  } else {
       console.log('Error: Unable to create output directory');
     }
-
 }
-
 module.exports = midi;
