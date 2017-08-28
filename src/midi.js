@@ -21,11 +21,11 @@ const midi = (notes, fileName) => {
 
 	let file = new jsmidgen.File();
 	let track = new jsmidgen.Track();
-	
+
 	if (bpm !== undefined) {
 		track.setTempo(bpm);
 	}
-	
+
 	file.addTrack(track);
 
 	notes.forEach((noteObj) => {
@@ -47,18 +47,18 @@ const midi = (notes, fileName) => {
 		}
 	});
 	let outputFile = path.join(__dirname, '../Output/', fileName + '.mid');
-	
+
 	writeFile(outputFile, file.toBytes(), 'binary');
 }
 
 
- 
-function writeFile(file, contents, options) {
-    mkdirp( getDirName(file), function (err) {
-  if (err) return cb(err);
 
-    fs.writeFileSync(file, contents, options);
-  });
-}
+function writeFile(outPath, contents, options) => {
+	  let outputPathCreated = mkdirp.sync(getDirName(outPath));
+	  if (outputPathCreated) {
+	  	fs.writeFileSync(outPath, contents, options);
+	  } else { console.log('Error: Unable to create output directory'); }
+        }
+
 
 module.exports = midi;
