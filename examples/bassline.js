@@ -2,8 +2,11 @@
 
 const scribble = require('../src/');
 
+// Most music software consider C3 as middle C, so lets bump it by 1 to ensure our notes are imported as expected
+scribble.setMiddleC(5);
+
 // Get alternate notes from the C Phrygian mode
-var notes = scribble.mode('c', 'phrygian').filter((x, i) => i % 2 === 0);
+var notes = scribble.mode('c phrygian 2').filter((x, i) => i % 2 === 0);
 
 // Generate 4 clips (one for each note) and concat them together
 var clip = notes.reduce((accumulator, note) => {

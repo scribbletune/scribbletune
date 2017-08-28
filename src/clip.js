@@ -84,11 +84,11 @@ const clip = params => {
 
 	// Validate provided notes
 	params.notes.forEach(el => {
-		assert(el.match(/[abcdefg]#?[0-9]/g) !== null, el + 'is not a valid note!');
+		assert(el.match(/[abcdefg]#?[0-9]/g) !== null, el + ' is not a valid note!');
 	});
 
 	// Validate provided pattern does not include anything other than x, - OR _
-	assert(params.pattern.match(/[^x\-_]+/) === null, params.pattern + 'is not a valid pattern!');
+	assert(params.pattern.match(/[^x\-_]+/) === null, params.pattern + ' is not a valid pattern!');
 
 	// Update notes array in case of arpegiate
 	if (params.arpegiate) {
