@@ -5,19 +5,20 @@ const mkdirp = require('mkdirp');
 const assert = require('assert');
 const jsmidgen = require('jsmidgen');
 const transpose = require('./transpose');
-
+var path = require('path');
+var getDirName = require('path').dirname;
 
 
 /**
  * Take an array of note objects to generate a MIDI file in the same location as this method is called
  * @param  {Array} notes    Notes are in the format: {note: ['c3'], level: 127, length: 64}
  * @param  {String} fileName If a filename is not provided, then `music.mid` is used by default
- * @param  {String} bpm If a filename is not provided, then `music.mid` is used by default
+ * @param  {String} bpm bpm of output for the file
  */
 
-const midi = (notes, fileName) => {
+const midi = (notes, fileName, bpm) => {
 	assert(Array.isArray(notes), 'You must provide an array of notes to write!');
-	fileName = fileName || 'music.mid';
+	fileName = fileName || 'music';
 
 	let file = new jsmidgen.File();
 	let track = new jsmidgen.Track();
@@ -46,19 +47,24 @@ const midi = (notes, fileName) => {
 			track.noteOff(0, '', noteObj.length);
 		}
 	});
+
 	let outputFile = path.join(__dirname, '../Output/', fileName + '.mid');
 
 	writeFile(outputFile, file.toBytes(), 'binary');
 }
 
+ 
 
 
-function writeFile(outPath, contents, options) => {
+function writeFile(outPath, contents, options) {
 	  let outputPathCreated = mkdirp.sync(getDirName(outPath));
-	  if (outputPathCreated) {
+	   
+	  if (outputPathCreated || outputPathCreated == null) {
 	  	fs.writeFileSync(outPath, contents, options);
-	  } else { console.log('Error: Unable to create output directory'); }
-        }
+	  } else {
+      console.log('Error: Unable to create output directory');
+    }
 
+}
 
 module.exports = midi;
