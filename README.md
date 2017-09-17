@@ -17,7 +17,7 @@ let clip = scribble.clip({
 });
 scribble.midi(clip);
 ```
-Save this file as _c.js_ and run it from the terminal with `node c.js`. This will create a file called _music.mid_ at the same location as the _c.js_ file. If you import the MIDI file into your favorite MIDI music editing software (Garage Band / Cubase / Ableton Live / Reason etc), you ll hear the beautiful middle C played across a single bar.
+Save this file as _c.js_ and run it from the terminal with `node c.js`. This will create a file called _music.mid_ at the same location as the _c.js_ file. If you import the MIDI file into your favorite MIDI music editing software (Garage Band / Cubase / Ableton Live / Reason etc), you'll hear the beautiful middle C played across a single bar.
 
 ### Create a simple melody
 You can do more than render a single note! You can `require` the scribbletune module and use it to generate scales(modes), chords and patterns to create melodies. For example, to create a MIDI file comprising just the C Major scale (Ionian mode), you could create a new file and add some code like this:
@@ -158,7 +158,7 @@ scribble.midi(clip, "octave.midi");
 ```
 Now the imported clip will show the notes as they were added.
 
-### Tranposing notes
+### Transposing notes
 Sometimes a clip might sound better if it was just a couple octaves higher or lower, but how could we transpose it that way?
 Enter `scribble.transposeNote`
 This function will take in any note (or array of notes) and an integer representing the octave you wish to transpose to, and will return a note (or array of notes) correctly transposed. Let's see it in action!
@@ -185,7 +185,7 @@ scribble.midi(clip, 'transpose.midi');
 ```
 Let's run it again and hear the results! Much better! This works with any number of notes, and any wacky combination of octave. Have fun with it!
 
-There's a lot more to this humble beginning. But I ll let you explore it for yourself. As you can see, now you can use any JavaScript library (or not) to compute melodies using Scribbletune! Ok then, get on with it :)
+There's a lot more to this humble beginning. But I'll let you explore it for yourself. As you can see, now you can use any JavaScript library (or not) to compute melodies using Scribbletune! Ok then, get on with it :)
 
 ```
 npm install scribbletune
