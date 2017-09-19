@@ -47,7 +47,7 @@ const midi = (notes, fileName, bpm) => {
 		}
 	});
 
-	let outputFile = path.join(__dirname, '../Output/', fileName + '.mid');
+	let outputFile = path.join(process.cwd(), '/Output/', fileName + '.mid');
 
 	writeFile(outputFile, file.toBytes(), 'binary');
 }
