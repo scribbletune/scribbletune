@@ -15,6 +15,18 @@ test('clip should use provided notes', (t) => {
 	t.end();
 });
 
+test('clip should allow uppercase notes', (t) => {
+	t.equal(
+		scribble.clip({
+			notes: 'D3'
+		})[0].note[0],
+		'D3',
+		'Clip function uses the notes entered as uppercase'
+	);
+
+	t.end();
+});
+
 test('clip should throw an error in case of invalid notes', (t) => {
 	t.throws(function() {
 		scribble.clip({notes: ['k1']});
