@@ -3,7 +3,14 @@
 const assert = require('assert');
 const modes = require('./modes');
 const transpose = require('./transpose');
-const chromaticNotes = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'];
+const chromaticNotes = ['c', 'db', 'd', 'eb', 'e', 'f', 'gb', 'g', 'ab', 'a', 'bb', 'b'];
+const accidentals = {
+	'c#': 'db',
+	'd#': 'eb',
+	'f#': 'gb',
+	'g#': 'ab',
+	'a#': 'bb'
+};
 
 /**
  * Get mode or scale for the provided root note and octave
@@ -50,6 +57,9 @@ const mode = (root, mode, octave, addRootFromNextOctave) => {
 	assert(modes.hasOwnProperty(mode), 'Invalid mode: ' + mode);
 
 	root = root || 'c';
+	if (root.indexOf('#') > 0) {
+		root = accidentals[root];
+	}
 	mode = mode || 'ionian';
 	octave = +octave || transpose.defaultMiddleC;
 
