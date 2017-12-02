@@ -60,38 +60,38 @@ test('Scribbletune::modes Common', (t) => {
 test('Scribbletune::scale Melodic Minor scales', (t) => {
 	t.equal(
 		scribble.scale('c', 'melodic minor').join(''),
-		'c4d4d#4f4g4a4b4c5',
-		'C Melodic Minor is c d d# f g a b'
+		'c4d4eb4f4g4a4b4c5',
+		'C Melodic Minor is c d e♭ f g a b'
 	);
 	t.equal(
 		scribble.scale('c', 'phrygian #6').join(''),
-		'c4c#4d#4f4g4a4a#4c5',
-		'C Phrygian #6 is c c# d# f g a a#'
+		'c4db4eb4f4g4a4bb4c5',
+		'C Phrygian #6 is c d♭ e♭ f g a b♭'
 	);
 	t.equal(
 		scribble.scale('c', 'lydian augmented').join(''),
-		'c4d4e4f#4g#4a4b4c5',
-		'C Lyidan Augmented is c d e f# g# a b'
+		'c4d4e4gb4ab4a4b4c5',
+		'C Lyidan Augmented is c d e g♭ a♭ a b'
 	);
 	t.equal(
 		scribble.scale('c', 'lydian dominant').join(''),
-		'c4d4e4f#4g4a4a#4c5',
-		'C Lydian Dominant is c d e f# g a a#'
+		'c4d4e4gb4g4a4bb4c5',
+		'C Lydian Dominant is c d e g♭ g a b♭'
 	);
 	t.equal(
 		scribble.scale('c', 'fifth mode').join(''),
-		'c4d4e4f4g4g#4a#4c5',
-		'C Fifth mode is c d e f g g# a#'
+		'c4d4e4f4g4ab4bb4c5',
+		'C Fifth mode is c d e f g a♭ b♭'
 	);
 	t.equal(
 		scribble.scale('c', 'locrian #2').join(''),
-		'c4d4d#4f4f#4g#4a#4c5',
-		'C Locrian #2 is c d d# f f# g# a#'
+		'c4d4eb4f4gb4ab4bb4c5',
+		'C Locrian #2 is c d e♭ f g♭ a♭ b♭'
 	);
 	t.equal(
 		scribble.scale('c', 'altered').join(''),
-		'c4c#4d#4e4f#4g#4a#4c5',
-		'C Altered is c c# d# e f# g# a#'
+		'c4db4eb4e4gb4ab4bb4c5',
+		'C Altered is c d♭ e♭ e g♭ a♭ b♭'
 	);
 	t.end();
 });
@@ -99,13 +99,13 @@ test('Scribbletune::scale Melodic Minor scales', (t) => {
 test('Scribbletune::modes Blues/Jazz/Harmonic', (t) => {
 	t.equal(
 		scribble.mode('c', 'whole tone').join(''),
-		'c4d4e4f#4g#4a#4c5',
-		'C Whole Tone is c d e f# g# a#'
+		'c4d4e4gb4ab4bb4c5',
+		'C Whole Tone is c d e g♭ a♭ b♭'
 	);
 	t.equal(
 		scribble.mode('c', 'diminished whole half').join(''),
-		'c4d4d#4f4f#4g#4a4b4c5',
-		'C Diminished Whole Half is c d d# f f# g# a b'
+		'c4d4eb4f4gb4ab4a4b4c5',
+		'C Diminished Whole Half is c d e♭ f g♭ a♭ a b'
 	);
 	t.equal(
 		scribble.mode('c', 'major pentatonic').join(''),
@@ -114,63 +114,63 @@ test('Scribbletune::modes Blues/Jazz/Harmonic', (t) => {
 	);
 	t.equal(
 		scribble.mode('c', 'minor pentatonic').join(''),
-		'c4d#4f4g4a#4c5',
-		'C Minor Pentatonic is c d# f g a#'
+		'c4eb4f4g4bb4c5',
+		'C Minor Pentatonic is c e♭ f g b♭'
 	);
 	t.equal(
 		scribble.mode('c', 'suspended pentatonic').join(''),
-		'c4d4f4g4a#4c5',
-		'C Suspended Pentatonic is c d f g a#'
+		'c4d4f4g4bb4c5',
+		'C Suspended Pentatonic is c d f g b♭'
 	);
 	t.equal(
 		scribble.mode('c', 'dominant pentatonic').join(''),
-		'c4d4e4g4a#4c5',
-		'C Dominant Pentatonic is c d e g a#'
+		'c4d4e4g4bb4c5',
+		'C Dominant Pentatonic is c d e g b♭'
 	);
 	t.equal(
 		scribble.mode('c', 'japanese').join(''),
-		'c4c#4f4g4g#4c5',
-		'C Japanese is c c# f g g#'
+		'c4db4f4g4ab4c5',
+		'C Japanese is c d♭ f g a♭'
 	);
 	t.equal(
 		scribble.mode('c', 'blues').join(''),
-		'c4d#4f4f#4g4a#4c5',
-		'C Blues is c d# f f# g a#'
+		'c4eb4f4gb4g4bb4c5',
+		'C Blues is c e♭ f g♭ g b♭'
 	);
 	t.equal(
 		scribble.mode('c', 'bebop major').join(''),
-		'c4d4e4f4g4g#4a4b4c5',
-		'C Bebop Major is c d e f g g# a b'
+		'c4d4e4f4g4ab4a4b4c5',
+		'C Bebop Major is c d e f g a♭ a b'
 	);
 	t.equal(
 		scribble.mode('c', 'bebop minor').join(''),
-		'c4d4d#4e4f4g4a4a#4c5',
-		'C Bebop Minor is c d d# e f g a a#'
+		'c4d4eb4e4f4g4a4bb4c5',
+		'C Bebop Minor is c d e♭ e f g a b♭'
 	);
 	t.equal(
 		scribble.mode('c', 'bebop dominant').join(''),
-		'c4d4e4f4g4a4a#4b4c5',
-		'C Bebop Dominant is c d e f g a a# b'
+		'c4d4e4f4g4a4bb4b4c5',
+		'C Bebop Dominant is c d e f g a b♭ b'
 	);
 	t.equal(
 		scribble.mode('c', 'bebop melodic minor').join(''),
-		'c4d4d#4f4g4g#4a4b4c5',
-		'C Bebop Melodic Minor is c d d# f g g# a b'
+		'c4d4eb4f4g4ab4a4b4c5',
+		'C Bebop Melodic Minor is c d e♭ f g a♭ a b'
 	);
 	t.equal(
 		scribble.mode('c', 'harmonic major').join(''),
-		'c4d4e4f4g4g#4b4c5',
-		'C Harmonic major is c d e f g g# b'
+		'c4d4e4f4g4ab4b4c5',
+		'C Harmonic major is c d e f g a♭ b'
 	);
 	t.equal(
 		scribble.mode('c', 'harmonic minor').join(''),
-		'c4d4d#4f4g4g#4b4c5',
-		'C Harmonic Minor is c d d# f g g# b'
+		'c4d4eb4f4g4ab4b4c5',
+		'C Harmonic Minor is c d e♭ f g a♭ b'
 	);
 	t.equal(
 		scribble.mode('c', 'double harmonic major').join(''),
-		'c4c#4e4f4g4g#4b4c5',
-		'C Double Harmonic Minor is c c# e f g g# b'
+		'c4db4e4f4g4ab4b4c5',
+		'C Double Harmonic Minor is c d♭ e f g a♭ b'
 	);
 	t.end();
 });
@@ -178,58 +178,58 @@ test('Scribbletune::modes Blues/Jazz/Harmonic', (t) => {
 test('Scribbletune::modes Exotic', (t) => {
 	t.equal(
 		scribble.mode('c', 'hungarian gypsy').join(''),
-		'c4d4d#4f#4g4g#4a#4c5',
-		'C Hungarian Gypsy is c d d# f# g g# a#'
+		'c4d4eb4gb4g4ab4bb4c5',
+		'C Hungarian Gypsy is c d e♭ g♭ g a♭ b♭'
 	);
 	t.equal(
 		scribble.mode('c', 'hungarian major').join(''),
-		'c4d#4e4f#4g4a4a#4c5',
-		'C Hungarian Major is c d# e f# g a a#'
+		'c4eb4e4gb4g4a4bb4c5',
+		'C Hungarian Major is c e♭ e g♭ g a b♭'
 	);
 	t.equal(
 		scribble.mode('c', 'phrygian dominant').join(''),
-		'c4c#4e4f4g4g#4a#4c5',
-		'C Phrygian Dominant is c c# e f g g# a#'
+		'c4db4e4f4g4ab4bb4c5',
+		'C Phrygian Dominant is c d♭ e f g a♭ b♭'
 	);
 	t.equal(
 		scribble.mode('c', 'neapolitan minor').join(''),
-		'c4c#4d#4f4g4g#4b4c5',
-		'C Neopolitan Minor is c c# d# f g g# b'
+		'c4db4eb4f4g4ab4b4c5',
+		'C Neopolitan Minor is c d♭ e♭ f g a♭ b'
 	);
 	t.equal(
 		scribble.mode('c', 'neapolitan major').join(''),
-		'c4c#4d#4f4g4a4b4c5',
-		'C Neopolitan Major is c c# d# f g a b'
+		'c4db4eb4f4g4a4b4c5',
+		'C Neopolitan Major is c d♭ e♭ f g a b'
 	);
 	t.equal(
 		scribble.mode('c', 'enigmatic').join(''),
-		'c4c#4e4f#4g#4a#4b4c5',
-		'C Enigmatic is c c# e f# g# a# b'
+		'c4db4e4gb4ab4bb4b4c5',
+		'C Enigmatic is c d♭ e g♭ a♭ b♭ b'
 	);
 	t.equal(
 		scribble.mode('c', 'eight-tone spanish').join(''),
-		'c4c#4d#4e4f4f#4g#4a#4c5',
-		'C Eight-Tone Spanish is c c# d# e f f# g# a#'
+		'c4db4eb4e4f4gb4ab4bb4c5',
+		'C Eight-Tone Spanish is c d♭ e♭ e f g♭ a♭ b♭'
 	);
 	t.equal(
 		scribble.mode('c', 'balinese pelog').join(''),
-		'c4c#4d#4g4g#4c5',
-		'C Balinese Pelog is c c# d# g g#'
+		'c4db4eb4g4ab4c5',
+		'C Balinese Pelog is c d♭ e♭ g a♭'
 	);
 	t.equal(
 		scribble.mode('c', 'oriental').join(''),
-		'c4c#4e4f4f#4a4a#4c5',
-		'C Oriental is c c# e f f# a a#'
+		'c4db4e4f4gb4a4bb4c5',
+		'C Oriental is c d♭ e f g♭ a b♭'
 	);
 	t.equal(
 		scribble.mode('c oriental').join(''),
-		'c4c#4e4f4f#4a4a#4c5',
-		'C Oriental is c c# e f f# a a#'
+		'c4db4e4f4gb4a4bb4c5',
+		'C Oriental is c d♭ e f g♭ a b♭'
 	);
 	t.equal(
 		scribble.mode('c', 'iwato').join(''),
-		'c4c#4f4f#4a#4c5',
-		'C Iwato c c# f f# a#'
+		'c4db4f4gb4bb4c5',
+		'C Iwato c d♭ f g♭ b♭'
 	);
 	t.equal(
 		scribble.mode('c', 'yo').join(''),
@@ -238,28 +238,28 @@ test('Scribbletune::modes Exotic', (t) => {
 	);
 	t.equal(
 		scribble.mode('c', 'prometheus').join(''),
-		'c4d4e4f#4a4a#4c5',
-		'C Prometheus is c d e f# a a#'
+		'c4d4e4gb4a4bb4c5',
+		'C Prometheus is c d e g♭ a b♭'
 	);
 	t.equal(
 		scribble.mode('c', 'symmetrical').join(''),
-		'c4c#4d#4f4g#4a4a#4c5',
-		'C Symmetrical is c c# d# f g# a a#'
+		'c4db4eb4f4ab4a4bb4c5',
+		'C Symmetrical is c d♭ e♭ f a♭ a b♭'
 	);
 	t.equal(
 		scribble.mode('c', 'major locrian').join(''),
-		'c4d4e4f4f#4g#4a#4c5',
-		'C Major Locrian is c d e f f# g# a#'
+		'c4d4e4f4gb4ab4bb4c5',
+		'C Major Locrian is c d e f g♭ a♭ b♭'
 	);
 	t.equal(
 		scribble.mode('c major locrian').join(''),
-		'c4d4e4f4f#4g#4a#4c5',
-		'C Major Locrian is c d e f f# g# a#'
+		'c4d4e4f4gb4ab4bb4c5',
+		'C Major Locrian is c d e f g♭ a♭ b♭'
 	);
 	t.equal(
 		scribble.mode('c neapolitan minor').join(''),
-		'c4c#4d#4f4g4g#4b4c5',
-		'C Neopolitan Minor is c c# d# f g g# b'
+		'c4db4eb4f4g4ab4b4c5',
+		'C Neopolitan Minor is c d♭ e♭ f g a♭ b'
 	);
 	t.end();
 });
@@ -267,18 +267,18 @@ test('Scribbletune::modes Exotic', (t) => {
 test('Scribbletune::modes Miscellaneous', (t) => {
 	t.equal(
 		scribble.mode('c', 'augmented').join(''),
-		'c4d4e4f#4g#4a4b4c5',
-		'C Augmented is c d e f# g# a b'
+		'c4d4e4gb4ab4a4b4c5',
+		'C Augmented is c d e g♭ a♭ a b'
 	);
 	t.equal(
 		scribble.mode('c augmented').join(''),
-		'c4d4e4f#4g#4a4b4c5',
-		'C Augmented is c d e f# g# a b'
+		'c4d4e4gb4ab4a4b4c5',
+		'C Augmented is c d e g♭ a♭ a b'
 	);
 	t.equal(
 		scribble.mode('c', 'lydian minor').join(''),
-		'c4d4e4f#4g4g#4c5',
-		'C Lydian Minor is c d e f# g g#'
+		'c4d4e4gb4g4ab4c5',
+		'C Lydian Minor is c d e g♭ g a♭'
 	);
 	t.equal(
 		scribble.mode('c', 'ionian').join(''),
@@ -312,18 +312,23 @@ test('Scribbletune::modes Miscellaneous', (t) => {
 	);
 	t.equal(
 		scribble.mode('c', 'major locrian', 4, false).join(''),
-		'c4d4e4f4f#4g#4a#4',
+		'c4d4e4f4gb4ab4bb4',
 		'Add root from next octave is customizable'
 	);
 	t.equal(
 		scribble.mode('c major locrian 4 false').join(''),
-		'c4d4e4f4f#4g#4a#4',
+		'c4d4e4f4gb4ab4bb4',
 		'Add root from next octave is customizable'
 	);
 	t.equal(
 		scribble.scale('c', 'lydian dominant', 4, false).join(''),
-		'c4d4e4f#4g4a4a#4',
+		'c4d4e4gb4g4a4bb4',
 		'Add root from next octave is customizable'
+	);
+	t.equal(
+		scribble.mode('c#', 'ionian').join(''),
+		'db4eb4f4gb4ab4bb4c5db5',
+		'Mode accepts accidentals provided as sharps'
 	);
 	t.end();
 });

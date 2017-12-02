@@ -19,8 +19,8 @@ test('Scribbletune::chord', t => {
 
 	t.equal(
 		scribble.chord('Cmin').join(),
-		'c4,d#4,g4',
-		'C Minor is C D# G'
+		'c4,eb4,g4',
+		'C Minor is C Eb G'
 	);
 
 	t.equal(
@@ -31,20 +31,20 @@ test('Scribbletune::chord', t => {
 
 	t.equal(
 		scribble.chord('Cmin7').join(),
-		'c4,d#4,g4,a#4',
-		'C Minor is C D# G A#'
+		'c4,eb4,g4,bb4',
+		'C Minor is C Eb G Bb'
 	);
 
 	t.equal(
 		scribble.chord('Cm7').join(),
-		'c4,d#4,g4,a#4',
-		'C Minor is C D# G A#'
+		'c4,eb4,g4,bb4',
+		'C Minor is C Eb G Bb'
 	);
 
 	t.equal(
 		scribble.chord('Cm7-5').join(),
-		'c5,d#5,g5,a#5',
-		'C Minor is C D# G A#'
+		'c5,eb5,g5,bb5',
+		'C Minor is C Eb G Bb'
 	);
 
 	t.equal(
@@ -67,20 +67,20 @@ test('Scribbletune::chord', t => {
 
 	t.equal(
 		scribble.chord('Cdim').join(),
-		'c4,d#4,f#4',
-		'C Diminished is C D# F#'
+		'c4,eb4,gb4',
+		'C Diminished is C Eb Gb'
 	);
 
 	t.equal(
 		scribble.chord('Cdim7').join(),
-		'c4,d#4,f#4,a4',
-		'C Diminished 7th is C D# F# A'
+		'c4,eb4,gb4,a4',
+		'C Diminished 7th is C Eb Gb A'
 	);
 
 	t.equal(
 		scribble.chord('Caug').join(),
-		'c4,e4,g#4',
-		'C Augmented is C E G#'
+		'c4,e4,ab4',
+		'C Augmented is C E Ab'
 	);
 
 	t.equal(
@@ -91,14 +91,14 @@ test('Scribbletune::chord', t => {
 
 	t.equal(
 		scribble.chord('Cdom7').join(),
-		'c4,e4,g4,a#4',
-		'C Augmented is C E G A#'
+		'c4,e4,g4,bb4',
+		'C Augmented is C E G Bb'
 	);
 
 	t.equal(
 		scribble.chord('fmin5').join(),
-		'f5,g#5,c6',
-		'F minor is F, G#, C'
+		'f5,ab5,c6',
+		'F minor is F, Ab, C'
 	);
 
 	t.end();
@@ -132,26 +132,38 @@ test('Scribbletune::Alternative names for chords', t => {
 
 	t.equal(
 		scribble.chord('CMin').join(),
-		'c4,d#4,g4',
-		'C Minor is C D# G'
+		'c4,eb4,g4',
+		'C Minor is C Eb G'
+	);
+
+	t.equal(
+		scribble.chord('DbMin').join(),
+		'db4,e4,ab4',
+		'C Minor is Db E A♭'
+	);
+
+	t.equal(
+		scribble.chord('C#Min').join(),
+		'db4,e4,ab4',
+		'Chord accepts accidentals provided as sharps'
 	);
 
 	t.equal(
 		scribble.chord('Cm').join(),
-		'c4,d#4,g4',
-		'C Minor is C D# G'
+		'c4,eb4,g4',
+		'C Minor is C Eb G'
 	);
 
 	t.equal(
 		scribble.chord('CDim').join(),
-		'c4,d#4,f#4',
-		'C Diminished is C D# F#'
+		'c4,eb4,gb4',
+		'C Diminished is C Eb Gb'
 	);
 
 	t.equal(
 		scribble.chord('CDim7').join(),
-		'c4,d#4,f#4,a4',
-		'C Diminished 7th is C D# F# A'
+		'c4,eb4,gb4,a4',
+		'C Diminished 7th is C Eb Gb A'
 	);
 
 	t.equal(
@@ -168,26 +180,26 @@ test('Scribbletune::Alternative names for chords', t => {
 
 	t.equal(
 		scribble.chord('CAug').join(),
-		'c4,e4,g#4',
-		'C Augmented is C E G#'
+		'c4,e4,ab4',
+		'C Augmented is C E Ab'
 	);
 
 	t.equal(
 		scribble.chord('CDom7').join(),
-		'c4,e4,g4,a#4',
-		'C Augmented is C E G A#'
+		'c4,e4,g4,bb4',
+		'C Augmented is C E G Bb'
 	);
 
 	t.equal(
 		scribble.chord('C7th').join(),
-		'c4,e4,g4,a#4',
-		'C Augmented is C E G A#'
+		'c4,e4,g4,bb4',
+		'C Augmented is C E G Bb'
 	);
 
 	t.equal(
 		scribble.chord('CAug').join(),
-		'c4,e4,g#4',
-		'C Augmented is C E G#'
+		'c4,e4,ab4',
+		'C Augmented is C E Ab'
 	);
 
 	t.equal(
