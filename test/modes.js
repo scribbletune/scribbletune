@@ -54,6 +54,11 @@ test('Scribbletune::modes Common', (t) => {
 		'b4c5d5e5f5g5a5b5',
 		'B Locrian is b c d e f g a'
 	);
+	t.equal(
+		scribble.mode('c', 'Major').join(''),
+		'c4d4e4f4g4a4b4c5',
+		'Scribbletune scales are not case sensitive'
+	);
 	t.end();
 });
 

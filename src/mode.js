@@ -50,6 +50,8 @@ const mode = (root, mode, octave, addRootFromNextOctave) => {
 		mode = args.join(' ');
 	}
 
+	mode = mode.toLowerCase();
+
 	// Make sure the root is valid [abcdefg] optionally followed by #
 	assert(root.match(/[abcdefg]#?/i), 'Invalid root note: ' + root);
 
