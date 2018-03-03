@@ -11,7 +11,7 @@ var notes = scribble.mode('c phrygian 2').filter((x, i) => i % 2 === 0);
 // Generate 4 clips (one for each note) and concat them together
 var clip = notes.reduce((accumulator, note) => {
 	return accumulator.concat(scribble.clip({
-		notes: [note],	
+		notes: [note],
 		pattern: 'x-x_-xx_'.repeat(4), // Each note will use this pattern
 		sizzle: true
 	}));

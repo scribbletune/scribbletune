@@ -49,7 +49,7 @@ const getArpedNotes = (notes, distance) => {
  * @param  {Object} params Extend base parans object derived from getdefaultParams
  * @return {Object} The return object is used with the `midi` method to generate a MIDI file
  */
-const clip = params => {	
+const clip = params => {
 	params = Object.assign(getdefaultParams(), params || {});
 	let level = params.accentHi;
 	let sizzleArr;
@@ -75,7 +75,7 @@ const clip = params => {
 	params.notes = params.notes.map(el => {
 		if (Array.isArray(el)) {
 			return el.join();
-		} else if (chord.isChord(el)) {
+		} else if (chord.getChord(el)) {
 			return chord.getChord(el).join();
 		} else {
 			return el;
