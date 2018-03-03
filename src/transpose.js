@@ -6,7 +6,7 @@ const defaultMiddleC = 4;
  * Transposition is a global that subtracts the provided value for middle C from the default middle C
  * For e.g. if you set the middle C to 5, the transposition will be be set to defaultMiddleC - 5 = -1.
  * While writing to MIDI, this "transposition" will be considered and a note entered as C4
- * will appear as C4 in Ableton Live or Propellerhead Reason which consider C3 as the middle C. 
+ * will appear as C4 in Ableton Live or Propellerhead Reason which consider C3 as the middle C.
  * Without this adjustment it will look like C3 in most modern music creation software!
  */
 let transposition = 0;
@@ -41,7 +41,7 @@ function transposeOctave(initialOctave) {
 /**
  * Takes a single note or array of notes and transposes into the octave given by transposition or the octave param
  * @param {String/Array} noteArg		The Array/String contaning the note(s)
- * @param {Integer} octave The octave to transpose to  
+ * @param {Integer} octave The octave to transpose to
  * @return {String(s)} 	The correctly transposed note(s)
  */
 const transposeNote = (noteArg, octave) => {
@@ -59,7 +59,7 @@ const transposeNote = (noteArg, octave) => {
  * Private method to transpose a single note to the correct octave determined by transposition or the octave argument
  * @param {String} note     Note to be transposed
  * @param {Integer} noteIndex   Index in note array (if noteIndex is 0, we will use the octave of that note as a ref)
- * @param {Integer} octave Optional octave to transpose to  
+ * @param {Integer} octave Optional octave to transpose to
  * @return {String} Transposed note
  */
 const _transposeSingle = (note, noteIndex, octave) => {
@@ -67,7 +67,7 @@ const _transposeSingle = (note, noteIndex, octave) => {
 
 	// Get the root from the note, for e.g. get C from C4
 	let root = note.replace(/\d/g, '');
-    
+
 	// Get the octave from the note, for e.g. get 4 from C4
 	let oct = +note.replace(/[^\d]/g, '');
 

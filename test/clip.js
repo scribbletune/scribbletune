@@ -40,35 +40,35 @@ test('clip should allow passing a string of notes', (t) => {
 		notes: 'c4 d4 e4',
 		pattern: 'xxx'
 	});
-	t.equal(clip[0].note[0], 'c4', 'Clip uses provided notes as a string');
-	t.equal(clip[1].note[0], 'd4', 'Clip uses provided notes as a string');
-	t.equal(clip[2].note[0], 'e4', 'Clip uses provided notes as a string');
+	t.equal(clip[0].note[0], 'C4', 'Clip uses provided notes as a string');
+	t.equal(clip[1].note[0], 'D4', 'Clip uses provided notes as a string');
+	t.equal(clip[2].note[0], 'E4', 'Clip uses provided notes as a string');
 	t.end();
 });
 
 test('clip should allow passing a string of notes with chords', (t) => {
 	let clip = scribble.clip({
-		notes: 'c4 Dmaj e4',
+		notes: 'c4 DM e4',
 		pattern: 'xxx'
 	});
-	t.equal(clip[0].note[0], 'c4', 'Clip uses provided notes as a string');
-	t.equal(clip[1].note[0], 'd4', 'Clip uses provided notes as a string');
-	t.equal(clip[1].note[1], 'gb4', 'Clip uses provided notes as a string');
-	t.equal(clip[1].note[2], 'a4', 'Clip uses provided notes as a string');
-	t.equal(clip[2].note[0], 'e4', 'Clip uses provided notes as a string');
+	t.equal(clip[0].note[0], 'C4', 'Clip uses provided notes as a string');
+	t.equal(clip[1].note[0], 'D4', 'Clip uses provided notes as a string');
+	t.equal(clip[1].note[1], 'F#4', 'Clip uses provided notes as a string');
+	t.equal(clip[1].note[2], 'A4', 'Clip uses provided notes as a string');
+	t.equal(clip[2].note[0], 'E4', 'Clip uses provided notes as a string');
 	t.end();
 });
 
 test('clip should allow passing a string of notes with chords with octave', (t) => {
 	let clip = scribble.clip({
-		notes: 'c4 Dmaj-5 e4',
+		notes: 'c4 DM-5 e4',
 		pattern: 'xxx'
 	});
-	t.equal(clip[0].note[0], 'c4', 'Clip uses provided notes as a string');
-	t.equal(clip[1].note[0], 'd5', 'Clip uses provided notes as a string');
-	t.equal(clip[1].note[1], 'gb5', 'Clip uses provided notes as a string');
-	t.equal(clip[1].note[2], 'a5', 'Clip uses provided notes as a string');
-	t.equal(clip[2].note[0], 'e4', 'Clip uses provided notes as a string');
+	t.equal(clip[0].note[0], 'C4', 'Clip uses provided notes as a string');
+	t.equal(clip[1].note[0], 'D5', 'Clip uses provided notes as a string');
+	t.equal(clip[1].note[1], 'F#5', 'Clip uses provided notes as a string');
+	t.equal(clip[1].note[2], 'A5', 'Clip uses provided notes as a string');
+	t.equal(clip[2].note[0], 'E4', 'Clip uses provided notes as a string');
 	t.end();
 });
 
@@ -191,17 +191,17 @@ test('clip should extend notes in case of a longer pattern but retain length of 
 
 test('clip should allow using chords', (t) => {
 	let clip = scribble.clip({
-		notes: ['Cmaj', 'Cmin', 'a3'],
+		notes: ['CM', 'Cm', 'a3'],
 		pattern: 'xxx'
 	});
 	t.equal(
 		clip[0].note.join(),
-		'c4,e4,g4',
+		'C4,E4,G4',
 		'Clip allows usage of chords'
 	);
 	t.equal(
 		clip[1].note.join(),
-		'c4,eb4,g4',
+		'C4,Eb4,G4',
 		'Clip allows usage of chords'
 	);
 	t.equal(
@@ -239,27 +239,4 @@ test('clip should increase pattern length if shorter than number of notes', (t) 
 	t.end();
 });
 
-test('clip should arpegiate notes with default settings', (t) => {
-	let clip = scribble.clip({
-		notes: ['c4', 'e4'],
-		pattern: 'x'.repeat(4),
-		arpegiate: true
-	});
-	// The third note in the clip array should be c5 (Note: `clip[n].note` itself is an array for chord support)
-	t.equal(clip[2].note[0], 'c5', 'Clip arpegiates notes with default settings');
-	t.end();
-});
 
-test('clip should arpegiate notes with provided settings', (t) => {
-	let clip = scribble.clip({
-		notes: ['c4', 'e4'],
-		pattern: 'x'.repeat(4),
-		arpegiate: {
-			steps: 2,
-			distance: 1
-		}
-	});
-	// The third note in the clip array should be c#4 (Note: `clip[n].note` itself is an array for chord support)
-	t.equal(clip[2].note[0], 'c#4', 'Clip arpegiates notes with provided settings');
-	t.end();
-});
