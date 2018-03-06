@@ -3,7 +3,6 @@
 const fs = require('fs');
 const assert = require('assert');
 const jsmidgen = require('jsmidgen');
-const transpose = require('./transpose');
 
 /**
  * Take an array of note objects to generate a MIDI file in the same location as this method is called
@@ -23,8 +22,6 @@ const midi = (notes, fileName) => {
 		// only the first noteOn (or noteOff) needs the complete arity of the function call
 		// subsequent calls need only the first 2 args (channel and note)
 		if (noteObj.note) {
-			// Transpose the note to the correct middle C (in case middle C was changed)
-			noteObj.note = transpose.transposeNote(noteObj.note);
 			if (typeof noteObj.note === 'string') {
 				track.noteOn(0, noteObj.note, noteObj.length, level); // channel, pitch(note), length, velocity
 				track.noteOff(0, noteObj.note, noteObj.length, level);
