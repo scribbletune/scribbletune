@@ -44,4 +44,5 @@ const mode = (root, mode, octave) => {
 	return Tonal.scale(mode).map(Tonal.transpose(root + octave));
 }
 
-module.exports = mode;
+module.exports.mode = mode;
+module.exports.names = Tonal.scale.names();
