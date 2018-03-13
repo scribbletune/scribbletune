@@ -12,7 +12,7 @@ test('Scribbletune::modes Common', (t) => {
 	t.equal(
 		scribble.mode('c', 'ionian', 5).join(''),
 		'C5D5E5F5G5A5B5',
-		'C Ionian in the fifth octave is c5 d5 e5 f5 g5 a5 b5 c6'
+		'C Ionian in the fifth octave is c5 d5 e5 f5 g5 a5 b5'
 	);
 	t.equal(
 		scribble.mode('c ionian').join(''),
