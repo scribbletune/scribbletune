@@ -1,14 +1,15 @@
 'use strict';
 
 const Tonal = require('tonal');
-const assert = require('assert');
 
 /**
- * Get mode or scale for the provided root note and octave
+ * Get mode or scale for the provided root note and octave using Tonal
+ * Ideally Tonal should be used directly instead of this method
+ * This method is provided only for backward compatibility
  * @param  {String}  root                  Root note
  * @param  {String}  mode                  Name of the mode or scale
  * @param  {Number}  octave
- * @return {[type]}                        Returns the mode as an array, e.g. ['c3', 'd3', 'e3', 'f3', 'g3', 'a3', 'b3', 'c4']
+ * @return {[type]}                        Returns the mode as an array, e.g. ['c3', 'd3', 'e3', 'f3', 'g3', 'a3', 'b3']
  */
 const mode = (root, mode, octave) => {
 	if (root.match(/\s/) && !mode && !octave) {
@@ -34,14 +35,11 @@ const mode = (root, mode, octave) => {
 		mode = args.join(' ');
 	}
 
-	// Make sure the root is valid [abcdefg] optionally followed by #
-	assert(root.match(/[abcdefg]#?/i), 'Invalid root note: ' + root);
-
-	root = root || 'c';
+	root = root || 'C';
 	mode = mode || 'ionian';
 	octave = +octave || 4;
 
-	return Tonal.scale(mode).map(Tonal.transpose(root + octave));
+	return Tonal.Scale.notes(root + octave + ' ' + mode);
 }
 
 module.exports.mode = mode;
