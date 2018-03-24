@@ -94,10 +94,11 @@ test('clip should validate provided notes & pattern using default notes and patt
 
 test('clip should shuffle provided notes', (t) => {
 	let clip = scribble.clip({
-		notes: scribble.scale('c', 'major', 3),
+		notes: scribble.scale('C3 major'),
 		pattern: 'xxxx',
 		shuffle: true
 	});
+	console.log(clip);
 	t.equal(
 		clip[0].note[0] === 'c3' && clip[0].note[1] === 'd3',
 		false,

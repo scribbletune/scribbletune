@@ -9,7 +9,7 @@ const jsmUtils = require('jsmidgen').Util;
  * Get defauly params for a clip, such as root note, pattern etc
  * @return {Object}
  */
-const getdefaultParams = () => ({
+const getDefaultParams = () => ({
 	ticks: 512,			// By default a single 4x4 bar is 512 ticks (this is known as HDR_SPEED)
 	notes: ['c3'],
 	pattern: 'x_______________',
@@ -46,11 +46,11 @@ const getArpedNotes = (notes, distance) => {
 
 /**
  * A clip is a container of a musical idea based on the params passed to it
- * @param  {Object} params Extend base parans object derived from getdefaultParams
+ * @param  {Object} params Extend base parans object derived from getDefaultParams
  * @return {Object} The return object is used with the `midi` method to generate a MIDI file
  */
 const clip = params => {
-	params = Object.assign(getdefaultParams(), params || {});
+	params = Object.assign(getDefaultParams(), params || {});
 	let level = params.accentHi;
 	let sizzleArr;
 	if (params.sizzle) {

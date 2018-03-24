@@ -2,6 +2,7 @@
 
 const Tonal = require('tonal');
 const chordNames = Tonal.Chord.names();
+
 /**
  * Use the chord regex to identify if the passed string is a chord
  * @param  {String}  str [examples: CMaj Cmaj cmaj Cm cmin f#maj7 etc]
@@ -16,6 +17,7 @@ const isChord = str => {
 
 	return !!c;
 }
+
 /**
  * Derive a chord from the given string. Exposed as simply `chord` in Scribbletune
  * @param  {String} str [example: CMaj]
@@ -37,6 +39,6 @@ const getChord = str => {
  * Get a list of chords available in Scribbletune.
  * @return {Array}     [example output: ['maj', 'min', 'dim']]
  */
-const listChords = () => chordNames;
+const chords = () => chordNames;
 
-module.exports = {isChord, getChord, listChords};
+module.exports = {isChord, getChord, chords};
