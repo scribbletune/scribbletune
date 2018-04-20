@@ -8,14 +8,15 @@
   },
   "dependencies": {
     "jsmidgen": "~0.1.4",
-    "tonal": "^1.1.3"
+    "tonal": "^1.1.3",
+    "tone": "^0.12.80"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-eslint": "^1.1.1",
     "gulp-istanbul": "^0.10.3",
     "gulp-tape": "0.0.7",
-    "tape": "^4.2.0"
+    "tape": "^4.9.0"
   },
   "repository": {
     "type": "git",
