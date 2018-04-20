@@ -8,7 +8,7 @@
 		"space-before-blocks": [1, "always"],
 		"spaced-comment": 2
 	},
-	env: { 
+	"env": { 
 		"es6": true
 	}
 }

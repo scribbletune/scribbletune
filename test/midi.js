@@ -1,5 +1,5 @@
 'use strict';
-
+global.window = true;
 const fs = require('fs');
 const test = require('tape');
 const scribble = require('../src/index');

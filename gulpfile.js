@@ -2,7 +2,7 @@ const gulp = require('gulp');
 const tape = require('gulp-tape');
 const istanbul = require('gulp-istanbul');
 const eslint = require('gulp-eslint');
-
+var window = true;
 gulp.task('lint', () => {
 	return gulp.src(['src/*.js','!node_modules/**'])
 		.pipe(eslint())

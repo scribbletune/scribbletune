@@ -15,4 +15,5 @@ module.exports = {
 	midi,
 	sequence: webaudio.sequence,
 	player: webaudio.player,
+	getNextPos: webaudio.getNextPos
 };
