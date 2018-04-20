@@ -24,7 +24,13 @@ const sequence = params => {
 	return new Tone.Sequence(getSeqFn(params.player.toMaster()), expandStr(params.pattern), params.subdiv || '4n');
 }
 
+const getNextPos = () => {
+	var m = +Tone.Transport.position.split(':')[0];
+	return (m + 1) + ':0:0';
+};
+
 module.exports = {
 	player,
-	sequence
+	sequence,
+	getNextPos
 };
