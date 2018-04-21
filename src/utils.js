@@ -1,7 +1,5 @@
 'use strict';
 
-const minorChords = ['m', 'min', 'Min', 'Minor', 'minor'];
-
 const utils = {
 	/**
 	 * Basic Array randomizer
@@ -22,7 +20,7 @@ const utils = {
 	/**
 	 * Return an array of numbers relative to maxLevel || 127 ordered in a Sine wave format
 	 * This is used by the `sizzle` param of the `clip` method to add a rudimentary variation to the accent of each note
-	 * @param  {Number} maxLevel A number between not more than 127
+	 * @param {Number} maxLevel A number between not more than 127
 	 * @return {Array}  Example output [63, 90, 110, 127, 110, 90, 63, 0, 63, 90, 110, 127, 110, 90, 63, 0]
 	 */
 	sizzleMap: maxLevel => {
@@ -33,6 +31,20 @@ const utils = {
 		piArrRev.reverse();
 		let arr = piArr.concat(piArrRev);
 		return arr.map(element => Math.round(Math.sin(element) * maxLevel));
+	},
+
+	/**
+	 * Take a String input such as xxx[xx[xx]]
+	 * and return an Array as ['x', 'x', 'x', ['x', 'x', ['x', 'x']]]
+	 * @param  {String} str
+	 * @return {Array}
+	*/
+	expandStr: str => {
+		str = JSON.stringify(str.split(''));
+		str = str.replace(/,"\[",/g, ', [');
+		str = str.replace(/"\[",/g, '[');
+		str = str.replace(/,"\]"/g, ']');
+		return JSON.parse(str);
 	}
 };
 
