@@ -8,12 +8,15 @@ const webaudio = require('./webaudio');
 // Allow scale to be denoted by mode as well
 module.exports = {
 	scale: Tonal.Scale.notes,
+	mode: Tonal.Scale.notes,
 	scales: Tonal.Scale.names(),
+	modes: Tonal.Scale.names(),
 	chord: chord.getChord,
 	chords: chord.chords,
 	clip,
 	midi,
 	sequence: webaudio.sequence,
-	player: webaudio.player,
-	getNextPos: webaudio.getNextPos
+	getNextPos: webaudio.getNextPos,
+	createSession: webaudio.createSession,
+	loop: webaudio.loop
 };
