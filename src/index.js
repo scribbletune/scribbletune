@@ -3,7 +3,7 @@ const Tonal = require('tonal');
 const chord = require('./chord');
 const clip = require('./clip');
 const midi = require('./midi');
-const webaudio = require('./webaudio');
+const loop = require('./loop');
 
 // Allow scale to be denoted by mode as well
 module.exports = {
@@ -15,8 +15,5 @@ module.exports = {
 	chords: chord.chords,
 	clip,
 	midi,
-	sequence: webaudio.sequence,
-	getNextPos: webaudio.getNextPos,
-	createSession: webaudio.createSession,
-	loop: webaudio.loop
+	loop
 };
