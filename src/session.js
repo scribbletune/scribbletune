@@ -5,8 +5,13 @@ const utils = require('./utils');
 const loop = require('./loop');
 
 const getNextPos = () => {
-	var m = +Tone.Transport.position.split(':')[0];
-	return (m + 1) + ':0:0';
+	var arr = Tone.Transport.position.split(':');
+	// If we are still around 0:0:0x, then set start position to 0
+	if (arr[0] === '0' && arr[1] === '0') {
+		return 0;
+	}
+	// Else set it to the next bar
+	return (+arr[0] + 1) + ':0:0';
 };
 
 class Channel {
@@ -27,17 +32,19 @@ class Channel {
 		return this._clips;
 	}
 
-	startClip(idx, when) {
+	startClip(idx) {
+		console.log(Tone.Transport.position);
 		// Stop any currently running clip
 		if (this._activeClipIdx > -1) {
 			this.stopClip(this._activeClipIdx);
 		}
 		this._activeClipIdx = idx;
-		this._clips[idx].start(typeof when === 'undefined' ?  getNextPos() : when);
+		let when = getNextPos();
+		this._clips[idx].start(when);
 	}
 
 	stopClip(idx) {
-		this._clips[idx].stop(typeof when === 'undefined' ?  getNextPos() : when);
+		this._clips[idx].stop(getNextPos());
 	}
 
 	addLoop(loopParams, idx) {
