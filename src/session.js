@@ -64,6 +64,10 @@ class Channel {
 			this._clips[i] = null;
 		}
 	}
+
+	get activeClipIdx() {
+		return this._activeClipIdx;
+	}
 }
 
 class Session {
