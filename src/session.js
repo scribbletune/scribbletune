@@ -17,7 +17,7 @@ const getNextPos = () => {
 class Channel {
 	constructor(params) {
 		this.idx = params.idx,
-		this._activeClipIdx = -1;
+		this._activePatternIdx = -1;
 		this._clips = [];
 		if (params.sound) {
 			this.player = new Tone.Player(params.sound).toMaster();
@@ -33,18 +33,15 @@ class Channel {
 	}
 
 	startClip(idx) {
-		console.log(Tone.Transport.position);
-		// Stop any currently running clip
-		if (this._activeClipIdx > -1) {
-			this.stopClip(this._activeClipIdx);
+		// Stop any other currently running clip
+		if (this._activePatternIdx > -1 && this._activePatternIdx !== idx) {
+			this.stopClip(this._activePatternIdx);
 		}
 
-		if (this._clips[idx]) {
-			this._activeClipIdx = idx;
+		if (this._clips[idx] && this._clips[idx].state !== 'started') {
+			this._activePatternIdx = idx;
 			let when = getNextPos();
 			this._clips[idx].start(when);
-		} else {
-			this._activeClipId = -1;
 		}
 	}
 
@@ -61,12 +58,12 @@ class Channel {
 			}, loopParams));
 		} else {
 			// Allow creation of empty clips
-			this._clips[i] = null;
+			this._clips[idx] = null;
 		}
 	}
 
 	get activeClipIdx() {
-		return this._activeClipIdx;
+		return this._activePatternIdx;
 	}
 }
 
