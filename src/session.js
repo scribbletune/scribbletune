@@ -38,9 +38,14 @@ class Channel {
 		if (this._activeClipIdx > -1) {
 			this.stopClip(this._activeClipIdx);
 		}
-		this._activeClipIdx = idx;
-		let when = getNextPos();
-		this._clips[idx].start(when);
+
+		if (this._clips[idx]) {
+			this._activeClipIdx = idx;
+			let when = getNextPos();
+			this._clips[idx].start(when);
+		} else {
+			this._activeClipId = -1;
+		}
 	}
 
 	stopClip(idx) {
@@ -85,6 +90,13 @@ class Session {
 
 	stop() {
 		Tone.Transport.stop();
+	}
+
+	// Start the clips at a specific index in all the channels
+	startRow(idx) {
+		this._channels.forEach(ch => {
+			ch.startClip(idx);
+		});
 	}
 }
 
