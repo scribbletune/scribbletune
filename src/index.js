@@ -5,6 +5,7 @@ const clip = require('./clip');
 const midi = require('./midi');
 const loop = require('./loop');
 const session = require('./session');
+const transport = require('./transport');
 
 // Allow scale to be denoted by mode as well
 module.exports = {
@@ -17,5 +18,6 @@ module.exports = {
 	clip,
 	midi,
 	session,
-	loop
+	loop,
+	transport
 };
