@@ -17,7 +17,7 @@ const getInstrSeqFn = (params) => {
 
 	return (time, el) => {
 		if (el === 'x') {
-			params.instrument.triggerAttackRelease(params.notes[counter]);
+			params.instrument.triggerAttackRelease(params.notes[counter], '8n', time);
 			counter++;
 			if (counter === params.notes.length) {
 				counter = 0;
