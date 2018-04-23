@@ -16,5 +16,6 @@ module.exports = {
 	chords: chord.chords,
 	clip,
 	midi,
-	session
+	session,
+	loop
 };
