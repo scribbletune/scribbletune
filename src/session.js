@@ -85,15 +85,6 @@ class Session {
 		return this._channels;
 	}
 
-	start(bpm) {
-		Tone.Transport.bpm.value = bpm || 120;
-		Tone.Transport.start();
-	}
-
-	stop() {
-		Tone.Transport.stop();
-	}
-
 	// Start the clips at a specific index in all the channels
 	startRow(idx) {
 		this._channels.forEach(ch => {

@@ -9,7 +9,8 @@
   "dependencies": {
     "jsmidgen": "~0.1.4",
     "tonal": "^1.1.3",
-    "tone": "^0.12.80"
+    "tone": "^0.12.80",
+    "Presets": "git+https://github.com/walmik/Presets.git#gh-pages"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
