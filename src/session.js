@@ -3,6 +3,7 @@
 const Tone = require('tone');
 const utils = require('./utils');
 const loop = require('./loop');
+const Presets = require('Presets');
 
 const getNextPos = () => {
 	var arr = Tone.Transport.position.split(':');
@@ -23,7 +24,12 @@ class Channel {
 			this.player = new Tone.Player(params.sound).toMaster();
 		}
 		if (params.synth) {
-			this.instrument = new Tone[params.synth]().toMaster();
+			let preset, synth = params.synth;
+			if (params.synth.indexOf(':') > -1) {
+				preset = Presets.instrument(params.synth);
+				synth = params.synth.split(':')[0];
+			}
+			this.instrument = new Tone[synth](preset).toMaster();
 		}
 		params.loops.forEach(this.addLoop, this);
 	}
