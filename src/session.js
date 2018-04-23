@@ -85,7 +85,8 @@ class Session {
 		return this._channels;
 	}
 
-	start() {
+	start(bpm) {
+		Tone.Transport.bpm.value = bpm || 120;
 		Tone.Transport.start();
 	}
 
