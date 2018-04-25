@@ -67,7 +67,7 @@ class Channel {
 				this.instrument.toMaster();
 			}
 		}
-		params.loops.forEach(this.addLoop, this);
+		params.clips.forEach(this.addClip, this);
 	}
 
 	get clips() {
@@ -91,13 +91,13 @@ class Channel {
 		this._clips[idx].stop(getNextPos());
 	}
 
-	addLoop(loopParams, idx) {
+	addClip(clipParams, idx) {
 		idx = idx || this._clips.length;
-		if (loopParams.pattern) {
+		if (clipParams.pattern) {
 			this._clips[idx] = loop(Object.assign({
 				player: this.player, // will be ignored if undefined
 				instrument: this.instrument // will be ignored if undefined
-			}, loopParams));
+			}, clipParams));
 		} else {
 			// Allow creation of empty clips
 			this._clips[idx] = null;
