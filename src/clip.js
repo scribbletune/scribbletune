@@ -52,7 +52,7 @@ const getArpedNotes = (notes, distance) => {
  */
 const clip = params => {
 	// Temporary convoluted hack to retain a simple platform agnostic API
-	if (params && (params.sound || params.synth)) {
+	if (params && (params.sample || params.synth)) {
 		return loop(params);
 	}
 

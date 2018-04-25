@@ -36,10 +36,10 @@ module.exports = params => {
 
 	// params could already have a player or instrument (set by Scribbletune during channel creation)
 	// params may not have either and hence would have the means to create a new player or new instrument
-	// via `sound` (a path to a audio file) or a `synth` (from the various synths available in Tone.js)
-	if (params.sound) {
+	// via `sample` (a path to a audio file) or a `synth` (from the various synths available in Tone.js)
+	if (params.sample) {
 		// This implies, the loop is probably being hand created by the user with a audio sample
-		params.player = new Tone.Player(params.sound).toMaster();
+		params.player = new Tone.Player(params.sample).toMaster();
 	}
 
 	if (params.player) {
