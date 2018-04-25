@@ -46,8 +46,8 @@ class Channel {
 		this._clips = [];
 		let endpoint = wireUpEffects(params.effects);
 
-		if (params.sound) {
-			this.player = new Tone.Player(params.sound);
+		if (params.sample) {
+			this.player = new Tone.Player(params.sample);
 			if (endpoint) {
 				this.player.connect(endpoint);
 			} else {
