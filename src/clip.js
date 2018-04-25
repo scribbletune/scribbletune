@@ -4,6 +4,7 @@ const assert = require('assert');
 const utils = require('./utils');
 const chord = require('./chord');
 const jsmUtils = require('jsmidgen').Util;
+const loop = require('./loop');
 
 /**
  * Get defauly params for a clip, such as root note, pattern etc
@@ -50,6 +51,11 @@ const getArpedNotes = (notes, distance) => {
  * @return {Object} The return object is used with the `midi` method to generate a MIDI file
  */
 const clip = params => {
+	// Temporary convoluted hack to retain a simple platform agnostic API
+	if (params && (params.sound || params.synth)) {
+		return loop(params);
+	}
+
 	params = Object.assign(getDefaultParams(), params || {});
 	let level = params.accentHi;
 	let sizzleArr;

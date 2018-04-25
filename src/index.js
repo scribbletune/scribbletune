@@ -3,7 +3,6 @@ const Tonal = require('tonal');
 const chord = require('./chord');
 const clip = require('./clip');
 const midi = require('./midi');
-const loop = require('./loop');
 const session = require('./session');
 const transport = require('./transport');
 
@@ -18,6 +17,5 @@ module.exports = {
 	clip,
 	midi,
 	session,
-	loop,
 	transport
 };
