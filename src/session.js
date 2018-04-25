@@ -15,21 +15,57 @@ const getNextPos = () => {
 	return (+arr[0] + 1) + ':0:0';
 };
 
+const wireUpEffects = effects => {
+	if (!effects) {
+		return;
+	}
+	let eff, effectName, endpoint, presetJson;
+	while (effects.length) {
+		effectName = effects.pop();
+		if (effectName.includes(':')) {
+			presetJson = Presets.effect(effectName);
+			effectName = effectName.split(':')[0];
+		}
+		eff = new Tone[effectName](presetJson);
+		if (endpoint) {
+			eff.connect(endpoint);
+		} else {
+			eff.toMaster();
+		}
+		endpoint = eff;
+		presetJson = undefined;
+	}
+
+	return endpoint;
+}
+
 class Channel {
 	constructor(params) {
 		this.idx = params.idx,
 		this._activePatternIdx = -1;
 		this._clips = [];
+		let endpoint = wireUpEffects(params.effects);
+
 		if (params.sound) {
-			this.player = new Tone.Player(params.sound).toMaster();
+			this.player = new Tone.Player(params.sound);
+			if (endpoint) {
+				this.player.connect(endpoint);
+			} else {
+				this.player.toMaster();
+			}
 		}
 		if (params.synth) {
-			let preset, synth = params.synth;
-			if (params.synth.indexOf(':') > -1) {
-				preset = Presets.instrument(params.synth);
+			let presetJson, synth = params.synth;
+			if (params.synth.includes(':')) {
+				presetJson = Presets.instrument(params.synth);
 				synth = params.synth.split(':')[0];
 			}
-			this.instrument = new Tone[synth](preset).toMaster();
+			this.instrument = new Tone[synth](presetJson);
+			if (endpoint) {
+				this.instrument.connect(endpoint);
+			} else {
+				this.instrument.toMaster();
+			}
 		}
 		params.loops.forEach(this.addLoop, this);
 	}
