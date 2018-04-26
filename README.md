@@ -1,4 +1,7 @@
-Scribbletune (Requires Node 4+)
+#### IMPORTANT! If you are looking for the alpha version with the browser support, please use `npm install scribbletune@1.0.0-alpha.1`
+The major version is still under development. Untill it's officially released, please refer to [this wiki page](https://github.com/walmik/scribbletune/wiki/Scribbletune-1.0.0-alpha.1-(new-changes-&-goals)) for notes on how to use it. For the default version, please refer to the rest of this document.
+
+Scribbletune (Requires Node 6+)
 ------------------------------------------------
 [![Build Status](https://api.travis-ci.org/walmik/scribbletune.svg)](http://travis-ci.org/walmik/scribbletune)
 
