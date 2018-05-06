@@ -8,9 +8,13 @@ Use simple __JavaScript__ `Strings` and `Arrays` to generate rhythms and musical
 
 ### Install
 
-`npm install scribbletune`
+Internally Scribbletune depends on 3 other libraries ([Tone.js](https://tonejs.github.io/), [Tonal](https://github.com/danigb/tonal) and [jsmidgen](https://github.com/dingram/jsmidgen)) so technically you dont need to install anything other than Scribbletune itself. Use at least __Node 6+__ and __NPM 5.2+__ and in your project directory run, 
 
-### Let's C how this works
+```bash
+npm install scribbletune
+```
+
+#### Let's C how this works
 You can get started by requiring the `scribbletune` module and create a `clip` that contains just the middle C note. A clip is like a container for a musical idea. It can be of any length.
 
 ```js
@@ -22,9 +26,10 @@ var clip = scribble.clip({
 scribble.transport.start();
 clip.start();
 ```
-Run this script in the browser and you ll hear the sound of the beautiful middle C note emanating from your computer's speakers.
 
-Scribbletune depends on the brilliant [Tone.js](https://github.com/dingram/jsmidgen) wrapper for the WebAudioAPI to play and sequence sounds. That `tranport` that you see up there in the code snippet is basically Tone.Transport! You might wonder why use Scribbletune then? Well, Scribbletune lets you define patterns with its own simple pattern language and provides the same interface for exporting sequences as MIDI files that music software such as Ableton Live, Properllerhead Reason and many others can make use of. 
+Bundle up this script and run it in the browser to hear the sound of the beautiful middle C note emanating from your computer's speakers.
+
+Scribbletune depends on the brilliant [Tone.js](https://github.com/dingram/jsmidgen) wrapper for the WebAudioAPI to play and sequence sounds right in the browser. The `tranport` that you see up there in the code snippet is basically [Tone.Transport](https://tonejs.github.io/docs/r12/Transport)! You might wonder why use Scribbletune then? Well, Scribbletune lets you define patterns with `x` and `-` that can help you setup sequences, synths and effects with presets quickly (and much fewer lines of code). It also provides the same interface for exporting sequences as MIDI files that music software such as Ableton Live, Properllerhead Reason and many others can make use of.
 
 Make a small change to get a MIDI file instead,
 
@@ -38,9 +43,9 @@ scribble.midi(clip);
 
 Save this file as _c.js_ and run it from the terminal with `node c.js`. This will create a file called _music.mid_ at the same location as the _c.js_ file. If you import the MIDI file into your favorite MIDI music editing software (Garage Band / Cubase / Ableton Live / Reason etc), you'll hear the same middle C played across a single bar.
 
-Scribbletune uses the [jsmidgen node module](https://github.com/dingram/jsmidgen) for exporting your creations to MIDI files. In fact, _jsmidgen_ is one of the original motivators for Scribbletune itself! 
+Scribbletune uses the [jsmidgen node module](https://github.com/dingram/jsmidgen) for exporting your creations to MIDI files. In fact, _jsmidgen_ is one of the original motivations for making Scribbletune a Node module (I ve tried doing this with Python in the past - there is no limit in Python or for that matter any other language but when you also want to support browsers, then pretty much JavaScript is the only way forward).
 
-> As you can see, you uses the same `clip` method to create it for the browser or to export as MIDI from the terminal!
+> As you can see, you used the same `clip` method to create it for the browser or to export as MIDI from the terminal!
 
 ### Create a simple melody
 You can do more than render a single note! You can `require` the scribbletune module and use it to generate scales(modes), chords and patterns to create melodies. For example, to create a MIDI file comprising just the C Major scale (Ionian mode), you could create a new file and add some code like this:
@@ -75,7 +80,7 @@ Explore [scales](https://danigb.github.io/tonal-app/#/C/scales) and [chords](htt
 
 ### Chords
 
-You might wonder, why can't I just use Tonal directly? Of course you can! But Scribbletune provides some sugar on top of it so that you can directly add chords to the `notes` array while creating a clip to render chord progressions.
+You might wonder, why can't I just use Tonal directly? Of course you can! But Scribbletune provides some sugar on top of it so that you can directly add chords to the `notes` property while creating a clip to render chord progressions.
 
 ```js
 const scribble = require('scribbletune');
@@ -168,7 +173,13 @@ This will start a server on port 8000 and it will serve the files from the locat
 
 <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/247079528&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
 
-There's a lot more to this humble beginning. But I'll let you explore it for yourself. As you can see, now you can use basic JavaScript `String` and `Array` functions to compute melodies using Scribbletune! Ok then, get on with it ;).
+There's a lot more to this humble beginning. But I'll let you explore it for yourself. As you can see, now you can use basic JavaScript `String` and `Array` functions to compute melodies using Scribbletune!
+
+#### WIP development & documentation
+
+This project and it's documentation is still largely work in progress (but you can use it to start making music today). Some additional documentation for the newly added functionality that can help you put together a Ableton Live like Session view, available Tone.js synths and effects with presets etc is [available here](https://github.com/walmik/scribbletune/wiki/Scribbletune-1.0.0-alpha.1-(new-changes-&-goals))
+
+Ok then, get on with it ;).
 
 ```
 npm install scribbletune
