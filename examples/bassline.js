@@ -3,7 +3,7 @@
 const scribble = require('../src/');
 
 // Get alternate notes from the C Phrygian mode
-var notes = scribble.scale('c phrygian 2').filter((x, i) => i % 2 === 0);
+var notes = scribble.scale('C2 phrygian').filter((x, i) => i % 2 === 0);
 
 // Generate 4 clips (one for each note) and concat them together
 var clip = notes.reduce((accumulator, note) => {
