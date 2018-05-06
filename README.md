@@ -66,7 +66,7 @@ clip.start();
 scribble.midi(clip, 'cscale.mid');
 ```
 
-<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/247076595&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+[Click here to listen how that would sound](https://soundcloud.com/walmik/c-major)
 
 Scribbletune depends on [Tonal](https://github.com/danigb/tonal) for generating scales and chords. Initially Scribbletune had it's own functionality to generate this. To stay in tune with the ideals of open source software, now it's delegated entirely to Tonal as this is a library that is dedicated to do just that. 
 
@@ -95,7 +95,7 @@ scribble.midi(chords, 'chords.mid');
 
 Since I used the `midi` method, I could generate a MIDI file that I then imported into Garage Band and applied Synthesizer->EDM Chord->Sunrise Chords to it and here is how it sounds.
 
-<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/247079057&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+[Click here to listen how that turned out](https://soundcloud.com/walmik/chords)
 
 As you can see, you need to use the short chord symbols for naming chords... for e.g. major is denoted by `M`, minor chords by `m`, major seventh chords as `M7` and so on. To get a list of all the chords that Tonal can generate (and you can use em in Scribbletune), do this:
 
@@ -169,9 +169,7 @@ In index.html, make sure you add `<script src="bundle.js"></script>` Finally, ma
 python -m SimpleHTTPServer
 ```
 
-This will start a server on port 8000 and it will serve the files from the location this command was run from. Once you open your browser and load http://localhost:8000, you should here this looping over and over:
-
-<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/247079528&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+This will start a server on port 8000 and it will serve the files from the location this command was run from. Once you open your browser and load http://localhost:8000, [you should hear something like this looping over and over](https://soundcloud.com/walmik/loop).
 
 There's a lot more to this humble beginning. But I'll let you explore it for yourself. As you can see, now you can use basic JavaScript `String` and `Array` functions to compute melodies using Scribbletune!
 
