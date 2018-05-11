@@ -1,6 +1,6 @@
 'use strict';
 
-const Tone = require('tone');
+const Tone = typeof window !== 'undefined' && require('tone');
 const utils = require('./utils');
 const defaultSubdiv = '4n';
 
