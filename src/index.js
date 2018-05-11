@@ -3,8 +3,8 @@ const Tonal = require('tonal');
 const chord = require('./chord');
 const clip = require('./clip');
 const midi = require('./midi');
-const session = require('./session');
-const transport = require('./transport');
+const session = typeof window !== 'undefined' && require('./session');
+const transport = typeof window !== 'undefined' && require('./transport');
 
 // Allow scale to be denoted by mode as well
 module.exports = {
