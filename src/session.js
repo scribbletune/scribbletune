@@ -5,6 +5,10 @@ const utils = require('./utils');
 const loop = require('./loop');
 const Presets = require('Presets');
 
+/**
+ * Get the next position to stop the current clip(s) and start the next clip(s)
+ * @return {Number|String} The position on the timeline
+ */
 const getNextPos = () => {
 	var arr = Tone.Transport.position.split(':');
 	// If we are still around 0:0:0x, then set start position to 0
@@ -15,6 +19,14 @@ const getNextPos = () => {
 	return (+arr[0] + 1) + ':0:0';
 };
 
+/**
+ * Effects are provided as an array while creating a Channel. 
+ * They need to be chained one to the other in the order they appear all leading to the Master audio.
+ * For instance ['Delay', 'Reverb', 'EffectName:PresetName'] would be chained as
+ * Delay -> Reverb -> EffectName -> Master
+ * @param  {Array} effects
+ * @return {Tone.js Object}
+ */
 const wireUpEffects = effects => {
 	if (!effects) {
 		return;
@@ -36,9 +48,21 @@ const wireUpEffects = effects => {
 		presetJson = undefined;
 	}
 
+	// Return the first effect from the chain
+	// The Channel class will connect it's Player or Instrument to this
 	return endpoint;
 }
 
+/**
+ * Channel
+ * A channel is made up of a Tone.js Player/Instrument, one or more
+ * Tone.js sequences (known as clips in Scribbletune)
+ * & optionally a set of effects (with or without presets)
+ * 
+ * API:
+ * clips -> Get all clips for this channel
+ * addClip -> 
+ */
 class Channel {
 	constructor(params) {
 		this.idx = params.idx,
