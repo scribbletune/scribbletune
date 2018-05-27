@@ -8,6 +8,18 @@ Use simple __JavaScript__ `Strings` and `Arrays` to generate rhythms and musical
 
 ### Install
 
+To install the stable version (no browser suppport),
+
+```bash
+npm install scribbletune@0.11.2
+```
+
+To install the new still WIP version (with browser suppport via Tone.js),
+
+```bash
+npm install scribbletune
+```
+
 Internally Scribbletune depends on 3 other libraries ([Tone.js](https://tonejs.github.io/), [Tonal](https://github.com/danigb/tonal) and [jsmidgen](https://github.com/dingram/jsmidgen)) so technically you dont need to install anything other than Scribbletune itself. Use at least __Node 6+__ and __NPM 5.2+__ and in your project directory run, 
 
 ```bash

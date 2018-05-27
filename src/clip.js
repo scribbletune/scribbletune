@@ -79,7 +79,9 @@ const clip = params => {
 
 	// Convert chords if any to notes
 	params.notes = params.notes.map(el => {
-		if (Array.isArray(el)) {
+		if (utils.isNote(el)) {
+			return el;
+		} else if (Array.isArray(el)) {
 			return el.join();
 		} else if (chord.getChord(el)) {
 			return chord.getChord(el).join();
