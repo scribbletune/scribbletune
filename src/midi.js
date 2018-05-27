@@ -34,6 +34,7 @@ const midi = (notes, fileName) => {
 	});
 
 	fs.writeFileSync(fileName, file.toBytes(), 'binary');
+	console.log('MIDI file generated:', fileName);
 }
 
 module.exports = midi;
