@@ -45,7 +45,14 @@ const utils = {
 		str = str.replace(/"\[",/g, '[');
 		str = str.replace(/,"\]"/g, ']');
 		return JSON.parse(str);
-	}
+	},
+
+	/**
+	 * Take a string input and check if it s a note name or not
+	 * @param  {String} str Note name e.g. c4
+	 * @return {Boolean} Return true for c4 or return false for something like CM
+	 */
+	isNote: str => /^[a-gA-G](?:#|b)?\d/.test(str)
 };
 
 module.exports = utils;
