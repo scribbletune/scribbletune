@@ -92,6 +92,10 @@ const clip = params => {
 
 	// Validate provided notes
 	params.notes.forEach(el => {
+		// Notes could be chords provided as arrays which we can ignore for now
+		if (Array.isArray(el)) {
+			return;
+		}
 		assert(el.match(/[a-gA-G]#?[0-9]/g) !== null, el + ' is not a valid note!');
 	});
 
@@ -188,8 +192,9 @@ const clip = params => {
 		if (noteOn) {
 			// Found x OR x- OR x__
 			clipNotes.push({
-				// A note can be a single note like c3 or comma separated string to denote chords c3,e3,g3
-				note: params.notes[step].split(','),
+				// A note can be a single note like c4 or comma separated string to denote chords c4,e4,g4 or
+				// an array that provides notes to be used as a chord such as ['c4', 'e4', 'g4']
+				note: Array.isArray(params.notes[step]) ? params.notes[step] : params.notes[step].split(','),
 				length: params.noteLength * noteOn.length * params.ticks,
 				level: params.sizzle ? sizzleVal : level
 			});
