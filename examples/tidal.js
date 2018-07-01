@@ -3,8 +3,8 @@
 const scribble = require('../src/');
 
 let clip = scribble.clip({
-	pattern: 'x[-x]',
-	notes: 'c3'
+	pattern: 'xx_[x[-x]]',
+	notes: 'c4'
 });
 
 scribble.midi(clip);

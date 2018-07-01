@@ -96,12 +96,22 @@ const clip = params => {
 				let note = null;
 				// If the note is to be `on`, then it needs to be an array
 				if (el === 'x') {
-					note = params.notes[step]
+					note = params.notes[step];
 				}
 
-				clipNotes.push({note, length, level: params.accentHi});
+				// Push only note on OR off messages to the clip notes array
+				if (el === 'x' || el === '-') {
+					clipNotes.push({ note, length, level: params.accentHi });
+				}
+
+				// In case of an underscore, simply extend the previous note's length
+				if (el === '_' && clipNotes.length) {
+					clipNotes[clipNotes.length - 1].length += length;
+				}
+
 				step++;
 
+				// If the pattern is longer than the notes, then repeat notes
 				if (step === params.notes.length) {
 					step = 0;
 				}
