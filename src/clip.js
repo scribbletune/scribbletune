@@ -3,6 +3,7 @@
 const assert = require('assert');
 const utils = require('./utils');
 const chord = require('./chord');
+const loop = require('./loop');
 
 /**
  * Get defauly params for a clip, such as root note, pattern etc
@@ -40,6 +41,11 @@ params = {
 }
  */
 const clip = params => {
+	// Temporary hack to retain a simple platform agnostic API
+	if (params && (params.sample || params.synth)) {
+		return loop(params);
+	}
+
 	params = Object.assign(getDefaultParams(), params || {});
 
 	// If notes is a string, split it into an array
