@@ -12,6 +12,7 @@ module.exports = {
 	chords: chord.chords,
 	clip: require('./clip'),
 	midi: require('./midi'),
+	loop: typeof window !== 'undefined' && require('./loop'),
 	session: typeof window !== 'undefined' && require('./session'),
 	transport: typeof window !== 'undefined' && require('./transport')
 };
