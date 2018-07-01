@@ -63,8 +63,11 @@ const clip2 = params => {
 			'el must be a valid note, array of notes or a chord'
 		);
 
-		if (utils.isNote(el)) {
-			return el.toUpperCase();
+		if (chord.getChord(el)) {
+			// A note such as c6 could be a chord (sixth) or a note (c on the 6th octave)
+			// This also applies to c4, c5, c6, c9, c11
+			// TODO: Identify a way to avoid returning unwanted results
+			el = chord.getChord(el);
 		}
 
 		if (Array.isArray(el)) {
@@ -73,14 +76,9 @@ const clip2 = params => {
 			el.forEach(n => {
 				assert(utils.isNote(n), 'array must comprise valid notes');
 			});
-			return el.join();
-		}
-
-		if (chord.getChord(el)) {
-			// A note such as c6 could be a chord (sixth) or a note (c on the 6th octave)
-			// This also applies to c4, c5, c6, c9, c11
-			// TODO: Identify a way to avoid returning unwanted results
-			return chord.getChord(el).join();
+		} else {
+			// A note needs to be an array so that it can accomodate chords or single notes with a single interface
+			el = [el];
 		}
 
 		return el;
@@ -95,11 +93,12 @@ const clip2 = params => {
 				let note = null;
 				// If the note is to be `on`, then it needs to be an array
 				if (el === 'x') {
-					note = Array.isArray(params.notes[step]) ? params.notes[step] : params.notes[step].split(',')
+					note = params.notes[step]
 				}
 
 				clipNotes.push({note, length, level: 127});
 				step++;
+
 				if (step === params.notes.length) {
 					step = 0;
 				}

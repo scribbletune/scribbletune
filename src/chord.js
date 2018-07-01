@@ -24,6 +24,9 @@ const isChord = str => {
  * @return {Array}     [example output: ['c4', 'e4', 'g4']]
  */
 const getChord = str => {
+	if (typeof str !== 'string') {
+		return;
+	}
 	let arr;
 	let spl = str.split('-');
 	spl[0].replace(/([a-gA-G][#|b]?)(.+)/, (match, root, chordName) => {
