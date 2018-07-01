@@ -52,7 +52,7 @@ const utils = {
 	 * @param  {String} str Note name e.g. c4
 	 * @return {Boolean} Return true for c4 or return false for something like CM
 	 */
-	isNote: str => /^[a-gA-G](?:#|b)?\d/.test(str)
+	isNote: str => typeof str === 'string' && /^[a-gA-G](?:#|b)?\d/.test(str)
 };
 
 module.exports = utils;
