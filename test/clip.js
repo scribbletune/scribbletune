@@ -98,7 +98,7 @@ test('clip should shuffle provided notes', t => {
 		pattern: 'xxxx',
 		shuffle: true
 	});
-	console.log(clip);
+
 	t.equal(
 		clip[0].note[0] === 'C3' && clip[0].note[1] === 'D3',
 		false,
