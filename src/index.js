@@ -10,7 +10,7 @@ module.exports = {
 	modes: Tonal.Scale.names,
 	chord: chord.getChord,
 	chords: chord.chords,
-	clip: require('./clip2'),
+	clip: require('./clip'),
 	midi: require('./midi'),
 	session: typeof window !== 'undefined' && require('./session'),
 	transport: typeof window !== 'undefined' && require('./transport')
