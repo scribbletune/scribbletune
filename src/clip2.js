@@ -9,7 +9,7 @@ const chord = require('./chord');
  * @return {Object}
  */
 const getDefaultParams = () => ({
-	notes: ['c4'],
+	notes: ['C4'],
 	pattern: 'x',
 	accentMap: '',
 	accentHi: 127,
@@ -39,13 +39,8 @@ params = {
 	pattern: 'x[x[xx]x]x'
 }
  */
-const clip2 = params => {
-	var clipNotes = [];
-	var step = 0;
-
+const clip = params => {
 	params = Object.assign(getDefaultParams(), params || {});
-
-	let subdivHdr = hdr[params.subdiv] || hdr['4n'];
 
 	// If notes is a string, split it into an array
 	if (typeof params.notes === 'string') {
@@ -63,6 +58,11 @@ const clip2 = params => {
 			'el must be a valid note, array of notes or a chord'
 		);
 
+		if (utils.isNote(el)) {
+			// A note needs to be an array so that it can accomodate chords or single notes with a single interface
+			return [el];
+		}
+
 		if (chord.getChord(el)) {
 			// A note such as c6 could be a chord (sixth) or a note (c on the 6th octave)
 			// This also applies to c4, c5, c6, c9, c11
@@ -76,9 +76,6 @@ const clip2 = params => {
 			el.forEach(n => {
 				assert(utils.isNote(n), 'array must comprise valid notes');
 			});
-		} else {
-			// A note needs to be an array so that it can accomodate chords or single notes with a single interface
-			el = [el];
 		}
 
 		return el;
@@ -87,7 +84,13 @@ const clip2 = params => {
 	assert(typeof params.pattern === 'string', 'pattern should be a string');
 	assert(/[^x\-_\[\]]/.test(params.pattern) === false, 'pattern can only comprise x - _ [ ]');
 
-	function r(arr, length) {
+	if (params.shuffle) {
+		params.notes = utils.shuffle(params.notes);
+	}
+
+	let clipNotes = [];
+	let step = 0;
+	const rApplyPatternToNotes = (arr, length) => {
 		arr.forEach(el => {
 			if (typeof el === 'string') {
 				let note = null;
@@ -96,7 +99,7 @@ const clip2 = params => {
 					note = params.notes[step]
 				}
 
-				clipNotes.push({note, length, level: 127});
+				clipNotes.push({note, length, level: params.accentHi});
 				step++;
 
 				if (step === params.notes.length) {
@@ -104,13 +107,13 @@ const clip2 = params => {
 				}
 			}
 			if (Array.isArray(el)) {
-				r(el, length/el.length)
+				rApplyPatternToNotes(el, length/el.length)
 			}
 		});
-	}
+	};
 
-	r(utils.expandStr(params.pattern), subdivHdr);
+	rApplyPatternToNotes(utils.expandStr(params.pattern), hdr[params.subdiv] || hdr['4n']);
 	return clipNotes;
 };
 
-module.exports = clip2;
+module.exports = clip;

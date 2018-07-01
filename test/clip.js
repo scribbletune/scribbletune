@@ -3,7 +3,7 @@ global.window = true;
 const test = require('tape');
 const scribble = require('../src/index');
 
-test('clip should use provided notes', (t) => {
+test('clip should use provided notes', t => {
 	t.equal(
 		scribble.clip({
 			notes: ['D3']
@@ -15,7 +15,7 @@ test('clip should use provided notes', (t) => {
 	t.end();
 });
 
-test('clip should allow uppercase notes', (t) => {
+test('clip should allow uppercase notes', t => {
 	t.equal(
 		scribble.clip({
 			notes: 'D3'
@@ -27,7 +27,7 @@ test('clip should allow uppercase notes', (t) => {
 	t.end();
 });
 
-test('clip should throw an error in case of invalid notes', (t) => {
+test('clip should throw an error in case of invalid notes', t => {
 	t.throws(function() {
 		scribble.clip({notes: ['k1']});
 	}, /AssertionError/, 'should throw an error in case of invalid notes');
@@ -35,7 +35,7 @@ test('clip should throw an error in case of invalid notes', (t) => {
 	t.end();
 });
 
-test('clip should allow passing a string of notes', (t) => {
+test('clip should allow passing a string of notes', t => {
 	let clip = scribble.clip({
 		notes: 'C4 D4 E4',
 		pattern: 'xxx'
@@ -46,7 +46,7 @@ test('clip should allow passing a string of notes', (t) => {
 	t.end();
 });
 
-test('clip should allow passing a string of notes with chords', (t) => {
+test('clip should allow passing a string of notes with chords', t => {
 	let clip = scribble.clip({
 		notes: 'C4 DM E4',
 		pattern: 'xxx'
@@ -59,7 +59,7 @@ test('clip should allow passing a string of notes with chords', (t) => {
 	t.end();
 });
 
-test('clip should allow passing a string of notes with chords with octave', (t) => {
+test('clip should allow passing a string of notes with chords with octave', t => {
 	let clip = scribble.clip({
 		notes: 'C4 DM-5 E4',
 		pattern: 'xxx'
@@ -72,7 +72,7 @@ test('clip should allow passing a string of notes with chords with octave', (t) 
 	t.end();
 });
 
-test('clip should validate provided notes & pattern using default notes and patterns in their absence', (t) => {
+test('clip should validate provided notes & pattern using default notes and patterns in their absence', t => {
 	let clip;
 	t.throws(function() {
 		scribble.clip({pattern: 'kkjd'});
@@ -81,18 +81,18 @@ test('clip should validate provided notes & pattern using default notes and patt
 		scribble.clip({notes: ['k1']});
 	}, /AssertionError/, 'Invalid notes should throw an error!');
 	clip = scribble.clip({pattern: 'x_______x-------'}),
-	t.equal(clip[0].length, 256, 'Clip uses provided pattern');
-	t.equal(clip[8].length, 32, 'Clip uses provided pattern');
+	t.equal(clip[0].length, 128, 'Clip uses provided pattern');
+	t.equal(clip[8].length, 128, 'Clip uses provided pattern');
 	t.equal(clip[0].note[0], 'C4', 'Clip uses default note and octave');
 
 	clip = scribble.clip();
-	t.equal(clip[0].length, 512, 'Clip uses a default pattern');
+	t.equal(clip[0].length, 128, 'Clip uses a default pattern');
 	t.equal(clip[0].note[0], 'C4', 'Clip uses default note and octave');
 
 	t.end();
 });
 
-test('clip should shuffle provided notes', (t) => {
+test('clip should shuffle provided notes', t => {
 	let clip = scribble.clip({
 		notes: scribble.scale('C3 major'),
 		pattern: 'xxxx',
@@ -108,7 +108,7 @@ test('clip should shuffle provided notes', (t) => {
 	t.end();
 });
 
-test.skip('clip should allow setting accentMap with a x-_ string', (t) => {
+test.skip('clip should allow setting accentMap with a x-_ string', t => {
 	let clip = scribble.clip({
 		notes: ['c4'],
 		accentMap: 'x-x-',
@@ -128,7 +128,7 @@ test.skip('clip should allow setting accentMap with a x-_ string', (t) => {
 	t.end();
 });
 
-test.skip('clip should allow setting accentMap with a number Array', (t) => {
+test.skip('clip should allow setting accentMap with a number Array', t => {
 	let clip = scribble.clip({
 		notes: ['c4'],
 		accentMap: [12, 24, 36, 48],
@@ -148,7 +148,7 @@ test.skip('clip should allow setting accentMap with a number Array', (t) => {
 	t.end();
 });
 
-test('clip should override default params with provided params', (t) => {
+test('clip should override default params with provided params', t => {
 	let clip = scribble.clip({
 		accentHi: 100
 	});
@@ -161,7 +161,7 @@ test('clip should override default params with provided params', (t) => {
 	t.end();
 });
 
-test('clip should extend notes in case of a longer pattern', (t) => {
+test('clip should extend notes in case of a longer pattern', t => {
 	let longerPattern = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx';
 	let clip = scribble.clip({
 		notes: ['c3', 'd3'],
@@ -176,7 +176,7 @@ test('clip should extend notes in case of a longer pattern', (t) => {
 	t.end();
 });
 
-test('clip should extend notes in case of a longer pattern but retain length of pattern', (t) => {
+test('clip should extend notes in case of a longer pattern but retain length of pattern', t => {
 	let clip = scribble.clip({
 		notes: ['c3'],
 		pattern: 'xxxxx'
@@ -190,7 +190,7 @@ test('clip should extend notes in case of a longer pattern but retain length of 
 	t.end();
 });
 
-test('clip should allow using chords', (t) => {
+test('clip should allow using chords', t => {
 	let clip = scribble.clip({
 		notes: ['CM', 'Cm', 'A3'],
 		pattern: 'xxx'
@@ -214,7 +214,7 @@ test('clip should allow using chords', (t) => {
 	t.end();
 });
 
-test('clip should allow passing arrays of notes as individual notes', (t) => {
+test('clip should allow passing arrays of notes as individual notes', t => {
 	let clip = scribble.clip({
 		notes: [['c4', 'e4', 'g4']]
 	});
@@ -222,7 +222,17 @@ test('clip should allow passing arrays of notes as individual notes', (t) => {
 	t.end();
 });
 
-test('clip should not allow passing arrays of invalid notes as individual notes', (t) => {
+test('clip should allow passing arrays of notes along with individual notes', t => {
+	let clip = scribble.clip({
+		notes: [['c4', 'e4', 'g4'], 'e3'],
+		pattern: 'xx'
+	});
+	t.equal(clip[0].note.join(), 'c4,e4,g4', 'Clip allows passing array of notes');
+	t.equal(clip[1].note.join(), 'e3', 'Clip allows passing individual notes');
+	t.end();
+});
+
+test('clip should not allow passing arrays of invalid notes as individual notes', t => {
 	t.throws(function() {
 		scribble.clip({
 			notes: [['m', 'p', true]]
@@ -231,7 +241,7 @@ test('clip should not allow passing arrays of invalid notes as individual notes'
 	t.end();
 });
 
-test('clip should increase pattern length if shorter than number of notes', (t) => {
+test.skip('clip should increase pattern length if shorter than number of notes', t => {
 	let clip = scribble.clip({
 		notes: ['c4', 'e4', 'g4', 'b4'],
 		pattern: 'x'
@@ -240,4 +250,13 @@ test('clip should increase pattern length if shorter than number of notes', (t) 
 	t.end();
 });
 
-
+test('clip should accept tidal pattern format', t => {
+	let clip = scribble.clip({
+		pattern: 'x[-x]x[x[xx]]',
+		notes: 'c4'
+	});
+	t.equal(clip[0].length, 128, 'Clip accepts tidal pattern format correctly');
+	t.equal(clip[2].length, 64, 'Clip accepts tidal pattern for subdivision format correctly');
+	t.equal(clip[6].length, 32, 'Clip accepts tidal pattern for subdivision format correctly');
+	t.end();
+});
