@@ -1,5 +1,6 @@
 'use strict';
 
+const assert = require('assert');
 const utils = require('./utils');
 const chord = require('./chord');
 
@@ -39,11 +40,12 @@ params = {
 }
  */
 const clip2 = params => {
-	var subdivHdr = hdr[params.subdiv] || hdr['4n'];
 	var clipNotes = [];
 	var step = 0;
 
 	params = Object.assign(getDefaultParams(), params || {});
+
+	let subdivHdr = hdr[params.subdiv] || hdr['4n'];
 
 	// If notes is a string, split it into an array
 	if (typeof params.notes === 'string') {
@@ -54,29 +56,47 @@ const clip2 = params => {
 
 	// Convert chords if any to notes
 	params.notes = params.notes.map(el => {
+		assert(
+			Array.isArray(el) ||
+			utils.isNote(el) ||
+			chord.getChord(el),
+			'el must be a valid note, array of notes or a chord'
+		);
+
 		if (utils.isNote(el)) {
-			return el;
-		} else if (Array.isArray(el)) {
-			// This and the next else if is converting an existing array to a string
-			// Maybe this is not really necessary
+			return el.toUpperCase();
+		}
+
+		if (Array.isArray(el)) {
+			// This could be a chord provided as an array
+			// make sure it uses valid notes
+			el.forEach(n => {
+				assert(utils.isNote(n), 'array must comprise valid notes');
+			});
 			return el.join();
-		} else if (chord.getChord(el)) {
+		}
+
+		if (chord.getChord(el)) {
 			// A note such as c6 could be a chord (sixth) or a note (c on the 6th octave)
 			// This also applies to c4, c5, c6, c9, c11
 			// TODO: Identify a way to avoid returning unwanted results
 			return chord.getChord(el).join();
-		} else {
-			return el;
 		}
+
+		return el;
 	});
 
+	assert(typeof params.pattern === 'string', 'pattern should be a string');
+	assert(/[^x\-_\[\]]/.test(params.pattern) === false, 'pattern can only comprise x - _ [ ]');
+
 	function r(arr, length) {
-		arr.forEach(function(el, idx) {
+		arr.forEach(el => {
 			if (typeof el === 'string') {
-				// Note needs to be an array
-				let note = el === 'x'
-						? Array.isArray(params.notes[step]) ? params.notes[step] : params.notes[step].split(',')
-						: null;
+				let note = null;
+				// If the note is to be `on`, then it needs to be an array
+				if (el === 'x') {
+					note = Array.isArray(params.notes[step]) ? params.notes[step] : params.notes[step].split(',')
+				}
 
 				clipNotes.push({note, length, level: 127});
 				step++;

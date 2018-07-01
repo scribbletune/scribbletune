@@ -5,6 +5,7 @@ const utils = require('./utils');
 const chord = require('./chord');
 const jsmUtils = require('jsmidgen').Util;
 const loop = require('./loop');
+const clip2 = require('./clip2');
 
 /**
  * Get defauly params for a clip, such as root note, pattern etc
@@ -12,7 +13,7 @@ const loop = require('./loop');
  */
 const getDefaultParams = () => ({
 	ticks: 512,			// By default a single 4x4 bar is 512 ticks (this is known as HDR_SPEED)
-	notes: ['c3'],
+	notes: ['C4'],
 	pattern: 'x_______________',
 	noteLength: 1 / 16,
 	accentMap: '',
@@ -43,7 +44,6 @@ const getArpedNotes = (notes, distance) => {
 		return jsmUtils.noteFromMidiPitch(transposedMidiNum);
 	});
 };
-
 
 /**
  * A clip is a container of a musical idea based on the params passed to it
