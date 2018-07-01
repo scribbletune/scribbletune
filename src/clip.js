@@ -97,6 +97,7 @@ const clip = params => {
 				// If the note is to be `on`, then it needs to be an array
 				if (el === 'x') {
 					note = params.notes[step];
+					step++;
 				}
 
 				// Push only note on OR off messages to the clip notes array
@@ -108,8 +109,6 @@ const clip = params => {
 				if (el === '_' && clipNotes.length) {
 					clipNotes[clipNotes.length - 1].length += length;
 				}
-
-				step++;
 
 				// If the pattern is longer than the notes, then repeat notes
 				if (step === params.notes.length) {
