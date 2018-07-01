@@ -80,10 +80,6 @@ test('clip should validate provided notes & pattern using default notes and patt
 	t.throws(function() {
 		scribble.clip({notes: ['k1']});
 	}, /AssertionError/, 'Invalid notes should throw an error!');
-	clip = scribble.clip({pattern: 'x_______x-------'}),
-	t.equal(clip[0].length, 128, 'Clip uses provided pattern');
-	t.equal(clip[8].length, 128, 'Clip uses provided pattern');
-	t.equal(clip[0].note[0], 'C4', 'Clip uses default note and octave');
 
 	clip = scribble.clip();
 	t.equal(clip[0].length, 128, 'Clip uses a default pattern');
@@ -258,5 +254,15 @@ test('clip should accept tidal pattern format', t => {
 	t.equal(clip[0].length, 128, 'Clip accepts tidal pattern format correctly');
 	t.equal(clip[2].length, 64, 'Clip accepts tidal pattern for subdivision format correctly');
 	t.equal(clip[6].length, 32, 'Clip accepts tidal pattern for subdivision format correctly');
+	t.end();
+});
+
+test('clip should accept tidal pattern format with underscores', t => {
+	let clip = scribble.clip({
+		pattern: 'x___',
+		notes: 'c4'
+	});
+	t.equal(clip[0].length, 512, 'Clip accepts tidal pattern format correctly');
+
 	t.end();
 });

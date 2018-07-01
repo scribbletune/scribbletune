@@ -3,72 +3,44 @@
 const assert = require('assert');
 const utils = require('./utils');
 const chord = require('./chord');
-const jsmUtils = require('jsmidgen').Util;
-const loop = require('./loop');
-const clip2 = require('./clip2');
 
 /**
  * Get defauly params for a clip, such as root note, pattern etc
  * @return {Object}
  */
 const getDefaultParams = () => ({
-	ticks: 512,			// By default a single 4x4 bar is 512 ticks (this is known as HDR_SPEED)
 	notes: ['C4'],
-	pattern: 'x_______________',
-	noteLength: 1 / 16,
+	pattern: 'x',
 	accentMap: '',
 	accentHi: 127,
 	accentLow: 70,
 	shuffle: false,
 	sizzle: false,
-	arpegiate: false
+	arpegiate: false,
+	subdiv: '4n'
 });
 
 /**
- * Get default params for the arpegiate property
- * @return {Object}
+ * HDR speed is denoted by the number of ticks per note
+ * By default this is set to a quarter note (4n) to be in line with Tone.js' default subdivision
+ * Technically a bar is 512 ticks long. So it's HDR speed is 512
+ * @type {Object}
  */
-const getDefaultArpegiateParams = () => ({
-	distance: 12,
-	steps: 1
-});
-
-/**
- * Get arpegiated (transposed by distance) notes
- * @return {Object}
- */
-const getArpedNotes = (notes, distance) => {
-	return notes.map(note => {
-		let noteMidiNum = jsmUtils.midiPitchFromNote(note);
-		let transposedMidiNum = noteMidiNum + distance;
-		return jsmUtils.noteFromMidiPitch(transposedMidiNum);
-	});
+const hdr = {
+	'1n': 512,
+	'2n': 256,
+	'4n': 128,
+	'8n': 64,
+	'16n': 32,
 };
-
-/**
- * A clip is a container of a musical idea based on the params passed to it
- * @param  {Object} params Extend base parans object derived from getDefaultParams
- * @return {Object} The return object is used with the `midi` method to generate a MIDI file
+/*
+params = {
+	notes: 'c4',
+	pattern: 'x[x[xx]x]x'
+}
  */
 const clip = params => {
-	// Temporary convoluted hack to retain a simple platform agnostic API
-	if (params && (params.sample || params.synth)) {
-		return loop(params);
-	}
-
 	params = Object.assign(getDefaultParams(), params || {});
-	let level = params.accentHi;
-	let sizzleArr;
-	if (params.sizzle) {
-		sizzleArr = utils.sizzleMap(level);
-	}
-
-	// Check if the note length is a fraction
-	// If so convert it to decimal without using eval
-	if (typeof params.noteLength === 'string' && params.noteLength.indexOf('/') > 0) {
-		let a = params.noteLength.split('/');
-		params.noteLength = a[0] / a[1];
-	}
 
 	// If notes is a string, split it into an array
 	if (typeof params.notes === 'string') {
@@ -79,140 +51,79 @@ const clip = params => {
 
 	// Convert chords if any to notes
 	params.notes = params.notes.map(el => {
+		assert(
+			Array.isArray(el) ||
+			utils.isNote(el) ||
+			chord.getChord(el),
+			'el must be a valid note, array of notes or a chord'
+		);
+
 		if (utils.isNote(el)) {
-			return el;
-		} else if (Array.isArray(el)) {
-			return el.join();
-		} else if (chord.getChord(el)) {
-			return chord.getChord(el).join();
-		} else {
-			return el;
+			// A note needs to be an array so that it can accomodate chords or single notes with a single interface
+			return [el];
 		}
-	});
 
-	// Validate provided notes
-	params.notes.forEach(el => {
-		// Notes could be chords provided as arrays which we can ignore for now
+		if (chord.getChord(el)) {
+			// A note such as c6 could be a chord (sixth) or a note (c on the 6th octave)
+			// This also applies to c4, c5, c6, c9, c11
+			// TODO: Identify a way to avoid returning unwanted results
+			el = chord.getChord(el);
+		}
+
 		if (Array.isArray(el)) {
-			return;
+			// This could be a chord provided as an array
+			// make sure it uses valid notes
+			el.forEach(n => {
+				assert(utils.isNote(n), 'array must comprise valid notes');
+			});
 		}
-		assert(el.match(/[a-gA-G]#?[0-9]/g) !== null, el + ' is not a valid note!');
+
+		return el;
 	});
 
-	// Validate provided pattern does not include anything other than x, - OR _
-	assert(params.pattern.match(/[^x\-_]+/) === null, params.pattern + ' is not a valid pattern!');
+	assert(typeof params.pattern === 'string', 'pattern should be a string');
+	assert(/[^x\-_\[\]]/.test(params.pattern) === false, 'pattern can only comprise x - _ [ ]');
 
-	// Update notes array in case of arpegiate
-	if (params.arpegiate) {
-		if (typeof params.arpegiate === 'object') {
-			params.arpegiate = Object.assign(getDefaultArpegiateParams(), params.arpegiate);
-		} else {
-			params.arpegiate = getDefaultArpegiateParams();
-		}
-
-		// If the notes are c3 and f3 and the steps are 2 and distance is 12 (octave)
-		// Then, make 2 arrays of notes that 12 semitones more than the given notes
-		// So in this example, the 2 arrays would be [c4, f4] and [c5, f5]
-		// Concatentate these 2 new arrays with the existing notes to create an arpegiated sequence
-		let tmpNotes = params.notes;
-		for (var i = 0; i < params.arpegiate.steps; i++) {
-			let arpedNotes = getArpedNotes(tmpNotes, params.arpegiate.distance);
-			params.notes = params.notes.concat(arpedNotes);
-			tmpNotes = arpedNotes;
-		}
-	}
-
-	// Ensure notes array has at least as many elements as pattern
-	if (params.notes.length < params.pattern.length) {
-		while (params.notes.length < params.pattern.length) {
-			params.notes = params.notes.concat(params.notes);
-		}
-		// Clip off extra notes
-		params.notes = params.notes.slice(0, params.pattern.length);
-	}
-
-	// Ensure pattern is as long as number of notes
-	if (params.pattern.length < params.notes.length) {
-		let originalPattern = params.pattern;
-		while (params.pattern.length < params.notes.length) {
-			params.pattern = params.pattern + originalPattern;
-		}
-		// Clip off extra chars
-		params.pattern = params.pattern.slice(0, params.notes.length);
-	}
-
-	// Ensure accent map is as long as the pattern
-	if (params.accentMap) {
-		while (params.accentMap.length < params.pattern.length) {
-			params.accentMap = params.accentMap.concat(params.accentMap);
-		}
-
-		// accentMap can be a string (x---x--xx---x) or an Array of numbers (0 to 127)
-		// If it s a string, convert it to an array of numbers to be used later while
-		// assigning individual volume for each note
-		if (typeof params.accentMap === 'string') {
-			params.accentMap = params.accentMap.split('');
-			params.accentMap = params.accentMap.map(a => a === 'x' ? params.accentHi : params.accentLow);
-		}
-	}
-
-	// Ensure sizzle array is as long as the pattern
-	if (params.sizzle && sizzleArr) {
-		while (sizzleArr.length < params.pattern.length) {
-			sizzleArr = sizzleArr.concat(sizzleArr);
-		}
-	}
-
-	// Check if we need to shuffle the notes
 	if (params.shuffle) {
 		params.notes = utils.shuffle(params.notes);
 	}
 
-	// Use string.replace on pattern to derive an array of note objects
-	let clipNotes = [], step = 0;
+	let clipNotes = [];
+	let step = 0;
+	const rApplyPatternToNotes = (arr, length) => {
+		arr.forEach(el => {
+			if (typeof el === 'string') {
+				let note = null;
+				// If the note is to be `on`, then it needs to be an array
+				if (el === 'x') {
+					note = params.notes[step];
+				}
 
-	/**
-	 * Look for a note followed by a interval or sustain
-	 * @param  {Regex} match The pattern to match (-, x, x-, x_, x__, x____ etc)
-	 * @param  {String} noteOn   Note on (denoted by x) with or without sustain (denoted by underscore)
-	 * @param  {String} noteOff   Interval (denoted by hyphen)
-	 */
-	params.pattern.replace(/(x_*)|(-)/g, (match, noteOn, noteOff) => {
-		let sizzleVal = level;
-		if (params.sizzle) {
-			sizzleVal = sizzleArr[step];
-		}
+				// Push only note on OR off messages to the clip notes array
+				if (el === 'x' || el === '-') {
+					clipNotes.push({ note, length, level: params.accentHi });
+				}
 
-		if (params.accentMap) {
-			level = params.accentMap[step];
-			// Affect the sizzleVal so that the accentMap is carried forward in case of a sizzle
-			sizzleVal = level;
-		}
+				// In case of an underscore, simply extend the previous note's length
+				if (el === '_' && clipNotes.length) {
+					clipNotes[clipNotes.length - 1].length += length;
+				}
 
-		if (noteOn) {
-			// Found x OR x- OR x__
-			clipNotes.push({
-				// A note can be a single note like c4 or comma separated string to denote chords c4,e4,g4 or
-				// an array that provides notes to be used as a chord such as ['c4', 'e4', 'g4']
-				note: Array.isArray(params.notes[step]) ? params.notes[step] : params.notes[step].split(','),
-				length: params.noteLength * noteOn.length * params.ticks,
-				level: params.sizzle ? sizzleVal : level
-			});
+				step++;
 
-			// Increment step to proceed in the notes array
-			step++;
-		}
+				// If the pattern is longer than the notes, then repeat notes
+				if (step === params.notes.length) {
+					step = 0;
+				}
+			}
+			if (Array.isArray(el)) {
+				rApplyPatternToNotes(el, length/el.length)
+			}
+		});
+	};
 
-		if (noteOff) {
-			// Found - (hyphen) - note off
-			clipNotes.push({
-				note: null,
-				length: params.noteLength * params.ticks
-			});
-		}
-	});
-
+	rApplyPatternToNotes(utils.expandStr(params.pattern), hdr[params.subdiv] || hdr['4n']);
 	return clipNotes;
-}
+};
 
 module.exports = clip;
