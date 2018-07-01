@@ -6,10 +6,10 @@ const chord = require('./chord');
 module.exports = {
 	scale: Tonal.Scale.notes,
 	mode: Tonal.Scale.notes,
-	scales: Tonal.Scale.names(),
-	modes: Tonal.Scale.names(),
+	scales: Tonal.Scale.names,
+	modes: Tonal.Scale.names,
 	chord: chord.getChord,
-	chords: chord.chords(),
+	chords: chord.chords,
 	clip: require('./clip2'),
 	midi: require('./midi'),
 	session: typeof window !== 'undefined' && require('./session'),
