@@ -96,7 +96,15 @@ const clip = params => {
 
 	let clipNotes = [];
 	let step = 0;
-	const rApplyPatternToNotes = (arr, length) => {
+	/**
+	 * Recursively apply pattern to notes
+	 *
+	 * Pass in a pattern array such as ['x', '-', 'x', 'x'] with a length for each element
+	 * The length is the HDR speed or tick length (obtained from the hdr object in this script)
+	 * If the element of this array is also a (pattern) array, then divide the length by
+	 * the length of the inner array and then call the recursive function on that inner array
+	 */
+	const recursivelyApplyPatternToNotes = (arr, length) => {
 		arr.forEach(el => {
 			if (typeof el === 'string') {
 				let note = null;
@@ -122,12 +130,12 @@ const clip = params => {
 				}
 			}
 			if (Array.isArray(el)) {
-				rApplyPatternToNotes(el, length/el.length)
+				recursivelyApplyPatternToNotes(el, length/el.length)
 			}
 		});
 	};
 
-	rApplyPatternToNotes(utils.expandStr(params.pattern), hdr[params.subdiv] || hdr['4n']);
+	recursivelyApplyPatternToNotes(utils.expandStr(params.pattern), hdr[params.subdiv] || hdr['4n']);
 	return clipNotes;
 };
 
