@@ -3,7 +3,6 @@
 const assert = require('assert');
 const utils = require('./utils');
 const chord = require('./chord');
-const loop = require('./loop');
 
 /**
  * Get defauly params for a clip, such as root note, pattern etc

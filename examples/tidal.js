@@ -21,4 +21,5 @@ const getMelody = () => {
 	return clipA.concat(clipB);
 };
 
-scribble.midi(getMelody().concat(getMelody(), getMelody(), getMelody()));
+scribble.midi(getMelody().concat(getMelody(), getMelody(), getMelody())); // This will create a file called music.mid
+// Import the file created in a music production software and play it with any synth

@@ -10,7 +10,7 @@ var clip = notes.reduce((accumulator, note) => {
 	return accumulator.concat(scribble.clip({
 		notes: [note],
 		pattern: 'x-x_-xx_'.repeat(4), // Each note will use this pattern
-		sizzle: true
+		subdiv: '16n' // use a 16th note as the default duration of a note
 	}));
 }, []);
 
