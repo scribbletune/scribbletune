@@ -99,6 +99,34 @@ let pattern = '[-x]'.repeat(4); // same as [-x][-x][-x][-x]
 
 Hmmm, that can be a very simple bass line for a simple dance music loop. Here's a rendered version of using that with a kick drum, bass and hats sample [loop](https://soundcloud.com/walmik/loop).
 
+### Progressions
+You must have seen or known about common chord progressions which look like I IV V ii. For the C Major scale, that means the following chords:
+- CMaj
+- FMaj
+- GMaj
+- Dm
+
+With the new experimental feature `progression` you can get this with Scribbletune:
+
+```js
+let prog = scribble.progression('C4 major', 'I IV V ii');
+console.log(prog); // CMaj-4 FMaj-4 GMaj-4 Dm-4
+```
+
+Hmmmm, what can you do with that? Well one thing is it can help in your song writing process to improve your existing songs or transpose its key. The other is to use it in Scribbletune itself!
+
+```js
+const scribble = require('../src/');
+
+let clip = scribble.clip({
+	notes: scribble.progression('D4 minor', 'I IV V ii'),
+	pattern: 'x_'.repeat(4)
+});
+
+scribble.midi(clip);
+```
+This will create a MIDI file with those chords each played for half note!
+
 There's a lot more to this humble beginning. But I'll let you explore it for yourself. As you can see, now you can use basic JavaScript `String` and `Array` functions to compute melodies using Scribbletune!
 
 Ok then, get on with it ;).
