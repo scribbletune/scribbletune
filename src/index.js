@@ -11,5 +11,6 @@ module.exports = {
 	chord: chord.getChord,
 	chords: chord.chords,
 	clip: require('./clip'),
+	progression: require('./progression'),
 	midi: require('./midi')
 };
