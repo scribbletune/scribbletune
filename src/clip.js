@@ -40,11 +40,6 @@ params = {
 }
  */
 const clip = params => {
-	// Temporary hack to retain a simple platform agnostic API
-	if (params && (params.sample || params.synth)) {
-		return loop(params);
-	}
-
 	params = Object.assign(getDefaultParams(), params || {});
 
 	// If notes is a string, split it into an array

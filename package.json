@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/walmik/scribbletune.git"
+    "url": "git://github.com/scribbletune/scribbletune.git"
   },
   "keywords": [
     "javascript",
@@ -29,7 +29,7 @@
   "author": "Walmik Deshpande",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/walmik/scribbletune/issues"
+    "url": "https://github.com/scribbletune/scribbletune/issues"
   },
   "engines": {
     "node": ">6.x.x"
