@@ -88,6 +88,12 @@ const clip = params => {
 		params.notes = utils.shuffle(params.notes);
 	}
 
+	// If the clip method is being called in the context of a Tone.js instrument or synth,
+	// then there's no need to continue
+	if (params.synth || params.instrument || params.sample || params.player) {
+		return params;
+	}
+
 	let clipNotes = [];
 	let step = 0;
 	/**
