@@ -10,16 +10,16 @@ gulp.task('lint', () => {
 		.pipe(eslint.failAfterError());
 });
 
-gulp.task('pre-coverage', function() {
+gulp.task('coverage', function() {
 	return gulp.src(['src/*.js'])
 		.pipe(istanbul())
 		.pipe(istanbul.hookRequire());
 });
 
-gulp.task('test-with-coverage', ['pre-coverage'], function() {
+gulp.task('test', function() {
 	return gulp.src('test/*.js')
 		.pipe(tape())
 		.pipe(istanbul.writeReports());
 });
 
-gulp.task('default', ['lint', 'test-with-coverage']);
+gulp.task('default', gulp.series('coverage', 'test'));

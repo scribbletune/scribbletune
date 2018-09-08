@@ -3,6 +3,7 @@
 const assert = require('assert');
 const utils = require('./utils');
 const chord = require('./chord');
+const loop = typeof window !== 'undefined' && require('./loop');
 
 /**
  * Get defauly params for a clip, such as root note, pattern etc
@@ -91,7 +92,7 @@ const clip = params => {
 	// If the clip method is being called in the context of a Tone.js instrument or synth,
 	// then there's no need to continue
 	if (params.synth || params.instrument || params.sample || params.player) {
-		return params;
+		return loop(params);
 	}
 
 	let clipNotes = [];
