@@ -1,4 +1,5 @@
-const loop = require('./loop');
+const clip = require('./clip');
+const browserClip = require('./browserClip');
 
 /**
  * Channel
@@ -23,6 +24,10 @@ class Channel {
 		if (params.synth) {
 			this.instrument = new Tone[params.synth]();
 			this.instrument.toMaster();
+		}
+		if (params.samples) {
+			this.sampler = new Tone.Sampler(params.samples);
+			this.sampler.toMaster();
 		}
 		params.clips.forEach(this.addClip, this);
 	}
@@ -51,9 +56,10 @@ class Channel {
 	addClip(clipParams, idx) {
 		idx = idx || this._clips.length;
 		if (clipParams.pattern) {
-			this._clips[idx] = loop(Object.assign({
+			this._clips[idx] = clip(Object.assign({
 				player: this.player, // will be ignored if undefined
-				instrument: this.instrument // will be ignored if undefined
+				instrument: this.instrument, // will be ignored if undefined
+				sampler: this.sampler // will be ignored if undefined
 			}, clipParams));
 		} else {
 			// Allow creation of empty clips

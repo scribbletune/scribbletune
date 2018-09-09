@@ -80,7 +80,7 @@ module.exports = params => {
 	Either ways, a pattern is required and it will be used to create a playable Tone.js Sequence
 	 */
 	if (params.sample) {
-		// This implies, the loop is probably being hand created by the user with a audio sample
+		// This implies, the clip is probably being hand created by the user with a audio sample
 		params.player = new Tone.Player(params.sample).toMaster();
 	}
 
