@@ -36,6 +36,25 @@ const _getInstrSeqFn = (params) => {
 
 /**
  * @param  {Object}
+ * @return {Function}
+ * Take an object literal which has a Tone.js sampler and return a function that can be used
+ * as the callback in Tone.Sequence https://tonejs.github.io/docs/r12/Sequence
+ */
+const _getSamplerSeqFn = (params) => {
+	var counter = 0;
+	return (time, el) => {
+		if (el === 'x' && params.notes[counter]) {
+			params.sampler.triggerAttack(params.notes[counter]);
+			counter++;
+			if (counter === params.notes.length) {
+				counter = 0;
+			}
+		}
+	}
+};
+
+/**
+ * @param  {Object}
  * @return {Tone.js Sequence Object}
  * Take a object literal that may have a Tone.js player OR instrument
  * or simply a sample or synth with a pattern and return a Tone.js sequence
@@ -49,7 +68,7 @@ module.exports = params => {
 		throw new Error('No pattern provided!');
 	}
 
-	if (!params.player && !params.instrument && !params.sample && !params.synth) {
+	if (!params.player && !params.instrument && !params.sample && !params.synth && !params.sampler && !params.samples) {
 		throw new Error('No player or instrument provided!');
 	}
 
@@ -68,6 +87,14 @@ module.exports = params => {
 	if (params.player) {
 		// This implies, a player object was already created (either by user or mostly by Scribbletune during channel creation)
 		return new Tone.Sequence(_getPlayerSeqFn(params.player), utils.expandStr(params.pattern), defaultSubdiv);
+	}
+
+	if (params.samples) {
+		params.sampler = new Tone.Sampler(params.samples).toMaster();
+	}
+
+	if (params.sampler) {
+		return new Tone.Sequence(_getSamplerSeqFn(params), utils.expandStr(params.pattern), defaultSubdiv);
 	}
 
 	if (params.synth) {

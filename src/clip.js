@@ -91,7 +91,7 @@ const clip = params => {
 
 	// If the clip method is being called in the context of a Tone.js instrument or synth,
 	// then there's no need to continue
-	if (params.synth || params.instrument || params.sample || params.player) {
+	if (params.synth || params.instrument || params.sample || params.player || params.samples || params.sampler) {
 		return loop(params);
 	}
 
