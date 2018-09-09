@@ -16,4 +16,4 @@ You can even download the [precompiled version of scribbletune](https://raw.gith
 <script src="/path/to/scribbletune.js"></script>
 ```
 ---
-Proceed to scribbletune.com for documentation, tutorials and examples!
+Proceed to [scribbletune.com](https://scribbletune.com) for documentation, tutorials and examples!
