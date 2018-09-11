@@ -1,6 +1,6 @@
 {
   "name": "scribbletune",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Create music with JavaScript and Node.js!",
   "main": "./src/index.js",
   "scripts": {
@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "jsmidgen": "~0.1.4",
-    "tonal": "^1.1.3"
+    "tonal": "1.1.3"
   },
   "devDependencies": {
     "gulp": "^4.0.0",
