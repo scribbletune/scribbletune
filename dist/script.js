@@ -30,7 +30,7 @@
 
 	var notes = scribble.chord('Cm7-3');
 	// Simply pass the samples object to the clip method as `samples` (plural)
-	scribble.clip({ samples: piano, pattern: 'x-[xx]-', notes: [...notes, ...notes.reverse()], volume: -12 }).start();
+	scribble.clip({ samples: piano, pattern: 'x-[xx]-', notes: [...notes, ...notes.reverse()], volume: -14, effects: ['PingPongDelay'] }).start();
 
 	// Wire up start/stop buttons
 	document.querySelector('#startBtn').addEventListener('click', function() {

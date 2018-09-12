@@ -80,7 +80,13 @@ module.exports = params => {
 	Either ways, a pattern is required and it will be used to create a playable Tone.js Sequence
 	 */
 
-	const panVol = new Tone.PanVol(params.pan || 0, params.volume || -12);
+	let effects = [];
+
+	if (params.effects) {
+		effects = params.effects.map(eff => new Tone[eff]);
+	}
+
+	effects.push(new Tone.PanVol(params.pan || 0, params.volume || -12));
 
 	if (params.sample) {
 		// This implies, the clip is probably being hand created by the user with a audio sample
@@ -97,19 +103,19 @@ module.exports = params => {
 	}
 
 	if (params.player) {
-		params.player.chain(panVol, Tone.Master);
+		params.player.chain(...effects, Tone.Master);
 		// This implies, a player object was already created (either by user or by Scribbletune during channel creation)
 		return new Tone.Sequence(_getPlayerSeqFn(params.player), utils.expandStr(params.pattern), params.subdiv || defaultSubdiv);
 	}
 
 	if (params.sampler) {
-		params.sampler.chain(panVol, Tone.Master);
+		params.sampler.chain(...effects, Tone.Master);
 		// This implies, a sampler object was already created (either by user or by Scribbletune during channel creation)
 		return new Tone.Sequence(_getSamplerSeqFn(params), utils.expandStr(params.pattern), params.subdiv || defaultSubdiv);
 	}
 
 	if (params.instrument) {
-		params.instrument.chain(panVol, Tone.Master);
+		params.instrument.chain(...effects, Tone.Master);
 		// This implies, the instrument was already created (either by user or by Scribbletune during channel creation)
 		// Unlike player, the instrument needs the entire params object to construct a sequence
 		return new Tone.Sequence(_getInstrSeqFn(params), utils.expandStr(params.pattern), params.subdiv || defaultSubdiv);
