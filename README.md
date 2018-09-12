@@ -9,7 +9,7 @@ Use simple __JavaScript__ `Strings` and `Arrays` to generate rhythms and musical
 ```bash
 npm install scribbletune
 ```
-You can even download the [precompiled version of scribbletune](https://raw.githubusercontent.com/scribbletune/scribbletune.js/master/dist/scribbletune.js) right in the browser with a SCRIPT tag. Make sure to pull in Tone.js first however.
+You can even download the [precompiled version of scribbletune](https://raw.githubusercontent.com/scribbletune/scribbletune/master/dist/scribbletune.js) right in the browser with a SCRIPT tag. Make sure to pull in Tone.js first however.
 
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/13.3.1/Tone.min.js"></script>
