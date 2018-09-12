@@ -44,7 +44,7 @@ const _getSamplerSeqFn = (params) => {
 	var counter = 0;
 	return (time, el) => {
 		if (el === 'x' && params.notes[counter]) {
-			params.sampler.triggerAttack(params.notes[counter]);
+			params.sampler.triggerAttackRelease(params.notes[counter], '8n', time);
 			counter++;
 			if (counter === params.notes.length) {
 				counter = 0;
