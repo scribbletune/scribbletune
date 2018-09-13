@@ -2,6 +2,9 @@
     "include": [
       "src/**/*.js"
     ],
+    "exclude": [
+      "tests/**/*.spec.js"
+    ],
     "check-coverage": true,
     "all": true,
     "sourceMap": false,
@@ -11,7 +14,6 @@
       ".js"
     ],
     "reporter": [
-      "html",
       "lcov",
       "text",
       "text-summary"
