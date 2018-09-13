@@ -1,0 +1,19 @@
+{
+    "include": [
+      "src/**/*.js"
+    ],
+    "check-coverage": true,
+    "all": true,
+    "sourceMap": false,
+    "instrument": false,
+    "lines": 50,
+    "extension": [
+      ".js"
+    ],
+    "reporter": [
+      "html",
+      "lcov",
+      "text",
+      "text-summary"
+    ]
+  }
