@@ -1,7 +1,6 @@
 (function() {
 	// Play a simply poly synth
-	// Synth doesnt accept an array of notes, but Polysynth does (Scribbletune works with notes as arrays)
-	scribble.clip({ synth: 'PolySynth', pattern: '-x', notes: 'C4 D4 C4 D#4 C4 D4 C4 Bb3' }).start();
+	scribble.clip({ synth: 'Synth', pattern: '-x', notes: 'C4 D4 C4 D#4 C4 D4 C4 Bb3' }).start();
 	scribble.clip({ synth: 'PolySynth', pattern: 'xx[xx]', notes: 'C3 Cm-3' }).start();
 
 	// Use individual sound samples to trigger patterns on them

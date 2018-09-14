@@ -37,6 +37,28 @@ const _getInstrSeqFn = params => {
 /**
  * @param  {Object}
  * @return {Function}
+ * Take an object literal which has a Tone.js instrument and return a function that can be used
+ * as the callback in Tone.Sequence https://tonejs.github.io/docs/r12/Sequence
+ */
+const _getMonoInstrSeqFn = params => {
+	var counter = 0;
+	return (time, el) => {
+		if (el === 'x' && params.notes[counter]) {
+			// in monophonic instruments the triggerAttackRelease takes the note directly
+			// In Scribbletune each note is an array by default to support chords
+			// hence we target the 0th element of each note
+			params.instrument.triggerAttackRelease(params.notes[counter][0], '8n', time);
+			counter++;
+			if (counter === params.notes.length) {
+				counter = 0;
+			}
+		}
+	}
+};
+
+/**
+ * @param  {Object}
+ * @return {Function}
  * Take an object literal which has a Tone.js sampler and return a function that can be used
  * as the callback in Tone.Sequence https://tonejs.github.io/docs/r12/Sequence
  */
@@ -118,6 +140,6 @@ module.exports = params => {
 		params.instrument.chain(...effects, Tone.Master);
 		// This implies, the instrument was already created (either by user or by Scribbletune during channel creation)
 		// Unlike player, the instrument needs the entire params object to construct a sequence
-		return new Tone.Sequence(_getInstrSeqFn(params), utils.expandStr(params.pattern), params.subdiv || defaultSubdiv);
+		return new Tone.Sequence(params.instrument.voices ? _getInstrSeqFn(params) : _getMonoInstrSeqFn(params), utils.expandStr(params.pattern), params.subdiv || defaultSubdiv);
 	}
 };
