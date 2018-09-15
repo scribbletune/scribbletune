@@ -4,7 +4,11 @@
   "description": "Create music with JavaScript and Node.js!",
   "main": "./src/index.js",
   "scripts": {
-    "test": "gulp",
+    "lint:eslint": "eslint . --color",
+    "lint:eslint:fix": "npm run lint:eslint -- --fix",
+    "lint": "npm run lint:eslint",
+    "pretest": "rm -rf coverage",
+    "test": "nyc tape tests/**/*.spec.js",
     "build": "npx webpack",
     "rebuild": "rm -rf node_modules; rm package-lock.json; npm i; npm run build",
     "watch": "npx webpack -d --watch",
@@ -15,10 +19,8 @@
     "tonal": "1.1.3"
   },
   "devDependencies": {
-    "gulp": "^4.0.0",
-    "gulp-eslint": "^5.0.0",
-    "gulp-istanbul": "^1.1.3",
-    "gulp-tape": "0.0.7",
+    "eslint": "^5.5.0",
+    "nyc": "^11.7.1",
     "tape": "^4.9.0",
     "webpack": "^4.17.2",
     "webpack-cli": "^3.1.0",

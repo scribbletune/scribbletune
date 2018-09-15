@@ -1,7 +1,10 @@
 language: node_js
+
 node_js:
   - "6"
   - "8"
   - "10"
-before_script:
-  - npm install -g gulp
+
+script:
+  - npm run lint
+  - npm test
