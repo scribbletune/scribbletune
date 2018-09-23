@@ -29,7 +29,13 @@ class Channel {
 			this.sampler = new Tone.Sampler(params.samples);
 			this.sampler.toMaster();
 		}
-		params.clips.forEach(this.addClip, this);
+
+		// Filter out unrequired params and create clip params object
+		const {clips, samples, sample, synth, ...originalParamsFiltered} = params;
+
+		params.clips.forEach((c) => {
+			this.addClip({...c, ...originalParamsFiltered});
+		}, this);
 	}
 
 	get clips() {

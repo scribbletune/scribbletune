@@ -4,8 +4,8 @@
 	var channel1 = session.createChannel({
 		sample: 'https://scribbletune.com/sounds/ch.wav',
 		clips: [
-			{ pattern: 'x' },
 			{ pattern: '[xx]' },
+			{ pattern: 'x' },
 			{ pattern: '[-x]' }
 		]
 	});
@@ -14,18 +14,19 @@
 		sample: 'https://scribbletune.com/sounds/bass.wav',
 		clips: [
 			{ pattern: '[--xx]' },
-			{ pattern: '[-x]' },
-			{ pattern: '[xxx]' }
+			{ pattern: 'x', effects: ['PingPongDelay'] },
+			{ pattern: '[xx]' }
 		]
 	});
 
 	var channel3 = session.createChannel({
 		synth: 'PolySynth',
 		clips: [
-			{ pattern: '[--xx]', notes: 'C5 Eb5' },
-			{ pattern: '[-x]', notes: 'Eb5 G5' },
-			{ pattern: '[xxx]', notes: 'G5 Bb5' }
-		]
+			{ pattern: '[--xx]', notes: 'C4 Eb4' },
+			{ pattern: '[-x]', notes: 'Eb4 G4' },
+			{ pattern: '[xx]', notes: 'G4 Bb4' }
+		],
+		volume: -24
 	});
 
 	var channel4 = session.createChannel({
@@ -45,10 +46,12 @@
 			'C4' : 'https://scribbletune.com/sounds/piano/piano60.wav'
 		},
 		clips: [
-			{ pattern: '[--xx]', notes: 'D3 D4' },
+			{ pattern: 'xx', notes: scribble.scale('C3 minor').filter((n, i) => i % 2 === 0) },
 			{ pattern: '[-x]', notes: 'C3 C4' },
-			{ pattern: '[xxx]', notes: 'G3 C4' }
-		]
+			{ pattern: '[xx]', notes: 'G3 C4' }
+		],
+		effects: ['Freeverb', 'PingPongDelay'],
+		volume: -18
 	});
 
 	document.querySelectorAll('.btn').forEach(function(el, idx) {
