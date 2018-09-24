@@ -2,6 +2,21 @@ const clip = require('./clip');
 const browserClip = require('./browserClip');
 
 /**
+ * Get the next logical position to play in the session
+ * Tone has a build-in method `Tone.Transport.nextSubdivision('4n')`
+ * but I think it s better to round off as follows for live performance
+ */
+const getNextPos = () => {
+  var arr = Tone.Transport.position.split(':');
+  // If we are still around 0:0:0x, then set start position to 0
+  if (arr[0] === '0' && arr[1] === '0') {
+    return 0;
+  }
+  // Else set it to the next bar
+  return (+arr[0] + 1) + ':0:0';
+}
+
+/**
  * Channel
  * A channel is made up of a Tone.js Player/Instrument, one or more
  * Tone.js sequences (known as clips in Scribbletune)
@@ -50,13 +65,12 @@ class Channel {
 
 		if (this._clips[idx] && this._clips[idx].state !== 'started') {
 			this._activePatternIdx = idx;
-			let when = Tone.Transport.nextSubdivision('4n');
-			this._clips[idx].start(when);
+			this._clips[idx].start(getNextPos());
 		}
 	}
 
 	stopClip(idx) {
-		this._clips[idx].stop(Tone.Transport.nextSubdivision('4n'));
+		this._clips[idx].stop(getNextPos());
 	}
 
 	addClip(clipParams, idx) {
