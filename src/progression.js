@@ -1,42 +1,53 @@
 'use strict';
 const Tonal = require('tonal');
 
-const degrees = {
-	'I': { idx: 0, name: 'M' },
-	'II': { idx: 1, name: 'M' },
-	'III': { idx: 2, name: 'M' },
-	'IV': { idx: 3, name: 'M' },
-	'V': { idx: 4, name: 'M' },
-	'VI': { idx: 5, name: 'M' },
-	'VII': { idx: 6, name: 'M' },
-
-	'i': { idx: 0, name: 'm' },
-	'ii': { idx: 1, name: 'm' },
-	'iii': { idx: 2, name: 'm' },
-	'iv': { idx: 3, name: 'm' },
-	'v': { idx: 4, name: 'm' },
-	'vi': { idx: 5, name: 'm' },
-	'vii': { idx: 6, name: 'm' },
-
-	'I7': { idx: 0, name: 'Maj7' },
-	'II7': { idx: 1, name: 'Maj7' },
-	'III7': { idx: 2, name: 'Maj7' },
-	'IV7': { idx: 3, name: 'Maj7' },
-	'V7': { idx: 4, name: 'Maj7' },
-	'VI7': { idx: 5, name: 'Maj7' },
-	'VII7': { idx: 6, name: 'Maj7' },
-
-	'i7': { idx: 0, name: 'm7' },
-	'ii7': { idx: 1, name: 'm7' },
-	'iii7': { idx: 2, name: 'm7' },
-	'iv7': { idx: 3, name: 'm7' },
-	'v7': { idx: 4, name: 'm7' },
-	'vi7': { idx: 5, name: 'm7' },
-	'vii7': { idx: 6, name: 'm7' },
+const idxByDegree = {
+	'i': 0,
+	'ii': 1,
+	'iii': 2,
+	'iv': 3,
+	'v': 4,
+	'vi': 5,
+	'vii': 6
 };
 
-const progression = (noteOctaveScale, chords) => {
+/**
+ * Get a chord name from degree
+ * @param  {String} roman e.g. ii OR ii° OR V7
+ * @return {String} e.g. m OR m7b5 OR Maj7
+ */
+const getChordName = roman => {
+  // remove any non character
+  const str = roman.replace(/\W/g, '');
+  let prefix = 'M';
+  // check if it s lowercase
+  if (str.toLowerCase() === str) {
+    prefix = 'm';
+  }
+  if (roman.includes('°')) {
+    return prefix + '7b5';
+  }
+  if (roman.includes('+')) {
+    return prefix + '#5';
+  }
+
+  if (roman.includes('7')) {
+    return prefix === 'M' ? 'Maj7' : 'm7';
+  }
+
+  return prefix;
+};
+
+/**
+ * Take the specified scale and degrees and return the chord names for them
+ * These can be used as the value for the `notes` param of the `clip` method
+ * @param {String} noteOctaveScale e.g. 'C4 major'
+ * @param  {String} chordDegress e.g. 'I IV V IV'
+ * @return {String} e.g. 'CM FM GM FM'
+ */
+const progression = (noteOctaveScale, chordDegress) => {
 	// Set the octave if missing
+  // For example if the method was called with `C major` instead of `C4 major`, then add the 4
 	const noteOctaveScaleArr = noteOctaveScale.split(' ');
 	if (!noteOctaveScaleArr[0].match(/\d/)) {
 		noteOctaveScaleArr[0] += '4';
@@ -45,16 +56,19 @@ const progression = (noteOctaveScale, chords) => {
 
 	// Get the scale from the given note and scale/mode combination
 	const mode = Tonal.Scale.notes(noteOctaveScale);
-	const chordsArr = chords.replace(/\s*,+\s*/g, ' ').split(' ');
-	const chordFamily = chordsArr.map((el, idx) => {
-		// get the degree
-		const degree = degrees[el];
+	const chordDegreesArr = chordDegress.replace(/\s*,+\s*/g, ' ').split(' ');
+  // Now we have something like ['i', 'ii', 'IV']
+  // Convert it to a chord family such as ['Cm', 'Dm', 'FM']
+	const chordFamily = chordDegreesArr.map((roman, idx) => {
+    const chordName = getChordName(roman); // e.g. m
+    // get the index to be used by removing any digit or non alphabet character
+    const scaleId = idxByDegree[roman.replace(/\W|\d/g, '').toLowerCase()]; // e.g. 0
 		// get the note itself
-		const note = mode[degrees[el].idx];
-		// get the octave of the note
-		const oct = note.replace(/\D+/, ''); 
+		const note = mode[scaleId]; // e.g. C
+		// get the octave of the note;
+		const oct = note.replace(/\D+/, '');  // e.g. 4
 		// now get the chord
-		return note.replace(/\d/, '') + degree.name + '-' + oct;
+		return note.replace(/\d/, '') + chordName + '-' + oct;
 	});
 
 	return chordFamily.toString().replace(/,/g, ' ');
