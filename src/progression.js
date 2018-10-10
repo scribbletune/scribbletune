@@ -44,7 +44,7 @@ const fillArr = (arr, len) => {
   // Create a couple of chord arrays with bumped octaves
   let arr1 = arr.map(bumpOctave);
   let arr2 = arr1.map(bumpOctave);
-  let finalArr =  [...arr, ...arr1, ...arr2];
+  let finalArr =  [].concat(arr, arr1, arr2);
 
   // Slice and return only as much as required
   return finalArr.slice(0, len);
@@ -133,7 +133,7 @@ const arpegiate = chordsOrParams => {
   if (typeof chordsOrParams === 'string') {
     params.chords = chordsOrParams;
   } else {
-    params = {...params, ...chordsOrParams}
+    params = Object.assign({}, params, chordsOrParams);
   }
 
   if (params.count > 8 || params.count < 2) {
@@ -149,7 +149,7 @@ const arpegiate = chordsOrParams => {
     let filledArr = fillArr(chord(el), params.count);
     // reorder the filledArr as per params.order
     let reorderedArr = params.order.split('').map(idx => filledArr[idx]);
-    finalArr = [...finalArr, ...reorderedArr];
+    finalArr = [].concat(finalArr, reorderedArr);
   });
 
   return finalArr;
