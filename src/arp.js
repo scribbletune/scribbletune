@@ -8,7 +8,6 @@ const chord = require('./chord').getChord;
  * @return {Array} e.g. ['a4', 'b4', 'a5', 'b5']
  */
 const fillArr = (arr, len) => {
-
   const bumpOctave = el => {
     let note = el.replace(/\d/, '');
     let oct = el.replace(/\D/g, '');
@@ -24,7 +23,7 @@ const fillArr = (arr, len) => {
   return finalArr.slice(0, len);
 };
 
-const arp = chordsOrParams => {
+const arp = (chordsOrParams) => {
   let finalArr = [];
   let params = {
     count: 8,
@@ -38,11 +37,11 @@ const arp = chordsOrParams => {
   }
 
   if (params.count > 8 || params.count < 2) {
-    throw Error('Invalid value for count');
+    throw new TypeError('Invalid value for count', 'arp.js', 41);
   }
 
   if (params.order.match(/\D/g) || params.order.includes('8') || params.order.includes('9')) {
-    throw Error('Invalid value for order');
+    throw new TypeError('Invalid value for order', 'arp.js', 45);
   }
 
   let chordsArr = params.chords.split(' ');

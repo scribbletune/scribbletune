@@ -1,7 +1,7 @@
 'use strict';
 
 const Tonal = require('tonal');
-const chordNames = Tonal.Chord.names();
+const chordNames = Tonal.chord.names();
 const utils = require('./utils');
 
 /**
@@ -13,7 +13,8 @@ const getChord = str => {
 	if (typeof str !== 'string' || utils.isNote(str)) {
 		return;
 	}
-	// Since chords like C6 can also qualify for the note C6, 
+
+	// Since chords like C5 can also qualify for the note C5, 
 	// Scribbletune treats such chords with the `th` appended to it
 	const numericalChords = {
 		'4th': '4',
@@ -24,17 +25,31 @@ const getChord = str => {
 		'13th': '13',
 	};
 	let arr;
-	let spl = str.split('-');
-	spl[0].replace(/([a-gA-G][#|b]?)(.+)/, (match, root, chordName) => {
-		if (numericalChords[chordName]) {
-			chordName = numericalChords[chordName];
-		}
-		if (chordNames.indexOf(chordName) > -1) {
-			arr = Tonal.chord(chordName).map(Tonal.transpose(root + (spl[1] || 4)));
-		}
-	});
+	// separate the octave from the chord
+	const spl = str.split('-'); // e.g. CMaj7-4 => ['CMaj7', '4'];
+	// tonal doesnt recognize 5 and below in the `tokenize` method,
+	// hence explicitly massage those out
+	const tokenizedName = Tonal.Chord.tokenize(spl[0]); // e.g. ['C', 'Maj7']
+	let root = tokenizedName[0];
+	let chordName = tokenizedName[1];
+	
+	if (root[1] === '4' || root[1] === '5') {
+		chordName = root[1];
+		root = root.replace(/\d/, '');
+	}
 
-	return arr;
+	if (numericalChords[chordName]) {
+		chordName = numericalChords[chordName];
+	}
+
+	if (!Tonal.Chord.exists(chordName)) {
+		throw new TypeError('Invalid chord name: ' + chordName, 'chord.js', 33);
+	}
+
+	return Tonal.chord(chordName).map((el) => {
+		let note = Tonal.transpose(root + (spl[1] || 4))(el);
+		return Tonal.Note.fromMidi(Tonal.Note.midi(note));
+	});
 }
 
 /**

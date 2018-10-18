@@ -56,7 +56,7 @@ const clip = params => {
 			Array.isArray(el) ||
 			utils.isNote(el) ||
 			chord.getChord(el),
-			'el must be a valid note, array of notes or a chord'
+			el + ' must be a valid note, array of notes or a chord'
 		);
 
 		if (utils.isNote(el)) {

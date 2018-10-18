@@ -30,7 +30,7 @@ test('clip should allow uppercase notes', t => {
 test('clip should throw an error in case of invalid notes', t => {
 	t.throws(function() {
 		scribble.clip({notes: ['k1']});
-	}, /AssertionError/, 'should throw an error in case of invalid notes');
+	}, /TypeError/, 'should throw an error in case of invalid notes');
 
 	t.end();
 });
@@ -53,7 +53,7 @@ test('clip should allow passing a string of notes with chords', t => {
 	});
 	t.equal(clip[0].note[0], 'C4', 'Clip uses provided notes as a string');
 	t.equal(clip[1].note[0], 'D4', 'Clip uses provided notes as a string');
-	t.equal(clip[1].note[1], 'F#4', 'Clip uses provided notes as a string');
+	t.equal(clip[1].note[1], 'Gb4', 'Clip uses provided notes as a string');
 	t.equal(clip[1].note[2], 'A4', 'Clip uses provided notes as a string');
 	t.equal(clip[2].note[0], 'E4', 'Clip uses provided notes as a string');
 	t.end();
@@ -66,7 +66,7 @@ test('clip should allow passing a string of notes with chords with octave', t =>
 	});
 	t.equal(clip[0].note[0], 'C4', 'Clip uses provided notes as a string');
 	t.equal(clip[1].note[0], 'D5', 'Clip uses provided notes as a string');
-	t.equal(clip[1].note[1], 'F#5', 'Clip uses provided notes as a string');
+	t.equal(clip[1].note[1], 'Gb5', 'Clip uses provided notes as a string');
 	t.equal(clip[1].note[2], 'A5', 'Clip uses provided notes as a string');
 	t.equal(clip[2].note[0], 'E4', 'Clip uses provided notes as a string');
 	t.end();
@@ -79,7 +79,7 @@ test('clip should validate provided notes & pattern using default notes and patt
 	}, /AssertionError/, 'Invalid pattern should throw an error!');
 	t.throws(function() {
 		scribble.clip({notes: ['k1']});
-	}, /AssertionError/, 'Invalid notes should throw an error!');
+	}, /TypeError/, 'Invalid notes should throw an error!');
 
 	clip = scribble.clip();
 	t.equal(clip[0].length, 128, 'Clip uses a default pattern');

@@ -1,5 +1,5 @@
 'use strict';
-const Tonal = require('tonal');
+const scale = require('./scale').getScaleNotes;
 const chord = require('./chord').getChord;
 
 /**
@@ -81,7 +81,7 @@ const getChords = (noteOctaveScale, chordDegress) => {
   }
 
   // Get the scale from the given note and scale/mode combination
-  const mode = Tonal.Scale.notes(noteOctaveScale);
+  const mode = scale(noteOctaveScale);
   const chordDegreesArr = chordDegress.replace(/\s*,+\s*/g, ' ').split(' ');
   // Now we have something like ['i', 'ii', 'IV']
   // Convert it to a chord family such as ['Cm', 'Dm', 'FM']
