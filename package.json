@@ -1,6 +1,6 @@
 {
   "name": "scribbletune",
-  "version": "1.7.1",
+  "version": "1.8.0",
   "description": "Create music with JavaScript and Node.js!",
   "main": "./src/index.js",
   "scripts": {
@@ -14,10 +14,12 @@
     "watch": "npx webpack -d --watch",
     "start": "webpack-dev-server"
   },
-  "pre-commit": [ "build" ],
+  "pre-commit": [
+    "build"
+  ],
   "dependencies": {
     "jsmidgen": "~0.1.4",
-    "tonal": "1.1.3"
+    "tonal": "^2.0.0"
   },
   "devDependencies": {
     "eslint": "^4.0.0",
