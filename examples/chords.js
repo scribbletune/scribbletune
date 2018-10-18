@@ -7,6 +7,6 @@ let clip = scribble.clip({
 	subdiv: '16n'
 });
 
-scribble.midi(clip); // This will create a file called music.mid
-// Import the file created in a music production software and play it with a Piano kinda instrument
-
+scribble.midi(clip);
+// This will create a file called music.mid in the same location as you run this script
+// Import this file in a music production software and play it with a Piano kinda instrument

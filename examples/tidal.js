@@ -21,5 +21,6 @@ const getMelody = () => {
 	return clipA.concat(clipB);
 };
 
-scribble.midi(getMelody().concat(getMelody(), getMelody(), getMelody())); // This will create a file called music.mid
-// Import the file created in a music production software and play it with any synth
+scribble.midi(getMelody().concat(getMelody(), getMelody(), getMelody())); 
+// This will create a file called music.mid in the same location as you run this script
+// Import this file in a music production software and play it with any synth

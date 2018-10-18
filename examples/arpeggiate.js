@@ -19,3 +19,5 @@ const c = scribble.clip({
 });
 
 scribble.midi(c, 'arp.mid');
+// This will create a file called arp.mid in the same location as you run this script
+// Import this file in a music production software and play it with any synth

@@ -16,3 +16,5 @@ var clip = notes.reduce((accumulator, note) => {
 
 // Export a midi file from this clip
 scribble.midi(clip);
+// This will create a file called music.mid in the same location as you run this script
+// Import this file in a music production software and play it with a bass synth
