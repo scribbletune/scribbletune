@@ -1,13 +1,13 @@
 'use strict';
-const Tonal = require('tonal');
+const scale = require('./scale');
 const chord = require('./chord');
 
 // Allow scale to be denoted by mode as well
 module.exports = {
-	scale: Tonal.Scale.notes,
-	mode: Tonal.Scale.notes,
-	scales: Tonal.Scale.names,
-	modes: Tonal.Scale.names,
+	scale: scale.getScaleNotes,
+	mode: scale.getScaleNotes,
+	scales: scale.getAvailableScaleNames,
+	modes: scale.getAvailableScaleNames,
 	chord: chord.getChord,
 	chords: chord.chords,
 	clip: require('./clip'),
