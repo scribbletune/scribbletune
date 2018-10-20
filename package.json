@@ -15,7 +15,8 @@
     "start": "webpack-dev-server"
   },
   "pre-commit": [
-    "build"
+    "build",
+    "test"
   ],
   "dependencies": {
     "jsmidgen": "~0.1.4",
