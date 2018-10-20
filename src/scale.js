@@ -3,12 +3,13 @@
 const Tonal = require('tonal');
 
 const getScaleNotes = (tonicOctScale) => {
+  tonicOctScale = tonicOctScale && tonicOctScale.toLowerCase(); // tonal expects lower case scale names
   const tokenizedName = Tonal.Scale.tokenize(tonicOctScale);
   const scaleName = tokenizedName[1] || tokenizedName;
   if (!Tonal.Scale.exists(scaleName)) {
-    throw new TypeError('Invalid scale name: ' + scaleName, 'scale.js', 9);
+    throw new TypeError('Invalid scale name: ' + scaleName);
   }
-  return Tonal.Scale.notes(tonicOctScale).map(el => Tonal.Note.fromMidi(Tonal.Note.midi(el)));
+  return Tonal.Scale.notes(tonicOctScale).map(Tonal.Note.simplify);
 };
 
 const getAvailableScaleNames = () => {

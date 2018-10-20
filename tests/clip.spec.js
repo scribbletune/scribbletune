@@ -53,7 +53,7 @@ test('clip should allow passing a string of notes with chords', t => {
 	});
 	t.equal(clip[0].note[0], 'C4', 'Clip uses provided notes as a string');
 	t.equal(clip[1].note[0], 'D4', 'Clip uses provided notes as a string');
-	t.equal(clip[1].note[1], 'Gb4', 'Clip uses provided notes as a string');
+	t.equal(clip[1].note[1], 'F#4', 'Clip uses provided notes as a string');
 	t.equal(clip[1].note[2], 'A4', 'Clip uses provided notes as a string');
 	t.equal(clip[2].note[0], 'E4', 'Clip uses provided notes as a string');
 	t.end();
@@ -66,7 +66,7 @@ test('clip should allow passing a string of notes with chords with octave', t =>
 	});
 	t.equal(clip[0].note[0], 'C4', 'Clip uses provided notes as a string');
 	t.equal(clip[1].note[0], 'D5', 'Clip uses provided notes as a string');
-	t.equal(clip[1].note[1], 'Gb5', 'Clip uses provided notes as a string');
+	t.equal(clip[1].note[1], 'F#5', 'Clip uses provided notes as a string');
 	t.equal(clip[1].note[2], 'A5', 'Clip uses provided notes as a string');
 	t.equal(clip[2].note[0], 'E4', 'Clip uses provided notes as a string');
 	t.end();

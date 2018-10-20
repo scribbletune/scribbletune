@@ -36,3 +36,10 @@ test('chords method should return numerical chords with a suffix of `th`', t => 
 
 	t.end();
 });
+
+test('getChord method should return simplified notes with the correct octave', t => {
+	t.equal(scribble.chord('CM').join(), 'C4,E4,G4', 'Numerical chords must not exist in chord list');
+	t.equal(scribble.chord('CM-5').join(), 'C5,E5,G5', 'Numerical chords must not exist in chord list');
+	t.equal(scribble.chord('Gbm').join(), 'Gb4,A4,Db5', 'Numerical chords must not exist in chord list');
+	t.end();
+});

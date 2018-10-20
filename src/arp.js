@@ -37,11 +37,11 @@ const arp = (chordsOrParams) => {
   }
 
   if (params.count > 8 || params.count < 2) {
-    throw new TypeError('Invalid value for count', 'arp.js', 41);
+    throw new TypeError('Invalid value for count');
   }
 
   if (params.order.match(/\D/g) || params.order.includes('8') || params.order.includes('9')) {
-    throw new TypeError('Invalid value for order', 'arp.js', 45);
+    throw new TypeError('Invalid value for order');
   }
 
   let chordsArr = params.chords.split(' ');

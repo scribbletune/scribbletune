@@ -43,12 +43,12 @@ const getChord = str => {
 	}
 
 	if (!Tonal.Chord.exists(chordName)) {
-		throw new TypeError('Invalid chord name: ' + chordName, 'chord.js', 33);
+		throw new TypeError('Invalid chord name: ' + chordName);
 	}
 
 	return Tonal.chord(chordName).map((el) => {
 		let note = Tonal.transpose(root + (spl[1] || 4))(el);
-		return Tonal.Note.fromMidi(Tonal.Note.midi(note));
+		return Tonal.Note.simplify(note);
 	});
 }
 
