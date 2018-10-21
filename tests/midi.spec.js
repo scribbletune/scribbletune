@@ -20,3 +20,13 @@ test('Scribbletune::midi', t => {
 		t.end();
 	});
 });
+
+test('Scribbletune::midi data is returned as byte string if fileName is null', t => {
+	const byteString = scribble.midi(scribble.clip({
+		pattern: 'x',
+		notes: 'c4'
+	}), null);
+
+	t.equal(byteString, 'MThd\x00\x00\x00\x06\x00\x00\x00\x01\x00MTrk\x00\x00\x00\r\x00<\x00<Z\x00ÿ/\x00', 'Scribbletune returns byte string');
+	t.end();
+});

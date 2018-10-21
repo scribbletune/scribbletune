@@ -8,9 +8,11 @@ const jsmidgen = require('jsmidgen');
  * Take an array of note objects to generate a MIDI file in the same location as this method is called
  * @param  {Array} notes    Notes are in the format: {note: ['c3'], level: 127, length: 64}
  * @param  {String} fileName If a filename is not provided, then `music.mid` is used by default
+ * If `null` is passed for `fileName` bytes are returned instead of creating a file
  */
 const midi = (notes, fileName) => {
 	assert(Array.isArray(notes), 'You must provide an array of notes to write!');
+	const returnBytes = fileName === null;
 	fileName = fileName || 'music.mid';
 	let file = new jsmidgen.File();
 	let track = new jsmidgen.Track();
@@ -32,6 +34,11 @@ const midi = (notes, fileName) => {
 			track.noteOff(0, '', noteObj.length);
 		}
 	});
+
+	// If filename is passed as null, then return the bytes as is
+	if (returnBytes) {
+		return file.toBytes();
+	}
 
 	fs.writeFileSync(fileName, file.toBytes(), 'binary');
 	console.log('MIDI file generated:', fileName);
