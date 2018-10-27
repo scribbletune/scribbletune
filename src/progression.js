@@ -16,7 +16,7 @@ const get = mode => {
     phrygian: ['i', 'II', 'III', 'iv', 'v°', 'VI', 'vii'],
     lydian: ['I', 'II', 'iii', 'iv°', 'V', 'vi', 'vii'],
     mixolydian: ['I', 'ii', 'iii°', 'IV', 'v', 'vi', 'VII'],
-    aeolian: ['I', 'ii°', 'III', 'iv', 'v', 'VI', 'VII'],
+    aeolian: ['i', 'ii°', 'III', 'iv', 'v', 'VI', 'VII'],
     locrian: ['i°', 'II', 'iii', 'iv', 'V', 'VI', 'vii'],
     melodic: ['i', 'ii', 'III+', 'IV', 'V', 'vi°', 'vii°'],
     harmonic: ['i', 'ii°', 'III+', 'iv', 'V', 'VI', 'vii°']
