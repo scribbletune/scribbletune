@@ -18,8 +18,8 @@ const get = mode => {
     mixolydian: ['I', 'ii', 'iii°', 'IV', 'v', 'vi', 'VII'],
     aeolian: ['i', 'ii°', 'III', 'iv', 'v', 'VI', 'VII'],
     locrian: ['i°', 'II', 'iii', 'iv', 'V', 'VI', 'vii'],
-    melodic: ['i', 'ii', 'III+', 'IV', 'V', 'vi°', 'vii°'],
-    harmonic: ['i', 'ii°', 'III+', 'iv', 'V', 'VI', 'vii°']
+    'melodic minor': ['i', 'ii', 'III+', 'IV', 'V', 'vi°', 'vii°'],
+    'harmonic minor': ['i', 'ii°', 'III+', 'iv', 'V', 'VI', 'vii°']
   };
   theRomans.major = theRomans.ionian;
   theRomans.minor = theRomans.aeolian;
