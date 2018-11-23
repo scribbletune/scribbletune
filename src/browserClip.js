@@ -26,7 +26,7 @@ const _getInstrSeqFn = params => {
 	var counter = 0;
 	return (time, el) => {
 		if (el === 'x' && params.notes[counter]) {
-			params.instrument.triggerAttackRelease(params.notes[counter], params.dur || params.subdiv || defaultDur, time);
+			params.instrument.triggerAttackRelease(params.notes[counter], params.durations[counter] || params.dur || params.subdiv || defaultDur, time);
 			counter++;
 			if (counter === params.notes.length) {
 				counter = 0;
@@ -48,7 +48,7 @@ const _getMonoInstrSeqFn = params => {
 			// in monophonic instruments the triggerAttackRelease takes the note directly
 			// In Scribbletune each note is an array by default to support chords
 			// hence we target the 0th element of each note
-			params.instrument.triggerAttackRelease(params.notes[counter][0], params.dur || params.subdiv || defaultDur, time);
+			params.instrument.triggerAttackRelease(params.notes[counter][0], params.durations[counter] || params.dur || params.subdiv || defaultDur, time);
 			counter++;
 			if (counter === params.notes.length) {
 				counter = 0;
@@ -67,7 +67,7 @@ const _getSamplerSeqFn = params => {
 	var counter = 0;
 	return (time, el) => {
 		if (el === 'x' && params.notes[counter]) {
-			params.sampler.triggerAttackRelease(params.notes[counter], params.dur || params.subdiv || defaultDur, time);
+			params.sampler.triggerAttackRelease(params.notes[counter], params.durations[counter] || params.dur || params.subdiv || defaultDur, time);
 			counter++;
 			if (counter === params.notes.length) {
 				counter = 0;
@@ -75,6 +75,17 @@ const _getSamplerSeqFn = params => {
 		}
 	}
 };
+
+const durations = (params) => {
+	let subdivTick = Tone.Time(params.subdiv).toTicks();
+	let durations = [];
+	params.base.forEach( ({note, divisor, duration, level})=>{
+		if(note) {
+			durations.push(Tone.Time(`${duration*subdivTick/divisor}i`).toNotation());
+		}
+	});
+	return durations;
+}
 
 /**
  * @param  {Object}
@@ -95,6 +106,7 @@ module.exports = params => {
 		throw new Error('No player or instrument provided!');
 	}
 
+	params.durations = durations(params);
 	/*
 	1. The params object can be used to pass a sample (sound source) OR a synth(Synth/FMSynth/AMSynth etc) or samples.
 	Scribbletune will then create a Tone.js Player or Tone.js Instrument or Tone.js Sampler respectively

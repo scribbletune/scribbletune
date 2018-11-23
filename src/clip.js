@@ -18,7 +18,7 @@ const getDefaultParams = () => ({
 	shuffle: false,
 	sizzle: false,
 	arpegiate: false,
-	subdiv: '4n'
+	subdiv: '4n',
 });
 
 /**
@@ -34,24 +34,18 @@ const hdr = {
 	'8n': 64,
 	'16n': 32,
 };
-/*
-params = {
-	notes: 'c4',
-	pattern: 'x[x[xx]x]x'
-}
- */
-const clip = params => {
-	params = Object.assign(getDefaultParams(), params || {});
 
-	// If notes is a string, split it into an array
-	if (typeof params.notes === 'string') {
+/**
+ * Transform note/chord string into nested arrays of notes.
+ */
+const expandNotes = (notes) => {
+	if (typeof notes === 'string') {
 		// Remove any accidental double spaces
-		params.notes = params.notes.replace(/\s{2,}/g, ' ');
-		params.notes = params.notes.split(' ');
+		notes = notes.replace(/\s{2,}/g, ' ');
+		notes = notes.split(' ');
 	}
 
-	// Convert chords if any to notes
-	params.notes = params.notes.map(el => {
+	return notes.map(el => {
 		assert(
 			Array.isArray(el) ||
 			utils.isNote(el) ||
@@ -81,7 +75,54 @@ const clip = params => {
 
 		return el;
 	});
+}
 
+/**
+ * Translate the pattern string into a sequence of callbacks
+ * that provide the noteIndex, duration, and divisor where
+ * duration is a multiplier for the divisor.
+ */
+const _recursivelyApplyPattern = (pattern, callback, count, divisor) => {
+	let index = 0;
+	while(index < pattern.length) {
+		let el = pattern[index];
+		if(el === 'x') {
+			let end = index + 1;
+			while(end < pattern.length && pattern[end] === '_') {
+				end++;
+			}
+			let duration = end - index;
+			callback({noteIndex:count, duration, divisor});
+			count++;
+			index = end;
+			continue;
+		}
+		if(el === '_') {
+			// no note just continue?
+			index++
+			continue;
+		}
+		if(el === '-') {
+			callback({duration:1, divisor});
+			index++;
+			continue;
+		}
+		if(Array.isArray(el)) {
+			count = _recursivelyApplyPattern(el, callback, count, divisor*el.length);
+			index++;
+			continue;
+		}
+		index++;
+	}
+	return count;
+}
+const applyPattern = (pattern, callback) => {
+	const expanded = utils.expandStr(pattern);
+	_recursivelyApplyPattern(expanded, callback, 0, 1);
+}
+
+const createCommonBase = (params) => {
+	params.notes = expandNotes(params.notes);
 	assert(typeof params.pattern === 'string', 'pattern should be a string');
 	assert(/[^x\-_\[\]]/.test(params.pattern) === false, 'pattern can only comprise x - _ [ ]');
 
@@ -89,55 +130,45 @@ const clip = params => {
 		params.notes = utils.shuffle(params.notes);
 	}
 
-	// If the clip method is being called in the context of a Tone.js instrument or synth,
-	// then there's no need to continue
+	let clipNotes = [];
+	let index = 0;
+	applyPattern(params.pattern, ({noteIndex, duration, divisor})=>{
+		clipNotes[index] = {
+			note:noteIndex !== undefined ? params.notes[noteIndex % params.notes.length] : null,
+			divisor,
+			duration,
+			level:params.accentHi
+		}
+		index++;
+	});
+	params.base = clipNotes;
+	return params;
+}
+
+const asMidi = (params) =>{
+	const quant =hdr[params.subdiv] || hdr['4n'];
+	return params.base.map(({note, divisor, level, duration})=>{
+		return {
+			note,
+			length:duration*quant/divisor,
+			level
+		}
+	});
+}
+
+/*
+params = {
+	notes: 'c4',
+	pattern: 'x[x[xx]x]x'
+}
+ */
+const clip = params => {
+	params = Object.assign(getDefaultParams(), params || {});
+	params = createCommonBase(params);
 	if (params.synth || params.instrument || params.sample || params.player || params.samples || params.sampler) {
 		return browserClip(params);
 	}
-
-	let clipNotes = [];
-	let step = 0;
-	/**
-	 * Recursively apply pattern to notes
-	 *
-	 * Pass in a pattern array such as ['x', '-', 'x', 'x'] with a length for each element
-	 * The length is the HDR speed or tick length (obtained from the hdr object in this script)
-	 * If the element of this array is also a (pattern) array, then divide the length by
-	 * the length of the inner array and then call the recursive function on that inner array
-	 */
-	const recursivelyApplyPatternToNotes = (arr, length) => {
-		arr.forEach(el => {
-			if (typeof el === 'string') {
-				let note = null;
-				// If the note is to be `on`, then it needs to be an array
-				if (el === 'x') {
-					note = params.notes[step];
-					step++;
-				}
-
-				// Push only note on OR off messages to the clip notes array
-				if (el === 'x' || el === '-') {
-					clipNotes.push({ note, length, level: params.accentHi });
-				}
-
-				// In case of an underscore, simply extend the previous note's length
-				if (el === '_' && clipNotes.length) {
-					clipNotes[clipNotes.length - 1].length += length;
-				}
-
-				// If the pattern is longer than the notes, then repeat notes
-				if (step === params.notes.length) {
-					step = 0;
-				}
-			}
-			if (Array.isArray(el)) {
-				recursivelyApplyPatternToNotes(el, length/el.length)
-			}
-		});
-	};
-
-	recursivelyApplyPatternToNotes(utils.expandStr(params.pattern), hdr[params.subdiv] || hdr['4n']);
-	return clipNotes;
+	return asMidi(params);
 };
 
 module.exports = clip;
