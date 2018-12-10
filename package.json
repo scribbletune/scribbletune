@@ -1,10 +1,10 @@
 {
   "name": "scribbletune",
-  "version": "1.9.2",
+  "version": "1.9.3",
   "description": "Create music with JavaScript and Node.js!",
   "main": "./src/index.js",
   "scripts": {
-    "lint:eslint": "eslint . --color",
+    "lint:eslint": "npx eslint ./src --color",
     "lint:eslint:fix": "npm run lint:eslint -- --fix",
     "lint": "npm run lint:eslint",
     "pretest": "rm -rf coverage",

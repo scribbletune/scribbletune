@@ -131,7 +131,7 @@ const clip = params => {
 				}
 			}
 			if (Array.isArray(el)) {
-				recursivelyApplyPatternToNotes(el, length/el.length)
+				recursivelyApplyPatternToNotes(el, length / el.length)
 			}
 		});
 	};

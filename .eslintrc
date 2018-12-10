@@ -6,7 +6,8 @@
 		"no-nested-ternary": 1,
 		"padded-blocks": [1, "never"],
 		"space-before-blocks": [1, "always"],
-		"spaced-comment": 2
+		"spaced-comment": 2,
+		"space-infix-ops": 2
 	},
 	"env": { 
 		"es6": true
