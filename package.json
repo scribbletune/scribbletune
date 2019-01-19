@@ -1,6 +1,6 @@
 {
   "name": "scribbletune",
-  "version": "1.9.3",
+  "version": "1.9.4",
   "description": "Create music with JavaScript and Node.js!",
   "main": "./src/index.js",
   "scripts": {
@@ -29,7 +29,7 @@
     "tape": "^4.9.0",
     "webpack": "^4.17.2",
     "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.8"
+    "webpack-dev-server": ">=3.1.11"
   },
   "repository": {
     "type": "git",
