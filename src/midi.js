@@ -17,8 +17,6 @@ const jsmidgen = require('jsmidgen');
  */
 const midi = (notes, fileName, callback) => {
 	assert(Array.isArray(notes), 'You must provide an array of notes to write!');
-	const returnBytes = fileName === null;
-	fileName = fileName || 'music.mid';
 	let file = new jsmidgen.File();
 	let track = new jsmidgen.Track();
 	file.addTrack(track);
@@ -40,23 +38,40 @@ const midi = (notes, fileName, callback) => {
 		}
 	});
 
-	if (callback && typeof callback === 'function') {
-		// If filename is passed as null, then return the bytes as is
-		if (returnBytes) {
-			callback(null, file.toBytes());
-		} else {
-			fs.writeFile(fileName, file.toBytes(), 'binary', callback)
-		}
-	} else {
-		// If filename is passed as null, then return the bytes as is
-		if (returnBytes) {
-			return file.toBytes();
-		}
+	return outputMIDI(fileName, file.toBytes(), callback)
+}
 
-		fs.writeFileSync(fileName, file.toBytes(), 'binary');
+function outputMIDI(fileName, bytes, callback) {
+	const returnBytes = fileName === null;
+	fileName = fileName || 'music.mid';
+	const hasCallback = callback && typeof callback === 'function';
+
+	if (!returnBytes) {
+		writeMIDIFile(hasCallback, {
+			fileName,
+			bytes,
+			callback
+		});
+		return;
 	}
 
-	console.log('MIDI file generated:', fileName);
+	// If filename is passed as null, then return the bytes as is
+	if (!hasCallback) {
+		return bytes;
+	}
+	callback(null, bytes);
+}
+
+function writeMIDIFile(hasCallback, fileParams) {
+	const writeFile = hasCallback ? fs.writeFile : fs.writeFileSync;
+	writeFile(
+		fileParams.fileName,
+		fileParams.bytes,
+		'binary',
+		fileParams.callback
+	);
+
+	console.log('MIDI file generated:', fileParams.fileName);
 }
 
 module.exports = midi;
