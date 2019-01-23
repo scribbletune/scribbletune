@@ -15,7 +15,7 @@ const jsmidgen = require('jsmidgen');
  * In case `fileName` is null, it will return a `err, bytes` signature for the function
  *
  */
-const generateMidi = (notes, fileName, callback) => {
+const midi = (notes, fileName, callback) => {
 	if (!callback || typeof callback !== 'function') {
 		throw new TypeError('Invalid callback');
 	}
@@ -32,27 +32,6 @@ const generateMidi = (notes, fileName, callback) => {
 	}
 
 	fs.writeFile(fileName, bytes, 'binary', callback);
-}
-
-/**
- * Take an array of note objects to synchronously generate a MIDI file in the same location as this method is called
- * @param  {Array} notes    Notes are in the format: {note: ['c3'], level: 127, length: 64}
- * @param  {String} fileName If a filename is not provided, then `music.mid` is used by default
- * If `null` is passed for `fileName` bytes are returned instead of creating a file
- */
-const generateMidiSync = (notes, fileName) => {
-	const file = createFileFromNotes(notes)
-	const returnBytes = fileName === null;
-	fileName = fileName || 'music.mid';
-	const bytes = file.toBytes();
-
-	if (returnBytes) {
-		// If filename is passed as null, then return the bytes in callback
-		return bytes;
-	}
-
-	fs.writeFileSync(fileName, bytes, 'binary');
-	console.log('MIDI file generated:', fileName);
 }
 
 function createFileFromNotes(notes) {
@@ -81,4 +60,4 @@ function createFileFromNotes(notes) {
 	return file;
 }
 
-module.exports = { generateMidi, generateMidiSync };
+module.exports = midi;

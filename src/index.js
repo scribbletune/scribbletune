@@ -1,7 +1,6 @@
 'use strict';
 const scale = require('./scale');
 const chord = require('./chord');
-const midi = require('./midi')
 
 // Allow scale to be denoted by mode as well
 module.exports = {
@@ -14,7 +13,6 @@ module.exports = {
 	clip: require('./clip'),
 	progression: require('./progression'),
 	arp: require('./arp'),
-	midi: midi.generateMidi,
-	midiSync: midi.generateMidiSync,
+	midi: require('./midi'),
 	session: typeof window !== 'undefined' && require('./session')
 };
