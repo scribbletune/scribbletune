@@ -18,7 +18,7 @@ const jsmidgen = require('jsmidgen');
  */
 const midi = (notes, fileName, callback) => {
 	const returnBytes = fileName === null;
-	if ((returnBytes && !callback) || typeof callback !== 'function') {
+	if (callback && typeof callback !== 'function') {
 		throw new TypeError('Invalid callback');
 	}
 
@@ -27,6 +27,7 @@ const midi = (notes, fileName, callback) => {
 			console.log('MIDI file generated:', fileName);
 		}
 	}
+
 	const file = createFileFromNotes(notes)
 	fileName = fileName || 'music.mid';
 	const bytes = file.toBytes();
