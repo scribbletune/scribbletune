@@ -4,29 +4,64 @@ const fs = require('fs');
 const test = require('tape');
 const scribble = require('../src/index');
 
+const fileName = 'music.mid'
+const filePath = `./${fileName}`
+let scribbleClip = scribble.clip({
+	pattern: 'x[-x]',
+	notes: scribble.scale('C4 major')
+});
+
+test('Scribbletune::midi verifies callback method', t => {
+	let fileExists = false;
+	try {
+		scribble.midi(scribbleClip, fileName, {})
+	} catch (err) {
+		t.equal(err.message, 'Invalid callback')
+	}
+	t.end();
+});
+
 test('Scribbletune::midi', t => {
 	let fileExists = false;
-	scribble.midi(scribble.clip({
-		pattern: 'x[-x]',
-		notes: scribble.scale('C4 major')
-	}));
 
-	fs.access('./music.mid', fs.F_OK, (err) => {
-		if (!err) {
-			fileExists = true;
-		}
-		t.equal(fileExists, true, 'Scribbletune renders a midi file');
+	scribble.midi(scribbleClip, fileName, (err) => {
+		// file created asynchronously
+		t.equal(err, null)
+		fs.access(filePath, fs.F_OK, (err) => {
+			if (!err) {
+				fileExists = true;
+			}
+			t.equal(fileExists, true, 'Scribbletune renders a midi file');
 
-		t.end();
+			fs.unlinkSync(filePath);
+			t.end();
+		});
 	});
 });
 
 test('Scribbletune::midi data is returned as byte string if fileName is null', t => {
-	const byteString = scribble.midi(scribble.clip({
+	scribbleClip = scribble.clip({
 		pattern: 'x',
 		notes: 'c4'
-	}), null);
+	})
 
-	t.equal(byteString, 'MThd\x00\x00\x00\x06\x00\x00\x00\x01\x00MTrk\x00\x00\x00\r\x00<\x00<Z\x00ÿ/\x00', 'Scribbletune returns byte string');
+	scribble.midi(scribbleClip, null, (err, byteString) => {
+		t.equal(err, null)
+		t.equal(byteString, 'MThd\x00\x00\x00\x06\x00\x00\x00\x01\x00MTrk\x00\x00\x00\r\x00<\x00<Z\x00ÿ/\x00', 'Scribbletune returns byte string');
+		t.end();
+	});
+});
+
+test('Scribbletune::midi when data is returned as byte string, it needs a callback method', t => {
+	scribbleClip = scribble.clip({
+		pattern: 'x',
+		notes: 'c4'
+	})
+
+	try {
+		scribble.midi(scribbleClip, null)
+	} catch (err) {
+		t.equal(err.message, 'Invalid callback')
+	}
 	t.end();
 });
