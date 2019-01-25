@@ -8,20 +8,26 @@ const jsmidgen = require('jsmidgen');
  * Take an array of note objects to asynchronously generate a MIDI file in the same location as this method is called
  * @param  {Array} notes    Notes are in the format: {note: ['c3'], level: 127, length: 64}
  * @param  {String} fileName If a filename is not provided, then `music.mid` is used by default
- * If `null` is passed for `fileName` bytes are returned instead of creating a file
+ * If `null` is passed for `fileName` bytes are returned instead of creating a file and callback
  *
- * @param  {Object} callback Receives a callback method. Current signature for method is `err` in first param,
+ * @param  {Object} [callback=Function] Receives a callback method. Current signature for method is `err` in first param,
  * in case something goes wrong.
  * In case `fileName` is null, it will return a `err, bytes` signature for the function
+ * and a `callback` needs to be set
  *
  */
 const midi = (notes, fileName, callback) => {
-	if (!callback || typeof callback !== 'function') {
+	const returnBytes = fileName === null;
+	if ((returnBytes && !callback) || typeof callback !== 'function') {
 		throw new TypeError('Invalid callback');
 	}
 
+	callback = callback || function(err) {
+		if (!err) {
+			console.log('MIDI file generated:', fileName);
+		}
+	}
 	const file = createFileFromNotes(notes)
-	const returnBytes = fileName === null;
 	fileName = fileName || 'music.mid';
 	const bytes = file.toBytes();
 

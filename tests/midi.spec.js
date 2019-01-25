@@ -51,3 +51,17 @@ test('Scribbletune::midi data is returned as byte string if fileName is null', t
 		t.end();
 	});
 });
+
+test('Scribbletune::midi when data is returned as byte string, it needs a callback method', t => {
+	scribbleClip = scribble.clip({
+		pattern: 'x',
+		notes: 'c4'
+	})
+
+	try {
+		scribble.midi(scribbleClip, null)
+	} catch (err) {
+		t.equal(err.message, 'Invalid callback')
+	}
+	t.end();
+});
