@@ -3,7 +3,15 @@
 const Tonal = require('tonal');
 
 const getScaleNotes = (tonicOctScale) => {
-  tonicOctScale = tonicOctScale && tonicOctScale.toLowerCase(); // tonal expects lower case scale names
+  console.log(tonicOctScale);
+  tonicOctScale = tonicOctScale && tonicOctScale.toLowerCase();
+
+  // In Tonal, the only scales that are not entirely lower case are
+  // lydian #5P pentatonic and minor #7M pentatonic,
+  // hence make provision for them separately
+  tonicOctScale = tonicOctScale.replace('#5p', '#5P');
+  tonicOctScale = tonicOctScale.replace('#7m', '#7M');
+
   const tokenizedName = Tonal.Scale.tokenize(tonicOctScale);
   const scaleName = tokenizedName[1] || tokenizedName;
   if (!Tonal.Scale.exists(scaleName)) {
