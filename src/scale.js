@@ -3,7 +3,6 @@
 const Tonal = require('tonal');
 
 const getScaleNotes = (tonicOctScale) => {
-  console.log(tonicOctScale);
   tonicOctScale = tonicOctScale && tonicOctScale.toLowerCase();
 
   // In Tonal, the only scales that are not entirely lower case are
