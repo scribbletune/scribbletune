@@ -8,7 +8,7 @@
     "check-coverage": true,
     "all": true,
     "sourceMap": false,
-    "instrument": false,
+    "instrument": true,
     "lines": 50,
     "extension": [
       ".js"
