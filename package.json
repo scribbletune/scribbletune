@@ -27,7 +27,15 @@
     "eslint": "^4.0.0",
     "nyc": "^13.1.0",
     "pre-commit": "^1.2.2",
+    "prettier": "^1.17.1",
     "tape": "^4.9.0",
+    "ts-loader": "^6.0.1",
+    "tslint": "^5.16.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-loader": "^3.5.4",
+    "tslint-plugin-prettier": "^2.0.1",
+    "typescript": "^3.4.5",
     "webpack": "^4.17.2",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": ">=3.1.11"
@@ -39,7 +47,12 @@
   "keywords": [
     "javascript",
     "music",
-    "midi"
+    "music theory",
+    "midi",
+    "web audio api",
+    "jsmidgen",
+    "tone.js",
+    "tonal"
   ],
   "author": "Walmik Deshpande",
   "license": "MIT",
