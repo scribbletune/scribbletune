@@ -27,4 +27,5 @@ type Params = {
 };
 
 declare var Tone: any;
-declare var require: any;
+declare var require: NodeRequire;
+declare module 'jsmidgen';

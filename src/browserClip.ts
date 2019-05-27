@@ -1,4 +1,4 @@
-import { expandStr } from '../utils';
+import { expandStr } from './utils';
 const defaultSubdiv = '4n';
 const defaultDur = '8n';
 
@@ -8,7 +8,7 @@ const defaultDur = '8n';
  * Take a Tone.js Player and return a function that can be used
  * as the callback in Tone.Sequence https://tonejs.github.io/docs/r12/Sequence
  */
-const _getPlayerSeqFn = (player: any) => {
+const getPlayerSeqFn = (player: any) => {
   return (time: string, el: string) => {
     if (el === 'x') {
       player.start(time);
@@ -22,8 +22,8 @@ const _getPlayerSeqFn = (player: any) => {
  * Take an object literal which has a Tone.js instrument and return a function that can be used
  * as the callback in Tone.Sequence https://tonejs.github.io/docs/r12/Sequence
  */
-const _getInstrSeqFn = (params: Params) => {
-  var counter = 0;
+const getInstrSeqFn = (params: Params) => {
+  let counter = 0;
   return (time: string, el: string) => {
     if (el === 'x' && params.notes[counter]) {
       params.instrument.triggerAttackRelease(
@@ -45,8 +45,8 @@ const _getInstrSeqFn = (params: Params) => {
  * Take an object literal which has a Tone.js instrument and return a function that can be used
  * as the callback in Tone.Sequence https://tonejs.github.io/docs/r12/Sequence
  */
-const _getMonoInstrSeqFn = (params: Params) => {
-  var counter = 0;
+const getMonoInstrSeqFn = (params: Params) => {
+  let counter = 0;
   return (time: string, el: string) => {
     if (el === 'x' && params.notes[counter]) {
       // in monophonic instruments the triggerAttackRelease takes the note directly
@@ -71,8 +71,8 @@ const _getMonoInstrSeqFn = (params: Params) => {
  * Take an object literal which has a Tone.js sampler and return a function that can be used
  * as the callback in Tone.Sequence https://tonejs.github.io/docs/r12/Sequence
  */
-const _getSamplerSeqFn = (params: Params) => {
-  var counter = 0;
+const getSamplerSeqFn = (params: Params) => {
+  let counter = 0;
   return (time: string, el: string) => {
     if (el === 'x' && params.notes[counter]) {
       params.sampler.triggerAttackRelease(
@@ -144,7 +144,7 @@ module.exports = (params: Params) => {
     params.player.chain(...effects, Tone.Master);
     // This implies, a player object was already created (either by user or by Scribbletune during channel creation)
     return new Tone.Sequence(
-      _getPlayerSeqFn(params.player),
+      getPlayerSeqFn(params.player),
       expandStr(params.pattern),
       params.subdiv || defaultSubdiv
     );
@@ -154,7 +154,7 @@ module.exports = (params: Params) => {
     params.sampler.chain(...effects, Tone.Master);
     // This implies, a sampler object was already created (either by user or by Scribbletune during channel creation)
     return new Tone.Sequence(
-      _getSamplerSeqFn(params),
+      getSamplerSeqFn(params),
       expandStr(params.pattern),
       params.subdiv || defaultSubdiv
     );
@@ -166,8 +166,8 @@ module.exports = (params: Params) => {
     // Unlike player, the instrument needs the entire params object to construct a sequence
     return new Tone.Sequence(
       params.instrument.voices
-        ? _getInstrSeqFn(params)
-        : _getMonoInstrSeqFn(params),
+        ? getInstrSeqFn(params)
+        : getMonoInstrSeqFn(params),
       expandStr(params.pattern),
       params.subdiv || defaultSubdiv
     );

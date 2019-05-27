@@ -1,18 +1,16 @@
-import { isNote, shuffle, expandStr } from '../utils';
-import { getChord } from '../chord';
+import { isNote, shuffle, expandStr } from './utils';
+import { getChord } from './chord';
 
+/* tslint:disable:no-var-requires */
 const browserClip = typeof window !== 'undefined' && require('./browserClip');
 
 type ClipParams = {
-  notes: string | string[];
+  notes: string | (string | string[])[];
   pattern: string;
-  accentMap: string;
-  accentHi: number;
-  accentLow: number;
-  shuffle: boolean;
-  sizzle: boolean;
-  arpegiate: boolean;
-  subdiv: string;
+  shuffle?: boolean;
+  sizzle?: boolean;
+  arpegiate?: boolean;
+  subdiv?: string;
   synth?: any;
   instrument?: any;
   sample?: any;
@@ -28,9 +26,6 @@ type ClipParams = {
 const getDefaultParams = (): ClipParams => ({
   notes: ['C4'],
   pattern: 'x',
-  accentMap: '',
-  accentHi: 127,
-  accentLow: 70,
   shuffle: false,
   sizzle: false,
   arpegiate: false,
@@ -84,15 +79,19 @@ export const clip = (params: ClipParams) => {
       // This could be a chord provided as an array
       // make sure it uses valid notes
       el.forEach(n => {
-        if (!isNote(n)) throw new TypeError('array must comprise valid notes');
+        if (!isNote(n)) {
+          throw new TypeError('array must comprise valid notes');
+        }
       });
     }
 
     return el;
   });
 
-  if (!/[^x\-_\[\]]/.test(params.pattern)) {
-    throw new TypeError('pattern can only comprise x - _ [ ]');
+  if (/[^x\-_\[\]]/.test(params.pattern)) {
+    throw new TypeError(
+      `pattern can only comprise x - _ [ ], found ${params.pattern}`
+    );
   }
 
   if (params.shuffle) {
@@ -134,7 +133,7 @@ export const clip = (params: ClipParams) => {
 
         // Push only note on OR off messages to the clip notes array
         if (el === 'x' || el === '-') {
-          clipNotes.push({ note, length, level: params.accentHi });
+          clipNotes.push({ note, length, level: 127 });
         }
 
         // In case of an underscore, simply extend the previous note's length
@@ -155,7 +154,7 @@ export const clip = (params: ClipParams) => {
 
   recursivelyApplyPatternToNotes(
     expandStr(params.pattern),
-    hdr[params.subdiv] || hdr['4n']
+    hdr[params.subdiv as string] || hdr['4n']
   );
   return clipNotes;
 };

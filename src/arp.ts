@@ -1,4 +1,4 @@
-import { getChord } from '../chord';
+import { getChord } from './chord';
 
 /**
  * Take an array and fill it with it s own elements in the next octave till it s of the specified `len`
@@ -8,8 +8,8 @@ import { getChord } from '../chord';
  */
 const fillArr = (arr: string[], len: number) => {
   const bumpOctave = (el: string): string => {
-    let note = el.replace(/\d/, '');
-    let oct = el.replace(/\D/g, '');
+    const note = el.replace(/\d/, '');
+    const oct = el.replace(/\D/g, '');
     return note + (+oct + 1);
   };
 

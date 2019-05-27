@@ -1,4 +1,4 @@
-import { clip } from '../clip';
+import { clip } from './clip';
 
 /**
  * Get the next logical position to play in the session
@@ -6,7 +6,7 @@ import { clip } from '../clip';
  * but I think it s better to round off as follows for live performance
  */
 const getNextPos = (): number | string => {
-  var arr = Tone.Transport.position.split(':');
+  const arr = Tone.Transport.position.split(':');
   // If we are still around 0:0:0x, then set start position to 0
   if (arr[0] === '0' && arr[1] === '0') {
     return 0;
@@ -25,17 +25,17 @@ const getNextPos = (): number | string => {
  * clips -> Get all clips for this channel
  * addClip ->
  */
-class Channel {
+export class Channel {
   idx: number;
-  _activePatternIdx: number;
-  _clips: any;
+  activePatternIdx: number;
+  channelClips: any;
   player: any;
   instrument: any;
   sampler: any;
 
   constructor(params: Params) {
-    (this.idx = params.idx as number), (this._activePatternIdx = -1);
-    this._clips = [];
+    (this.idx = params.idx as number), (this.activePatternIdx = -1);
+    this.channelClips = [];
 
     if (params.sample) {
       this.player = new Tone.Player(params.sample);
@@ -59,29 +59,29 @@ class Channel {
   }
 
   get clips() {
-    return this._clips;
+    return this.channelClips;
   }
 
   startClip(idx: number) {
     // Stop any other currently running clip
-    if (this._activePatternIdx > -1 && this._activePatternIdx !== idx) {
-      this.stopClip(this._activePatternIdx);
+    if (this.activePatternIdx > -1 && this.activePatternIdx !== idx) {
+      this.stopClip(this.activePatternIdx);
     }
 
-    if (this._clips[idx] && this._clips[idx].state !== 'started') {
-      this._activePatternIdx = idx;
-      this._clips[idx].start(getNextPos());
+    if (this.channelClips[idx] && this.channelClips[idx].state !== 'started') {
+      this.activePatternIdx = idx;
+      this.channelClips[idx].start(getNextPos());
     }
   }
 
   stopClip(idx: number) {
-    this._clips[idx].stop(getNextPos());
+    this.channelClips[idx].stop(getNextPos());
   }
 
   addClip(clipParams: any, idx?: number) {
-    idx = idx || this._clips.length;
+    idx = idx || this.channelClips.length;
     if (clipParams.pattern) {
-      this._clips[idx as number] = clip(
+      this.channelClips[idx as number] = clip(
         Object.assign(
           {
             player: this.player, // will be ignored if undefined
@@ -93,39 +93,11 @@ class Channel {
       );
     } else {
       // Allow creation of empty clips
-      this._clips[idx as number] = null;
+      this.channelClips[idx as number] = null;
     }
   }
 
   get activeClipIdx() {
-    return this._activePatternIdx;
-  }
-}
-
-export class Session {
-  _channels: any;
-
-  constructor(arr: any) {
-    arr = arr || [];
-    this._channels = arr.map((ch: any, i: number) => {
-      ch.idx = ch.idx || i;
-      return new Channel(ch);
-    });
-  }
-
-  createChannel(ch: any) {
-    ch.idx = ch.idx || this._channels.length;
-    this._channels.push(new Channel(ch));
-  }
-
-  get channels() {
-    return this._channels;
-  }
-
-  // Start the clips at a specific index in all the channels
-  startRow(idx: number) {
-    this._channels.forEach((ch: any) => {
-      ch.startClip(idx);
-    });
+    return this.activePatternIdx;
   }
 }

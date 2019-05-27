@@ -1,34 +1,24 @@
 {
   "name": "scribbletune",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "description": "Create music with JavaScript and Node.js!",
   "main": "./src/index.js",
   "scripts": {
-    "lint:eslint": "npx eslint ./src --color",
-    "lint:eslint:fix": "npm run lint:eslint -- --fix",
-    "lint": "npm run lint:eslint",
-    "pretest": "rm -rf coverage",
-    "test": "nyc tape --require babel-register tests/**/*.spec.js",
+    "test": "jest --coverage",
     "build": "npx webpack",
-    "nuke": "rm -rf node_modules; rm package-lock.json; npm i; npm run build",
-    "watch": "npx webpack -d --watch",
-    "start": "webpack-dev-server"
+    "watch": "npx webpack --watch",
+    "nuke": "rm -rf node_modules; rm package-lock.json; npm i; npm run build"
   },
-  "pre-commit": [
-    "build",
-    "test"
-  ],
   "dependencies": {
     "jsmidgen": "~0.1.4",
     "tonal": "^2.0.0"
   },
   "devDependencies": {
-    "babel-register": "^6.26.0",
-    "eslint": "^4.0.0",
-    "nyc": "^13.1.0",
-    "pre-commit": "^1.2.2",
+    "@types/jest": "^24.0.13",
+    "@types/node": "^12.0.2",
+    "jest": "^24.8.0",
     "prettier": "^1.17.1",
-    "tape": "^4.9.0",
+    "ts-jest": "^24.0.2",
     "ts-loader": "^6.0.1",
     "tslint": "^5.16.0",
     "tslint-config-prettier": "^1.18.0",
@@ -37,8 +27,7 @@
     "tslint-plugin-prettier": "^2.0.1",
     "typescript": "^3.4.5",
     "webpack": "^4.17.2",
-    "webpack-cli": "^3.1.0",
-    "webpack-dev-server": ">=3.1.11"
+    "webpack-cli": "^3.1.0"
   },
   "repository": {
     "type": "git",

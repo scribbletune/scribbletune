@@ -1,4 +1,4 @@
-import { getScale } from '../scale';
+import { getScale } from './scale';
 
 /**
  * Get the chords that go with a given scale/mode

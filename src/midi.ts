@@ -1,5 +1,5 @@
 import fs from 'fs';
-const jsmidgen = require('jsmidgen');
+import * as jsmidgen from 'jsmidgen';
 
 /**
  * Take an array of note objects to generate a MIDI file in the same location as this method is called
@@ -27,12 +27,12 @@ export const midi = (
 };
 
 function createFileFromNotes(notes: NoteObject[]) {
-  let file = new jsmidgen.File();
-  let track = new jsmidgen.Track();
+  const file = new jsmidgen.File();
+  const track = new jsmidgen.Track();
   file.addTrack(track);
 
   for (const noteObj of notes) {
-    let level = noteObj.level || 127;
+    const level = noteObj.level || 127;
     // While writing chords (multiple notes per tick)
     // only the first noteOn (or noteOff) needs the complete arity of the function call
     // subsequent calls need only the first 2 args (channel and note)

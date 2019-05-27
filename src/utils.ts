@@ -12,7 +12,7 @@ export const isNote = (str: string): boolean =>
  * @param  {String} str
  * @return {Array}
  */
-export const expandStr = (str: string): [] => {
+export const expandStr = (str: string): any => {
   str = JSON.stringify(str.split(''));
   str = str.replace(/,"\[",/g, ', [');
   str = str.replace(/"\[",/g, '[');
@@ -25,10 +25,10 @@ export const expandStr = (str: string): [] => {
  * @param  {Array} arr
  * @return {Array}
  */
-export const shuffle = (arr: string[]): string[] => {
-  let lastIndex: number = arr.length - 1;
+export const shuffle = (arr: any[]): string[] => {
+  const lastIndex: number = arr.length - 1;
   arr.forEach((el, idx: number) => {
-    let rnd = Math.round(Math.random() * lastIndex);
+    const rnd = Math.round(Math.random() * lastIndex);
     arr[idx] = arr[rnd];
     arr[rnd] = el;
   });
@@ -42,8 +42,7 @@ export const shuffle = (arr: string[]): string[] => {
  * @param {Number} maxLevel A number between not more than 127
  * @return {Array}  Example output [63, 90, 110, 127, 110, 90, 63, 0, 63, 90, 110, 127, 110, 90, 63, 0]
  */
-export const sizzleMap = (maxLevel: number): number[] => {
-  maxLevel = maxLevel || 127;
+export const sizzleMap = (maxLevel: number = 127): number[] => {
   const pi = Math.PI;
   const piArr: number[] = [
     pi / 6,

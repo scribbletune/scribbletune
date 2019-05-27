@@ -1,17 +1,6 @@
 import { chord, Chord, Note, transpose } from 'tonal';
 const chordNames: string[] = Chord.names();
-import { isNote } from '../utils';
-
-// Since chords like C5 can also qualify for the note C5,
-// Scribbletune treats such chords with the `th` appended to it
-const numericalChords: NVP<string> = {
-  '4th': '4',
-  '5th': '5',
-  '7th': '7',
-  '9th': '9',
-  '11th': '11',
-  '13th': '13',
-};
+import { isNote } from './utils';
 
 /**
  * Derive a chord from the given string. Exposed as simply `chord` in Scribbletune
@@ -39,6 +28,17 @@ export const getChord = (
     root = root.replace(/\d/, '');
   }
 
+  // Since chords like C5 can also qualify for the note C5,
+  // Scribbletune treats such chords with the `th` appended to it
+  const numericalChords: NVP<string> = {
+    '4th': '4',
+    '5th': '5',
+    '7th': '7',
+    '9th': '9',
+    '11th': '11',
+    '13th': '13',
+  };
+
   if (numericalChords[chordName]) {
     chordName = numericalChords[chordName];
   }
@@ -48,7 +48,7 @@ export const getChord = (
   }
 
   return (chord(chordName) || []).map(el => {
-    let note = transpose.bind(null, root + (spl[1] || 4))(el);
+    const note = transpose.bind(null, root + (spl[1] || 4))(el);
     return Note.simplify(note as string);
   });
 };
@@ -58,6 +58,17 @@ export const getChord = (
  * @return {Array}     [example output: ['maj', 'min', 'dim']]
  */
 export const chords = (): string[] => {
+  // Since chords like C5 can also qualify for the note C5,
+  // Scribbletune treats such chords with the `th` appended to it
+  const numericalChords: NVP<string> = {
+    '4': '4th',
+    '5': '5th',
+    '7': '7th',
+    '9': '9th',
+    '11': '11th',
+    '13': '13th',
+  };
+
   return chordNames.map(c => {
     if (/^\d+$/.test(c) && numericalChords[c]) {
       return numericalChords[c];

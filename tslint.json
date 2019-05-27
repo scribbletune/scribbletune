@@ -21,7 +21,8 @@
     "prettier": true,
     "no-default-export": false,
     "no-debugger": false,
-    "quotemark": [true, "single", "double"]
+    "quotemark": [true, "single", "double"],
+    "array-type": [true, "array"]
   },
   "rulesDirectory": ["tslint-plugin-prettier"]
 }

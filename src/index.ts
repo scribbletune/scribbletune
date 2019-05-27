@@ -6,16 +6,16 @@ import { arp } from './arp';
 import { midi } from './midi';
 import { Session } from './session';
 
-module.exports = {
-  scale: getScale,
-  mode: getScale,
+export {
+  getScale as scale,
+  getScale as mode,
   scales,
-  modes: scales,
-  chord: getChord,
+  scales as modes,
+  getChord as chord,
   chords,
   clip,
-  progression: get,
+  get as progression,
   arp,
   midi,
-  session: typeof window !== 'undefined' && Session,
+  Session as session,
 };
