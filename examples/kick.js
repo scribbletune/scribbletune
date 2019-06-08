@@ -1,7 +1,6 @@
 'use strict';
 
-const scribble = require('../lib/');
-console.log(scribble);
+const scribble = require('../');
 let clip = scribble.clip({
   notes: 'c4',
   pattern: 'x'.repeat(4),

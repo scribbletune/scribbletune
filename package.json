@@ -2,7 +2,7 @@
   "name": "scribbletune",
   "version": "3.0.0",
   "description": "Create music with JavaScript and Node.js!",
-  "main": "./src/index.js",
+  "main": "./index.js",
   "scripts": {
     "test": "jest --coverage",
     "build": "npx webpack",

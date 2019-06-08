@@ -9,7 +9,7 @@ import * as jsmidgen from 'jsmidgen';
  */
 export const midi = (
   notes: NoteObject[],
-  fileName?: string | null
+  fileName: string | null = 'music.mid'
 ): string | undefined => {
   const file = createFileFromNotes(notes);
   const bytes = file.toBytes();
@@ -18,11 +18,11 @@ export const midi = (
     return bytes;
   }
 
-  if (fileName && !fileName.endsWith('.mid')) {
+  if (!fileName.endsWith('.mid')) {
     fileName = fileName + '.mid';
   }
 
-  fs.writeFileSync(fileName || 'music.mid', bytes, 'binary');
+  fs.writeFileSync(fileName, bytes, 'binary');
   console.log(`MIDI file generated: ${fileName}.`);
 };
 

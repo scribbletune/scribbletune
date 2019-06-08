@@ -45,12 +45,7 @@ const hdr: NVP<number> = {
   '8n': 64,
   '16n': 32,
 };
-/*
-params = {
-	notes: 'c4',
-	pattern: 'x[x[xx]x]x'
-}
- */
+
 export const clip = (params: ClipParams) => {
   params = { ...getDefaultParams(), ...(params || {}) };
 

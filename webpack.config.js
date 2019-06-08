@@ -1,20 +1,31 @@
 const path = require('path');
 
+const getOutput = () => {
+  const output = {
+    filename: 'index.js',
+    path: __dirname,
+    libraryTarget: 'commonjs',
+  };
+
+  if (process.env.TARGET === 'browser') {
+    output.filename = 'scribbletune.js';
+    output.path = path.resolve(__dirname, './dist');
+    output.library = 'scribble';
+    output.libraryTarget = 'umd';
+  }
+
+  return output;
+};
+
 module.exports = {
   mode: 'production',
   entry: {
     main: './src/index.ts',
   },
 
-  output: {
-    filename: 'scribbletune.js',
-    path: path.resolve(__dirname, './dist'),
-    library: 'scribble',
-    libraryTarget: 'umd',
-  },
+  output: getOutput(),
 
-  devtool: 'source-map',
-  // plugins: [],
+  devtool: process.env.TARGET === 'browser' ? 'source-map' : '',
 
   module: {
     rules: [
@@ -31,7 +42,10 @@ module.exports = {
     extensions: ['.ts', '.js', '.json'],
   },
 
-  node: {
-    fs: 'empty',
+  // node: {
+  //   fs: 'empty',
+  // },
+  externals: {
+    fs: 'fs',
   },
 };
