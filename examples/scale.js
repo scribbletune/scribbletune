@@ -1,10 +1,10 @@
 'use strict';
 
-const scribble = require('../src/');
+const scribble = require('../');
 
 let clip = scribble.clip({
-	notes: scribble.scale('C4 major'),
-	pattern: 'x'.repeat(8)
+  notes: scribble.scale('C4 minor'),
+  pattern: 'x'.repeat(8),
 });
 
 scribble.midi(clip);

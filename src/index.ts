@@ -1,7 +1,7 @@
 import { getScale, scales } from './scale';
 import { getChord, chords } from './chord';
 import { clip } from './clip';
-import { get } from './progression';
+import { getChordDegrees, getChordsByProgression } from './progression';
 import { arp } from './arp';
 import { midi } from './midi';
 import { Session } from './session';
@@ -14,7 +14,8 @@ export {
   getChord as chord,
   chords,
   clip,
-  get as progression,
+  getChordDegrees,
+  getChordsByProgression,
   arp,
   midi,
   Session as session,

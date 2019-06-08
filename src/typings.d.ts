@@ -1,5 +1,5 @@
 type NoteObject = {
-  note: string[] | string;
+  note: string[] | string | null;
   length: number;
   level: number;
 };

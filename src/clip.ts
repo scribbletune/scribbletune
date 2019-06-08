@@ -119,7 +119,7 @@ export const clip = (params: ClipParams) => {
   const recursivelyApplyPatternToNotes = (arr: string[], length: number) => {
     arr.forEach(el => {
       if (typeof el === 'string') {
-        let note: string | string[] = [];
+        let note: string | string[] | null = null;
         // If the note is to be `on`, then it needs to be an array
         if (el === 'x') {
           note = params.notes[step];

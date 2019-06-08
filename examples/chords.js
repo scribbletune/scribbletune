@@ -1,10 +1,10 @@
 'use strict';
 
-const scribble = require('../src/');
+const scribble = require('../');
 let clip = scribble.clip({
-	notes: 'F#m C#m DM Bm EM AM DM C#m AM',
-	pattern: 'x_x_x_--'.repeat(8),
-	subdiv: '16n'
+  notes: 'F#m C#m DM Bm EM AM DM C#m AM',
+  pattern: 'x_x_x_--'.repeat(8),
+  subdiv: '16n',
 });
 
 scribble.midi(clip);

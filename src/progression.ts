@@ -7,7 +7,7 @@ import { getScale } from './scale';
  * @param  {String} mode e.g. major
  * @return {Array} e.g.['I', 'ii', 'iii', 'IV', 'V', 'vi', 'vii°']
  */
-export const get = (mode: string) => {
+export const getChordDegrees = (mode: string) => {
   const theRomans: NVP<string[]> = {
     ionian: ['I', 'ii', 'iii', 'IV', 'V', 'vi', 'vii°'],
     dorian: ['i', 'ii', 'III', 'IV', 'v', 'vi°', 'VII'],
@@ -69,7 +69,7 @@ const getChordName = (roman: string): string => {
  * @param  {String} chordDegress e.g. 'I IV V IV'
  * @return {String} e.g. 'CM FM GM FM'
  */
-export const getChords = (
+export const getChordsByProgression = (
   noteOctaveScale: string,
   chordDegress: string
 ): string => {
