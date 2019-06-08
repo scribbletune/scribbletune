@@ -18,5 +18,5 @@ export {
   getChordsByProgression,
   arp,
   midi,
-  Session as session,
+  Session,
 };

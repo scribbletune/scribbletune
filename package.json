@@ -5,7 +5,9 @@
   "main": "./index.js",
   "scripts": {
     "test": "jest --coverage",
-    "build": "npx webpack",
+    "build:node": "npx webpack",
+    "build:browser": "TARGET=browser npx webpack",
+    "build": "npm t && npm run build:node && npm run build:browser",
     "watch": "npx webpack --watch",
     "nuke": "rm -rf node_modules; rm package-lock.json; npm i; npm run build"
   },
