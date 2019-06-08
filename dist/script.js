@@ -9,12 +9,16 @@
 
   // Use individual sound samples to trigger patterns on them
   scribble
-    .clip({ sample: 'https://scribbletune.com/sounds/kick.wav', pattern: 'x' })
+    .clip({
+      sample: 'https://scribbletune.com/sounds/kick.wav',
+      pattern: 'x',
+    })
     .start();
   scribble
     .clip({
       sample: 'https://scribbletune.com/sounds/bass.wav',
       pattern: '[-x]',
+      volume: 0.7,
     })
     .start();
   scribble
@@ -57,7 +61,6 @@
       samples: piano,
       pattern: 'x-[xx]-',
       notes: [...notes, ...notes.reverse()],
-      volume: -14,
     })
     .start();
   scribble
@@ -65,8 +68,8 @@
       samples: piano,
       pattern: 'x-[xx]-',
       notes: [...notes, ...notes.reverse()],
-      volume: -14,
       effects: ['PingPongDelay'],
+      volume: 0.5,
     })
     .start();
 

@@ -124,7 +124,11 @@ module.exports = (params: Params) => {
     effects = params.effects.map((eff: any) => new Tone[eff]());
   }
 
-  effects.push(new Tone.PanVol(params.pan || 0, params.volume || -12));
+  effects.push(
+    new Tone.Gain({
+      gain: params.volume || 1,
+    })
+  );
 
   if (params.sample) {
     // This implies, the clip is probably being hand created by the user with a audio sample
