@@ -2,21 +2,30 @@
 
 const scribble = require('../');
 
-// Get alternate notes from the C Phrygian mode
-var notes = scribble.scale('C2 phrygian').filter((x, i) => i % 2 === 0);
-
-// Generate 4 clips (one for each note) and concat them together
-var clip = notes.reduce((accumulator, note) => {
-  return accumulator.concat(
-    scribble.clip({
-      notes: [note],
-      pattern: '--xx-xxx--xx-xxx--xx-xxx-xx---x_', // Each note will use this pattern
-      subdiv: '16n', // use a 16th note as the default duration of a note
-    })
-  );
-}, []);
-
+const pattern = '[-xxx]'.repeat(16);
 // Export a midi file from this clip
-scribble.midi(clip);
+scribble.midi(
+  scribble
+    .clip({
+      notes: 'A2',
+      pattern,
+    })
+    .concat(
+      scribble.clip({
+        notes: 'E2',
+        pattern,
+      }),
+
+      scribble.clip({
+        notes: 'A2',
+        pattern,
+      }),
+
+      scribble.clip({
+        notes: 'F2',
+        pattern,
+      })
+    )
+);
 // This will create a file called music.mid in the same location as you run this script
 // Import this file in a music production software and play it with a bass synth
