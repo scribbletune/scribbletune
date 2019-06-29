@@ -18,7 +18,6 @@
     .clip({
       sample: 'https://scribbletune.com/sounds/bass.wav',
       pattern: '[-x]',
-      volume: 0.7,
     })
     .start();
   scribble

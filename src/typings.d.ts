@@ -1,14 +1,32 @@
-type NoteObject = {
+interface NoteObject {
   note: string[] | string | null;
   length: number;
   level: number;
-};
+}
 
-type NVP<T> = {
+interface NVP<T> {
   [key: string]: T;
-};
+}
 
-type Params = {
+interface ClipParams {
+  notes: string | (string | string[])[];
+  pattern: string;
+  shuffle?: boolean;
+  sizzle?: boolean;
+  arpegiate?: boolean;
+  subdiv?: string;
+  synth?: any;
+  instrument?: any;
+  sample?: any;
+  samples?: any;
+  sampler?: any;
+  player?: any;
+  dur?: string;
+  effects?: string[];
+  volume?: number;
+}
+
+interface ChannelParams {
   idx?: number;
   player?: any;
   instrument?: any;
@@ -16,15 +34,14 @@ type Params = {
   synth?: any;
   sampler?: any;
   samples?: any;
-  pattern: string;
-  notes: string[];
-  dur?: string;
   subdiv?: string;
   effects?: string[];
   pan?: number;
   volume?: number;
   clips?: any;
-};
+}
+
+type SeqFn = (time: string, el: string) => void;
 
 declare var Tone: any;
 declare var require: NodeRequire;

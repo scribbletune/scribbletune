@@ -8,7 +8,7 @@ const defaultDur = '8n';
  * Take a Tone.js Player and return a function that can be used
  * as the callback in Tone.Sequence https://tonejs.github.io/docs/r12/Sequence
  */
-const getPlayerSeqFn = (player: any) => {
+const getPlayerSeqFn = (player: any): SeqFn => {
   return (time: string, el: string) => {
     if (el === 'x') {
       player.start(time);
@@ -22,7 +22,7 @@ const getPlayerSeqFn = (player: any) => {
  * Take an object literal which has a Tone.js instrument and return a function that can be used
  * as the callback in Tone.Sequence https://tonejs.github.io/docs/r12/Sequence
  */
-const getInstrSeqFn = (params: Params) => {
+const getInstrSeqFn = (params: ClipParams): SeqFn => {
   let counter = 0;
   return (time: string, el: string) => {
     if (el === 'x' && params.notes[counter]) {
@@ -45,7 +45,7 @@ const getInstrSeqFn = (params: Params) => {
  * Take an object literal which has a Tone.js instrument and return a function that can be used
  * as the callback in Tone.Sequence https://tonejs.github.io/docs/r12/Sequence
  */
-const getMonoInstrSeqFn = (params: Params) => {
+const getMonoInstrSeqFn = (params: ClipParams): SeqFn => {
   let counter = 0;
   return (time: string, el: string) => {
     if (el === 'x' && params.notes[counter]) {
@@ -71,7 +71,7 @@ const getMonoInstrSeqFn = (params: Params) => {
  * Take an object literal which has a Tone.js sampler and return a function that can be used
  * as the callback in Tone.Sequence https://tonejs.github.io/docs/r12/Sequence
  */
-const getSamplerSeqFn = (params: Params) => {
+const getSamplerSeqFn = (params: ClipParams) => {
   let counter = 0;
   return (time: string, el: string) => {
     if (el === 'x' && params.notes[counter]) {
@@ -94,7 +94,7 @@ const getSamplerSeqFn = (params: Params) => {
  * Take a object literal that may have a Tone.js player OR instrument
  * or simply a sample or synth with a pattern and return a Tone.js sequence
  */
-module.exports = (params: Params) => {
+module.exports = (params: ClipParams) => {
   if (!params.pattern) {
     throw new Error('No pattern provided!');
   }
@@ -126,7 +126,7 @@ module.exports = (params: Params) => {
 
   effects.push(
     new Tone.Gain({
-      gain: params.volume || 1,
+      gain: params.volume || 0.7,
     })
   );
 

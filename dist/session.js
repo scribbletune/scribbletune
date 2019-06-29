@@ -1,32 +1,50 @@
 (function() {
-  console.log(scribble);
   var session = new scribble.Session();
 
-  var channel1 = session.createChannel({
+  session.createChannel({
     sample: 'https://scribbletune.com/sounds/ch.wav',
+    volume: 1,
     clips: [{ pattern: '[xx]' }, { pattern: 'x' }, { pattern: '[-x]' }],
   });
 
-  var channel2 = session.createChannel({
+  session.createChannel({
     sample: 'https://scribbletune.com/sounds/bass.wav',
     clips: [
       { pattern: '[--xx]' },
-      { pattern: 'x', effects: ['PingPongDelay'] },
-      { pattern: '[xx]' },
+      { pattern: '[-xxx]' },
+      { pattern: '[-x][--xx][-x][-xxx]' },
     ],
+    volume: 0.4,
   });
 
-  var channel3 = session.createChannel({
-    synth: 'PolySynth',
+  session.createChannel({
+    sample: 'https://scribbletune.com/sounds/kick.wav',
+    clips: [{ pattern: 'x' }, { pattern: 'x-' }, { pattern: 'x' }],
+  });
+
+  session.createChannel({
+    sample: 'https://scribbletune.com/sounds/snare.wav',
     clips: [
-      { pattern: '[--xx]', notes: 'C4 Eb4' },
-      { pattern: '[-x]', notes: 'Eb4 G4' },
-      { pattern: '[xx]', notes: 'G4 Bb4' },
+      { pattern: '-x-x-x-[xx]' },
+      { pattern: '-x[-x]' },
+      { pattern: '-x-[xxx]' },
     ],
-    volume: -24,
   });
 
-  var channel4 = session.createChannel({
+  var theChords = scribble.getChordsByProgression(
+    'C4 major',
+    'i iv i iv i v i II'
+  );
+
+  var notesArr = scribble.arp({
+    chords: theChords,
+    count: 4, // you can set any number from 2 to 8
+    // The default value of order is 01234567 as count is 8 by default
+    // but here we set count to 4 hence we are only using the first 4 indices to set a order
+    order: '1032',
+  });
+
+  session.createChannel({
     samples: {
       C3: 'https://scribbletune.com/sounds/piano/piano48.wav',
       'C#3': 'https://scribbletune.com/sounds/piano/piano49.wav',
@@ -44,14 +62,13 @@
     },
     clips: [
       {
-        pattern: 'xx',
-        notes: scribble.scale('C3 minor').filter((n, i) => i % 2 === 0),
+        pattern: '[xx]',
+        notes: notesArr,
       },
-      { pattern: '[-x]', notes: 'C3 C4' },
-      { pattern: '[xx]', notes: 'G3 C4' },
+      { pattern: '[xx]', notes: scribble.arp('CM FM CM GM') },
+      { pattern: '[xxxx]', notes: notesArr },
     ],
-    effects: ['Freeverb', 'PingPongDelay'],
-    volume: -18,
+    volume: 0.2,
   });
 
   document.querySelectorAll('.btn').forEach(function(el, idx) {

@@ -23,7 +23,10 @@ const getNextPos = (): number | string => {
  *
  * API:
  * clips -> Get all clips for this channel
- * addClip ->
+ * addClip -> Add a new clip to the channel
+ * startClip -> Start a clip at the provided index
+ * stopClip -> Stop a clip at the provided index
+ * activeClipIdx -> Get the clip that is currently playing
  */
 export class Channel {
   idx: number;
@@ -33,21 +36,21 @@ export class Channel {
   instrument: any;
   sampler: any;
 
-  constructor(params: Params) {
+  constructor(params: ChannelParams) {
     (this.idx = params.idx as number), (this.activePatternIdx = -1);
     this.channelClips = [];
 
     if (params.sample) {
       this.player = new Tone.Player(params.sample);
-      this.player.toMaster();
+      // this.player.toMaster();
     }
     if (params.synth) {
       this.instrument = new Tone[params.synth]();
-      this.instrument.toMaster();
+      // this.instrument.toMaster();
     }
     if (params.samples) {
       this.sampler = new Tone.Sampler(params.samples);
-      this.sampler.toMaster();
+      // this.sampler.toMaster();
     }
 
     // Filter out unrequired params and create clip params object

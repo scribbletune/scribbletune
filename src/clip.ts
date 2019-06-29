@@ -4,21 +4,6 @@ import { getChord } from './chord';
 /* tslint:disable:no-var-requires */
 const browserClip = typeof window !== 'undefined' && require('./browserClip');
 
-type ClipParams = {
-  notes: string | (string | string[])[];
-  pattern: string;
-  shuffle?: boolean;
-  sizzle?: boolean;
-  arpegiate?: boolean;
-  subdiv?: string;
-  synth?: any;
-  instrument?: any;
-  sample?: any;
-  samples?: any;
-  sampler?: any;
-  player?: any;
-};
-
 /**
  * Get defauly params for a clip, such as root note, pattern etc
  * @return {Object}
