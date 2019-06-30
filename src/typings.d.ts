@@ -12,9 +12,11 @@ interface ClipParams {
   notes: string | (string | string[])[];
   pattern: string;
   shuffle?: boolean;
-  sizzle?: boolean;
   arpegiate?: boolean;
   subdiv?: string;
+  amp: number;
+  sizzle: boolean | 'sin' | 'cos' | 'rampUp' | 'rampDown';
+  sizzleReps: number;
   synth?: any;
   instrument?: any;
   sample?: any;

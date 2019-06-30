@@ -10,7 +10,7 @@
     "build": "npm t && npm run build:node && npm run build:browser",
     "watch:browser": "TARGET=browser npx webpack --watch",
     "watch:node": "npx webpack --watch",
-    "nuke": "rm -rf node_modules; rm package-lock.json; npm i; npm run build"
+    "rebuild": "rm -rf node_modules; rm package-lock.json; npm i; npm run build"
   },
   "dependencies": {
     "jsmidgen": "~0.1.4",

@@ -13,8 +13,10 @@ const getDefaultParams = (): ClipParams => ({
   pattern: 'x',
   shuffle: false,
   sizzle: false,
+  sizzleReps: 1,
   arpegiate: false,
   subdiv: '4n',
+  amp: 100,
 });
 
 /**
@@ -136,5 +138,48 @@ export const clip = (params: ClipParams) => {
     expandStr(params.pattern),
     hdr[params.subdiv as string] || hdr['4n']
   );
+
+  if (params.sizzle) {
+    const volArr = [];
+    const style = params.sizzle === true ? 'sin' : params.sizzle;
+    const beats = clipNotes.length;
+    const stepLevel = params.amp / (beats / params.sizzleReps);
+    if (style === 'sin' || style === 'cos') {
+      for (let i = 0; i < beats; i++) {
+        const level =
+          Math[style]((i * Math.PI) / (beats / params.sizzleReps)) * params.amp;
+        volArr.push(Math.round(Math.abs(level)));
+      }
+    }
+
+    if (style === 'rampUp') {
+      let level = 0;
+      for (let i = 0; i < beats; i++) {
+        if (i % (beats / params.sizzleReps) === 0) {
+          level = 0;
+        } else {
+          level = level + stepLevel;
+        }
+        volArr.push(Math.round(Math.abs(level)));
+      }
+    }
+
+    if (style === 'rampDown') {
+      let level = params.amp;
+      for (let i = 0; i < beats; i++) {
+        if (i % (beats / params.sizzleReps) === 0) {
+          level = params.amp;
+        } else {
+          level = level - stepLevel;
+        }
+        volArr.push(Math.round(Math.abs(level)));
+      }
+    }
+
+    for (let i = 0; i < volArr.length; i++) {
+      clipNotes[i].level = volArr[i] ? volArr[i] : 1;
+    }
+  }
+
   return clipNotes;
 };

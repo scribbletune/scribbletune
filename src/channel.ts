@@ -84,16 +84,12 @@ export class Channel {
   addClip(clipParams: any, idx?: number) {
     idx = idx || this.channelClips.length;
     if (clipParams.pattern) {
-      this.channelClips[idx as number] = clip(
-        Object.assign(
-          {
-            player: this.player, // will be ignored if undefined
-            instrument: this.instrument, // will be ignored if undefined
-            sampler: this.sampler, // will be ignored if undefined
-          },
-          clipParams
-        )
-      );
+      this.channelClips[idx as number] = clip({
+        player: this.player, // will be ignored if undefined
+        instrument: this.instrument, // will be ignored if undefined
+        sampler: this.sampler, // will be ignored if undefined
+        ...clipParams,
+      });
     } else {
       // Allow creation of empty clips
       this.channelClips[idx as number] = null;
