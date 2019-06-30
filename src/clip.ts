@@ -143,6 +143,7 @@ export const clip = (params: ClipParams) => {
     hdr[params.subdiv as string] || hdr['4n']
   );
 
+  // Many thanks to @R1G for the following functionality
   if (params.sizzle) {
     const volArr = [];
     const style: SizzleStyle = params.sizzle === true ? 'sin' : params.sizzle;
