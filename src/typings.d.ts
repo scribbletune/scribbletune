@@ -8,15 +8,17 @@ interface NVP<T> {
   [key: string]: T;
 }
 
+type SizzleStyle = 'sin' | 'cos' | 'rampUp' | 'rampDown';
+
 interface ClipParams {
   notes: string | (string | string[])[];
   pattern: string;
   shuffle?: boolean;
   arpegiate?: boolean;
   subdiv?: string;
-  amp: number;
-  sizzle: boolean | 'sin' | 'cos' | 'rampUp' | 'rampDown';
-  sizzleReps: number;
+  amp?: number;
+  sizzle?: boolean | SizzleStyle;
+  sizzleReps?: number;
   synth?: any;
   instrument?: any;
   sample?: any;
@@ -28,18 +30,8 @@ interface ClipParams {
   volume?: number;
 }
 
-interface ChannelParams {
+interface ChannelParams extends ClipParams {
   idx?: number;
-  player?: any;
-  instrument?: any;
-  sample?: any;
-  synth?: any;
-  sampler?: any;
-  samples?: any;
-  subdiv?: string;
-  effects?: string[];
-  pan?: number;
-  volume?: number;
   clips?: any;
 }
 

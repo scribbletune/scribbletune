@@ -147,4 +147,90 @@ describe('../src/clip', () => {
     });
     expect(c[0].length).toBe(512);
   });
+
+  it('applies sin styled sizzle if true', () => {
+    const c = clip({
+      notes: 'c4',
+      pattern: 'xxxx',
+      sizzle: true,
+    });
+    expect(c[0].level).toBe(1);
+    expect(c[1].level).toBe(71);
+    expect(c[2].level).toBe(100);
+    expect(c[3].level).toBe(71);
+  });
+
+  it('applies sin styled sizzle if sin is specified', () => {
+    const c = clip({
+      notes: 'c4',
+      pattern: 'x'.repeat(16),
+      sizzle: 'sin',
+    });
+    expect(c[0].level).toBe(1);
+    expect(c[1].level).toBe(20);
+    expect(c[2].level).toBe(38);
+    expect(c[3].level).toBe(56);
+  });
+
+  it('repeats a sin styled sizzle if sin is specified with reps', () => {
+    const c = clip({
+      notes: 'c4',
+      pattern: 'x'.repeat(16),
+      sizzle: 'sin',
+      sizzleReps: 4,
+    });
+    expect(c[0].level).toBe(1);
+    expect(c[1].level).toBe(71);
+    expect(c[2].level).toBe(100);
+    expect(c[3].level).toBe(71);
+  });
+
+  it('applies cos styled sizzle if cos is specified', () => {
+    const c = clip({
+      notes: 'c4',
+      pattern: 'x'.repeat(16),
+      sizzle: 'cos',
+    });
+    expect(c[0].level).toBe(100);
+    expect(c[1].level).toBe(98);
+    expect(c[2].level).toBe(92);
+    expect(c[3].level).toBe(83);
+  });
+
+  it('applies rampUp styled sizzle if rampUp is specified', () => {
+    const c = clip({
+      notes: 'c4',
+      pattern: 'x'.repeat(16),
+      sizzle: 'rampUp',
+    });
+    const volArr = c.map((c: any) => c.level);
+    expect(volArr.join(',')).toBe(
+      '1,6,13,19,25,31,38,44,50,56,63,69,75,81,88,94'
+    );
+  });
+
+  it('applies rampUp styled sizzle if rampUp is specified', () => {
+    const c = clip({
+      notes: 'c4',
+      pattern: 'x'.repeat(16),
+      sizzle: 'rampDown',
+    });
+    const volArr = c.map((c: any) => c.level);
+    expect(volArr.join(',')).toBe(
+      '100,94,88,81,75,69,63,56,50,44,38,31,25,19,13,6'
+    );
+  });
+
+  it('adjusts sizzle according to custome amplitude', () => {
+    const c = clip({
+      notes: 'c4',
+      pattern: 'x'.repeat(16),
+      sizzle: 'rampDown',
+      amp: 127,
+    });
+    const volArr = c.map((c: any) => c.level);
+    expect(volArr.join(',')).toBe(
+      '127,119,111,103,95,87,79,71,64,56,48,40,32,24,16,8'
+    );
+  });
 });

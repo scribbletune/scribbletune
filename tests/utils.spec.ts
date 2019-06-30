@@ -1,6 +1,6 @@
 import { shuffle, expandStr, sizzleMap, isNote } from '../src/utils';
 
-describe('../src/chord', () => {
+describe('../src/utils', () => {
   it('shuffles as expected', () => {
     const shuffledPattern = shuffle(['x', '_', '-', '-']);
     expect(shuffledPattern[0] === 'x' && shuffledPattern[1] === '_').toBe(

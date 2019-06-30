@@ -103,23 +103,26 @@ export const clip = (params: ClipParams) => {
    * If the element of this array is also a (pattern) array, then divide the length by
    * the length of the inner array and then call the recursive function on that inner array
    */
-  const recursivelyApplyPatternToNotes = (arr: string[], length: number) => {
-    arr.forEach(el => {
-      if (typeof el === 'string') {
+  const recursivelyApplyPatternToNotes = (
+    patternArr: string[],
+    length: number
+  ) => {
+    patternArr.forEach(char => {
+      if (typeof char === 'string') {
         let note: string | string[] | null = null;
         // If the note is to be `on`, then it needs to be an array
-        if (el === 'x') {
+        if (char === 'x') {
           note = params.notes[step];
           step++;
         }
 
         // Push only note on OR off messages to the clip notes array
-        if (el === 'x' || el === '-') {
+        if (char === 'x' || char === '-') {
           clipNotes.push({ note, length, level: 127 });
         }
 
         // In case of an underscore, simply extend the previous note's length
-        if (el === '_' && clipNotes.length) {
+        if (char === '_' && clipNotes.length) {
           clipNotes[clipNotes.length - 1].length += length;
         }
 
@@ -128,8 +131,8 @@ export const clip = (params: ClipParams) => {
           step = 0;
         }
       }
-      if (Array.isArray(el)) {
-        recursivelyApplyPatternToNotes(el, length / el.length);
+      if (Array.isArray(char)) {
+        recursivelyApplyPatternToNotes(char, length / char.length);
       }
     });
   };
@@ -141,13 +144,14 @@ export const clip = (params: ClipParams) => {
 
   if (params.sizzle) {
     const volArr = [];
-    const style = params.sizzle === true ? 'sin' : params.sizzle;
-    const beats = clipNotes.length;
-    const stepLevel = params.amp / (beats / params.sizzleReps);
+    const style: SizzleStyle = params.sizzle === true ? 'sin' : params.sizzle;
+    const beats: number = clipNotes.length;
+    const amp: number = params.amp as number;
+    const sizzleReps = params.sizzleReps as number;
+    const stepLevel = amp / (beats / sizzleReps);
     if (style === 'sin' || style === 'cos') {
       for (let i = 0; i < beats; i++) {
-        const level =
-          Math[style]((i * Math.PI) / (beats / params.sizzleReps)) * params.amp;
+        const level = Math[style]((i * Math.PI) / (beats / sizzleReps)) * amp;
         volArr.push(Math.round(Math.abs(level)));
       }
     }
@@ -155,7 +159,7 @@ export const clip = (params: ClipParams) => {
     if (style === 'rampUp') {
       let level = 0;
       for (let i = 0; i < beats; i++) {
-        if (i % (beats / params.sizzleReps) === 0) {
+        if (i % (beats / sizzleReps) === 0) {
           level = 0;
         } else {
           level = level + stepLevel;
@@ -165,10 +169,10 @@ export const clip = (params: ClipParams) => {
     }
 
     if (style === 'rampDown') {
-      let level = params.amp;
+      let level = amp;
       for (let i = 0; i < beats; i++) {
-        if (i % (beats / params.sizzleReps) === 0) {
-          level = params.amp;
+        if (i % (beats / sizzleReps) === 0) {
+          level = amp;
         } else {
           level = level - stepLevel;
         }
