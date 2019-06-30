@@ -233,4 +233,69 @@ describe('../src/clip', () => {
       '127,119,111,103,95,87,79,71,64,56,48,40,32,24,16,8'
     );
   });
+
+  it('accepts an accent to affect volumes in a clip', () => {
+    const c = clip({
+      notes: 'c4',
+      pattern: 'xxxx',
+      accent: 'x--x',
+    });
+    const volArr = c.map((c: any) => c.level);
+    expect(volArr.join(',')).toBe('100,50,50,100');
+  });
+
+  it('allows accent volumes to be affected by a custom amplitude', () => {
+    const c = clip({
+      notes: 'c4',
+      pattern: 'xxxx',
+      accent: 'x--x',
+      amp: 127,
+    });
+    const volArr = c.map((c: any) => c.level);
+    expect(volArr.join(',')).toBe('127,50,50,127');
+  });
+
+  it('allows accent volumes to be affected by a custom lower accent', () => {
+    const c = clip({
+      notes: 'c4',
+      pattern: 'xxxx',
+      accent: 'x--x',
+      amp: 127,
+      accentLow: 23,
+    });
+    const volArr = c.map((c: any) => c.level);
+    expect(volArr.join(',')).toBe('127,23,23,127');
+  });
+
+  it('extends accents according to clip length', () => {
+    const c = clip({
+      notes: 'c4',
+      pattern: 'xxxxx',
+      accent: 'x--x',
+      amp: 127,
+      accentLow: 23,
+    });
+    const volArr = c.map((c: any) => c.level);
+    expect(volArr.join(',')).toBe('127,23,23,127,127');
+  });
+
+  it('throws an error in case of invalid accent', () => {
+    expect(function() {
+      clip({ notes: 'c4', pattern: 'x', accent: 'k' });
+    }).toThrow();
+    expect(function() {
+      clip({ notes: 'c4', pattern: 'x', accent: 'x_' });
+    }).toThrow();
+  });
+
+  it('sets an average of accent and sizzle if both are provided', () => {
+    const c = clip({
+      notes: 'c4',
+      pattern: 'xxxx',
+      accent: 'x--x',
+      sizzle: true,
+    });
+    const volArr = c.map((c: any) => c.level);
+    expect(volArr.join(',')).toBe('51,61,75,86');
+  });
 });

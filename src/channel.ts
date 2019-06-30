@@ -42,15 +42,12 @@ export class Channel {
 
     if (params.sample) {
       this.player = new Tone.Player(params.sample);
-      // this.player.toMaster();
     }
     if (params.synth) {
       this.instrument = new Tone[params.synth]();
-      // this.instrument.toMaster();
     }
     if (params.samples) {
       this.sampler = new Tone.Sampler(params.samples);
-      // this.sampler.toMaster();
     }
 
     // Filter out unrequired params and create clip params object

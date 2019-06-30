@@ -18,6 +18,8 @@ interface ClipParams {
   subdiv?: string;
   amp?: number;
   sizzle?: boolean | SizzleStyle;
+  accent?: string;
+  accentLow?: number;
   sizzleReps?: number;
   synth?: any;
   instrument?: any;

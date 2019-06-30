@@ -4,8 +4,8 @@ const scribble = require('../');
 let clip = scribble.clip({
   notes: 'c4',
   pattern: '[xxxx]'.repeat(4),
-  sizzle: 'sin',
-  sizzleReps: 4,
+  accent: 'x--x',
+  sizzle: true,
 });
 
 scribble.midi(clip);

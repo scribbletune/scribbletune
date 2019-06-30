@@ -17,6 +17,7 @@ const getDefaultParams = (): ClipParams => ({
   arpegiate: false,
   subdiv: '4n',
   amp: 100,
+  accentLow: 50,
 });
 
 /**
@@ -181,7 +182,35 @@ export const clip = (params: ClipParams) => {
     }
 
     for (let i = 0; i < volArr.length; i++) {
-      clipNotes[i].level = volArr[i] ? volArr[i] : 1;
+      clipNotes[i].level = volArr[i] ? volArr[i] : 1; // Cannot allow 0 value on level
+    }
+  }
+
+  if (params.accent) {
+    if (/[^x\-]/.test(params.accent)) {
+      throw new TypeError('Accent can only have x and - characters');
+    }
+
+    let a = 0;
+    for (const clipNote of clipNotes) {
+      let level =
+        params.accent[a] === 'x'
+          ? (params.amp as number)
+          : (params.accentLow as number);
+
+      if (params.sizzle) {
+        level = (clipNote.level + level) / 2;
+      }
+
+      clipNote.level = Math.round(level);
+
+      // Step to the next character in the accent
+      a = a + 1;
+
+      // Reset `a` so that it can loop over the accent
+      if (a === params.accent.length) {
+        a = 0;
+      }
     }
   }
 
