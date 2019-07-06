@@ -34,6 +34,12 @@ describe('../src/clip', () => {
     }).toThrow();
   });
 
+  it('accepts R to denote a note to be added randomly', () => {
+    expect(function() {
+      clip({ notes: ['C4'], pattern: 'xxRx' });
+    }).not.toThrow();
+  });
+
   it('accepts a string of notes', () => {
     const c = clip({
       notes: 'C4 D4 E4',

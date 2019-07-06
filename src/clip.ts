@@ -71,7 +71,7 @@ export const clip = (params: ClipParams) => {
     return el;
   });
 
-  if (/[^x\-_\[\]]/.test(params.pattern)) {
+  if (/[^x\-_\[\]R]/.test(params.pattern)) {
     throw new TypeError(
       `pattern can only comprise x - _ [ ], found ${params.pattern}`
     );
@@ -117,9 +117,18 @@ export const clip = (params: ClipParams) => {
           step++;
         }
 
+        if (char === 'R' && Math.round(Math.random())) {
+          note = params.notes[step];
+          step++;
+        }
+
         // Push only note on OR off messages to the clip notes array
-        if (char === 'x' || char === '-') {
-          clipNotes.push({ note, length, level: 127 });
+        if (char === 'x' || char === '-' || char === 'R') {
+          clipNotes.push({
+            note,
+            length,
+            level: char === 'R' ? (params.accentLow as number) : 127,
+          });
         }
 
         // In case of an underscore, simply extend the previous note's length
