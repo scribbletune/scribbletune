@@ -17,7 +17,7 @@ const getDefaultParams = (): ClipParams => ({
   arpegiate: false,
   subdiv: '4n',
   amp: 100,
-  accentLow: 50,
+  accentLow: 70,
 });
 
 /**
@@ -127,7 +127,10 @@ export const clip = (params: ClipParams) => {
           clipNotes.push({
             note,
             length,
-            level: char === 'R' ? (params.accentLow as number) : 127,
+            level:
+              char === 'R'
+                ? (params.accentLow as number)
+                : (params.amp as number),
           });
         }
 

@@ -247,7 +247,7 @@ describe('../src/clip', () => {
       accent: 'x--x',
     });
     const volArr = c.map((c: any) => c.level);
-    expect(volArr.join(',')).toBe('100,50,50,100');
+    expect(volArr.join(',')).toBe('100,70,70,100');
   });
 
   it('allows accent volumes to be affected by a custom amplitude', () => {
@@ -258,7 +258,7 @@ describe('../src/clip', () => {
       amp: 127,
     });
     const volArr = c.map((c: any) => c.level);
-    expect(volArr.join(',')).toBe('127,50,50,127');
+    expect(volArr.join(',')).toBe('127,70,70,127');
   });
 
   it('allows accent volumes to be affected by a custom lower accent', () => {
@@ -302,6 +302,6 @@ describe('../src/clip', () => {
       sizzle: true,
     });
     const volArr = c.map((c: any) => c.level);
-    expect(volArr.join(',')).toBe('51,61,75,86');
+    expect(volArr.join(',')).toBe('51,71,85,86');
   });
 });
