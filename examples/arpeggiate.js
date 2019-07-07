@@ -19,6 +19,7 @@ scribble.midi(
   'arp.mid'
 ); // This will create a file called arp.mid in the same location as you run this script
 
+// Generate a pad from the chords used
 scribble.midi(
   scribble.clip({
     notes: theChords,
@@ -27,3 +28,29 @@ scribble.midi(
   }),
   'pad.mid'
 ); // This will create a file called pad.mid in the same location as you run this script
+
+// Generate a melody to go along with the arp and the pad
+const getRandomPattern = function(count) {
+  let str = '';
+  for (let i = 0; i < (count || 8); i++) {
+    str += Math.round(Math.random()) ? 'x-' : '-x';
+  }
+
+  return str;
+};
+
+const ptn = getRandomPattern();
+const arpedNotes = scribble.arp({
+  chords: scribble.getChordsByProgression('G minor', 'i III'),
+  count: 4,
+  order: '0213',
+});
+
+scribble.midi(
+  scribble.clip({
+    notes: arpedNotes,
+    pattern: ptn,
+    subdiv: '16n',
+  }),
+  'melody.mid'
+);
