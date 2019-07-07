@@ -1,19 +1,22 @@
-<img width=2% src="https://scribbletune.com/images/scribbletune-logo.png"> SCRIBBLETUNE
-------------------------------------------------
+## <img width=2% src="https://scribbletune.com/images/scribbletune-logo.png"> SCRIBBLETUNE
+
 [![Build Status](https://travis-ci.com/scribbletune/scribbletune.svg?branch=master)](http://travis-ci.com/scribbletune/scribbletune)
 
-Use simple __JavaScript__ `Strings` and `Arrays` to generate rhythms and musical patterns. Directly use the names of scales or chords in your code to get arrays which you can mash up using Array methods in ways you hadn't imagined before! Create clips of musical ideas and **export MIDI files** which you can import in *Ableton Live, Reason, Garage Band* or any music creation software that accepts MIDI files. You can even use Scribbletune **in the browser** with Tone.js!
+Use simple **JavaScript** `Strings` and `Arrays` to generate rhythms and musical patterns. Directly use the names of scales or chords in your code to get arrays which you can mash up using Array methods in ways you hadn't imagined before! Create clips of musical ideas and **export MIDI files** which you can import in _Ableton Live, Reason, Garage Band_ or any music creation software that accepts MIDI files. You can even use Scribbletune **in the browser** with Tone.js!
 
 ### Install
 
 ```bash
 npm install scribbletune
 ```
+
 You can also use Scribbletune in the browser with a SCRIPT tag. Make sure to pull in Tone.js first however.
 
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/13.3.1/Tone.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/scribbletune/1.9.2/scribbletune.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/scribbletune/3.0.0/scribbletune.js"></script>
 ```
+
 ---
+
 Visit [scribbletune.com](https://scribbletune.com) for documentation, tutorials and examples!
