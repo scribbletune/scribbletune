@@ -21,6 +21,7 @@ interface ClipParams {
   accent?: string;
   accentLow?: number;
   sizzleReps?: number;
+  randomNotes?: null | string | (string | string[])[];
   synth?: any;
   instrument?: any;
   sample?: any;

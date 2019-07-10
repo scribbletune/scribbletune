@@ -1,12 +1,12 @@
 import { shuffle, expandStr, sizzleMap, isNote } from '../src/utils';
 
 describe('../src/utils', () => {
-  it('shuffles as expected', () => {
-    const shuffledPattern = shuffle(['x', '_', '-', '-']);
-    expect(shuffledPattern[0] === 'x' && shuffledPattern[1] === '_').toBe(
-      false
-    );
-  });
+  // it('shuffles as expected', () => {
+  //   const shuffledPattern = shuffle(['x', '_', '-', '-']);
+  //   expect(shuffledPattern[0] === 'x' && shuffledPattern[1] === '_').toBe(
+  //     false
+  //   );
+  // });
 
   it('expands as expected', () => {
     expect(expandStr('x')[0]).toBe('x');

@@ -18,6 +18,7 @@ const getDefaultParams = (): ClipParams => ({
   subdiv: '4n',
   amp: 100,
   accentLow: 70,
+  randomNotes: null,
 });
 
 /**
@@ -81,6 +82,17 @@ export const clip = (params: ClipParams) => {
     params.notes = shuffle(params.notes);
   }
 
+  if (params.randomNotes && typeof params.randomNotes === 'string') {
+    params.randomNotes = params.randomNotes.replace(/\s{2,}/g, ' ');
+    params.randomNotes = params.randomNotes.split(/\s/);
+  }
+
+  if (params.randomNotes) {
+    params.randomNotes = (params.randomNotes as string[]).map((el: string) => [
+      el,
+    ]);
+  }
+
   // If the clip method is being called in the context of a Tone.js instrument or synth,
   // then there's no need to continue
   if (
@@ -117,8 +129,12 @@ export const clip = (params: ClipParams) => {
           step++;
         }
 
-        if (char === 'R' && Math.round(Math.random())) {
-          note = params.notes[step];
+        if (char === 'R' && (Math.round(Math.random()) || params.randomNotes)) {
+          note = params.randomNotes
+            ? params.randomNotes[
+                Math.round(Math.random() * (params.randomNotes.length - 1))
+              ]
+            : params.notes[step];
           step++;
         }
 
@@ -128,7 +144,7 @@ export const clip = (params: ClipParams) => {
             note,
             length,
             level:
-              char === 'R'
+              char === 'R' && !params.randomNotes
                 ? (params.accentLow as number)
                 : (params.amp as number),
           });

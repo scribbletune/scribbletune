@@ -2,16 +2,21 @@
 
 const scribble = require('../');
 
-const pattern = '[-xxx]'.repeat(16);
+const pattern = '[-xRx][-xRx][-xRx][-xRR]'.repeat(4);
 
 const clip = scribble.clip({
-  notes: 'A2',
+  notes: 'C4',
   pattern,
+  randomNotes: scribble.scale('D4 phrygian'),
 });
 
-console.log(clip);
+const clip2 = scribble.clip({
+  notes: 'D4',
+  pattern,
+  randomNotes: scribble.scale('D4 phrygian'),
+});
 
-scribble.midi(clip);
+scribble.midi(clip.concat(clip2));
 
 // Export a midi file from this clip
 // scribble.midi(
