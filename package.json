@@ -53,5 +53,8 @@
   },
   "engines": {
     "node": ">8.x.x"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }
