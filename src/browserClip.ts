@@ -2,6 +2,8 @@ import { expandStr } from './utils';
 const defaultSubdiv = '4n';
 const defaultDur = '8n';
 
+const random = (num = 1) => Math.round(Math.random() * num);
+
 /**
  * @param  {Tone.js Player Object}
  * @return {Function}
@@ -10,7 +12,7 @@ const defaultDur = '8n';
  */
 const getPlayerSeqFn = (player: any): SeqFn => {
   return (time: string, el: string) => {
-    if (el === 'x') {
+    if (el === 'x' || (el === 'R' && random())) {
       player.start(time);
     }
   };
@@ -25,9 +27,15 @@ const getPlayerSeqFn = (player: any): SeqFn => {
 const getInstrSeqFn = (params: ClipParams): SeqFn => {
   let counter = 0;
   return (time: string, el: string) => {
-    if (el === 'x' && params.notes[counter]) {
+    if (
+      (el === 'x' && params.notes[counter]) ||
+      (el === 'R' && !params.randomNotes && random()) ||
+      (el === 'R' && params.randomNotes)
+    ) {
       params.instrument.triggerAttackRelease(
-        params.notes[counter],
+        el === 'R' && params.randomNotes
+          ? params.randomNotes[random(params.randomNotes.length - 1)]
+          : params.notes[counter],
         params.dur || params.subdiv || defaultDur,
         time
       );
@@ -48,12 +56,18 @@ const getInstrSeqFn = (params: ClipParams): SeqFn => {
 const getMonoInstrSeqFn = (params: ClipParams): SeqFn => {
   let counter = 0;
   return (time: string, el: string) => {
-    if (el === 'x' && params.notes[counter]) {
+    if (
+      (el === 'x' && params.notes[counter]) ||
+      (el === 'R' && !params.randomNotes && random()) ||
+      (el === 'R' && params.randomNotes)
+    ) {
       // in monophonic instruments the triggerAttackRelease takes the note directly
       // In Scribbletune each note is an array by default to support chords
       // hence we target the 0th element of each note
       params.instrument.triggerAttackRelease(
-        params.notes[counter][0],
+        el === 'R' && params.randomNotes
+          ? params.randomNotes[random(params.randomNotes.length - 1)]
+          : params.notes[counter][0],
         params.dur || params.subdiv || defaultDur,
         time
       );
@@ -74,9 +88,15 @@ const getMonoInstrSeqFn = (params: ClipParams): SeqFn => {
 const getSamplerSeqFn = (params: ClipParams) => {
   let counter = 0;
   return (time: string, el: string) => {
-    if (el === 'x' && params.notes[counter]) {
+    if (
+      (el === 'x' && params.notes[counter]) ||
+      (el === 'R' && !params.randomNotes && random()) ||
+      (el === 'R' && params.randomNotes)
+    ) {
       params.sampler.triggerAttackRelease(
-        params.notes[counter],
+        el === 'R' && params.randomNotes
+          ? params.randomNotes[random(params.randomNotes.length - 1)]
+          : params.notes[counter],
         params.dur || params.subdiv || defaultDur,
         time
       );
@@ -103,6 +123,7 @@ module.exports = (params: ClipParams) => {
     !params.player &&
     !params.instrument &&
     !params.sample &&
+    !params.buffer &&
     !params.synth &&
     !params.sampler &&
     !params.samples
@@ -130,9 +151,9 @@ module.exports = (params: ClipParams) => {
     })
   );
 
-  if (params.sample) {
+  if (params.sample || params.buffer) {
     // This implies, the clip is probably being hand created by the user with a audio sample
-    params.player = new Tone.Player(params.sample);
+    params.player = new Tone.Player(params.sample || params.buffer);
   }
 
   if (params.samples) {

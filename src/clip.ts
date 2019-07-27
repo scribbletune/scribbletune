@@ -99,6 +99,7 @@ export const clip = (params: ClipParams) => {
     params.synth ||
     params.instrument ||
     params.sample ||
+    params.buffer ||
     params.player ||
     params.samples ||
     params.sampler

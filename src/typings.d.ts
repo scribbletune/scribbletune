@@ -25,6 +25,7 @@ interface ClipParams {
   synth?: any;
   instrument?: any;
   sample?: any;
+  buffer?: any;
   samples?: any;
   sampler?: any;
   player?: any;
