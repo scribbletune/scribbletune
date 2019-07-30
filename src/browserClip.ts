@@ -145,12 +145,6 @@ module.exports = (params: ClipParams) => {
     effects = params.effects.map((eff: any) => new Tone[eff]());
   }
 
-  effects.push(
-    new Tone.Gain({
-      gain: params.volume || 0.7,
-    })
-  );
-
   if (params.sample || params.buffer) {
     // This implies, the clip is probably being hand created by the user with a audio sample
     params.player = new Tone.Player(params.sample || params.buffer);
@@ -166,6 +160,9 @@ module.exports = (params: ClipParams) => {
   }
 
   if (params.player) {
+    if (params.volume) {
+      params.player.volume.value = params.volume;
+    }
     params.player.chain(...effects, Tone.Master);
     // This implies, a player object was already created (either by user or by Scribbletune during channel creation)
     return new Tone.Sequence(
@@ -176,6 +173,9 @@ module.exports = (params: ClipParams) => {
   }
 
   if (params.sampler) {
+    if (params.volume) {
+      params.sampler.volume.value = params.volume;
+    }
     params.sampler.chain(...effects, Tone.Master);
     // This implies, a sampler object was already created (either by user or by Scribbletune during channel creation)
     return new Tone.Sequence(
@@ -186,6 +186,9 @@ module.exports = (params: ClipParams) => {
   }
 
   if (params.instrument) {
+    if (params.volume) {
+      params.instrument.volume.value = params.volume;
+    }
     params.instrument.chain(...effects, Tone.Master);
     // This implies, the instrument was already created (either by user or by Scribbletune during channel creation)
     // Unlike player, the instrument needs the entire params object to construct a sequence
