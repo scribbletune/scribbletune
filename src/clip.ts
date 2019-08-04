@@ -52,13 +52,6 @@ export const clip = (params: ClipParams) => {
       return [el];
     }
 
-    if (getChord(el)) {
-      // A note such as c6 could be a chord (sixth) or a note (c on the 6th octave)
-      // This also applies to c4, c5, c6, c9, c11
-      // TODO: Identify a way to avoid returning unwanted results
-      el = getChord(el);
-    }
-
     if (Array.isArray(el)) {
       // This could be a chord provided as an array
       // make sure it uses valid notes
@@ -67,9 +60,14 @@ export const clip = (params: ClipParams) => {
           throw new TypeError('array must comprise valid notes');
         }
       });
+
+      return el;
     }
 
-    return el;
+    if (!Array.isArray(el) && getChord(el)) {
+      el = getChord(el);
+      return el;
+    }
   });
 
   if (/[^x\-_\[\]R]/.test(params.pattern)) {

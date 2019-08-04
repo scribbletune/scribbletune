@@ -304,4 +304,39 @@ describe('../src/clip', () => {
     const volArr = c.map((c: any) => c.level);
     expect(volArr.join(',')).toBe('51,71,85,86');
   });
+
+  it('accepts array of arrays', () => {
+    expect(function() {
+      clip({
+        notes: [
+          ['c4', 'e4'],
+          ['e4'],
+          ['c4', 'e4'],
+          ['e4'],
+          ['d4', 'e4'],
+          ['e4'],
+          ['c4', 'e4'],
+          ['d4', 'f4'],
+          ['e4'],
+          ['e4'],
+          ['c4', 'e4'],
+          ['d4', 'e4'],
+          ['d4', 'e4'],
+          ['c4', 'f4'],
+          ['e4'],
+          ['c4', 'd4', 'e4'],
+        ],
+        pattern: 'xxxx',
+      });
+    }).not.toThrow();
+  });
+
+  it('accepts array of arrays but throws an error for incorrect input', () => {
+    expect(function() {
+      clip({
+        notes: [['c4', 'e4'], ['k4']],
+        pattern: 'xxxx',
+      });
+    }).toThrow();
+  });
 });
