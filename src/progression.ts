@@ -1,4 +1,5 @@
 import { getScale } from './scale';
+import { pickOne, dice } from './utils';
 
 /**
  * Get the chords that go with a given scale/mode
@@ -99,4 +100,81 @@ export const getChordsByProgression = (
   });
 
   return chordFamily.toString().replace(/,/g, ' ');
+};
+
+const getProgFactory = ({ T, P, D }: TPD) => {
+  return (count: number = 4) => {
+    const chords = [];
+
+    // Push root/tonic
+    chords.push(pickOne(T));
+
+    let i = 1;
+
+    // Pick a predominant
+    if (i < count - 1) {
+      chords.push(pickOne(P));
+      i++;
+    }
+
+    // Try another predominant
+    if (i < count - 1 && dice()) {
+      chords.push(pickOne(P));
+      i++;
+    }
+
+    /////////4 or more//////////
+    if (i < count - 1) {
+      // Pick a dominant
+      chords.push(pickOne(D));
+      i++;
+    }
+
+    if (i < count - 1) {
+      // Pick a predominant
+      chords.push(pickOne(P));
+      i++;
+    }
+
+    if (i < count - 1) {
+      // Pick a dominant
+      chords.push(pickOne(D));
+      i++;
+    }
+
+    // Pick a predominant if possible
+    if (i < count - 1 && dice()) {
+      chords.push(pickOne(P));
+      i++;
+    }
+    ////////////////////////////
+
+    // Fill the rest with dominant
+    while (i < count) {
+      chords.push(pickOne(D));
+      i++;
+    }
+
+    return chords;
+  };
+};
+
+const M = getProgFactory({ T: ['I', 'vi'], P: ['ii', 'IV'], D: ['V'] });
+const m = getProgFactory({ T: ['i', 'VI'], P: ['ii', 'iv'], D: ['V'] });
+
+/**
+ * Generate a chord progression based on basic music theory
+ * where we follow tonic to optionally predominant and then dominant
+ * and then randomly to predominant and continue this till we reach `count`
+ * @param scale e.g. major
+ * @param count e.g. 4
+ */
+export const progression = (scale: progressionScale, count: number = 4) => {
+  if (scale === 'major' || scale === 'M') {
+    return M(count);
+  }
+
+  if (scale === 'minor' || scale === 'm') {
+    return m(count);
+  }
 };

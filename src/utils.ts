@@ -68,3 +68,15 @@ export const sizzleMap = (maxLevel: number = 127): number[] => {
   const arr: number[] = piArr.concat(piArrRev);
   return arr.map(element => Math.round(Math.sin(element) * maxLevel));
 };
+
+/**
+ * Pick one item randomly from an array and return it
+ * @param arr
+ */
+export const pickOne = (arr: any[]) =>
+  arr.length > 1 ? arr[Math.round(Math.random())] : arr[0];
+
+/**
+ * Boolean generator
+ */
+export const dice = () => !!Math.round(Math.random());

@@ -8,7 +8,14 @@ interface NVP<T> {
   [key: string]: T;
 }
 
+interface TPD {
+  T: string[]; // Tonic
+  P: string[]; // Predominant (or subdominant)
+  D: string[]; // Dominant
+}
+
 type SizzleStyle = 'sin' | 'cos' | 'rampUp' | 'rampDown';
+type progressionScale = 'major' | 'minor' | 'M' | 'm';
 
 interface ClipParams {
   notes: string | (string | string[])[];

@@ -1,12 +1,15 @@
 'use strict';
 
 const scribble = require('../');
-
-let clip = scribble.clip({
-  notes: scribble.getChordsByProgression('D4 minor', 'I IV V ii'),
-  pattern: 'x_'.repeat(4) + 'x_______',
+const minorChordProgression = scribble.progression('m').join(' ');
+const c = scribble.clip({
+  notes: 'D3',
+  pattern: '[x-RR]'.repeat(16), // R will play notes from our progression
+  randomNotes: scribble.arp({
+    chords: scribble.getChordsByProgression('D4 minor', minorChordProgression), // We are using the `m` method we generated earlier from our factory method
+    count: 4,
+    order: '1032',
+  }),
 });
 
-scribble.midi(clip);
-// This will create a file called music.mid in the same location as you run this script
-// Import this file in a music production software and play it with a piano kinda instrument
+scribble.midi(c, 'progression.mid');
