@@ -25,7 +25,7 @@ const fillArr = (arr: string[], len: number) => {
 
 type Params = {
   count: number;
-  order: string;
+  order?: string;
   chords: string;
 };
 
@@ -38,34 +38,34 @@ type Params = {
 export const arp = (chordsOrParams: string | Params) => {
   let finalArr: any = [];
   const params: Params = {
-    count: 8,
-    order: '01234567',
+    count: 4,
+    order: '0123',
     chords: '',
   };
 
   if (typeof chordsOrParams === 'string') {
     params.chords = chordsOrParams;
   } else {
+    if (chordsOrParams.order && chordsOrParams.order.match(/\D/g)) {
+      throw new TypeError('Invalid value for order');
+    }
+
+    if (chordsOrParams.count > 8 || chordsOrParams.count < 2) {
+      throw new TypeError('Invalid value for count');
+    }
+
+    // Provision a order for the notes in case only count was provided
+    if (chordsOrParams.count && !chordsOrParams.order) {
+      params.order = Array.from(Array(chordsOrParams.count).keys()).join('');
+    }
     Object.assign(params, chordsOrParams);
-  }
-
-  if (params.count > 8 || params.count < 2) {
-    throw new TypeError('Invalid value for count');
-  }
-
-  if (
-    params.order.match(/\D/g) ||
-    params.order.includes('8') ||
-    params.order.includes('9')
-  ) {
-    throw new TypeError('Invalid value for order');
   }
 
   const chordsArr: string[] = params.chords.split(' ');
   for (const chord of chordsArr) {
     const filledArr = fillArr(getChord(chord) as string[], params.count);
     // reorder the filledArr as per params.order
-    const reorderedArr = params.order
+    const reorderedArr = (params.order as string)
       .split('')
       .map((idx: any) => filledArr[idx]);
     finalArr = [...finalArr, ...reorderedArr];

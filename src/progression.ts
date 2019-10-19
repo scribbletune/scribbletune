@@ -123,7 +123,7 @@ const getProgFactory = ({ T, P, D }: TPD) => {
       i++;
     }
 
-    /////////4 or more//////////
+    ///////// 4 or more//////////
     if (i < count - 1) {
       // Pick a dominant
       chords.push(pickOne(D));
