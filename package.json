@@ -4,6 +4,8 @@
   "description": "Create music with JavaScript and Node.js!",
   "main": "./index.js",
   "scripts": {
+    "doc": "npx typedoc --out docs src/ src/typings.d.ts",
+    "doc:json": "npx typedoc --json typedoc-out.json src",
     "test": "jest --coverage",
     "build:node": "npx webpack",
     "build:browser": "TARGET=browser npx webpack",

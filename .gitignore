@@ -6,3 +6,10 @@ coverage
 .idea/
 .vscode/
 .npmrc
+
+*BAK*
+/docs
+/jsdoc
+jsdoc-config.json
+typedoc-out.json
+/src/ClipParams.ts
