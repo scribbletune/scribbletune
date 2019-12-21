@@ -14,7 +14,7 @@ You can also use Scribbletune in the browser with a SCRIPT tag. Make sure to pul
 
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/13.3.1/Tone.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/scribbletune/3.3.2/scribbletune.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/scribbletune/3.4.1/scribbletune.js"></script>
 ```
 
 ---
