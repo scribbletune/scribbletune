@@ -28,6 +28,10 @@ const getDefaultParams = (): ClipParams => ({
  * @type {Object}
  */
 const hdr: NVP<number> = {
+  '1m': 2048,
+  '2m': 4096,
+  '3m': 6144,
+  '4m': 8192,
   '1n': 512,
   '2n': 256,
   '4n': 128,

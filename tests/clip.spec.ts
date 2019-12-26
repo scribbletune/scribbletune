@@ -339,4 +339,39 @@ describe('../src/clip', () => {
       });
     }).toThrow();
   });
+
+  it('sets quarter note as the default subdivision', () => {
+    const c = clip({
+      notes: 'c4',
+      pattern: 'x',
+    });
+    expect(c[0].length).toBe(128);
+  });
+
+  it('allows setting eighth note as the subdivision', () => {
+    const c = clip({
+      notes: 'c4',
+      pattern: 'x',
+      subdiv: '8n',
+    });
+    expect(c[0].length).toBe(64);
+  });
+
+  it('allows setting a whole note as the subdivision', () => {
+    const c = clip({
+      notes: 'c4',
+      pattern: 'x',
+      subdiv: '1n',
+    });
+    expect(c[0].length).toBe(512);
+  });
+
+  it('allows setting an entire measure as the subdivision', () => {
+    const c = clip({
+      notes: 'c4',
+      pattern: 'x',
+      subdiv: '1m',
+    });
+    expect(c[0].length).toBe(2048);
+  });
 });
