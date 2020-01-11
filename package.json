@@ -3,6 +3,7 @@
   "version": "3.4.3",
   "description": "Create music with JavaScript and Node.js!",
   "main": "./index.js",
+  "types": "index.d.ts",
   "scripts": {
     "doc": "npx typedoc --out docs src/ src/typings.d.ts",
     "doc:json": "npx typedoc --json typedoc-out.json src",
@@ -21,6 +22,7 @@
   "devDependencies": {
     "@types/jest": "^24.0.24",
     "@types/node": "^12.12.21",
+    "dts-bundle": "^0.7.3",
     "jest": "^24.9.0",
     "prettier": "^1.19.1",
     "ts-jest": "^24.2.0",
