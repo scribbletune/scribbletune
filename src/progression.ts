@@ -166,7 +166,7 @@ const m = getProgFactory({ T: ['i', 'VI'], P: ['ii', 'iv'], D: ['V'] });
  * Generate a chord progression based on basic music theory
  * where we follow tonic to optionally predominant and then dominant
  * and then randomly to predominant and continue this till we reach `count`
- * @param scale e.g. major
+ * @param scale e.g. M (for major chord progression), m (for minor chord progression)
  * @param count e.g. 4
  */
 export const progression = (scale: progressionScale, count: number = 4) => {

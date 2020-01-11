@@ -4,7 +4,7 @@ import { isNote } from './utils';
 
 /**
  * Derive a chord from the given string. Exposed as simply `chord` in Scribbletune
- * @return {Array}     [example output: ['c4', 'e4', 'g4']]
+ * @return {Array}     [example `chord('CM')` outputs: ['c4', 'e4', 'g4'], `chord('CM-5')` outputs: ['c5', 'e5', 'g5']]
  */
 export const getChord = (
   name: string

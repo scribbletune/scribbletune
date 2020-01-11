@@ -7,7 +7,7 @@ export const scales: () => string[];
 
 /**
     * Derive a chord from the given string. Exposed as simply `chord` in Scribbletune
-    * @return {Array}     [example output: ['c4', 'e4', 'g4']]
+    * @return {Array}     [example `chord('CM')` outputs: ['c4', 'e4', 'g4'], `chord('CM-5')` outputs: ['c5', 'e5', 'g5']]
     */
 export const getChord: (name: string) => (string | null)[] | string[] | null;
 /**
@@ -38,7 +38,7 @@ export const getChordsByProgression: (noteOctaveScale: string, chordDegress: str
     * Generate a chord progression based on basic music theory
     * where we follow tonic to optionally predominant and then dominant
     * and then randomly to predominant and continue this till we reach `count`
-    * @param scale e.g. major
+    * @param scale e.g. M (for major chord progression), m (for minor chord progression)
     * @param count e.g. 4
     */
 export const progression: (scale: progressionScale, count?: number) => any[] | undefined;
@@ -50,9 +50,11 @@ type Params = {
 };
 /**
   *
-  * @param chordsOrParams a string that denotes comma seprated chords to be used or an object with additional properties
+  * @param chordsOrParams a string that denotes comma separated chords to be used or an object with additional properties
   * By default, if this is a string, the the count of notes generated is 8 and the order is ascending.
   * For instance arp('CM FM') will result in an array of notes [C4, E4, G4, F4, A4, C4, C5, E5]
+  * You can even provide Params as an object.
+  * For e.g. arp({count: 8, order: '10325476', chords: 'FM-4 Gm7b5-4 AbM-4 Bbm-4 Cm-5 DbM-5 EbM-5})
   */
 export const arp: (chordsOrParams: string | Params) => any;
 export {};
