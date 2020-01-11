@@ -17,6 +17,9 @@ const getOutput = () => {
   return output;
 };
 
+const plugins = [];
+plugins.push(new DtsBundlePlugin());
+
 module.exports = {
   mode: 'production',
   entry: {
@@ -42,10 +45,27 @@ module.exports = {
     extensions: ['.ts', '.js', '.json'],
   },
 
+  plugins: plugins,
   // node: {
   //   fs: 'empty',
   // },
   externals: {
     fs: 'fs',
   },
+};
+
+
+function DtsBundlePlugin(){}
+DtsBundlePlugin.prototype.apply = function (compiler) {
+  compiler.plugin('done', function(){
+    var dts = require('dts-bundle');
+
+    dts.bundle({
+      name: 'scribbletune',
+      main: 'lib/index.d.ts',
+      out: '../index.d.ts',
+      removeSource: true,
+      outputAsModuleFolder: true // to use npm in-package typings
+    });
+  });
 };
