@@ -13,7 +13,9 @@ export class Session {
 
   createChannel(ch: ChannelParams) {
     ch.idx = ch.idx || this.sessionChannels.length;
-    this.sessionChannels.push(new Channel(ch));
+    const newChannel = new Channel(ch);
+    this.sessionChannels.push(newChannel);
+    return newChannel;
   }
 
   get channels() {
