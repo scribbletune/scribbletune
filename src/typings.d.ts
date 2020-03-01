@@ -149,5 +149,6 @@ interface ChannelParams extends ClipParams {
 type SeqFn = (time: string, el: string) => void;
 
 declare var Tone: any;
+declare var LiveAPI: any;
 declare var require: NodeRequire;
 declare module 'jsmidgen';

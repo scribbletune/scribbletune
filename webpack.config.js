@@ -54,10 +54,9 @@ module.exports = {
   },
 };
 
-
-function DtsBundlePlugin(){}
-DtsBundlePlugin.prototype.apply = function (compiler) {
-  compiler.plugin('done', function(){
+function DtsBundlePlugin() {}
+DtsBundlePlugin.prototype.apply = function(compiler) {
+  compiler.plugin('done', function() {
     var dts = require('dts-bundle');
 
     dts.bundle({
@@ -65,7 +64,7 @@ DtsBundlePlugin.prototype.apply = function (compiler) {
       main: 'lib/index.d.ts',
       out: '../index.d.ts',
       removeSource: true,
-      outputAsModuleFolder: true // to use npm in-package typings
+      outputAsModuleFolder: true, // to use npm in-package typings
     });
   });
 };

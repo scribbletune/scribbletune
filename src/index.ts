@@ -9,6 +9,7 @@ import {
 import { arp } from './arp';
 import { midi } from './midi';
 import { Session } from './session';
+import { max } from './max';
 
 export {
   getScale as scale,
@@ -24,4 +25,5 @@ export {
   arp,
   midi,
   Session,
+  max,
 };
