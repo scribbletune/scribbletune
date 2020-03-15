@@ -4,8 +4,11 @@ import { Util } from 'jsmidgen';
  * Take an array of note objects to populate a clip selected in Ableton Live via Max4Live
  * @param  {<Array>NoteObject} notes    Notes are in the format: {note: ['c3'], level: 127, length: 64}
  */
-export const max = (notes: NoteObject[]) => {
-  const liveObject = new LiveAPI('live_set view highlighted_clip_slot clip');
+export const max = (
+  notes: NoteObject[],
+  liveClip: string = 'live_set view highlighted_clip_slot clip'
+) => {
+  const liveObject = new LiveAPI(liveClip);
   const totalLength = notes.reduce((a, b) => {
     return a + b.length;
   }, 0);
