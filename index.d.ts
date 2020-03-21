@@ -9,7 +9,7 @@ export const scales: () => string[];
     * Derive a chord from the given string. Exposed as simply `chord` in Scribbletune
     * @return {Array}     [example `chord('CM')` outputs: ['c4', 'e4', 'g4'], `chord('CM-5')` outputs: ['c5', 'e5', 'g5']]
     */
-export const getChord: (name: string) => (string | null)[] | string[] | null;
+export const getChord: (name: string) => string[] | (string | null)[] | null;
 /**
     * Get a list of chords available in Scribbletune.
     * @return {Array}     [example output: ['maj', 'min', 'dim']]

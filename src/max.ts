@@ -31,7 +31,7 @@ export const max = (
         Util.midiPitchFromNote(noteObj.note[0]),
         cursor.toFixed(2).toString(),
         (noteObj.length / 512).toFixed(2).toString(),
-        100,
+        noteObj.level || 100,
         0
       );
       cursor = cursor + noteObj.length / 512;
