@@ -24,16 +24,19 @@ export const max = (
   liveObject.call('notes', noteCount);
 
   let cursor = 0;
-  notes.forEach((noteObj: NoteObject) => {
+  notes.forEach((noteObj: any) => {
     if (noteObj.note) {
-      liveObject.call(
-        'note',
-        Util.midiPitchFromNote(noteObj.note[0]),
-        cursor.toFixed(2).toString(),
-        (noteObj.length / 512).toFixed(2).toString(),
-        noteObj.level || 100,
-        0
-      );
+      noteObj.note.forEach((n: string) => {
+        liveObject.call(
+          'note',
+          Util.midiPitchFromNote(n),
+          cursor.toFixed(2).toString(),
+          (noteObj.length / 512).toFixed(2).toString(),
+          noteObj.level || 100,
+          0
+        );
+      });
+
       cursor = cursor + noteObj.length / 512;
     } else {
       cursor = cursor + noteObj.length / 512;

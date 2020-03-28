@@ -49,14 +49,14 @@ const getChordName = (roman: string): string => {
   if (str.toLowerCase() === str) {
     prefix = 'm';
   }
-  if (roman.includes('°')) {
+  if (roman.indexOf('°') > -1) {
     return prefix + '7b5';
   }
-  if (roman.includes('+')) {
+  if (roman.indexOf('+') > -1) {
     return prefix + '#5';
   }
 
-  if (roman.includes('7')) {
+  if (roman.indexOf('7') > -1) {
     return prefix === 'M' ? 'Maj7' : 'm7';
   }
 
