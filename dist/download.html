@@ -1,46 +1,49 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>Create a downloadable MIDI file</title>
 </head>
+
 <body>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/scribbletune/3.5.3/scribbletune.js"></script>
-<script>
-  // Sample Clip that renders the C Major scale
-  const c = scribble.clip({
-    notes: scribble.scale('C4 major'),
-    pattern: 'x'.repeat(7)
-  });
+  <script src="scribbletune.js"></script>
+  <script>
+    // Sample Clip that renders the C Major scale
+    const c = scribble.clip({
+      notes: scribble.scale('C4 major'),
+      pattern: 'x'.repeat(7)
+    });
 
-  // Get hold of the bytes from the scribble.midi method
-  // (passing null as the second argument returns bytes)
-  const b = scribble.midi(c, null);
+    // Get hold of the bytes from the scribble.midi method
+    // (passing null as the second argument returns bytes)
+    const b = scribble.midi(c, null);
 
-  // Convert bytes to array buffer
-  // Ref: Accepted answer on https://stackoverflow.com/questions/35038884/download-file-from-bytes-in-javascript
-  var bytes = new Uint8Array(b.length);
-  for (var i = 0; i < b.length; i++) {
-    var ascii = b.charCodeAt(i);
-    bytes[i] = ascii;
-  }
+    // Convert bytes to array buffer
+    // Ref: Accepted answer on https://stackoverflow.com/questions/35038884/download-file-from-bytes-in-javascript
+    var bytes = new Uint8Array(b.length);
+    for (var i = 0; i < b.length; i++) {
+      var ascii = b.charCodeAt(i);
+      bytes[i] = ascii;
+    }
 
-  // Create a Blob so that we can set it up with the type of file we want (for eg MIDI)
-  var blob = new Blob([bytes], {type: "audio/midi"});
+    // Create a Blob so that we can set it up with the type of file we want (for eg MIDI)
+    var blob = new Blob([bytes], { type: "audio/midi" });
 
-  // Create a link element to be used (you can use an existing link on the page as well)
-  var link = document.createElement('a');
-  link.href = window.URL.createObjectURL(blob);
+    // Create a link element to be used (you can use an existing link on the page as well)
+    var link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
 
-  // Give your downloadable file a name
-  link.download = 'music.mid';
-  link.innerText = 'Download MIDI file';
-  document.body.appendChild(link);
+    // Give your downloadable file a name
+    link.download = 'music.mid';
+    link.innerText = 'Download MIDI file';
+    document.body.appendChild(link);
 
-</script>
+  </script>
 
 </body>
+
 </html>

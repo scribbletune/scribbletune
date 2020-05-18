@@ -64,8 +64,10 @@ export {};
   * @param  {<Array>NoteObject} notes    Notes are in the format: {note: ['c3'], level: 127, length: 64}
   * @param  {String | null} fileName If a filename is not provided, then `music.mid` is used by default
   * If `null` is passed for `fileName`, bytes are returned instead of creating a file
+  * If this method is called from a browser then it will return a HTML link that you can append in your page
+  * This link will enable the generated MIDI as a downloadable file.
   */
-export const midi: (notes: NoteObject[], fileName?: string | null) => string | undefined;
+export const midi: (notes: NoteObject[], fileName?: string | null) => string | HTMLAnchorElement | undefined;
 
 export class Session {
     sessionChannels: Channel[];

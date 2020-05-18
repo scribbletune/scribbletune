@@ -26,7 +26,11 @@ export const midi = (
     fileName = fileName + '.mid';
   }
 
-  if (typeof window !== 'undefined' && window.URL && window.URL.createObjectURL) {
+  if (
+    typeof window !== 'undefined' &&
+    window.URL &&
+    window.URL.createObjectURL
+  ) {
     return createDownloadLink(bytes);
   }
 
@@ -41,21 +45,23 @@ export const midi = (
 const createDownloadLink = (b: string): HTMLAnchorElement => {
   // Convert bytes to array buffer
   // Accepted answer on https://stackoverflow.com/questions/35038884/download-file-from-bytes-in-javascript
-  var bytes = new Uint8Array(b.length);
-  for (var i = 0; i < b.length; i++) {
-    var ascii = b.charCodeAt(i);
+  const bytes = new Uint8Array(b.length);
+  for (let i = 0; i < b.length; i++) {
+    const ascii = b.charCodeAt(i);
     bytes[i] = ascii;
   }
 
   // Create a Blob so that we can set it up with the type of file we want (for eg MIDI)
-  var blob = new Blob([bytes], {type: "audio/midi"});
+  const blob = new Blob([bytes], { type: 'audio/midi' });
 
   // Create a link element to be used (you can use an existing link on the page as well)
-  var link = document.createElement('a');
-  link.href = typeof window !== 'undefined' &&
-    typeof window.URL !== 'undefined' &&
-    typeof window.URL.createObjectURL !== 'undefined' &&
-    window.URL.createObjectURL(blob) || '';
+  const link = document.createElement('a');
+  link.href =
+    (typeof window !== 'undefined' &&
+      typeof window.URL !== 'undefined' &&
+      typeof window.URL.createObjectURL !== 'undefined' &&
+      window.URL.createObjectURL(blob)) ||
+    '';
 
   // Give your downloadable file a name
   link.download = 'music.mid';
@@ -87,4 +93,4 @@ const createFileFromNotes = (notes: NoteObject[]) => {
   }
 
   return file;
-}
+};
