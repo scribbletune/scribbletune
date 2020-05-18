@@ -8,11 +8,13 @@ import * as jsmidgen from 'jsmidgen';
  * @param  {<Array>NoteObject} notes    Notes are in the format: {note: ['c3'], level: 127, length: 64}
  * @param  {String | null} fileName If a filename is not provided, then `music.mid` is used by default
  * If `null` is passed for `fileName`, bytes are returned instead of creating a file
+ * If this method is called from a browser then it will return a HTML link that you can append in your page
+ * This link will enable the generated MIDI as a downloadable file.
  */
 export const midi = (
   notes: NoteObject[],
   fileName: string | null = 'music.mid'
-): string | undefined => {
+): string | HTMLAnchorElement | undefined => {
   const file = createFileFromNotes(notes);
   const bytes = file.toBytes();
 
@@ -24,11 +26,45 @@ export const midi = (
     fileName = fileName + '.mid';
   }
 
+  if (typeof window !== 'undefined' && window.URL && window.URL.createObjectURL) {
+    return createDownloadLink(bytes);
+  }
+
   fs.writeFileSync(fileName, bytes, 'binary');
   console.log(`MIDI file generated: ${fileName}.`);
 };
 
-function createFileFromNotes(notes: NoteObject[]) {
+/**
+ * Create a downloadable link
+ * @param b
+ */
+const createDownloadLink = (b: string): HTMLAnchorElement => {
+  // Convert bytes to array buffer
+  // Accepted answer on https://stackoverflow.com/questions/35038884/download-file-from-bytes-in-javascript
+  var bytes = new Uint8Array(b.length);
+  for (var i = 0; i < b.length; i++) {
+    var ascii = b.charCodeAt(i);
+    bytes[i] = ascii;
+  }
+
+  // Create a Blob so that we can set it up with the type of file we want (for eg MIDI)
+  var blob = new Blob([bytes], {type: "audio/midi"});
+
+  // Create a link element to be used (you can use an existing link on the page as well)
+  var link = document.createElement('a');
+  link.href = typeof window !== 'undefined' &&
+    typeof window.URL !== 'undefined' &&
+    typeof window.URL.createObjectURL !== 'undefined' &&
+    window.URL.createObjectURL(blob) || '';
+
+  // Give your downloadable file a name
+  link.download = 'music.mid';
+  link.innerText = 'Download MIDI file';
+
+  return link;
+};
+
+const createFileFromNotes = (notes: NoteObject[]) => {
   const file = new jsmidgen.File();
   const track = new jsmidgen.Track();
   file.addTrack(track);
