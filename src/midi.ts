@@ -31,7 +31,7 @@ export const midi = (
     window.URL &&
     window.URL.createObjectURL
   ) {
-    return createDownloadLink(bytes);
+    return createDownloadLink(bytes, fileName);
   }
 
   fs.writeFileSync(fileName, bytes, 'binary');
@@ -42,7 +42,7 @@ export const midi = (
  * Create a downloadable link
  * @param b
  */
-const createDownloadLink = (b: string): HTMLAnchorElement => {
+const createDownloadLink = (b: string, fileName: string): HTMLAnchorElement => {
   // Convert bytes to array buffer
   // Accepted answer on https://stackoverflow.com/questions/35038884/download-file-from-bytes-in-javascript
   const bytes = new Uint8Array(b.length);
@@ -63,8 +63,8 @@ const createDownloadLink = (b: string): HTMLAnchorElement => {
       window.URL.createObjectURL(blob)) ||
     '';
 
-  // Give your downloadable file a name
-  link.download = 'music.mid';
+  // Give the downloadable file a name
+  link.download = fileName;
   link.innerText = 'Download MIDI file';
 
   return link;
