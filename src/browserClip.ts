@@ -36,7 +36,7 @@ const getInstrSeqFn = (params: ClipParams): SeqFn => {
         el === 'R' && params.randomNotes
           ? params.randomNotes[random(params.randomNotes.length - 1)]
           : params.notes[counter],
-        params.dur || params.subdiv || defaultDur,
+        params.dur?.[counter] || params.subdiv || defaultDur,
         time
       );
       counter++;
@@ -68,7 +68,7 @@ const getMonoInstrSeqFn = (params: ClipParams): SeqFn => {
         el === 'R' && params.randomNotes
           ? params.randomNotes[random(params.randomNotes.length - 1)]
           : params.notes[counter][0],
-        params.dur || params.subdiv || defaultDur,
+        params.dur?.[counter] || params.subdiv || defaultDur,
         time
       );
       counter++;
@@ -97,7 +97,7 @@ const getSamplerSeqFn = (params: ClipParams) => {
         el === 'R' && params.randomNotes
           ? params.randomNotes[random(params.randomNotes.length - 1)]
           : params.notes[counter],
-        params.dur || params.subdiv || defaultDur,
+        params.dur?.[counter] || params.subdiv || defaultDur,
         time
       );
       counter++;

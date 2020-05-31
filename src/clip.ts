@@ -49,6 +49,13 @@ export const clip = (params: ClipParams) => {
     params.notes = params.notes.split(' ');
   }
 
+  // If dur is a string, split it into an array
+  if (typeof params.dur === 'string') {
+    // Remove any accidental double spaces
+    params.dur = params.dur.replace(/\s{2,}/g, ' ');
+    params.dur = params.dur.split(' ');
+  }
+
   // Convert chords if any to notes
   params.notes = params.notes.map((el: any) => {
     if (isNote(el as string)) {
