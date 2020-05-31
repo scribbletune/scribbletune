@@ -25,23 +25,28 @@ const getPlayerSeqFn = (player: any): SeqFn => {
  * as the callback in Tone.Sequence https://tonejs.github.io/docs/r12/Sequence
  */
 const getInstrSeqFn = (params: ClipParams): SeqFn => {
-  let counter = 0;
+  let counterNotes = 0;
+  let counterDur = 0;
   return (time: string, el: string) => {
     if (
-      (el === 'x' && params.notes[counter]) ||
+      (el === 'x' && params.notes[counterNotes]) ||
       (el === 'R' && !params.randomNotes && random()) ||
       (el === 'R' && params.randomNotes)
     ) {
       params.instrument.triggerAttackRelease(
         el === 'R' && params.randomNotes
           ? params.randomNotes[random(params.randomNotes.length - 1)]
-          : params.notes[counter],
-        params.dur?.[counter] || params.subdiv || defaultDur,
+          : params.notes[counterNotes],
+        params.dur?.[counterDur] || params.subdiv || defaultDur,
         time
       );
-      counter++;
-      if (counter === params.notes.length) {
-        counter = 0;
+      counterNotes++;
+      counterDur++;
+      if (counterNotes === params.notes.length) {
+        counterNotes = 0;
+      }
+      if (counterDur === params.dur?.length) {
+        counterDur = 0;
       }
     }
   };
@@ -54,10 +59,11 @@ const getInstrSeqFn = (params: ClipParams): SeqFn => {
  * as the callback in Tone.Sequence https://tonejs.github.io/docs/r12/Sequence
  */
 const getMonoInstrSeqFn = (params: ClipParams): SeqFn => {
-  let counter = 0;
+  let counterNotes = 0;
+  let counterDur = 0;
   return (time: string, el: string) => {
     if (
-      (el === 'x' && params.notes[counter]) ||
+      (el === 'x' && params.notes[counterNotes]) ||
       (el === 'R' && !params.randomNotes && random()) ||
       (el === 'R' && params.randomNotes)
     ) {
@@ -67,13 +73,17 @@ const getMonoInstrSeqFn = (params: ClipParams): SeqFn => {
       params.instrument.triggerAttackRelease(
         el === 'R' && params.randomNotes
           ? params.randomNotes[random(params.randomNotes.length - 1)]
-          : params.notes[counter][0],
-        params.dur?.[counter] || params.subdiv || defaultDur,
+          : params.notes[counterNotes][0],
+        params.dur?.[counterDur] || params.subdiv || defaultDur,
         time
       );
-      counter++;
-      if (counter === params.notes.length) {
-        counter = 0;
+      counterNotes++;
+      counterDur++;
+      if (counterNotes === params.notes.length) {
+        counterNotes = 0;
+      }
+      if (counterDur === params.dur?.length) {
+        counterDur = 0;
       }
     }
   };
@@ -86,23 +96,28 @@ const getMonoInstrSeqFn = (params: ClipParams): SeqFn => {
  * as the callback in Tone.Sequence https://tonejs.github.io/docs/r12/Sequence
  */
 const getSamplerSeqFn = (params: ClipParams) => {
-  let counter = 0;
+  let counterNotes = 0;
+  let counterDur = 0;
   return (time: string, el: string) => {
     if (
-      (el === 'x' && params.notes[counter]) ||
+      (el === 'x' && params.notes[counterNotes]) ||
       (el === 'R' && !params.randomNotes && random()) ||
       (el === 'R' && params.randomNotes)
     ) {
       params.sampler.triggerAttackRelease(
         el === 'R' && params.randomNotes
           ? params.randomNotes[random(params.randomNotes.length - 1)]
-          : params.notes[counter],
-        params.dur?.[counter] || params.subdiv || defaultDur,
+          : params.notes[counterNotes],
+        params.dur?.[counterDur] || params.subdiv || defaultDur,
         time
       );
-      counter++;
-      if (counter === params.notes.length) {
-        counter = 0;
+      counterNotes++;
+      counterDur++;
+      if (counterNotes === params.notes.length) {
+        counterNotes = 0;
+      }
+      if (counterDur === params.dur?.length) {
+        counterDur = 0;
       }
     }
   };
