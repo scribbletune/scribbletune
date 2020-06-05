@@ -120,12 +120,17 @@ interface ClipParams {
    */
   player?: any;
   /**
-   * A string or array of notes duration.
-   *  - Default:  `[ '4n' ]`
-   *  - Example:  `'4n 4n 4n 8n 1m'`
+   * The duration of an individual sample that is used in a browser `clip`.
+   *  - Example: `'32n'`, `'1m'`, `2.3`
    *  - See:  [Tone.js wiki ~ Time](https://github.com/Tonejs/Tone.js/wiki/Time#notation)
    */
-  dur?: string | (string | string[])[];
+  dur?: string;
+  /**
+   * Durations of notes in a browser `clip` as a number of quarter notes.
+   * Internal usage only, please use the pattern notation (`x`,`-`,`_`) instead.
+   *  - Example: `[1, 1, 0.5, 0.25]`
+   */
+  durations?: number[];
   /**
    * Name of an effect listed in `Tone.js`.
    *  - Example:  `[ 'Chorus' ]`

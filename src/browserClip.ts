@@ -18,6 +18,18 @@ const getPlayerSeqFn = (player: any): SeqFn => {
   };
 };
 
+const getNote = (el: string, params: ClipParams, counter: number) => {
+  return el === 'R' && params.randomNotes
+    ? params.randomNotes[random(params.randomNotes.length - 1)]
+    : params.notes[counter % params.notes.length];
+};
+
+const getDuration = (params: ClipParams, counter: number) => {
+  return params.durations
+    ? params.durations[counter % params.durations.length]
+    : params.dur || params.subdiv || defaultDur;
+};
+
 /**
  * @param  {Object}
  * @return {Function}
@@ -25,29 +37,15 @@ const getPlayerSeqFn = (player: any): SeqFn => {
  * as the callback in Tone.Sequence https://tonejs.github.io/docs/r12/Sequence
  */
 const getInstrSeqFn = (params: ClipParams): SeqFn => {
-  let counterNotes = 0;
-  let counterDur = 0;
+  let counter = 0;
   return (time: string, el: string) => {
-    if (
-      (el === 'x' && params.notes[counterNotes]) ||
-      (el === 'R' && !params.randomNotes && random()) ||
-      (el === 'R' && params.randomNotes)
-    ) {
+    if (el === 'x' || el === 'R') {
       params.instrument.triggerAttackRelease(
-        el === 'R' && params.randomNotes
-          ? params.randomNotes[random(params.randomNotes.length - 1)]
-          : params.notes[counterNotes],
-        params.dur?.[counterDur] || params.subdiv || defaultDur,
+        getNote(el, params, counter),
+        getDuration(params, counter),
         time
       );
-      counterNotes++;
-      counterDur++;
-      if (counterNotes === params.notes.length) {
-        counterNotes = 0;
-      }
-      if (counterDur === params.dur?.length) {
-        counterDur = 0;
-      }
+      counter++;
     }
   };
 };
@@ -59,32 +57,15 @@ const getInstrSeqFn = (params: ClipParams): SeqFn => {
  * as the callback in Tone.Sequence https://tonejs.github.io/docs/r12/Sequence
  */
 const getMonoInstrSeqFn = (params: ClipParams): SeqFn => {
-  let counterNotes = 0;
-  let counterDur = 0;
+  let counter = 0;
   return (time: string, el: string) => {
-    if (
-      (el === 'x' && params.notes[counterNotes]) ||
-      (el === 'R' && !params.randomNotes && random()) ||
-      (el === 'R' && params.randomNotes)
-    ) {
-      // in monophonic instruments the triggerAttackRelease takes the note directly
-      // In Scribbletune each note is an array by default to support chords
-      // hence we target the 0th element of each note
+    if (el === 'x' || el === 'R') {
       params.instrument.triggerAttackRelease(
-        el === 'R' && params.randomNotes
-          ? params.randomNotes[random(params.randomNotes.length - 1)]
-          : params.notes[counterNotes][0],
-        params.dur?.[counterDur] || params.subdiv || defaultDur,
+        getNote(el, params, counter)[0],
+        getDuration(params, counter),
         time
       );
-      counterNotes++;
-      counterDur++;
-      if (counterNotes === params.notes.length) {
-        counterNotes = 0;
-      }
-      if (counterDur === params.dur?.length) {
-        counterDur = 0;
-      }
+      counter++;
     }
   };
 };
@@ -95,32 +76,39 @@ const getMonoInstrSeqFn = (params: ClipParams): SeqFn => {
  * Take an object literal which has a Tone.js sampler and return a function that can be used
  * as the callback in Tone.Sequence https://tonejs.github.io/docs/r12/Sequence
  */
-const getSamplerSeqFn = (params: ClipParams) => {
-  let counterNotes = 0;
-  let counterDur = 0;
+const getSamplerSeqFn = (params: ClipParams): SeqFn => {
+  let counter = 0;
   return (time: string, el: string) => {
-    if (
-      (el === 'x' && params.notes[counterNotes]) ||
-      (el === 'R' && !params.randomNotes && random()) ||
-      (el === 'R' && params.randomNotes)
-    ) {
+    if (el === 'x' || el === 'R') {
       params.sampler.triggerAttackRelease(
-        el === 'R' && params.randomNotes
-          ? params.randomNotes[random(params.randomNotes.length - 1)]
-          : params.notes[counterNotes],
-        params.dur?.[counterDur] || params.subdiv || defaultDur,
+        getNote(el, params, counter),
+        getDuration(params, counter),
         time
       );
-      counterNotes++;
-      counterDur++;
-      if (counterNotes === params.notes.length) {
-        counterNotes = 0;
-      }
-      if (counterDur === params.dur?.length) {
-        counterDur = 0;
-      }
+      counter++;
     }
   };
+};
+
+const recursivelyApplyPatternToDurations = (
+  patternArr: string[],
+  length: number,
+  durations: number[] = []
+) => {
+  patternArr.forEach(char => {
+    if (typeof char === 'string') {
+      if (char === 'x' || char === 'R') {
+        durations.push(length);
+      }
+      if (char === '_' && durations.length) {
+        durations[durations.length - 1] += length;
+      }
+    }
+    if (Array.isArray(char)) {
+      recursivelyApplyPatternToDurations(char, length / char.length, durations);
+    }
+  });
+  return durations;
 };
 
 /**
@@ -144,6 +132,13 @@ module.exports = (params: ClipParams) => {
     !params.samples
   ) {
     throw new Error('No player or instrument provided!');
+  }
+
+  if (!params.durations && !params.dur) {
+    params.durations = recursivelyApplyPatternToDurations(
+      expandStr(params.pattern),
+      Tone.Ticks('4n').toSeconds()
+    );
   }
 
   /*
