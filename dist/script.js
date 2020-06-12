@@ -74,7 +74,7 @@
 
   // Wire up start/stop buttons
   document.querySelector('#startBtn').addEventListener('click', function() {
-    Tone.Transport.start();
+    Tone.context.resume().then(() => Tone.Transport.start());
   });
   document.querySelector('#stopBtn').addEventListener('click', function() {
     Tone.Transport.stop();

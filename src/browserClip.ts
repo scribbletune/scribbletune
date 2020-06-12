@@ -95,7 +95,7 @@ const recursivelyApplyPatternToDurations = (
   length: number,
   durations: number[] = []
 ) => {
-  patternArr.forEach(char => {
+  patternArr.forEach((char) => {
     if (typeof char === 'string') {
       if (char === 'x' || char === 'R') {
         durations.push(length);
@@ -173,7 +173,10 @@ module.exports = (params: ClipParams) => {
     if (params.volume) {
       params.player.volume.value = params.volume;
     }
-    params.player.chain(...effects, Tone.Master);
+    params.player.chain(
+      ...effects,
+      Tone.Master ? Tone.Master : Tone.Destination
+    );
     // This implies, a player object was already created (either by user or by Scribbletune during channel creation)
     return new Tone.Sequence(
       getPlayerSeqFn(params.player),
@@ -186,7 +189,10 @@ module.exports = (params: ClipParams) => {
     if (params.volume) {
       params.sampler.volume.value = params.volume;
     }
-    params.sampler.chain(...effects, Tone.Master);
+    params.sampler.chain(
+      ...effects,
+      Tone.Master ? Tone.Master : Tone.Destination
+    );
     // This implies, a sampler object was already created (either by user or by Scribbletune during channel creation)
     return new Tone.Sequence(
       getSamplerSeqFn(params),
@@ -199,7 +205,10 @@ module.exports = (params: ClipParams) => {
     if (params.volume) {
       params.instrument.volume.value = params.volume;
     }
-    params.instrument.chain(...effects, Tone.Master);
+    params.instrument.chain(
+      ...effects,
+      Tone.Master ? Tone.Master : Tone.Destination
+    );
     // This implies, the instrument was already created (either by user or by Scribbletune during channel creation)
     // Unlike player, the instrument needs the entire params object to construct a sequence
     return new Tone.Sequence(
