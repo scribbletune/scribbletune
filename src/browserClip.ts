@@ -95,7 +95,7 @@ const recursivelyApplyPatternToDurations = (
   length: number,
   durations: number[] = []
 ) => {
-  patternArr.forEach((char) => {
+  patternArr.forEach(char => {
     if (typeof char === 'string') {
       if (char === 'x' || char === 'R') {
         durations.push(length);
