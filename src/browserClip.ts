@@ -212,7 +212,7 @@ module.exports = (params: ClipParams) => {
     // This implies, the instrument was already created (either by user or by Scribbletune during channel creation)
     // Unlike player, the instrument needs the entire params object to construct a sequence
     return new Tone.Sequence(
-      params.instrument.voices
+      params.instrument instanceof Tone.PolySynth
         ? getInstrSeqFn(params)
         : getMonoInstrSeqFn(params),
       expandStr(params.pattern),
