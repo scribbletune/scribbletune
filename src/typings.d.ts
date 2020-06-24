@@ -88,8 +88,10 @@ interface ClipParams {
    */
   synth?: any;
   /**
-   * A `Tone` instance, only in the browser.
-   *  - Example: `{ instrument: getToneMonoSynth('MonoSynth:BassGuitar') }`
+   * A `Tone.Instrument` instance or the name of a synthesizer, listed in `Tone.js`. Only in the browser.
+   *  - Example: `Synth`
+   *  - Example: `new Tone.Synth()`
+   *  - Example: `getToneMonoSynth('MonoSynth:BassGuitar')`
    *  - See:     https://github.com/scribbletune/sampler#tone-monosynths
    */
   instrument?: any;
