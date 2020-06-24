@@ -83,13 +83,13 @@ interface ClipParams {
   randomNotes?: null | string | (string | string[])[];
   /**
    * The name of a synthesizer, listed in `Tone.js`.
-   *  - Example: 'PolySynth'.
+   *  - Example: `'PolySynth'`.
    *  - See:  [GitHub ~ Tone.js/Tone/instrument](https://github.com/Tonejs/Tone.js/tree/dev/Tone/instrument)
    */
   synth?: any;
   /**
    * A `Tone.Instrument` instance or the name of a synthesizer, listed in `Tone.js`. Only in the browser.
-   *  - Example: `Synth`
+   *  - Example: `'Synth'`
    *  - Example: `new Tone.Synth()`
    *  - Example: `getToneMonoSynth('MonoSynth:BassGuitar')`
    *  - See:     https://github.com/scribbletune/sampler#tone-monosynths
