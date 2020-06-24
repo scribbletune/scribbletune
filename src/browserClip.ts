@@ -186,7 +186,7 @@ module.exports = (params: ClipParams) => {
   if (params.synth && !params.instrument) {
     // This implies, the synth is probably being hand created by the user with an available Tone synth
     console.warn(
-      "The 'synth' parameter will be deprecated in the future. Please use the 'instrument' parameter instead."
+      'The "synth" parameter will be deprecated in the future. Please use the "instrument" parameter instead.'
     );
     params.instrument = new Tone[params.synth]();
   }
