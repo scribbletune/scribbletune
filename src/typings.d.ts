@@ -132,11 +132,15 @@ interface ClipParams {
    */
   durations?: number[];
   /**
-   * Name of an effect listed in `Tone.js`.
+   * Name of an effect listed in `Tone.js` or `Tone.Effect` instance. Single value or Array.
+   *  - Example:  `'Chorus'`
+   *  - Example:  `new Tone.AutoFilter()`
    *  - Example:  `[ 'Chorus' ]`
+   *  - Example:  `[ 'Chorus', 'AutoFilter' ]`
+   *  - Example:  `[ 'Chorus', new Tone.AutoFilter() ]`
    *  - See:  [GitHub ~ Tone.js/Tone/effect](https://github.com/Tonejs/Tone.js/tree/dev/Tone/effect)
    */
-  effects?: string[];
+  effects?: any | any[];
   /**
    * The volume in decibels, in the range `-60` to `+12`.
    * _(Note, not applicable to sample — it gives an error.)_

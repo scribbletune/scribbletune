@@ -151,8 +151,27 @@ module.exports = (params: ClipParams) => {
 
   let effects = [];
 
+  function createEffect(eff: any) {
+    if (typeof eff === 'string') {
+      return new Tone[eff]();
+    } else {
+      return eff;
+    }
+  }
+
+  function startEffect(eff: any) {
+    if (typeof eff.start === 'function') {
+      return eff.start();
+    } else {
+      return eff;
+    }
+  }
+
   if (params.effects) {
-    effects = params.effects.map((eff: any) => new Tone[eff]());
+    if (!Array.isArray(params.effects)) {
+      params.effects = [params.effects];
+    }
+    effects = params.effects.map(createEffect).map(startEffect);
   }
 
   if (params.sample || params.buffer) {
