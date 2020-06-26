@@ -151,8 +151,27 @@ module.exports = (params: ClipParams) => {
 
   let effects = [];
 
+  function createEffect(eff: any) {
+    if (typeof eff === 'string') {
+      return new Tone[eff]();
+    } else {
+      return eff;
+    }
+  }
+
+  function startEffect(eff: any) {
+    if (typeof eff.start === 'function') {
+      return eff.start();
+    } else {
+      return eff;
+    }
+  }
+
   if (params.effects) {
-    effects = params.effects.map((eff: any) => new Tone[eff]());
+    if (!Array.isArray(params.effects)) {
+      params.effects = [params.effects];
+    }
+    effects = params.effects.map(createEffect).map(startEffect);
   }
 
   if (params.sample || params.buffer) {
@@ -164,9 +183,18 @@ module.exports = (params: ClipParams) => {
     params.sampler = new Tone.Sampler(params.samples);
   }
 
-  if (params.synth) {
+  if (params.synth && !params.instrument) {
     // This implies, the synth is probably being hand created by the user with an available Tone synth
+    console.warn(
+      'The "synth" parameter will be deprecated in the future. Please use the "instrument" parameter instead.'
+    );
     params.instrument = new Tone[params.synth]();
+  }
+
+  if (params.instrument) {
+    if (typeof params.instrument === 'string') {
+      params.instrument = new Tone[params.instrument]();
+    }
   }
 
   if (params.player) {

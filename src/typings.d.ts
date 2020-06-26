@@ -83,13 +83,15 @@ interface ClipParams {
   randomNotes?: null | string | (string | string[])[];
   /**
    * The name of a synthesizer, listed in `Tone.js`.
-   *  - Example: 'PolySynth'.
+   *  - Example: `'PolySynth'`.
    *  - See:  [GitHub ~ Tone.js/Tone/instrument](https://github.com/Tonejs/Tone.js/tree/dev/Tone/instrument)
    */
   synth?: any;
   /**
-   * A `Tone` instance, only in the browser.
-   *  - Example: `{ instrument: getToneMonoSynth('MonoSynth:BassGuitar') }`
+   * A `Tone.Instrument` instance or the name of a synthesizer, listed in `Tone.js`. Only in the browser.
+   *  - Example: `'Synth'`
+   *  - Example: `new Tone.Synth()`
+   *  - Example: `getToneMonoSynth('MonoSynth:BassGuitar')`
    *  - See:     https://github.com/scribbletune/sampler#tone-monosynths
    */
   instrument?: any;
@@ -132,11 +134,15 @@ interface ClipParams {
    */
   durations?: number[];
   /**
-   * Name of an effect listed in `Tone.js`.
+   * Name of an effect listed in `Tone.js` or `Tone.Effect` instance. Single value or Array.
+   *  - Example:  `'Chorus'`
+   *  - Example:  `new Tone.AutoFilter()`
    *  - Example:  `[ 'Chorus' ]`
+   *  - Example:  `[ 'Chorus', 'AutoFilter' ]`
+   *  - Example:  `[ 'Chorus', new Tone.AutoFilter() ]`
    *  - See:  [GitHub ~ Tone.js/Tone/effect](https://github.com/Tonejs/Tone.js/tree/dev/Tone/effect)
    */
-  effects?: string[];
+  effects?: any | any[];
   /**
    * The volume in decibels, in the range `-60` to `+12`.
    * _(Note, not applicable to sample — it gives an error.)_
