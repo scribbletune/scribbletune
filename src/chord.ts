@@ -1,6 +1,8 @@
-import { chord, Chord, Note, transpose } from 'tonal';
-const chordNames: string[] = Chord.names();
-import { isNote } from './utils';
+import { Chord, ChordType, Note } from '@tonaljs/tonal';
+import { flat, isNote } from './utils';
+
+const chordTypes = ChordType.all();
+const chordNames = flat(chordTypes.map(t => t.aliases.concat([t.name]))).filter(Boolean);
 
 /**
  * Derive a chord from the given string. Exposed as simply `chord` in Scribbletune
@@ -43,12 +45,14 @@ export const getChord = (
     chordName = numericalChords[chordName];
   }
 
-  if (!Chord.exists(chordName)) {
+  if (!ChordType.get(chordName)) {
     throw new TypeError('Invalid chord name: ' + chordName);
   }
 
-  return (chord(chordName) || []).map(el => {
-    const note = transpose.bind(null, root + (spl[1] || 4))(el);
+  const chord = Chord.get(root + chordName);
+  const rootInOctave = root + (spl[1] || 4);
+  return (chord.intervals || []).map(interval => {
+    const note = Note.transpose(rootInOctave, interval);
     return Note.simplify(note as string);
   });
 };
@@ -69,7 +73,7 @@ export const chords = (): string[] => {
     '13': '13th',
   };
 
-  return chordNames.map(c => {
+  return chordNames.map((c: string) => {
     if (/^\d+$/.test(c) && numericalChords[c]) {
       return numericalChords[c];
     } else {

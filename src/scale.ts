@@ -1,4 +1,4 @@
-import * as Tonal from 'tonal';
+import { Note, Scale, ScaleType } from '@tonaljs/tonal';
 
 export const getScale = (tonicOctScale: string): (null | string)[] => {
   tonicOctScale = tonicOctScale && tonicOctScale.toLowerCase();
@@ -9,16 +9,17 @@ export const getScale = (tonicOctScale: string): (null | string)[] => {
   tonicOctScale = tonicOctScale.replace('#5p', '#5P');
   tonicOctScale = tonicOctScale.replace('#7m', '#7M');
 
-  const tokenizedName: [string, string] = Tonal.Scale.tokenize(tonicOctScale);
+  const tokenizedName: [string, string] = Scale.tokenize(tonicOctScale);
   const scaleName: string = tokenizedName[1];
 
-  if (!Tonal.Scale.exists(scaleName)) {
+  if (!ScaleType.get(scaleName)) {
     throw new Error(`${tonicOctScale} does not exist!`);
   }
 
-  return Tonal.Scale.notes(tonicOctScale).map(Tonal.Note.simplify);
+  const scale = Scale.get(tonicOctScale);
+  return scale.notes.map(Note.simplify);
 };
 
 export const scales = (): string[] => {
-  return Tonal.Scale.names();
+  return Scale.names();
 };

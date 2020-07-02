@@ -68,10 +68,14 @@ export const clip = (params: ClipParams) => {
       return el;
     }
 
-    if (!Array.isArray(el) && getChord(el)) {
-      el = getChord(el);
-      return el;
+    if (!Array.isArray(el)) {
+      const chord = getChord(el);
+      if (chord && chord.length) {
+        return chord;
+      }
     }
+
+    throw new Error(`Chord ${el} not found`);
   });
 
   if (/[^x\-_\[\]R]/.test(params.pattern)) {
