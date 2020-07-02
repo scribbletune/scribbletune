@@ -81,3 +81,14 @@ export const chords = (): string[] => {
     }
   });
 };
+
+/**
+ * Adds a chord to Tonal's chord collection, so getChord can access it.
+ * @param  {<Array>String} intervals e.g. ['1P', '3M', '5P']
+ * @param  {<Array>String} abbrev e.g. ['Q', 'T']
+ * @param  {String} name e.g. full
+ * @return {void}
+ */
+export const addChord = (intervals: string[], abbrev: string[], name?: string): void => {
+  ChordType.add(intervals, abbrev, name);
+}
