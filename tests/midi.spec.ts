@@ -46,9 +46,7 @@ describe('../src/midi', () => {
     const bytesTempo1 = midi(scribbleClip, null, 100) as string;
     const bytesTempo2 = midi(scribbleClip, null, 101) as string;
 
-    //console.log(convertBytesToAsciiArray(bytesTempo1));
-    //console.log(convertBytesToAsciiArray(bytesTempo2));
-
+    // Compare that the two generated midi files have different values
     expect(convertBytesToAsciiArray(bytesTempo1)[27]).toBe(39);
     expect(convertBytesToAsciiArray(bytesTempo2)[27]).toBe(16);
   });
