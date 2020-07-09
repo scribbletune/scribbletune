@@ -23,7 +23,7 @@ scribble.addChord(['1P', '5P', '8P', '22P', '24M', '26P'], [], 'fullM');
 scribble.addChord(['1P', '5P', '8P', '22P', '24m', '26P'], [], 'fullm');
 
 const clip3 = scribble.clip({
-  notes: ['Efullm2', 'GfullM2', 'GfullM2', "AfullM2"],
+  notes: ['Efullm-2', 'GfullM-2', 'GfullM-2', "AfullM-2"],
   pattern: 'x___xx_x________',
 });
 
