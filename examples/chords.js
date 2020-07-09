@@ -2,11 +2,8 @@
 
 const scribble = require('../');
 
-scribble.addChord(['1P', '5P', '8P', '22P', '24M', '26P'], [], 'fullM');
-scribble.addChord(['1P', '5P', '8P', '22P', '24m', '26P'], [], 'fullm');
-
 const clip = scribble.clip({
-  notes: 'F#fullm C#m DM Bm EfullM AM DM C#m AM',
+  notes: 'F#m C#m DM Bm EM AM DM C#m AM',
   pattern: 'x_x_x_--'.repeat(8),
   subdiv: '16n',
 });
@@ -21,3 +18,13 @@ const clip2 = scribble.clip({
 });
 
 console.log(clip2);
+
+scribble.addChord(['1P', '5P', '8P', '22P', '24M', '26P'], [], 'fullM');
+scribble.addChord(['1P', '5P', '8P', '22P', '24m', '26P'], [], 'fullm');
+
+const clip3 = scribble.clip({
+  notes: ['Efullm', 'GfullM', 'GfullM', "AfullM"],
+  pattern: 'x___xx_x________',
+});
+
+scribble.midi(clip3, 'chords.mid');
