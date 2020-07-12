@@ -74,8 +74,9 @@ export {};
   * If `null` is passed for `fileName`, bytes are returned instead of creating a file
   * If this method is called from a browser then it will return a HTML link that you can append in your page
   * This link will enable the generated MIDI as a downloadable file.
+  * @param {Number | null} bpm If a value is provided, the generated midi file will be set to this bpm value.
   */
-export const midi: (notes: NoteObject[], fileName?: string | null) => string | HTMLAnchorElement | undefined;
+export const midi: (notes: NoteObject[], fileName?: string | null, bpm?: number | undefined) => string | HTMLAnchorElement | undefined;
 
 export class Session {
     sessionChannels: Channel[];

@@ -27,4 +27,27 @@ describe('../src/midi', () => {
       'MThd\x00\x00\x00\x06\x00\x00\x00\x01\x00MTrk\x00\x00\x00\r\x00<\x00<Z\x00ÿ/\x00'
     );
   });
+
+  it('accepts an optional bpm argument', () => {
+    // small util to convert the midi data to an array of ascii codes
+    const convertBytesToAsciiArray = (bytes: string) => {
+      const ascii = new Uint8Array(bytes.length);
+      for (let i = 0; i < bytes.length; i++) {
+        ascii[i] = bytes.charCodeAt(i);
+      }
+      return ascii;
+    };
+
+    const scribbleClip = clip({
+      pattern: 'x',
+      notes: 'c4',
+    });
+
+    const bytesTempo1 = midi(scribbleClip, null, 100) as string;
+    const bytesTempo2 = midi(scribbleClip, null, 101) as string;
+
+    // Compare that the two generated midi files have different values
+    expect(convertBytesToAsciiArray(bytesTempo1)[27]).toBe(39);
+    expect(convertBytesToAsciiArray(bytesTempo2)[27]).toBe(16);
+  });
 });

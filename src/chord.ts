@@ -2,7 +2,9 @@ import { Chord, ChordType, Note } from '@tonaljs/tonal';
 import { flat, isNote } from './utils';
 
 const chordTypes = ChordType.all();
-const chordNames = flat(chordTypes.map(t => t.aliases.concat([t.name]))).filter(Boolean);
+const chordNames = flat(chordTypes.map(t => t.aliases.concat([t.name]))).filter(
+  Boolean
+);
 
 /**
  * Derive a chord from the given string. Exposed as simply `chord` in Scribbletune
@@ -89,6 +91,10 @@ export const chords = (): string[] => {
  * @param  {String} name e.g. full
  * @return {void}
  */
-export const addChord = (intervals: string[], abbrev: string[], name?: string): void => {
+export const addChord = (
+  intervals: string[],
+  abbrev: string[],
+  name?: string
+): void => {
   ChordType.add(intervals, abbrev, name);
-}
+};
