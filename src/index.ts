@@ -1,5 +1,5 @@
 import { getScale, scales } from './scale';
-import { getChord, chords } from './chord';
+import { addChord, getChord, chords } from './chord';
 import { clip } from './clip';
 import {
   getChordDegrees,
@@ -16,6 +16,7 @@ export {
   getScale as mode,
   scales,
   scales as modes,
+  addChord,
   getChord as chord,
   chords,
   clip,

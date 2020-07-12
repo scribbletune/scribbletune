@@ -80,3 +80,9 @@ export const pickOne = (arr: any[]) =>
  * Boolean generator
  */
 export const dice = () => !!Math.round(Math.random());
+
+/**
+ * Polyfill for Array.prototype.flat
+ */
+export const flat = (arr: any[][]) =>
+  arr.reduce((acc, val) => acc.concat(val), []);

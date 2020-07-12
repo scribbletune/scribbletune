@@ -1,6 +1,7 @@
 'use strict';
 
 const scribble = require('../');
+
 const clip = scribble.clip({
   notes: 'F#m C#m DM Bm EM AM DM C#m AM',
   pattern: 'x_x_x_--'.repeat(8),
@@ -13,7 +14,17 @@ scribble.midi(clip);
 
 const clip2 = scribble.clip({
   notes: scribble.getChordsByProgression('C4 major', 'vi IV V I'),
-  pattern: 'x',
+  pattern: 'xxxx',
 });
 
 console.log(clip2);
+
+scribble.addChord(['1P', '5P', '8P', '22P', '24M', '26P'], [], 'fullM');
+scribble.addChord(['1P', '5P', '8P', '22P', '24m', '26P'], [], 'fullm');
+
+const clip3 = scribble.clip({
+  notes: ['Efullm-2', 'GfullM-2', 'GfullM-2', "AfullM-2"],
+  pattern: 'x___xx_x________',
+});
+
+scribble.midi(clip3, 'chords.mid');
