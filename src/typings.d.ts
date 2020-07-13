@@ -151,6 +151,13 @@ interface ClipParams {
    *  - See:      https://tonejs.github.io/docs/13.8.25/Volume
    */
   volume?: number;
+  /**
+   * Boolean parameter to trigger offline rendering.
+   * If true, `scribbletune.clip` returns a `Tone.Player` with a buffer containing a pre-rendered sound of the sequence
+   * If false, it returns a `Tone.Sequence` which does live rendering.
+   * Note: The rendering needs some time to complete & be saved in the buffer, before being able to playing.
+   */
+  offlineRendering?: boolean;
 }
 
 interface ChannelParams extends ClipParams {

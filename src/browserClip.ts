@@ -90,7 +90,7 @@ const getSamplerSeqFn = (params: ClipParams): SeqFn => {
   };
 };
 
-const recursivelyApplyPatternToDurations = (
+export const recursivelyApplyPatternToDurations = (
   patternArr: string[],
   length: number,
   durations: number[] = []
@@ -111,13 +111,11 @@ const recursivelyApplyPatternToDurations = (
   return durations;
 };
 
-/**
- * @param  {Object}
- * @return {Tone.js Sequence Object}
- * Take a object literal that may have a Tone.js player OR instrument
- * or simply a sample or synth with a pattern and return a Tone.js sequence
- */
-module.exports = (params: ClipParams) => {
+const isToneV13 = () => {
+  return Tone.version.split('.')[0] === '13';
+};
+
+const generateSequence = (params: ClipParams) => {
   if (!params.pattern) {
     throw new Error('No pattern provided!');
   }
@@ -137,7 +135,7 @@ module.exports = (params: ClipParams) => {
   if (!params.durations && !params.dur) {
     params.durations = recursivelyApplyPatternToDurations(
       expandStr(params.pattern),
-      Tone.Ticks('4n').toSeconds()
+      Tone.Ticks(params.subdiv || defaultSubdiv).toSeconds()
     );
   }
 
@@ -151,21 +149,21 @@ module.exports = (params: ClipParams) => {
 
   let effects = [];
 
-  function createEffect(eff: any) {
+  const createEffect = (eff: any) => {
     if (typeof eff === 'string') {
       return new Tone[eff]();
     } else {
       return eff;
     }
-  }
+  };
 
-  function startEffect(eff: any) {
+  const startEffect = (eff: any) => {
     if (typeof eff.start === 'function') {
       return eff.start();
     } else {
       return eff;
     }
-  }
+  };
 
   if (params.effects) {
     if (!Array.isArray(params.effects)) {
@@ -233,10 +231,12 @@ module.exports = (params: ClipParams) => {
     if (params.volume) {
       params.instrument.volume.value = params.volume;
     }
-    params.instrument.chain(
-      ...effects,
-      Tone.Master ? Tone.Master : Tone.Destination
-    );
+    params.instrument.chain(...effects);
+    if (isToneV13()) {
+      params.instrument.toMaster();
+    } else {
+      params.instrument.toDestination();
+    }
     // This implies, the instrument was already created (either by user or by Scribbletune during channel creation)
     // Unlike player, the instrument needs the entire params object to construct a sequence
     return new Tone.Sequence(
@@ -246,5 +246,67 @@ module.exports = (params: ClipParams) => {
       expandStr(params.pattern),
       params.subdiv || defaultSubdiv
     );
+  }
+};
+
+const totalPatternDuration = (pattern: any, subdiv: any) => {
+  return recursivelyApplyPatternToDurations(
+    expandStr(pattern),
+    Tone.Ticks(subdiv).toSeconds()
+  ).reduce((accumulator, currentValue) => {
+    return accumulator + currentValue;
+  });
+};
+
+let offlineClipId = 0;
+let ongoingRenderingCounter = 0;
+let originalContext: any;
+
+const offlineRenderClip = (params: ClipParams, duration: number) => {
+  if (!originalContext) {
+    originalContext = Tone.getContext();
+  }
+  ongoingRenderingCounter++;
+  const player = new Tone.Player({ context: originalContext, loop: true });
+  const clipId = offlineClipId++;
+  console.log(`Offline rendering of clip ${clipId}...`);
+  console.time(`Offline rendering of clip ${clipId} done`);
+  Tone.Offline(({ transport }: any) => {
+    const sequence = generateSequence(params);
+    sequence.start();
+    transport.start();
+  }, duration).then((buffer: any) => {
+    player.buffer = buffer;
+    ongoingRenderingCounter--;
+    if (ongoingRenderingCounter === 0) {
+      Tone.setContext(originalContext);
+    }
+    console.timeEnd(`Offline rendering of clip ${clipId} done`);
+  });
+  player.toDestination();
+  player.sync();
+  return player;
+};
+
+/**
+ * @param  {Object}
+ * @return {Tone.js Sequence Object}
+ * Take a object literal that may have a Tone.js player OR instrument
+ * or simply a sample or synth with a pattern and return a Tone.js sequence
+ */
+export const browserClip = (params: ClipParams) => {
+  if (params.offlineRendering) {
+    if (isToneV13()) {
+      console.warn(
+        'Offline rendering not available for Tone <14. Please use Tone >=14.'
+      );
+    } else {
+      return offlineRenderClip(
+        params,
+        totalPatternDuration(params.pattern, params.subdiv || defaultSubdiv)
+      );
+    }
+  } else {
+    return generateSequence(params);
   }
 };
