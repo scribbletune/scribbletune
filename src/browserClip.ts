@@ -115,7 +115,7 @@ const isToneV13 = () => {
   return Tone.version.split('.')[0] === '13';
 };
 
-const generateSequence = (params: ClipParams, context?: any) => {
+const generateSequence = (params: ClipParams) => {
   if (!params.pattern) {
     throw new Error('No pattern provided!');
   }
