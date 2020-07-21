@@ -150,19 +150,12 @@ const generateSequence = (params: ClipParams) => {
   let effects = [];
 
   const createEffect = (eff: any) => {
-    if (typeof eff === 'string') {
-      return new Tone[eff]();
-    } else {
-      return eff;
-    }
+    const effect: any = typeof eff === 'string' ? new Tone[eff]() : eff;
+    return isToneV13() ? effect.toMaster() : effect.toDestination();
   };
 
   const startEffect = (eff: any) => {
-    if (typeof eff.start === 'function') {
-      return eff.start();
-    } else {
-      return eff;
-    }
+    return typeof eff.start === 'function' ? eff.start() : eff;
   };
 
   if (params.effects) {
@@ -292,12 +285,20 @@ const offlineRenderClip = (params: ClipParams, duration: number) => {
   console.time(`Offline rendering of clip ${clipId} done`);
   Tone.Offline(({ transport }: any) => {
     if (params.instrument) {
-      if (typeof params.instrument !== 'string') {
-        params.instrument = recreateToneObjectInContext(
-          params.instrument,
-          transport.context
-        );
+      params.instrument =
+        typeof params.instrument !== 'string'
+          ? recreateToneObjectInContext(params.instrument, transport.context)
+          : params.instrument;
+    }
+    if (params.effects) {
+      if (!Array.isArray(params.effects)) {
+        params.effects = [params.effects];
       }
+      params.effects = params.effects.map((effect: any) => {
+        return typeof effect !== 'string'
+          ? recreateToneObjectInContext(effect, transport.context)
+          : effect;
+      });
     }
     const sequence = generateSequence(params);
     sequence.start();
