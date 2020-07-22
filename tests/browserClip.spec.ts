@@ -1,5 +1,8 @@
 // global.window = true;
-import { recursivelyApplyPatternToDurations } from '../src/browserClip';
+import {
+  recursivelyApplyPatternToDurations,
+  totalPatternDuration,
+} from '../src/browserClip';
 import { expandStr } from '../src/utils';
 
 describe('../src/browserClip', () => {
@@ -37,5 +40,21 @@ describe('../src/browserClip', () => {
     expect(
       recursivelyApplyPatternToDurations(expandStr('x[x__-]x'), 1)
     ).toStrictEqual([1, 0.75, 1]);
+  });
+
+  it('applies same duration to simple pattern', () => {
+    expect(totalPatternDuration('xxxx__--', 1)).toStrictEqual(8);
+  });
+
+  it('split durations in subpattern', () => {
+    expect(totalPatternDuration('x[xx]x', 1)).toStrictEqual(3);
+  });
+
+  it('split duration in subpattern to subpattern', () => {
+    expect(totalPatternDuration('x[x[xx]]x', 1)).toStrictEqual(3);
+  });
+
+  it('is able to extend notes in subpattern', () => {
+    expect(totalPatternDuration('x[R[-x]-]-x_', 1)).toStrictEqual(5);
   });
 });

@@ -246,13 +246,13 @@ const generateSequence = (params: ClipParams) => {
   }
 };
 
-const totalPatternDuration = (pattern: any, subdiv: any) => {
-  return recursivelyApplyPatternToDurations(
-    expandStr(pattern),
-    Tone.Ticks(subdiv).toSeconds()
-  ).reduce((accumulator, currentValue) => {
-    return accumulator + currentValue;
-  });
+export const totalPatternDuration = (
+  pattern: any,
+  subdivOrLength: string | number
+) => {
+  return typeof subdivOrLength === 'number'
+    ? subdivOrLength * expandStr(pattern).length
+    : Tone.Ticks(subdivOrLength).toSeconds() * expandStr(pattern).length;
 };
 
 let offlineClipId = 0;
