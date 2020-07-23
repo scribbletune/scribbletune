@@ -150,19 +150,12 @@ const generateSequence = (params: ClipParams) => {
   let effects = [];
 
   const createEffect = (eff: any) => {
-    if (typeof eff === 'string') {
-      return new Tone[eff]();
-    } else {
-      return eff;
-    }
+    const effect: any = typeof eff === 'string' ? new Tone[eff]() : eff;
+    return isToneV13() ? effect.toMaster() : effect.toDestination();
   };
 
   const startEffect = (eff: any) => {
-    if (typeof eff.start === 'function') {
-      return eff.start();
-    } else {
-      return eff;
-    }
+    return typeof eff.start === 'function' ? eff.start() : eff;
   };
 
   if (params.effects) {
@@ -199,10 +192,12 @@ const generateSequence = (params: ClipParams) => {
     if (params.volume) {
       params.player.volume.value = params.volume;
     }
-    params.player.chain(
-      ...effects,
-      Tone.Master ? Tone.Master : Tone.Destination
-    );
+    params.player.chain(...effects);
+    if (isToneV13()) {
+      params.player.toMaster();
+    } else {
+      params.player.toDestination();
+    }
     // This implies, a player object was already created (either by user or by Scribbletune during channel creation)
     return new Tone.Sequence(
       getPlayerSeqFn(params.player),
@@ -215,10 +210,12 @@ const generateSequence = (params: ClipParams) => {
     if (params.volume) {
       params.sampler.volume.value = params.volume;
     }
-    params.sampler.chain(
-      ...effects,
-      Tone.Master ? Tone.Master : Tone.Destination
-    );
+    params.sampler.chain(...effects);
+    if (isToneV13()) {
+      params.sampler.toMaster();
+    } else {
+      params.sampler.toDestination();
+    }
     // This implies, a sampler object was already created (either by user or by Scribbletune during channel creation)
     return new Tone.Sequence(
       getSamplerSeqFn(params),
@@ -249,18 +246,33 @@ const generateSequence = (params: ClipParams) => {
   }
 };
 
-const totalPatternDuration = (pattern: any, subdiv: any) => {
-  return recursivelyApplyPatternToDurations(
-    expandStr(pattern),
-    Tone.Ticks(subdiv).toSeconds()
-  ).reduce((accumulator, currentValue) => {
-    return accumulator + currentValue;
-  });
+export const totalPatternDuration = (
+  pattern: any,
+  subdivOrLength: string | number
+) => {
+  return typeof subdivOrLength === 'number'
+    ? subdivOrLength * expandStr(pattern).length
+    : Tone.Ticks(subdivOrLength).toSeconds() * expandStr(pattern).length;
 };
 
 let offlineClipId = 0;
 let ongoingRenderingCounter = 0;
 let originalContext: any;
+
+const recreateToneObjectInContext = (toneObject: any, context: any) => {
+  if (toneObject.name === 'PolySynth') {
+    return new Tone.PolySynth(Tone[toneObject._dummyVoice.name], {
+      ...toneObject.get(),
+      context,
+    });
+  } else {
+    const newToneObject = new Tone[toneObject.name]({
+      ...toneObject.get(),
+      context,
+    });
+    return newToneObject;
+  }
+};
 
 const offlineRenderClip = (params: ClipParams, duration: number) => {
   if (!originalContext) {
@@ -272,9 +284,25 @@ const offlineRenderClip = (params: ClipParams, duration: number) => {
   console.log(`Offline rendering of clip ${clipId}...`);
   console.time(`Offline rendering of clip ${clipId} done`);
   Tone.Offline(({ transport }: any) => {
+    if (params.instrument) {
+      params.instrument =
+        typeof params.instrument !== 'string'
+          ? recreateToneObjectInContext(params.instrument, transport.context)
+          : params.instrument;
+    }
+    if (params.effects) {
+      if (!Array.isArray(params.effects)) {
+        params.effects = [params.effects];
+      }
+      params.effects = params.effects.map((effect: any) => {
+        return typeof effect !== 'string'
+          ? recreateToneObjectInContext(effect, transport.context)
+          : effect;
+      });
+    }
     const sequence = generateSequence(params);
     sequence.start();
-    transport.start();
+    transport.start(); // this is why offline rendering doesn't work with buffer-based instruments for now. We start transport before the buffer inside the recreated instrument is finished being computed.
   }, duration).then((buffer: any) => {
     player.buffer = buffer;
     ongoingRenderingCounter--;
@@ -300,13 +328,21 @@ export const browserClip = (params: ClipParams) => {
       console.warn(
         'Offline rendering not available for Tone <14. Please use Tone >=14.'
       );
+    } else if (
+      params.sample ||
+      params.samples ||
+      params.buffer ||
+      params.player
+    ) {
+      console.warn(
+        'Offline rendering is not available for `sample`, `samples`, `buffer` or `player` parameters (buffer-based instruments). Please use only `synth` or `instrument` parameters.'
+      );
     } else {
       return offlineRenderClip(
         params,
         totalPatternDuration(params.pattern, params.subdiv || defaultSubdiv)
       );
     }
-  } else {
-    return generateSequence(params);
   }
+  return generateSequence(params);
 };
