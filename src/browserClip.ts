@@ -306,10 +306,11 @@ const offlineRenderClip = (params: ClipParams, duration: number) => {
   }, duration).then((buffer: any) => {
     player.buffer = buffer;
     ongoingRenderingCounter--;
+    console.timeEnd(`Offline rendering of clip ${clipId} done`);
     if (ongoingRenderingCounter === 0) {
       Tone.setContext(originalContext);
+      params.offlineRenderingCallback?.();
     }
-    console.timeEnd(`Offline rendering of clip ${clipId} done`);
   });
   player.toDestination();
   player.sync();

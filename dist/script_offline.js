@@ -9,6 +9,7 @@
       { pattern: 'xx', notes: 'C3 Cm-3' },
     ],
     offlineRendering: true,
+    offlineRenderingCallback: () => console.log("Offline rendering finished."),
   });
 
   window.session = session
