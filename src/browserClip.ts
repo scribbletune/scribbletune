@@ -255,7 +255,6 @@ export const totalPatternDuration = (
     : Tone.Ticks(subdivOrLength).toSeconds() * expandStr(pattern).length;
 };
 
-let offlineClipId = 0;
 let ongoingRenderingCounter = 0;
 let originalContext: any;
 
@@ -280,9 +279,6 @@ const offlineRenderClip = (params: ClipParams, duration: number) => {
   }
   ongoingRenderingCounter++;
   const player = new Tone.Player({ context: originalContext, loop: true });
-  const clipId = offlineClipId++;
-  console.log(`Offline rendering of clip ${clipId}...`);
-  console.time(`Offline rendering of clip ${clipId} done`);
   Tone.Offline(({ transport }: any) => {
     if (params.instrument) {
       params.instrument =
@@ -308,8 +304,8 @@ const offlineRenderClip = (params: ClipParams, duration: number) => {
     ongoingRenderingCounter--;
     if (ongoingRenderingCounter === 0) {
       Tone.setContext(originalContext);
+      params.offlineRenderingCallback?.();
     }
-    console.timeEnd(`Offline rendering of clip ${clipId} done`);
   });
   player.toDestination();
   player.sync();

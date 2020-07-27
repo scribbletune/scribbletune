@@ -158,6 +158,10 @@ interface ClipParams {
    * Note: The rendering needs some time to complete & be saved in the buffer, before being able to playing.
    */
   offlineRendering?: boolean;
+  /**
+   * Callback function triggered when offline rendering is finished. Ignored when `offlineRendering: false`.
+   */
+  offlineRenderingCallback?: any;
 }
 
 interface ChannelParams extends ClipParams {
