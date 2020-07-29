@@ -35,15 +35,6 @@
     ],
   });
 
-  session.createChannel({
-    instrument: 'MembraneSynth',
-    clips: [
-      { pattern: '-', notes: 'C2' },
-      { pattern: '-', notes: 'C2' },
-      { pattern: '[-x][-x][-x]-', notes: 'C2' },
-    ],
-  });
-
   window.session = session; // Useful only for debugging & API exploration, so that you can access the session object in the browser console
 
   const channelPatterns = [
