@@ -4,12 +4,21 @@
   session.createChannel({
     instrument: 'PolySynth',
     clips: [
-      { pattern: '[xx]', notes: 'C3 Cm-3' },
-      { pattern: '[x-]', notes: 'C3 Cm-3' },
+      { pattern: 'x', notes: 'C3' },
+      { pattern: '[x-]', notes: 'C3' },
       { pattern: 'xx', notes: 'C3 Cm-3' },
     ],
     offlineRendering: true,
     offlineRenderingCallback: () => console.log("Offline rendering finished."),
+  });
+
+  session.createChannel({
+    instrument: 'MembraneSynth',
+    clips: [
+      { pattern: 'x-x-', notes: 'C1' },
+      { pattern: 'xxxx', notes: 'C1' },
+      { pattern: 'xx', notes: 'C1' },
+    ],
   });
 
   window.session = session
