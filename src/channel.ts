@@ -29,7 +29,7 @@ const getNextPos = (): number | string => {
  * activeClipIdx -> Get the clip that is currently playing
  */
 export class Channel {
-  idx: number;
+  idx: number | string;
   activePatternIdx: number;
   channelClips: any;
   player: any;
@@ -37,7 +37,7 @@ export class Channel {
   sampler: any;
 
   constructor(params: ChannelParams) {
-    (this.idx = params.idx as number), (this.activePatternIdx = -1);
+    (this.idx = params.idx || 0), (this.activePatternIdx = -1);
     this.channelClips = [];
 
     if (params.sample) {

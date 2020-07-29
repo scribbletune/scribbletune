@@ -28,4 +28,41 @@ export class Session {
       ch.startClip(idx);
     });
   }
+
+  play(params: PlayParams) {
+    const channelPatterns = params.channelPatterns;
+    const clipDuration = params.clipDuration || '4:0:0';
+    const clipDurationInSeconds: number = Tone.Time(clipDuration).toSeconds();
+
+    const stopClips = (clips: any[], time: number) => {
+      clips.map(c => c.stop(time));
+    };
+
+    const startClips = (
+      channelIdx: string | number,
+      clipIdx: string,
+      time: number
+    ): any[] => {
+      return clipIdx === '-'
+        ? []
+        : this.channels
+            .filter(c => c.idx === channelIdx)
+            .map(c => c.clips[clipIdx].start(time));
+    };
+
+    channelPatterns.forEach(({ channelIdx, pattern }: ChannelPattern) => {
+      let clips: any[] = [];
+      let time: number = 0;
+      let prevClipIdx: string = '-';
+      pattern.split('').forEach((clipIdx: string) => {
+        if (clipIdx !== prevClipIdx && clipIdx !== '_') {
+          stopClips(clips, time);
+          clips = startClips(channelIdx, clipIdx, time);
+        }
+        prevClipIdx = clipIdx;
+        time += clipDurationInSeconds;
+      });
+      stopClips(clips, time);
+    });
+  }
 }
