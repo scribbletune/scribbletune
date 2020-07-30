@@ -250,13 +250,17 @@ let ongoingRenderingCounter = 0;
 let originalContext: any;
 
 const recreateToneObjectInContext = (toneObject: any, context: any) => {
-  return new Tone[toneObject.name]({
-    ...toneObject.get(),
-    context,
-    ...(toneObject.name === 'PolySynth' && {
-      voice: Tone[toneObject._dummyVoice.name],
-    }),
-  });
+  if (toneObject.name === 'PolySynth') {
+    return new Tone.PolySynth(Tone[toneObject._dummyVoice.name], {
+      ...toneObject.get(),
+      context,
+    });
+  } else {
+    return new Tone[toneObject.name]({
+      ...toneObject.get(),
+      context,
+    });
+  }
 };
 
 const offlineRenderClip = (params: ClipParams, duration: number) => {
