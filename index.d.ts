@@ -84,6 +84,7 @@ export class Session {
     createChannel(ch: ChannelParams): Channel;
     get channels(): Channel[];
     startRow(idx: number): void;
+    play(params: PlayParams): void;
 }
 
 /**
@@ -106,7 +107,7 @@ export const max: (notes: NoteObject[], liveClip?: string) => void;
   * activeClipIdx -> Get the clip that is currently playing
   */
 export class Channel {
-    idx: number;
+    idx: number | string;
     activePatternIdx: number;
     channelClips: any;
     player: any;
