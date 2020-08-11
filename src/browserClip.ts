@@ -4,20 +4,6 @@ const defaultDur = '8n';
 
 const random = (num = 1) => Math.round(Math.random() * num);
 
-/**
- * @param  {Tone.js Player Object}
- * @return {Function}
- * Take a Tone.js Player and return a function that can be used
- * as the callback in Tone.Sequence https://tonejs.github.io/docs/r12/Sequence
- */
-const getPlayerSeqFn = (player: any): SeqFn => {
-  return (time: string, el: string) => {
-    if (el === 'x' || (el === 'R' && random())) {
-      player.start(time);
-    }
-  };
-};
-
 const getNote = (el: string, params: ClipParams, counter: number) => {
   return el === 'R' && params.randomNotes
     ? params.randomNotes[random(params.randomNotes.length - 1)]
@@ -34,60 +20,53 @@ const getDuration = (params: ClipParams, counter: number) => {
  * @param  {Object}
  * @return {Function}
  * Take an object literal which has a Tone.js instrument and return a function that can be used
- * as the callback in Tone.Sequence https://tonejs.github.io/docs/r12/Sequence
+ * as the callback in Tone.Sequence https://tonejs.github.io/docs/Sequence
  */
-const getInstrSeqFn = (params: ClipParams): SeqFn => {
+const getSeqFn = (params: ClipParams): SeqFn => {
   let counter = 0;
-  return (time: string, el: string) => {
-    if (el === 'x' || el === 'R') {
-      params.instrument.triggerAttackRelease(
-        getNote(el, params, counter),
-        getDuration(params, counter),
-        time
-      );
-      counter++;
-    }
-  };
-};
-
-/**
- * @param  {Object}
- * @return {Function}
- * Take an object literal which has a Tone.js instrument and return a function that can be used
- * as the callback in Tone.Sequence https://tonejs.github.io/docs/r12/Sequence
- */
-const getMonoInstrSeqFn = (params: ClipParams): SeqFn => {
-  let counter = 0;
-  return (time: string, el: string) => {
-    if (el === 'x' || el === 'R') {
-      params.instrument.triggerAttackRelease(
-        getNote(el, params, counter)[0],
-        getDuration(params, counter),
-        time
-      );
-      counter++;
-    }
-  };
-};
-
-/**
- * @param  {Object}
- * @return {Function}
- * Take an object literal which has a Tone.js sampler and return a function that can be used
- * as the callback in Tone.Sequence https://tonejs.github.io/docs/r12/Sequence
- */
-const getSamplerSeqFn = (params: ClipParams): SeqFn => {
-  let counter = 0;
-  return (time: string, el: string) => {
-    if (el === 'x' || el === 'R') {
-      params.sampler.triggerAttackRelease(
-        getNote(el, params, counter),
-        getDuration(params, counter),
-        time
-      );
-      counter++;
-    }
-  };
+  if (params.instrument instanceof Tone.Player) {
+    return (time: string, el: string) => {
+      if (el === 'x' || el === 'R') {
+        params.instrument.start(time);
+        counter++;
+      }
+    };
+  } else if (
+    params.instrument instanceof Tone.PolySynth ||
+    params.instrument instanceof Tone.Sampler
+  ) {
+    return (time: string, el: string) => {
+      if (el === 'x' || el === 'R') {
+        params.instrument.triggerAttackRelease(
+          getNote(el, params, counter),
+          getDuration(params, counter),
+          time
+        );
+        counter++;
+      }
+    };
+  } else if (params.instrument instanceof Tone.NoiseSynth) {
+    return (time: string, el: string) => {
+      if (el === 'x' || el === 'R') {
+        params.instrument.triggerAttackRelease(
+          getDuration(params, counter),
+          time
+        );
+        counter++;
+      }
+    };
+  } else {
+    return (time: string, el: string) => {
+      if (el === 'x' || el === 'R') {
+        params.instrument.triggerAttackRelease(
+          getNote(el, params, counter)[0],
+          getDuration(params, counter),
+          time
+        );
+        counter++;
+      }
+    };
+  }
 };
 
 export const recursivelyApplyPatternToDurations = (
@@ -164,77 +143,41 @@ const generateSequence = (params: ClipParams, context?: any) => {
     effects = params.effects.map(createEffect).map(startEffect);
   }
 
-  if (params.sample || params.buffer) {
-    // This implies, the clip is probably being hand created by the user with a audio sample
-    params.player = new Tone.Player({
-      url: params.sample || params.buffer,
-      context,
-    });
-  }
-
-  if (params.samples) {
-    params.sampler = new Tone.Sampler({ url: params.samples, context });
-  }
-
   if (params.synth && !params.instrument) {
-    // This implies, the synth is probably being hand created by the user with an available Tone synth
+    params.instrument = params.synth;
     console.warn(
       'The "synth" parameter will be deprecated in the future. Please use the "instrument" parameter instead.'
     );
-    params.instrument = new Tone[params.synth]({ context });
   }
 
-  if (params.instrument) {
-    if (typeof params.instrument === 'string') {
-      params.instrument = new Tone[params.instrument]({ context });
-    }
+  params.instrument =
+    params.sample || params.buffer
+      ? new Tone.Player({
+          url: params.sample || params.buffer,
+          context,
+        })
+      : params.sampler
+      ? params.sampler
+      : params.player
+      ? params.player
+      : params.samples
+      ? new Tone.Sampler({ url: params.samples, context })
+      : typeof params.instrument === 'string'
+      ? new Tone[params.instrument]({ context })
+      : params.instrument;
+
+  if (params.volume) {
+    params.instrument.volume.value = params.volume;
   }
 
-  if (params.player) {
-    if (params.volume) {
-      params.player.volume.value = params.volume;
-    }
-    params.player.chain(...effects).toDestination();
-    // This implies, a player object was already created (either by user or by Scribbletune during channel creation)
-    return new Tone.Sequence({
-      callback: getPlayerSeqFn(params.player),
-      events: expandStr(params.pattern),
-      subdivision: params.subdiv || defaultSubdiv,
-      context,
-    });
-  }
+  params.instrument.chain(...effects).toDestination();
 
-  if (params.sampler) {
-    if (params.volume) {
-      params.sampler.volume.value = params.volume;
-    }
-    params.sampler.chain(...effects).toDestination();
-    // This implies, a sampler object was already created (either by user or by Scribbletune during channel creation)
-    return new Tone.Sequence({
-      callback: getSamplerSeqFn(params),
-      events: expandStr(params.pattern),
-      subdivision: params.subdiv || defaultSubdiv,
-      context,
-    });
-  }
-
-  if (params.instrument) {
-    if (params.volume) {
-      params.instrument.volume.value = params.volume;
-    }
-    params.instrument.chain(...effects).toDestination();
-    // This implies, the instrument was already created (either by user or by Scribbletune during channel creation)
-    // Unlike player, the instrument needs the entire params object to construct a sequence
-    return new Tone.Sequence({
-      callback:
-        params.instrument instanceof Tone.PolySynth
-          ? getInstrSeqFn(params)
-          : getMonoInstrSeqFn(params),
-      events: expandStr(params.pattern),
-      subdivision: params.subdiv || defaultSubdiv,
-      context,
-    });
-  }
+  return new Tone.Sequence({
+    callback: getSeqFn(params),
+    events: expandStr(params.pattern),
+    subdivision: params.subdiv || defaultSubdiv,
+    context,
+  });
 };
 
 export const totalPatternDuration = (
@@ -250,7 +193,7 @@ let ongoingRenderingCounter = 0;
 let originalContext: any;
 
 const recreateToneObjectInContext = (toneObject: any, context: any) => {
-  if (toneObject.name === 'PolySynth') {
+  if (toneObject instanceof Tone.PolySynth) {
     return new Tone.PolySynth(Tone[toneObject._dummyVoice.name], {
       ...toneObject.get(),
       context,

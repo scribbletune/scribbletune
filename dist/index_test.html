@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Scribbletune</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <h1>Scribbletune in the browser with Tone.js!</h1>
+    <h3>Run all functional tests</h3>
+    <p>
+      This HTML file loads Tone.js from CDN and the browser version of
+      Scribbletune as SCRIPT tags. It also loads a file called script_test.js
+      for using these 2 libraries for generating patterns and playing them.
+      <a href="script_test.js">Take a look at script_test.js</a> to see the code
+      written for those tests.
+    </p>
+    <div>
+      <h2 id="testNumber">Ready to test !</h2>
+      <button id="next">Next test <kbd>→ Right arrow</kbd></button>
+      <h3 id="title">Click "Next test" to setup the first test</h3>
+      <h4>Description</h4>
+      <div id="description">
+        You can also open the developer tools to see the session & channel
+        parameters in the console. You'll see here a description of what you
+        should hear as a result.
+      </div>
+      <h4>Loading & rendering status</h4>
+      <div id="loading">✔️ Loaded</div>
+      <div id="rendering">✔️ Rendered</div>
+      <button id="playPause">Play <kbd>⏎ Enter</kbd></button>
+    </div>
+
+    <hr />
+    <p>
+      <a href="session.html">Click here</a> to view an example of using sessions
+      and channels with multiple clips
+    </p>
+    <!-- choose one version of Tone.js below -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.39/Tone.js"></script>
+    <script src="scribbletune.js"></script>
+    <script src="script_test.js"></script>
+  </body>
+  <style>
+    kbd {
+      border-radius: 3px;
+      padding: 2px;
+      border: 1px solid black;
+    }
+    button {
+      padding: 5px;
+    }
+  </style>
+</html>

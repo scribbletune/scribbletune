@@ -64,11 +64,13 @@ A unit test that tests the class 'newClass.ts' should be named 'newClass.spec.ts
 
 If the piece of work that you are adding is large then integration tests are welcomed as long as they are succinct and performant.
 
-### Browser Support
+### Browser Support & Functional Testing
 
 Scribbletune can be used both offline via Node.js as well as in the browser, via Tone.js. It is important that any new functionality is compatible with both of these.
 
 In exceptional cases where this is not possible you should clearly state this, with some reasoning, in the pull request.
+
+For features available in the browser, some functional tests are available in `dist/index_test.html` (using the script `dist/script_test.js`). Those tests are not automated and should be run manually one by one. If you fix or add a browser-based feature, please add a functional test in `dist/script_test.js`.
 
 ### Meeting the Issue Criteria
 
