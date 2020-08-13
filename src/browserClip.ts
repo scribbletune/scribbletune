@@ -128,7 +128,11 @@ const generateSequence = (params: ClipParams, context?: any) => {
 
   const createEffect = (eff: any) => {
     const effect: any =
-      typeof eff === 'string' ? new Tone[eff]({ context }) : eff;
+      typeof eff === 'string'
+        ? new Tone[eff]({ context })
+        : eff.context !== context
+        ? recreateToneObjectInContext(eff, context)
+        : eff;
     return effect.toDestination();
   };
 
@@ -166,6 +170,10 @@ const generateSequence = (params: ClipParams, context?: any) => {
       ? new Tone[params.instrument]({ context })
       : params.instrument;
 
+  if (params.instrument.context !== context) {
+    params.instrument = recreateToneObjectInContext(params.instrument, context);
+  }
+
   if (params.volume) {
     params.instrument.volume.value = params.volume;
   }
@@ -198,6 +206,20 @@ const recreateToneObjectInContext = (toneObject: any, context: any) => {
       ...toneObject.get(),
       context,
     });
+  } else if (toneObject instanceof Tone.Player) {
+    return new Tone.Player({ url: toneObject._buffer, context });
+  } else if (toneObject instanceof Tone.Sampler) {
+    const { attack, curve, release, volume } = toneObject.get();
+    const paramsFromSampler = { attack, curve, release, volume };
+    const paramsFromBuffers = {
+      baseUrl: toneObject._buffers.baseUrl,
+      urls: Object.fromEntries(toneObject._buffers._buffers.entries()),
+    };
+    return new Tone.Sampler({
+      ...paramsFromSampler,
+      ...paramsFromBuffers,
+      context,
+    });
   } else {
     return new Tone[toneObject.name]({
       ...toneObject.get(),
@@ -212,26 +234,11 @@ const offlineRenderClip = (params: ClipParams, duration: number) => {
   }
   ongoingRenderingCounter++;
   const player = new Tone.Player({ context: originalContext, loop: true });
-  Tone.Offline(({ transport }: any) => {
-    if (params.instrument) {
-      params.instrument =
-        typeof params.instrument !== 'string'
-          ? recreateToneObjectInContext(params.instrument, transport.context)
-          : params.instrument;
-    }
-    if (params.effects) {
-      if (!Array.isArray(params.effects)) {
-        params.effects = [params.effects];
-      }
-      params.effects = params.effects.map((effect: any) => {
-        return typeof effect !== 'string'
-          ? recreateToneObjectInContext(effect, transport.context)
-          : effect;
-      });
-    }
-    const sequence = generateSequence(params, transport.context);
+  Tone.Offline(async (context: any): Promise<void> => {
+    const sequence = generateSequence(params, context);
+    await Tone.loaded();
     sequence.start();
-    transport.start(); // this is why offline rendering doesn't work with buffer-based instruments for now. We start transport before the buffer inside the recreated instrument is finished being computed.
+    context.transport.start();
   }, duration).then((buffer: any) => {
     player.buffer = buffer;
     ongoingRenderingCounter--;
@@ -253,16 +260,10 @@ const offlineRenderClip = (params: ClipParams, duration: number) => {
  */
 export const browserClip = (params: ClipParams) => {
   if (params.offlineRendering) {
-    if (params.sample || params.samples || params.buffer || params.player) {
-      console.warn(
-        'Offline rendering is not available for `sample`, `samples`, `buffer` or `player` parameters (buffer-based instruments). Please use only `synth` or `instrument` parameters.'
-      );
-    } else {
-      return offlineRenderClip(
-        params,
-        totalPatternDuration(params.pattern, params.subdiv || defaultSubdiv)
-      );
-    }
+    return offlineRenderClip(
+      params,
+      totalPatternDuration(params.pattern, params.subdiv || defaultSubdiv)
+    );
   }
   return generateSequence(params, originalContext);
 };

@@ -206,6 +206,7 @@
         clips: [{ pattern: 'x' }],
       },
     ],
+    toBeAlsoTestedWithOfflineRendering: true,
   });
 
   tests.push({
@@ -217,6 +218,7 @@
         clips: [{ pattern: '[-x]' }],
       },
     ],
+    toBeAlsoTestedWithOfflineRendering: true,
   });
 
   tests.push({
@@ -232,6 +234,7 @@
         clips: [{ pattern: '[-x]' }],
       },
     ],
+    toBeAlsoTestedWithOfflineRendering: true,
   });
 
   tests.push({
@@ -259,6 +262,7 @@
         clips: [{ pattern: '-x' }],
       },
     ],
+    toBeAlsoTestedWithOfflineRendering: true,
   });
 
   const piano = {
@@ -292,6 +296,7 @@
         ],
       },
     ],
+    toBeAlsoTestedWithOfflineRendering: true,
   });
 
   tests.push({
@@ -311,6 +316,7 @@
         ],
       },
     ],
+    toBeAlsoTestedWithOfflineRendering: true,
   });
 
   tests.push({
@@ -505,6 +511,7 @@
         },
       ],
     },
+    toBeAlsoTestedWithOfflineRendering: true,
   });
 
   tests.push({
@@ -538,7 +545,7 @@
         sample: 'https://scribbletune.com/sounds/snare.wav',
         clips: [{ pattern: '-x' }],
       },
-      appendOfflineRenderingParams({
+      {
         idx: 'chord',
         instrument: new Tone.PolySynth(Tone.FMSynth, {
           volume: -15,
@@ -547,7 +554,7 @@
         clips: [
           { pattern: 'x___x___x___x___', notes: 'CTM-2 DTm-2 ETm-2 FTM-2' },
         ],
-      }),
+      },
     ],
     playMode: {
       func: 'play',
@@ -565,6 +572,7 @@
         },
       ],
     },
+    toBeAlsoTestedWithOfflineRendering: true,
   });
 
   createOfflineRenderingTests();
