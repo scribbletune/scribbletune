@@ -19,7 +19,7 @@ type progressionScale = 'major' | 'minor' | 'M' | 'm';
 
 interface ClipParams {
   /**
-   * A string or array of notes names.
+   * A string or array of notes or chords names.
    *  - Default:  `[ 'C4' ]`
    *  - Example:  `'C4 D4 C4 D#4 C4 D4 C4 Bb3'`
    */
@@ -77,8 +77,9 @@ interface ClipParams {
    */
   sizzleReps?: number;
   /**
-   * A string or array of random notes.
+   * A string or array of random notes or chords.
    *  - Default:  `null`
+   *  - Example:  `'C4 D4 C4 D#4 C4 D4 C4 Bb3'`
    */
   randomNotes?: null | string | (string | string[])[];
   /**
