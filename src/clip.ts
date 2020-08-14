@@ -42,6 +42,34 @@ const hdr: NVP<number> = {
   '16n': 32,
 };
 
+const convertChordsToNotes = (el: any) => {
+  if (isNote(el as string)) {
+    // A note needs to be an array so that it can accomodate chords or single notes with a single interface
+    return [el];
+  }
+
+  if (Array.isArray(el)) {
+    // This could be a chord provided as an array
+    // make sure it uses valid notes
+    el.forEach(n => {
+      if (!isNote(n)) {
+        throw new TypeError('array must comprise valid notes');
+      }
+    });
+
+    return el;
+  }
+
+  if (!Array.isArray(el)) {
+    const chord = getChord(el);
+    if (chord && chord.length) {
+      return chord;
+    }
+  }
+
+  throw new Error(`Chord ${el} not found`);
+};
+
 export const clip = (params: ClipParams) => {
   params = { ...getDefaultParams(), ...(params || {}) };
 
@@ -52,34 +80,7 @@ export const clip = (params: ClipParams) => {
     params.notes = params.notes.split(' ');
   }
 
-  // Convert chords if any to notes
-  params.notes = params.notes.map((el: any) => {
-    if (isNote(el as string)) {
-      // A note needs to be an array so that it can accomodate chords or single notes with a single interface
-      return [el];
-    }
-
-    if (Array.isArray(el)) {
-      // This could be a chord provided as an array
-      // make sure it uses valid notes
-      el.forEach(n => {
-        if (!isNote(n)) {
-          throw new TypeError('array must comprise valid notes');
-        }
-      });
-
-      return el;
-    }
-
-    if (!Array.isArray(el)) {
-      const chord = getChord(el);
-      if (chord && chord.length) {
-        return chord;
-      }
-    }
-
-    throw new Error(`Chord ${el} not found`);
-  });
+  params.notes = params.notes.map(convertChordsToNotes);
 
   if (/[^x\-_\[\]R]/.test(params.pattern)) {
     throw new TypeError(
@@ -92,14 +93,13 @@ export const clip = (params: ClipParams) => {
   }
 
   if (params.randomNotes && typeof params.randomNotes === 'string') {
-    params.randomNotes = params.randomNotes.replace(/\s{2,}/g, ' ');
-    params.randomNotes = params.randomNotes.split(/\s/);
+    params.randomNotes = params.randomNotes.replace(/\s{2,}/g, ' ').split(/\s/);
   }
 
   if (params.randomNotes) {
-    params.randomNotes = (params.randomNotes as string[]).map((el: string) => [
-      el,
-    ]);
+    params.randomNotes = (params.randomNotes as string[]).map(
+      convertChordsToNotes
+    );
   }
 
   // If the clip method is being called in the context of a Tone.js instrument or synth,

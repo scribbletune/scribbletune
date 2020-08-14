@@ -189,12 +189,43 @@ const generateSequence = (params: ClipParams, context?: any) => {
 };
 
 export const totalPatternDuration = (
-  pattern: any,
+  pattern: string,
   subdivOrLength: string | number
 ) => {
   return typeof subdivOrLength === 'number'
     ? subdivOrLength * expandStr(pattern).length
     : Tone.Ticks(subdivOrLength).toSeconds() * expandStr(pattern).length;
+};
+
+const leastCommonMultiple = (n1: number, n2: number): number => {
+  const [smallest, largest] = n1 < n2 ? [n1, n2] : [n2, n1];
+  let i = largest;
+  while (i % smallest !== 0) {
+    i += largest;
+  }
+  return i;
+};
+
+export const renderingDuration = (
+  pattern: string,
+  subdivOrLength: string | number,
+  notes: string | (string | string[])[],
+  randomNotes: undefined | null | string | (string | string[])[]
+) => {
+  const patternRegularNotesCount = pattern.split('').filter(c => {
+    return c === 'x';
+  }).length;
+  const patternRandomNotesCount = pattern.split('').filter(c => {
+    return c === 'R';
+  }).length;
+  const patternNotesCount = randomNotes?.length
+    ? patternRegularNotesCount
+    : patternRegularNotesCount + patternRandomNotesCount;
+  const notesCount = notes.length || 1;
+  return (
+    (totalPatternDuration(pattern, subdivOrLength) / patternNotesCount) *
+    leastCommonMultiple(notesCount, patternNotesCount)
+  );
 };
 
 let ongoingRenderingCounter = 0;
@@ -262,7 +293,12 @@ export const browserClip = (params: ClipParams) => {
   if (params.offlineRendering) {
     return offlineRenderClip(
       params,
-      totalPatternDuration(params.pattern, params.subdiv || defaultSubdiv)
+      renderingDuration(
+        params.pattern,
+        params.subdiv || defaultSubdiv,
+        params.notes,
+        params.randomNotes
+      )
     );
   }
   return generateSequence(params, originalContext);
