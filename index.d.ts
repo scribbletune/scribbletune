@@ -54,7 +54,7 @@ export const progression: (scale: progressionScale, count?: number) => any[] | u
 type Params = {
     count: number;
     order?: string;
-    chords: string;
+    chords: string | any[];
 };
 /**
   *

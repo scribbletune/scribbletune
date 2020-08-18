@@ -26,4 +26,17 @@ describe('../src/arp', () => {
     expect(arp('CM-4 FM-4')[3]).toBe('C5');
     expect(arp('CM-4 FM-4')[7]).toBe('F5');
   });
+
+  it('accepts chords as arrays', () => {
+    const a = arp({
+      chords: [
+        ['C3', 'E3', 'G3', 'B3'],
+        ['F3', 'A3', 'C4', 'E4'],
+      ],
+      count: 8,
+    });
+
+    expect(a[0]).toBe('C3');
+    expect(a[15]).toBe('E5');
+  });
 });

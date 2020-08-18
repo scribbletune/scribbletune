@@ -54,3 +54,34 @@ scribble.midi(
   }),
   'melody.mid'
 );
+
+// You can use lodash's sampleSize method to randomly select a set of notes
+// from a scale to construct random chords
+// e.g. https://scribbletune.com/examples/random-chords
+const arpedNotesFromChordArr = scribble.arp({
+  chords: [
+    ['A3', 'F#4', 'A4'],
+    ['F#3', 'G4', 'B4'],
+    ['B4', 'C3', 'B3'],
+    ['E4', 'C4', 'G3'],
+    ['G3', 'A3', 'D3'],
+    ['G3', 'B4', 'F#4'],
+    ['B3', 'F#4', 'G4'],
+    ['E4', 'A4', 'D3'],
+    ['A4', 'G4', 'A3'],
+    ['D3', 'B3', 'A4'],
+    ['F#4', 'B3', 'E4'],
+    ['C4', 'A3', 'F#4'],
+  ],
+  count: 4,
+  order: '0213',
+});
+
+scribble.midi(
+  scribble.clip({
+    notes: arpedNotesFromChordArr,
+    pattern: 'xx-x-xxx'.repeat(5).slice(0, 32),
+    subdiv: '16n',
+  }),
+  'melody2.mid'
+);

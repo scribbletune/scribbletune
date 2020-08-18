@@ -1,6 +1,6 @@
 {
   "name": "scribbletune",
-  "version": "3.14.1",
+  "version": "3.15.0",
   "description": "Create music with JavaScript and Node.js!",
   "main": "./index.js",
   "types": "index.d.ts",
@@ -8,6 +8,7 @@
     "doc": "npx typedoc --out docs src/ src/typings.d.ts",
     "doc:json": "npx typedoc --json typedoc-out.json src",
     "test": "jest --coverage",
+    "test:watch": "jest --watch",
     "build:node": "npx webpack",
     "build:browser": "TARGET=browser npx webpack",
     "build": "npm t && npm run build:node && npm run build:browser",

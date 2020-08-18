@@ -26,7 +26,7 @@ const fillArr = (arr: string[], len: number) => {
 type Params = {
   count: number;
   order?: string;
-  chords: string;
+  chords: string | any[];
 };
 
 /**
@@ -63,14 +63,29 @@ export const arp = (chordsOrParams: string | Params) => {
     Object.assign(params, chordsOrParams);
   }
 
-  const chordsArr: string[] = params.chords.split(' ');
-  for (const chord of chordsArr) {
-    const filledArr = fillArr(getChord(chord) as string[], params.count);
-    // reorder the filledArr as per params.order
-    const reorderedArr = (params.order as string)
-      .split('')
-      .map((idx: any) => filledArr[idx]);
-    finalArr = [...finalArr, ...reorderedArr];
+  // Chords can be passed as a string, e.g. CM-4 FM-4
+  // or as an array of notes arrays e.g. [['C3', 'E3', 'G3', 'B3'], ['F3', 'A3', 'C4', 'E4']]
+  if (typeof params.chords === 'string') {
+    const chordsArr: string[] = (params.chords as string).split(' ');
+    for (const chord of chordsArr) {
+      const filledArr = fillArr(getChord(chord) as string[], params.count);
+      // reorder the filledArr as per params.order
+      const reorderedArr = (params.order as string)
+        .split('')
+        .map((idx: any) => filledArr[idx]);
+      finalArr = [...finalArr, ...reorderedArr];
+    }
+  } else if (Array.isArray(params.chords)) {
+    for (const chord of params.chords) {
+      const filledArr = fillArr(chord as string[], params.count);
+      // reorder the filledArr as per params.order
+      const reorderedArr = (params.order as string)
+        .split('')
+        .map((idx: any) => filledArr[idx]);
+      finalArr = [...finalArr, ...reorderedArr];
+    }
+  } else {
+    throw new TypeError('Invalid value for chords');
   }
 
   return finalArr;
