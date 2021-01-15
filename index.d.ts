@@ -2,14 +2,14 @@
 
 export { getScale as scale, getScale as mode, scales, scales as modes, addChord, getChord as chord, chords, clip, getChordDegrees, getChordsByProgression, progression, arp, midi, Session, max, };
 
-export const getScale: (tonicOctScale: string) => (string | null)[];
+export const getScale: (tonicOctScale: string) => (null | string)[];
 export const scales: () => string[];
 
 /**
     * Derive a chord from the given string. Exposed as simply `chord` in Scribbletune
     * @return {Array}     [example `chord('CM')` outputs: ['c4', 'e4', 'g4'], `chord('CM-5')` outputs: ['c5', 'e5', 'g5']]
     */
-export const getChord: (name: string) => string[] | (string | null)[] | null;
+export const getChord: (name: string) => (string[] | null) | (null | string)[];
 /**
     * Get a list of chords available in Scribbletune.
     * @return {Array}     [example output: ['maj', 'min', 'dim']]
@@ -76,7 +76,7 @@ export {};
   * This link will enable the generated MIDI as a downloadable file.
   * @param {Number | null} bpm If a value is provided, the generated midi file will be set to this bpm value.
   */
-export const midi: (notes: NoteObject[], fileName?: string | null, bpm?: number | undefined) => string | HTMLAnchorElement | undefined;
+export const midi: (notes: NoteObject[], fileName?: string | null, bpm?: number | undefined, trackName?: string | undefined) => string | HTMLAnchorElement | undefined;
 
 export class Session {
     sessionChannels: Channel[];

@@ -1410,7 +1410,7 @@ createChannel	dist/script_test.js	/^    function createChannel(params) {$/;"	f	f
 createChannel	index.js	/^!function(t,n){for(var e in n)t[e]=n[e]}(exports,function(t){var n={};function e(r){if(n[r])retu/;"	m	class:t
 createChannel	src/session.ts	/^  createChannel(ch: ChannelParams) {$/;"	m	class:Session
 createDownloadLink	src/midi.ts	/^const createDownloadLink = (b: string, fileName: string): HTMLAnchorElement => {$/;"	C
-createFileFromNotes	src/midi.ts	/^const createFileFromNotes = (notes: NoteObject[], bpm?: number, fileName?: string | null) => {$/;"	C
+createFileFromNotes	src/midi.ts	/^const createFileFromNotes = (notes: NoteObject[], bpm?: number, trackName?: string) => {$/;"	C
 createOfflineRenderingTests	dist/script_test.js	/^  function createOfflineRenderingTests() {$/;"	f
 cross-spawn	package-lock.json	/^        "cross-spawn": "6.0.5",$/;"	s	object:dependencies.webpack-cli.requires
 cross-spawn	package-lock.json	/^        "cross-spawn": "^6.0.0",$/;"	s	object:dependencies.execa.requires

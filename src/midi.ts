@@ -15,9 +15,10 @@ import * as jsmidgen from 'jsmidgen';
 export const midi = (
   notes: NoteObject[],
   fileName: string | null = 'music.mid',
-  bpm?: number
+  bpm?: number,
+  trackName?: string
 ): string | HTMLAnchorElement | undefined => {
-  const file = createFileFromNotes(notes, bpm, fileName);
+  const file = createFileFromNotes(notes, bpm, trackName);
   const bytes = file.toBytes();
 
   if (fileName === null) {
@@ -72,7 +73,7 @@ const createDownloadLink = (b: string, fileName: string): HTMLAnchorElement => {
   return link;
 };
 
-const createFileFromNotes = (notes: NoteObject[], bpm?: number, fileName?: string | null) => {
+const createFileFromNotes = (notes: NoteObject[], bpm?: number, trackName?: string) => {
   const file = new jsmidgen.File();
   const track = new jsmidgen.Track();
 
@@ -82,8 +83,8 @@ const createFileFromNotes = (notes: NoteObject[], bpm?: number, fileName?: strin
   }
 
   // set midi track name if it is provided
-  if (typeof fileName === 'string') {
-    track.addEvent(new jsmidgen.MetaEvent({type: jsmidgen.MetaEvent.TRACK_NAME, data: fileName }));
+  if (typeof trackName === 'string') {
+    track.addEvent(new jsmidgen.MetaEvent({type: jsmidgen.MetaEvent.TRACK_NAME, data: trackName }));
   }
 
   file.addTrack(track);
