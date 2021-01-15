@@ -6,7 +6,7 @@ import {
   progression,
 } from './progression';
 import { arp } from './arp';
-import { midi } from './midi';
+import { max } from './max';
 
 export {
   scale,
@@ -20,5 +20,5 @@ export {
   getChordsByProgression,
   progression,
   arp,
-  midi,
+  max,
 };

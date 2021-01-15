@@ -1,4 +1,4 @@
-import { getChord } from './chord';
+import { chord } from './scalesAndChords';
 
 /**
  * Take an array and fill it with it s own elements in the next octave till it s of the specified `len`
@@ -67,8 +67,8 @@ export const arp = (chordsOrParams: string | Params) => {
   // or as an array of notes arrays e.g. [['C3', 'E3', 'G3', 'B3'], ['F3', 'A3', 'C4', 'E4']]
   if (typeof params.chords === 'string') {
     const chordsArr: string[] = (params.chords as string).split(' ');
-    for (const chord of chordsArr) {
-      const filledArr = fillArr(getChord(chord) as string[], params.count);
+    for (const c of chordsArr) {
+      const filledArr = fillArr(chord(c) as string[], params.count);
       // reorder the filledArr as per params.order
       const reorderedArr = (params.order as string)
         .split('')

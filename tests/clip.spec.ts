@@ -57,19 +57,19 @@ describe('../src/clip', () => {
     });
     expect(c[0].note[0]).toBe('C4');
     expect(c[1].note[0]).toBe('D4');
-    expect(c[1].note[1]).toBe('F#4');
+    expect(c[1].note[1]).toBe('Gb4');
     expect(c[1].note[2]).toBe('A4');
     expect(c[2].note[0]).toBe('E4');
   });
 
   it('accepts a string of notes with chords with octaves', () => {
     const c = clip({
-      notes: 'C4 DM-5 E4',
+      notes: 'C4 DM_5 E4',
       pattern: 'xxx',
     });
     expect(c[0].note[0]).toBe('C4');
     expect(c[1].note[0]).toBe('D5');
-    expect(c[1].note[1]).toBe('F#5');
+    expect(c[1].note[1]).toBe('Gb5');
     expect(c[1].note[2]).toBe('A5');
     expect(c[2].note[0]).toBe('E4');
   });

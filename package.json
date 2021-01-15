@@ -11,8 +11,10 @@
     "test:watch": "jest --watch",
     "build:node": "npx webpack",
     "build:browser": "TARGET=browser npx webpack",
-    "build": "npm t && npm run build:node && npm run build:browser",
+    "build:max": "TARGET=max npx webpack",
+    "build": "npm t && npm run build:node && npm run build:browser && npm run build:max",
     "watch:browser": "TARGET=browser npx webpack --watch",
+    "watch:max": "TARGET=max npx webpack --watch",
     "watch:node": "npx webpack --watch",
     "rebuild": "rm -rf node_modules; rm package-lock.json; npm i; npm run build"
   },

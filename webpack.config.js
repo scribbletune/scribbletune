@@ -14,7 +14,24 @@ const getOutput = () => {
     output.libraryTarget = 'umd';
   }
 
+  if (process.env.TARGET === 'max') {
+    output.filename = 'max.js';
+  }
+
   return output;
+};
+
+const getEntry = () => {
+  let main = './src/index.ts';
+  if (process.env.TARGET === 'browser') {
+    main = './src/browser-index.ts';
+  }
+  if (process.env.TARGET === 'max') {
+    main = './src/max-index.ts';
+  }
+  return {
+    main,
+  };
 };
 
 const plugins = [];
@@ -22,12 +39,8 @@ plugins.push(new DtsBundlePlugin());
 
 module.exports = {
   mode: 'production',
-  entry: {
-    main: './src/index.ts',
-  },
-
+  entry: getEntry(),
   output: getOutput(),
-
   devtool: process.env.TARGET === 'browser' ? 'source-map' : '',
 
   module: {

@@ -1,4 +1,4 @@
-import { getScale } from './scale';
+import { scale } from './scalesAndChords';
 import { pickOne, dice } from './utils';
 
 /**
@@ -83,7 +83,7 @@ export const getChordsByProgression = (
   }
 
   // Get the scale from the given note and scale/mode combination
-  const mode = getScale(noteOctaveScale);
+  const mode = scale(noteOctaveScale);
   const chordDegreesArr = chordDegress.replace(/\s*,+\s*/g, ' ').split(' ');
   // Now we have something like ['i', 'ii', 'IV']
   // Convert it to a chord family such as ['Cm', 'Dm', 'FM']

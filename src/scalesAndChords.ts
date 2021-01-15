@@ -1,3 +1,108 @@
+import { Util } from 'jsmidgen';
+
+export const scaleMaps: NVP<string> = {
+  major: 'WWHWWW',
+  minor: 'WHWWHW',
+  'major pentatonic': 'WWAW',
+  'ionian pentatonic': 'HHWH',
+  'mixolydian pentatonic': 'HHWA',
+  ritusen: 'WAWW',
+  egyptian: 'WAWA',
+  'neopolitan major pentatonic': 'HHHH',
+  'vietnamese 1': 'AWWH',
+  pelog: 'HWHH',
+  kumoijoshi: 'HHWH',
+  hirajoshi: 'WHHH',
+  iwato: 'HHHH',
+  'in-sen': 'HHWA',
+  'lydian pentatonic': 'HWHH',
+  'malkos raga': 'AWAW',
+  'locrian pentatonic': 'AWHH',
+  'minor pentatonic': 'AWWA',
+  'minor six pentatonic': 'AWWW',
+  'flat three pentatonic': 'WHHW',
+  'flat six pentatonic': 'WWAH',
+  scriabin: 'HAAW',
+  'whole tone pentatonic': 'HWWW',
+  'lydian #5P pentatonic': 'HWWA',
+  'lydian dominant pentatonic': 'HWHA',
+  'minor #7M pentatonic': 'AWWH',
+  'super locrian pentatonic': 'AHWH',
+  'minor hexatonic': 'WHWWH',
+  augmented: 'AHAHA',
+  'major blues': 'WHHAW',
+  piongio: 'WAWWH',
+  'prometheus neopolitan': 'HAWAH',
+  prometheus: 'WWWAH',
+  'mystery #1': 'HAWWW',
+  'six tone symmetric': 'HAHAH',
+  'whole tone': 'WWWWW',
+  "messiaen's mode #5": 'HHHHH',
+  'minor blues': 'AWHHA',
+  'locrian major': 'WWHHWW',
+  'double harmonic lydian': 'HAWHHA',
+  'harmonic minor': 'WHWWHA',
+  altered: 'HWHWWW',
+  'locrian #2': 'WHWHWW',
+  'mixolydian b6': 'WWHWHW',
+  'lydian dominant': 'WWWHWH',
+  lydian: 'WWWHWW',
+  'lydian augmented': 'WWWWHW',
+  'dorian b2': 'HWWWWH',
+  'melodic minor': 'WHWWWW',
+  locrian: 'HWWHWW',
+  ultralocrian: 'HWHWWH',
+  'locrian 6': 'HWWHAH',
+  'augmented heptatonic': 'AHHWHA',
+  'romanian minor': 'WHAHWH',
+  'dorian #4': 'WHAHWH',
+  'lydian diminished': 'WHAHWW',
+  phrygian: 'HWWWHW',
+  'leading whole tone': 'WWWWWH',
+  'lydian minor': 'WWWHHW',
+  'phrygian dominant': 'HAHWHW',
+  balinese: 'HWWWHA',
+  'neopolitan major': 'HWWWWW',
+  aeolian: 'WHWWHW',
+  'harmonic major': 'WWHWHA',
+  'double harmonic major': 'HAHWHA',
+  dorian: 'WHWWWH',
+  'hungarian minor': 'WHAHHA',
+  'hungarian major': 'AHWHWH',
+  oriental: 'HAHHAH',
+  flamenco: 'HWHWHA',
+  'todi raga': 'HWAHHA',
+  mixolydian: 'WWHWWH',
+  persian: 'HAHHWA',
+  enigmatic: 'HAWWWH',
+  'major augmented': 'WWHAHW',
+  'lydian #9': 'AHWHWW',
+  "messiaen's mode #4": 'HHAHHHA',
+  'purvi raga': 'HAHHHHA',
+  'spanish heptatonic': 'HWHHWHW',
+  bebop: 'WWHWWHH',
+  'bebop minor': 'WHHHWWH',
+  'bebop major': 'WWHWHHW',
+  'bebop locrian': 'HWWHHHW',
+  'minor bebop': 'WHWWHWH',
+  diminished: 'WHWHWHW',
+  ichikosucho: 'WWHHHWW',
+  'minor six diminished': 'WHWWHHW',
+  'half-whole diminished': 'HWHWHWH',
+  'kafi raga': 'AHHWWHH',
+  "messiaen's mode #6": 'WWHHWWH',
+  'composite blues': 'WHHHHHWH',
+  "messiaen's mode #3": 'WHHWHHWH',
+  "messiaen's mode #7": 'HHHWHHHHW',
+  chromatic: 'HHHHHHHHHHH',
+};
+
+/**
+ * Get a list of scales available in Scribbletune.
+ * @return {Array}     [example output: ['major', 'minor', 'harmonic minor']]
+ */
+export const scales = (): string[] => Object.keys(scaleMaps);
+
 export const chordMaps: NVP<number[]> = {
   '5th': [0, 7],
   fifth: [0, 7],
@@ -211,6 +316,102 @@ export const chordMaps: NVP<number[]> = {
  * @return {Array}     [example output: ['maj', 'min', 'dim']]
  */
 export const chords = (): string[] => Object.keys(chordMaps);
+
+/**
+ * Generate a scale using static scale maps
+ * @param name Name of the scale e.g. C4 major
+ */
+export const scale = (name: string): string[] => {
+  const match: RegExpMatchArray | null = name.match(
+    /([A-Ga-g])(b|#)?([0-9])\s([a-zA-Z0-9\s\#]+)/
+  );
+  const root: string = (match as RegExpMatchArray)[1];
+  const accidental: string = (match as RegExpMatchArray)[2] || '';
+  const octave: string = (match as RegExpMatchArray)[3];
+  const note: string = root + accidental + octave;
+  const scaleName: string = (match as RegExpMatchArray)[4];
+  if (!scaleMaps[scaleName]) {
+    throw `No such scale ${scaleName}`;
+  }
+
+  let pitch: number = Util.midiPitchFromNote(note);
+  const scaleNotes: string[] = [note];
+
+  for (let i: number = 0; i < scaleMaps[scaleName].length; i++) {
+    if (scaleMaps[scaleName][i] === 'A') {
+      pitch += 3;
+    } else if (scaleMaps[scaleName][i] === 'W') {
+      pitch += 2;
+    } else {
+      // H
+      pitch += 1;
+    }
+    let note = Util.noteFromMidiPitch(
+      pitch,
+      accidental ? accidental === 'b' : true
+    );
+    note = note[0].toUpperCase() + note.slice(1);
+    scaleNotes.push(note);
+  }
+
+  return scaleNotes;
+};
+
+/**
+ * Generate a chord based on static chord maps
+ * @param name
+ */
+export const chord = (name: string): string[] => {
+  const match: RegExpMatchArray | null = name.match(
+    /([A-Ga-g])(b|#)?([a-zA-Z0-9\-\+\#\s\Δ\°\ø\(\)\/]+)(\_[0-9])?/
+  );
+  const root: string = (match as RegExpMatchArray)[1];
+  const accidental: string = (match as RegExpMatchArray)[2] || '';
+  const octave: string =
+    ((match as RegExpMatchArray)[4] &&
+      (match as RegExpMatchArray)[4].replace(/\D/, '')) ||
+    '4';
+  const note: string = root + accidental + octave;
+  const chordName: string = (match as RegExpMatchArray)[3];
+  if (!chordMaps[chordName]) {
+    throw `No such chord ${chordName}`;
+  }
+
+  const chromatic: string[] = scale(note + ' chromatic').concat(
+    scale(root + accidental + (+octave + 1) + ' chromatic')
+  );
+
+  const chordNotes: string[] = [];
+  chordMaps[chordName].forEach((idx: number) => {
+    chordNotes.push(chromatic[idx]);
+  });
+
+  return chordNotes;
+};
+
+// const getScaleMaps = (str) => {
+//   let scaleMap = '';
+//   const scaleNotes = scribble.scale('C4 ' + str);
+//   const firstNote = scaleNotes.shift();
+//   let currentPitch = jsmidgen.Util.midiPitchFromNote(firstNote);
+//   while (scaleNotes.length) {
+//     let note = scaleNotes.shift();
+//     let pitch = jsmidgen.Util.midiPitchFromNote(note);
+//     if (pitch - currentPitch === 3) {
+//       scaleMap += 'A';
+//     } else if (pitch - currentPitch === 2) {
+//       scaleMap += 'W';
+//     } else {
+//       scaleMap += 'H';
+//     }
+//     currentPitch = pitch;
+//   }
+//   return scaleMap;
+// };
+
+// scribble.scales().forEach((s) => {
+//   console.log(`"${s}": '${getScaleMaps(s)}',`);
+// });
 
 // const getChordMaps = (chordName) => {
 //   const chordMap = [0];
