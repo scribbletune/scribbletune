@@ -2,10 +2,10 @@ import { arp } from '../src/arp';
 
 describe('../src/arp', () => {
   it('returns correct notes', () => {
-    expect(arp('CM-4 FM-4')[0]).toBe('C4');
+    expect(arp('CM_4 FM_4')[0]).toBe('C4');
     expect(
       arp({
-        chords: 'CM-4 FM-4',
+        chords: 'CM_4 FM_4',
         order: '76543210',
         count: 8,
       })[0]
@@ -14,7 +14,7 @@ describe('../src/arp', () => {
 
   it('sets the order if only count was provided', () => {
     const a = arp({
-      chords: 'CM7-4 FM7-4',
+      chords: 'CM7_4 FM7_4',
       count: 8,
     });
 
@@ -23,8 +23,8 @@ describe('../src/arp', () => {
   });
 
   it('set default order to 0123 and count to 4 when only chords are passed', () => {
-    expect(arp('CM-4 FM-4')[3]).toBe('C5');
-    expect(arp('CM-4 FM-4')[7]).toBe('F5');
+    expect(arp('CM_4 FM_4')[3]).toBe('C5');
+    expect(arp('CM_4 FM_4')[7]).toBe('F5');
   });
 
   it('accepts chords as arrays', () => {

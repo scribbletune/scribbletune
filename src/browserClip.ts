@@ -1,6 +1,72 @@
-import { expandStr } from './utils';
+import { isNote, shuffle, expandStr } from './utils';
+import { chord } from './scalesAndChords';
 const defaultSubdiv = '4n';
 const defaultDur = '8n';
+
+/**
+ * Get default params for a clip, such as root note, pattern etc
+ * @return {Object}
+ */
+const getDefaultParams = (): ClipParams => ({
+  notes: ['C4'],
+  pattern: 'x',
+  shuffle: false,
+  sizzle: false,
+  sizzleReps: 1,
+  arpegiate: false,
+  subdiv: '4n',
+  amp: 100,
+  accentLow: 70,
+  randomNotes: null,
+  effects: [],
+  offlineRendering: false,
+});
+
+/**
+ * HDR speed is denoted by the number of ticks per note
+ * By default this is set to a quarter note (4n) to be in line with Tone.js' default subdivision
+ * Technically a bar is 512 ticks long. So it's HDR speed is 512
+ * @type {Object}
+ */
+const hdr: NVP<number> = {
+  '1m': 2048,
+  '2m': 4096,
+  '3m': 6144,
+  '4m': 8192,
+  '1n': 512,
+  '2n': 256,
+  '4n': 128,
+  '8n': 64,
+  '16n': 32,
+};
+
+const convertChordsToNotes = (el: any) => {
+  if (isNote(el as string)) {
+    // A note needs to be an array so that it can accomodate chords or single notes with a single interface
+    return [el];
+  }
+
+  if (Array.isArray(el)) {
+    // This could be a chord provided as an array
+    // make sure it uses valid notes
+    el.forEach((n) => {
+      if (!isNote(n)) {
+        throw new TypeError('array must comprise valid notes');
+      }
+    });
+
+    return el;
+  }
+
+  if (!Array.isArray(el)) {
+    const c = chord(el);
+    if (c && c.length) {
+      return c;
+    }
+  }
+
+  throw new Error(`Chord ${el} not found`);
+};
 
 const random = (num = 1) => Math.round(Math.random() * num);
 
@@ -74,7 +140,7 @@ export const recursivelyApplyPatternToDurations = (
   length: number,
   durations: number[] = []
 ) => {
-  patternArr.forEach(char => {
+  patternArr.forEach((char) => {
     if (typeof char === 'string') {
       if (char === 'x' || char === 'R') {
         durations.push(length);
@@ -212,10 +278,10 @@ export const renderingDuration = (
   notes: string | (string | string[])[],
   randomNotes: undefined | null | string | (string | string[])[]
 ) => {
-  const patternRegularNotesCount = pattern.split('').filter(c => {
+  const patternRegularNotesCount = pattern.split('').filter((c) => {
     return c === 'x';
   }).length;
-  const patternRandomNotesCount = pattern.split('').filter(c => {
+  const patternRandomNotesCount = pattern.split('').filter((c) => {
     return c === 'R';
   }).length;
   const patternNotesCount = randomNotes?.length
@@ -289,7 +355,38 @@ const offlineRenderClip = (params: ClipParams, duration: number) => {
  * Take a object literal that may have a Tone.js player OR instrument
  * or simply a sample or synth with a pattern and return a Tone.js sequence
  */
-export const browserClip = (params: ClipParams) => {
+export const clip = (params: ClipParams) => {
+  params = { ...getDefaultParams(), ...(params || {}) };
+
+  // If notes is a string, split it into an array
+  if (typeof params.notes === 'string') {
+    // Remove any accidental double spaces
+    params.notes = params.notes.replace(/\s{2,}/g, ' ');
+    params.notes = params.notes.split(' ');
+  }
+
+  params.notes = params.notes.map(convertChordsToNotes);
+
+  if (/[^x\-_\[\]R]/.test(params.pattern)) {
+    throw new TypeError(
+      `pattern can only comprise x - _ [ ], found ${params.pattern}`
+    );
+  }
+
+  if (params.shuffle) {
+    params.notes = shuffle(params.notes);
+  }
+
+  if (params.randomNotes && typeof params.randomNotes === 'string') {
+    params.randomNotes = params.randomNotes.replace(/\s{2,}/g, ' ').split(/\s/);
+  }
+
+  if (params.randomNotes) {
+    params.randomNotes = (params.randomNotes as string[]).map(
+      convertChordsToNotes
+    );
+  }
+
   if (params.offlineRendering) {
     return offlineRenderClip(
       params,

@@ -1,5 +1,5 @@
 import { scales, chords, scale, chord } from './scalesAndChords';
-import { clip } from './clip';
+import { clip } from './browserClip';
 import {
   getChordDegrees,
   getChordsByProgression,
@@ -7,6 +7,7 @@ import {
 } from './progression';
 import { arp } from './arp';
 import { midi } from './midi';
+import { Session } from './session';
 
 export {
   scale,
@@ -21,4 +22,5 @@ export {
   progression,
   arp,
   midi,
+  Session,
 };

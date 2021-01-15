@@ -1,9 +1,5 @@
 import { isNote, shuffle, expandStr } from './utils';
-import { getChord } from './chord';
-
-/* tslint:disable:no-var-requires */
-const browserClip =
-  typeof window !== 'undefined' && require('./browserClip').browserClip;
+import { chord } from './scalesAndChords';
 
 /**
  * Get default params for a clip, such as root note, pattern etc
@@ -51,7 +47,7 @@ const convertChordsToNotes = (el: any) => {
   if (Array.isArray(el)) {
     // This could be a chord provided as an array
     // make sure it uses valid notes
-    el.forEach(n => {
+    el.forEach((n) => {
       if (!isNote(n)) {
         throw new TypeError('array must comprise valid notes');
       }
@@ -61,9 +57,9 @@ const convertChordsToNotes = (el: any) => {
   }
 
   if (!Array.isArray(el)) {
-    const chord = getChord(el);
-    if (chord && chord.length) {
-      return chord;
+    const c = chord(el);
+    if (c && c.length) {
+      return c;
     }
   }
 
@@ -102,20 +98,6 @@ export const clip = (params: ClipParams) => {
     );
   }
 
-  // If the clip method is being called in the context of a Tone.js instrument or synth,
-  // then there's no need to continue
-  if (
-    params.synth ||
-    params.instrument ||
-    params.sample ||
-    params.buffer ||
-    params.player ||
-    params.samples ||
-    params.sampler
-  ) {
-    return browserClip(params);
-  }
-
   const clipNotes: NoteObject[] = [];
   let step = 0;
   /**
@@ -130,7 +112,7 @@ export const clip = (params: ClipParams) => {
     patternArr: string[],
     length: number
   ) => {
-    patternArr.forEach(char => {
+    patternArr.forEach((char) => {
       if (typeof char === 'string') {
         let note: string | string[] | null = null;
         // If the note is to be `on`, then it needs to be an array
