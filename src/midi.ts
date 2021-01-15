@@ -17,7 +17,7 @@ export const midi = (
   fileName: string | null = 'music.mid',
   bpm?: number
 ): string | HTMLAnchorElement | undefined => {
-  const file = createFileFromNotes(notes, bpm);
+  const file = createFileFromNotes(notes, bpm, fileName);
   const bytes = file.toBytes();
 
   if (fileName === null) {
@@ -72,13 +72,18 @@ const createDownloadLink = (b: string, fileName: string): HTMLAnchorElement => {
   return link;
 };
 
-const createFileFromNotes = (notes: NoteObject[], bpm?: number) => {
+const createFileFromNotes = (notes: NoteObject[], bpm?: number, fileName?: string | null) => {
   const file = new jsmidgen.File();
   const track = new jsmidgen.Track();
 
   // set the track's bpm if it is provided
   if (typeof bpm === 'number') {
     track.setTempo(bpm);
+  }
+
+  // set midi track name if it is provided
+  if (typeof fileName === 'string') {
+    track.addEvent(new jsmidgen.MetaEvent({type: jsmidgen.MetaEvent.TRACK_NAME, data: fileName }));
   }
 
   file.addTrack(track);
