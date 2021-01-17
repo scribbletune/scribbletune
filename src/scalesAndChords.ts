@@ -24,7 +24,7 @@ export const scaleMaps: NVP<string> = {
   'flat six pentatonic': 'WWAH',
   scriabin: 'HAAW',
   'whole tone pentatonic': 'HWWW',
-  'lydian #5P pentatonic': 'HWWA',
+  'lydian #5p pentatonic': 'HWWA',
   'lydian dominant pentatonic': 'HWHA',
   'minor #7M pentatonic': 'AWWH',
   'super locrian pentatonic': 'AHWH',
@@ -329,13 +329,13 @@ export const scale = (name: string): string[] => {
   const accidental: string = (match as RegExpMatchArray)[2] || '';
   const octave: string = (match as RegExpMatchArray)[3];
   const note: string = root + accidental + octave;
-  const scaleName: string = (match as RegExpMatchArray)[4];
+  const scaleName: string = (match as RegExpMatchArray)[4].toLowerCase();
   if (!scaleMaps[scaleName]) {
     throw `No such scale ${scaleName}`;
   }
 
   let pitch: number = Util.midiPitchFromNote(note);
-  const scaleNotes: string[] = [note];
+  const scaleNotes: string[] = [note[0].toUpperCase() + note.slice(1)];
 
   for (let i: number = 0; i < scaleMaps[scaleName].length; i++) {
     if (scaleMaps[scaleName][i] === 'A') {
@@ -410,7 +410,7 @@ export const chord = (name: string): string[] => {
 // };
 
 // scribble.scales().forEach((s) => {
-//   console.log(`"${s}": '${getScaleMaps(s)}',`);
+//   console.log(`"${s.toLowerCase()}": '${getScaleMaps(s)}',`);
 // });
 
 // const getChordMaps = (chordName) => {

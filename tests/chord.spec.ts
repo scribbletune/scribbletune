@@ -1,8 +1,8 @@
-import { addChord, getChord, chords } from '../src/chord';
+import { chord, chords } from '../src/scalesAndChords';
 
 describe('../src/chord', () => {
   it('identifies numerical chords with a suffix of `th`', () => {
-    const c4th = getChord('C4th');
+    const c4th = chord('C4th');
     expect(c4th![0]).toBe('C4');
     expect(c4th![1]).toBe('F4');
     expect(c4th![2]).toBe('Bb4');
@@ -10,7 +10,7 @@ describe('../src/chord', () => {
   });
 
   it('identifies numerical chords with a suffix of `th` & octave', () => {
-    const d4th = getChord('D4th-5');
+    const d4th = chord('D4th_5');
     expect(d4th![0]).toBe('D5');
     expect(d4th![1]).toBe('G5');
     expect(d4th![2]).toBe('C6');
@@ -30,16 +30,8 @@ describe('../src/chord', () => {
   });
 
   it('returns simplified notes with the correct octave', () => {
-    expect(getChord('CM')!.join()).toBe('C4,E4,G4');
-    expect(getChord('CM-5')!.join()).toBe('C5,E5,G5');
-    expect(getChord('Gbm')!.join()).toBe('Gb4,A4,Db5');
-  });
-
-  it('returns a custom chord', () => {
-    addChord(['1P', '5P', '8P', '22P', '24M', '26P'], ['Q1', 'Q2'], 'full');
-    expect(getChord('CQ1')!.join()).toBe('C4,G4,C5,C7,E7,G7');
-    expect(getChord('CQ2-2')!.join()).toBe('C2,G2,C3,C5,E5,G5');
-    expect(getChord('D full')!.join()).toBe('D4,A4,D5,D7,F#7,A7');
-    expect(getChord('D full-2')!.join()).toBe('D2,A2,D3,D5,F#5,A5');
+    expect(chord('CM')!.join()).toBe('C4,E4,G4');
+    expect(chord('CM_5')!.join()).toBe('C5,E5,G5');
+    expect(chord('Gbm')!.join()).toBe('Gb4,A4,Db5');
   });
 });
