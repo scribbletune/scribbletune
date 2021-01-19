@@ -114,12 +114,7 @@ export const clip = (params: ClipParams) => {
   ) => {
     patternArr.forEach((char) => {
       if (typeof char === 'string') {
-        let note: string | string[] | null = null;
-        // If the note is to be `on`, then it needs to be an array
-        if (char === 'x') {
-          note = params.notes[step];
-          step++;
-        }
+        let note: any = params.notes[step];
 
         if (char === 'R' && (Math.round(Math.random()) || params.randomNotes)) {
           note = params.randomNotes
@@ -127,6 +122,9 @@ export const clip = (params: ClipParams) => {
                 Math.round(Math.random() * (params.randomNotes.length - 1))
               ]
             : params.notes[step];
+        }
+
+        if (char === 'x' || char === 'R') {
           step++;
         }
 
