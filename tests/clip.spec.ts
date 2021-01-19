@@ -1,7 +1,7 @@
 // global.window = true;
 
 import { clip } from '../src/clip';
-import { getScale } from '../src/scale';
+import { scale } from '../src/scalesAndChords';
 
 describe('../src/clip', () => {
   it('allows lowercase notes', () => {
@@ -76,11 +76,11 @@ describe('../src/clip', () => {
 
   it('shuffles notes', () => {
     const c = clip({
-      notes: getScale('C3 major') as string | (string | string[])[],
+      notes: scale('C3 major') as string | (string | string[])[],
       pattern: 'xxxx',
       shuffle: true,
     });
-    expect(c[0].note[0] === 'C3' && c[0].note[0] === 'D3').toBe(false);
+    expect(c[0].note[0] === 'C3' && c[1].note[0] === 'D3').toBe(false);
   });
 
   it('extends notes in case of a longer pattern', () => {

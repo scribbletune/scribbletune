@@ -1,6 +1,6 @@
 {
   "name": "scribbletune",
-  "version": "3.15.0",
+  "version": "4.0.0-alpha",
   "description": "Create music with JavaScript and Node.js!",
   "main": "./index.js",
   "types": "index.d.ts",
@@ -19,7 +19,6 @@
     "rebuild": "rm -rf node_modules; rm package-lock.json; npm i; npm run build"
   },
   "dependencies": {
-    "@tonaljs/tonal": "^4.0.2",
     "jsmidgen": "~0.1.5"
   },
   "devDependencies": {

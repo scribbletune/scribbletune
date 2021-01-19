@@ -1,5 +1,9 @@
 import { Util } from 'jsmidgen';
 
+// The following scale and chord maps are generated via Tonal https://github.com/tonaljs/tonal
+// The reason to not use Tonal directly is to reduce overall file size and
+// easily enable the JS to be transpilable to EcmaScript v5 to support maxforlive device development
+// From lib point of view, almost no functionality in Scribbletune is lost because of this.
 export const scaleMaps: NVP<string> = {
   major: 'WWHWWW',
   minor: 'WHWWHW',

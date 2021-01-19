@@ -1,5 +1,5 @@
 interface NoteObject {
-  note: string[] | string | null;
+  note: string[];
   length: number;
   level: number;
 }
