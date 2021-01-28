@@ -18,13 +18,3 @@ const clip2 = scribble.clip({
 });
 
 console.log(clip2);
-
-scribble.addChord(['1P', '5P', '8P', '22P', '24M', '26P'], [], 'fullM');
-scribble.addChord(['1P', '5P', '8P', '22P', '24m', '26P'], [], 'fullm');
-
-const clip3 = scribble.clip({
-  notes: ['Efullm-2', 'GfullM-2', 'GfullM-2', "AfullM-2"],
-  pattern: 'x___xx_x________',
-});
-
-scribble.midi(clip3, 'chords.mid');
