@@ -22,21 +22,21 @@
     "jsmidgen": "~0.1.5"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.24",
-    "@types/node": "^12.12.21",
+    "@types/jest": "^24.9.1",
+    "@types/node": "^12.19.15",
     "dts-bundle": "^0.7.3",
-    "jest": "^24.9.0",
+    "jest": "^26.6.3",
     "prettier": "1.19.1",
-    "ts-jest": "^26.1.0",
-    "ts-loader": "^6.2.1",
+    "ts-jest": "^26.4.4",
+    "ts-loader": "^6.2.2",
     "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-eslint-rules": "^5.4.0",
     "tslint-loader": "^3.5.4",
-    "tslint-plugin-prettier": "^2.1.0",
-    "typescript": "^3.7.4",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.10"
+    "tslint-plugin-prettier": "^2.3.0",
+    "typescript": "^3.9.7",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^3.3.12"
   },
   "repository": {
     "type": "git",
