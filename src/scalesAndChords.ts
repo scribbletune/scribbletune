@@ -393,6 +393,9 @@ export const chord = (name: string): string[] => {
   return chordNotes;
 };
 
+// The following methods were used to generate scale and chord maps from Tonal
+// Leaving them here till we can find a better place to park them
+
 // const getScaleMaps = (str) => {
 //   let scaleMap = '';
 //   const scaleNotes = scribble.scale('C4 ' + str);

@@ -92,11 +92,11 @@ export const getChordsByProgression = (
     // get the index to be used by removing any digit or non alphabet character
     const scaleId = idxByDegree[roman.replace(/\W|\d/g, '').toLowerCase()]; // e.g. 0
     // get the note itself
-    const note = mode[scaleId] as string; // e.g. C
+    const note = mode[scaleId]; // e.g. C
     // get the octave of the note;
     const oct = note.replace(/\D+/, ''); // e.g. 4
     // now get the chord
-    return note.replace(/\d/, '') + chordName + '-' + oct;
+    return note.replace(/\d/, '') + chordName + '_' + oct;
   });
 
   return chordFamily.toString().replace(/,/g, ' ');
@@ -166,15 +166,15 @@ const m = getProgFactory({ T: ['i', 'VI'], P: ['ii', 'iv'], D: ['V'] });
  * Generate a chord progression based on basic music theory
  * where we follow tonic to optionally predominant and then dominant
  * and then randomly to predominant and continue this till we reach `count`
- * @param scale e.g. M (for major chord progression), m (for minor chord progression)
+ * @param scaleType e.g. M (for major chord progression), m (for minor chord progression)
  * @param count e.g. 4
  */
-export const progression = (scale: progressionScale, count: number = 4) => {
-  if (scale === 'major' || scale === 'M') {
+export const progression = (scaleType: progressionScale, count: number = 4) => {
+  if (scaleType === 'major' || scaleType === 'M') {
     return M(count);
   }
 
-  if (scale === 'minor' || scale === 'm') {
+  if (scaleType === 'minor' || scaleType === 'm') {
     return m(count);
   }
 };

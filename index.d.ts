@@ -47,10 +47,10 @@ export const getChordsByProgression: (noteOctaveScale: string, chordDegress: str
     * Generate a chord progression based on basic music theory
     * where we follow tonic to optionally predominant and then dominant
     * and then randomly to predominant and continue this till we reach `count`
-    * @param scale e.g. M (for major chord progression), m (for minor chord progression)
+    * @param scaleType e.g. M (for major chord progression), m (for minor chord progression)
     * @param count e.g. 4
     */
-export const progression: (scale: progressionScale, count?: number) => any[] | undefined;
+export const progression: (scaleType: progressionScale, count?: number) => any[] | undefined;
 
 type Params = {
     count: number;
@@ -63,7 +63,7 @@ type Params = {
   * By default, if this is a string, the the count of notes generated is 8 and the order is ascending.
   * For instance arp('CM FM') will result in an array of notes [C4, E4, G4, F4, A4, C4, C5, E5]
   * You can even provide Params as an object.
-  * For e.g. arp({count: 8, order: '10325476', chords: 'FM-4 Gm7b5-4 AbM-4 Bbm-4 Cm-5 DbM-5 EbM-5})
+  * For e.g. arp({count: 8, order: '10325476', chords: 'FM_4 Gm7b5_4 AbM_4 Bbm_4 Cm_5 DbM_5 EbM_5})
   */
 export const arp: (chordsOrParams: string | Params) => any;
 export {};

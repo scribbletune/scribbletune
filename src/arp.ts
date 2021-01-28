@@ -35,7 +35,7 @@ type Params = {
  * By default, if this is a string, the the count of notes generated is 8 and the order is ascending.
  * For instance arp('CM FM') will result in an array of notes [C4, E4, G4, F4, A4, C4, C5, E5]
  * You can even provide Params as an object.
- * For e.g. arp({count: 8, order: '10325476', chords: 'FM-4 Gm7b5-4 AbM-4 Bbm-4 Cm-5 DbM-5 EbM-5})
+ * For e.g. arp({count: 8, order: '10325476', chords: 'FM_4 Gm7b5_4 AbM_4 Bbm_4 Cm_5 DbM_5 EbM_5})
  */
 export const arp = (chordsOrParams: string | Params) => {
   let finalArr: any = [];
@@ -63,12 +63,12 @@ export const arp = (chordsOrParams: string | Params) => {
     Object.assign(params, chordsOrParams);
   }
 
-  // Chords can be passed as a string, e.g. CM-4 FM-4
+  // Chords can be passed as a string, e.g. CM_4 FM_4
   // or as an array of notes arrays e.g. [['C3', 'E3', 'G3', 'B3'], ['F3', 'A3', 'C4', 'E4']]
   if (typeof params.chords === 'string') {
-    const chordsArr: string[] = (params.chords as string).split(' ');
+    const chordsArr: string[] = params.chords.split(' ');
     for (const c of chordsArr) {
-      const filledArr = fillArr(chord(c) as string[], params.count);
+      const filledArr = fillArr(chord(c), params.count);
       // reorder the filledArr as per params.order
       const reorderedArr = (params.order as string)
         .split('')
@@ -76,8 +76,8 @@ export const arp = (chordsOrParams: string | Params) => {
       finalArr = [...finalArr, ...reorderedArr];
     }
   } else if (Array.isArray(params.chords)) {
-    for (const chord of params.chords) {
-      const filledArr = fillArr(chord as string[], params.count);
+    for (const c of params.chords) {
+      const filledArr = fillArr(c as string[], params.count);
       // reorder the filledArr as per params.order
       const reorderedArr = (params.order as string)
         .split('')
