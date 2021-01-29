@@ -8,6 +8,10 @@ const getOutput = () => {
   };
 
   if (process.env.TARGET === 'browser') {
+    output.filename = 'browser.js';
+  }
+
+  if (process.env.TARGET === 'cdn') {
     output.filename = 'scribbletune.js';
     output.path = path.resolve(__dirname, './dist');
     output.library = 'scribble';
@@ -23,7 +27,7 @@ const getOutput = () => {
 
 const getEntry = () => {
   let main = './src/index.ts';
-  if (process.env.TARGET === 'browser') {
+  if (process.env.TARGET === 'browser' || process.env.TARGET === 'cdn') {
     main = './src/browser-index.ts';
   }
   if (process.env.TARGET === 'max') {
@@ -41,7 +45,7 @@ module.exports = {
   mode: 'production',
   entry: getEntry(),
   output: getOutput(),
-  devtool: process.env.TARGET === 'browser' ? 'source-map' : '',
+  devtool: process.env.TARGET === 'cdn' ? 'source-map' : '',
 
   module: {
     rules: [
