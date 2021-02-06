@@ -1,5 +1,5 @@
-import { scales, chords, scale, chord } from './scalesAndChords';
-import { clip } from './browserClip';
+import { scales, chords, scale, chord } from './scales-n-chords';
+import { clip } from './browser-clip';
 import {
   getChordDegrees,
   getChordsByProgression,

@@ -1,5 +1,5 @@
 import { isNote, shuffle, expandStr } from './utils';
-import { chord } from './scalesAndChords';
+import { chord } from './scales-n-chords';
 
 /**
  * Get default params for a clip, such as root note, pattern etc

@@ -1,4 +1,4 @@
-import { scales, chords, scale, chord } from './scalesAndChords';
+import { scales, chords, scale, chord } from './scales-n-chords';
 import { clip } from './clip';
 import {
   getChordDegrees,

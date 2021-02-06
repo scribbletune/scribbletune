@@ -1,4 +1,4 @@
-import { scale } from './scalesAndChords';
+import { scale } from './scales-n-chords';
 import { pickOne, dice } from './utils';
 
 /**
