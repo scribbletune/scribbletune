@@ -1,5 +1,5 @@
 import { isNote, shuffle, expandStr } from './utils';
-import { chord } from './scalesAndChords';
+import { chord } from './scales-n-chords';
 const defaultSubdiv = '4n';
 const defaultDur = '8n';
 

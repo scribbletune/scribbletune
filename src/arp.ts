@@ -1,4 +1,4 @@
-import { chord } from './scalesAndChords';
+import { chord } from './scales-n-chords';
 
 /**
  * Take an array and fill it with it s own elements in the next octave till it s of the specified `len`
