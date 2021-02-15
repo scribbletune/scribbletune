@@ -1,7 +1,7 @@
 // global.window = true;
 
 import { clip } from '../src/clip';
-import { scale } from '../src/scalesAndChords';
+import { scale } from '../src/scales-n-chords';
 
 describe('../src/clip', () => {
   it('allows lowercase notes', () => {

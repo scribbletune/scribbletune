@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import { clip } from '../src/clip';
 import { midi } from '../src/midi';
-import { scale } from '../src/scalesAndChords';
+import { scale } from '../src/scales-n-chords';
 
 describe('../src/midi', () => {
   it('writes a midi file', () => {
