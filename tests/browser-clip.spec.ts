@@ -2,10 +2,10 @@
 import {
   recursivelyApplyPatternToDurations,
   totalPatternDuration,
-} from '../src/browserClip';
+} from '../src/browser-clip';
 import { expandStr } from '../src/utils';
 
-describe('../src/browserClip', () => {
+describe('../src/browser-clip', () => {
   it('applies same duration to simple pattern', () => {
     expect(
       recursivelyApplyPatternToDurations(expandStr('xxxx'), 1)

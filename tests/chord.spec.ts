@@ -1,4 +1,4 @@
-import { chord, chords } from '../src/scalesAndChords';
+import { chord, chords } from '../src/scales-n-chords';
 
 describe('../src/chord', () => {
   it('identifies numerical chords with a suffix of `th`', () => {
