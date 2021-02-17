@@ -30,7 +30,7 @@ export const scaleMaps: NVP<string> = {
   'whole tone pentatonic': 'HWWW',
   // 'lydian #5p pentatonic': 'HWWA',
   'lydian dominant pentatonic': 'HWHA',
-  'minor #7M pentatonic': 'AWWH',
+  // 'minor #7M pentatonic': 'AWWH',
   'super locrian pentatonic': 'AHWH',
   'minor hexatonic': 'WHWWH',
   augmented: 'AHAHA',
