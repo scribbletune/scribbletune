@@ -7,6 +7,7 @@ import { Util } from 'jsmidgen';
 export const scaleMaps: NVP<string> = {
   major: 'WWHWWW',
   minor: 'WHWWHW',
+  ionian: 'WWHWWW',
   'major pentatonic': 'WWAW',
   'ionian pentatonic': 'HHWH',
   'mixolydian pentatonic': 'HHWA',
