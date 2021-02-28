@@ -53,6 +53,7 @@
   ],
   "author": "Walmik Deshpande",
   "license": "MIT",
+  "runkitExampleFilename": "runkit.js",
   "bugs": {
     "url": "https://github.com/scribbletune/scribbletune/issues"
   },
