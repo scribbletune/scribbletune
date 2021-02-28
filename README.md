@@ -1,6 +1,7 @@
 ## <img width=2% src="https://scribbletune.com/images/scribbletune-logo.png"> SCRIBBLETUNE
 
 [![Build Status](https://travis-ci.com/scribbletune/scribbletune.svg?branch=master)](http://travis-ci.com/scribbletune/scribbletune)
+[![Try scribbletune on RunKit](https://badge.runkitcdn.com/scribbletune.svg)](https://npm.runkit.com/scribbletune)
 
 Use simple **JavaScript** `Strings` and `Arrays` to generate rhythms and musical patterns. Directly use the names of scales or chords in your code to get arrays which you can mash up using Array methods in ways you hadn't imagined before! Create clips of musical ideas and **export MIDI files** which you can import in _Ableton Live, Reason, Garage Band_ or any music creation software that accepts MIDI files.
 
