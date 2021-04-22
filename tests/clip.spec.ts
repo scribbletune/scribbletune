@@ -1,7 +1,7 @@
 // global.window = true;
 
 import { clip } from '../src/clip';
-import { scale } from '../src/scales-n-chords';
+import { scale } from 'harmonics';
 
 describe('../src/clip', () => {
   it('allows lowercase notes', () => {

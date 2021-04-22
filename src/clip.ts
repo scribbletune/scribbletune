@@ -1,5 +1,5 @@
 import { isNote, shuffle, expandStr } from './utils';
-import { chord } from './scales-n-chords';
+import { inlineChord } from 'harmonics';
 
 /**
  * Get default params for a clip, such as root note, pattern etc
@@ -47,7 +47,7 @@ const convertChordsToNotes = (el: any) => {
   if (Array.isArray(el)) {
     // This could be a chord provided as an array
     // make sure it uses valid notes
-    el.forEach((n) => {
+    el.forEach(n => {
       if (!isNote(n)) {
         throw new TypeError('array must comprise valid notes');
       }
@@ -56,8 +56,9 @@ const convertChordsToNotes = (el: any) => {
     return el;
   }
 
+  // At this point, this could be an inline chord e.g. Cmaj7 or Dbsus2_5
   if (!Array.isArray(el)) {
-    const c = chord(el);
+    const c = inlineChord(el);
     if (c && c.length) {
       return c;
     }
@@ -112,7 +113,7 @@ export const clip = (params: ClipParams) => {
     patternArr: string[],
     length: number
   ) => {
-    patternArr.forEach((char) => {
+    patternArr.forEach(char => {
       if (typeof char === 'string') {
         let note: any = params.notes[step];
 

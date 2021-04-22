@@ -1,5 +1,5 @@
 import { isNote, shuffle, expandStr } from './utils';
-import { chord } from './scales-n-chords';
+import { chord } from 'harmonics';
 const defaultSubdiv = '4n';
 const defaultDur = '8n';
 
@@ -49,7 +49,7 @@ const convertChordsToNotes = (el: any) => {
   if (Array.isArray(el)) {
     // This could be a chord provided as an array
     // make sure it uses valid notes
-    el.forEach((n) => {
+    el.forEach(n => {
       if (!isNote(n)) {
         throw new TypeError('array must comprise valid notes');
       }
@@ -140,7 +140,7 @@ export const recursivelyApplyPatternToDurations = (
   length: number,
   durations: number[] = []
 ) => {
-  patternArr.forEach((char) => {
+  patternArr.forEach(char => {
     if (typeof char === 'string') {
       if (char === 'x' || char === 'R') {
         durations.push(length);
@@ -278,10 +278,10 @@ export const renderingDuration = (
   notes: string | (string | string[])[],
   randomNotes: undefined | null | string | (string | string[])[]
 ) => {
-  const patternRegularNotesCount = pattern.split('').filter((c) => {
+  const patternRegularNotesCount = pattern.split('').filter(c => {
     return c === 'x';
   }).length;
-  const patternRandomNotesCount = pattern.split('').filter((c) => {
+  const patternRandomNotesCount = pattern.split('').filter(c => {
     return c === 'R';
   }).length;
   const patternNotesCount = randomNotes?.length

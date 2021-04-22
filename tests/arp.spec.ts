@@ -14,7 +14,7 @@ describe('../src/arp', () => {
 
   it('sets the order if only count was provided', () => {
     const a = arp({
-      chords: 'CM7_4 FM7_4',
+      chords: 'Cmaj7_4 Fmaj7_4',
       count: 8,
     });
 

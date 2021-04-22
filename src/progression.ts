@@ -1,4 +1,4 @@
-import { scale } from './scales-n-chords';
+import { scale } from 'harmonics';
 import { pickOne, dice } from './utils';
 
 /**
@@ -57,7 +57,7 @@ const getChordName = (roman: string): string => {
   }
 
   if (roman.indexOf('7') > -1) {
-    return prefix === 'M' ? 'Maj7' : 'm7';
+    return prefix === 'M' ? 'maj7' : 'm7';
   }
 
   return prefix;

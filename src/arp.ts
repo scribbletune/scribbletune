@@ -1,4 +1,4 @@
-import { chord } from './scales-n-chords';
+import { inlineChord } from 'harmonics';
 
 /**
  * Take an array and fill it with it s own elements in the next octave till it s of the specified `len`
@@ -68,7 +68,7 @@ export const arp = (chordsOrParams: string | Params) => {
   if (typeof params.chords === 'string') {
     const chordsArr: string[] = params.chords.split(' ');
     for (const c of chordsArr) {
-      const filledArr = fillArr(chord(c), params.count);
+      const filledArr = fillArr(inlineChord(c), params.count);
       // reorder the filledArr as per params.order
       const reorderedArr = (params.order as string)
         .split('')
