@@ -11,13 +11,38 @@ Use simple **JavaScript** `Strings` and `Arrays` to generate rhythms and musical
 npm install scribbletune
 ```
 
-You can even use Scribbletune **in the browser** with Tone.js!. Make sure to pull in [Tone.js](https://cdnjs.com/libraries/tone) followed by the [latest browser version of Scribbletune](https://cdnjs.com/libraries/scribbletune).
+### Use it to create a MIDI clip by running a JS file from your terminal using node.js
+```javascript
+const scribble = require('scribbletune');
+const clip = scribble.clip({
+    notes: scribble.scale('C4 major'),
+    pattern: 'x'.repeat(7) + '_'
+});
+
+scribble.midi(clip, 'c-major.mid');
+```
+
+
+You can use Scribbletune even **in the browser** with Tone.js!. There are a couple of ways to do this. A quick and dirty way is to make sure to pull in [Tone.js](https://cdnjs.com/libraries/tone) followed by the [latest browser version of Scribbletune](https://cdnjs.com/libraries/scribbletune).
 
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/<LATEST-VERSION-FROM-CDNJS>/Tone.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/scribbletune/<LATEST-VERSION-FROM-CDNJS>/scribbletune.js"></script>
 ```
 
----
+This will expose a global object called `scribble` which you can directly use to run the methods from Scribbletune in conjunction with Tone.js
+
+The recommended way for the browser, however, is to import it like this
+```javascript
+const scribble = require('scribbletune/browser');
+```
+This will provide the same API but augment it a bit to support browser based functionality.
+
+Similarly, you can use the Scribbletune API for Max for Live development by doing
+```javascript
+const scribble = require('scribbletune/max');
+```
+Just like the `browser` version this too will enable the same API but with some added bells and whistles for Max for Live.
+
 
 Visit [scribbletune.com](https://scribbletune.com) for documentation, tutorials and examples! Listen to music generated with Scribbletune on [Soundcloud](https://soundcloud.com/scribbletune).
