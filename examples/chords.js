@@ -16,5 +16,3 @@ const clip2 = scribble.clip({
   notes: scribble.getChordsByProgression('C4 major', 'vi IV V I'),
   pattern: 'xxxx',
 });
-
-console.log(clip2);
