@@ -1,7 +1,7 @@
 // global.window = true;
 
 import { clip } from '../src/clip';
-import { getScale } from '../src/scale';
+import { scale } from 'harmonics';
 
 describe('../src/clip', () => {
   it('allows lowercase notes', () => {
@@ -57,30 +57,30 @@ describe('../src/clip', () => {
     });
     expect(c[0].note[0]).toBe('C4');
     expect(c[1].note[0]).toBe('D4');
-    expect(c[1].note[1]).toBe('F#4');
+    expect(c[1].note[1]).toBe('Gb4');
     expect(c[1].note[2]).toBe('A4');
     expect(c[2].note[0]).toBe('E4');
   });
 
   it('accepts a string of notes with chords with octaves', () => {
     const c = clip({
-      notes: 'C4 DM-5 E4',
+      notes: 'C4 DM_5 E4',
       pattern: 'xxx',
     });
     expect(c[0].note[0]).toBe('C4');
     expect(c[1].note[0]).toBe('D5');
-    expect(c[1].note[1]).toBe('F#5');
+    expect(c[1].note[1]).toBe('Gb5');
     expect(c[1].note[2]).toBe('A5');
     expect(c[2].note[0]).toBe('E4');
   });
 
   it('shuffles notes', () => {
     const c = clip({
-      notes: getScale('C3 major') as string | (string | string[])[],
+      notes: scale('C3 major') as string | (string | string[])[],
       pattern: 'xxxx',
       shuffle: true,
     });
-    expect(c[0].note[0] === 'C3' && c[0].note[0] === 'D3').toBe(false);
+    expect(c[0].note[0] === 'C3' && c[1].note[0] === 'D3').toBe(false);
   });
 
   it('extends notes in case of a longer pattern', () => {

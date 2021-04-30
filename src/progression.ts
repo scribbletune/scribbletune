@@ -1,4 +1,4 @@
-import { getScale } from './scale';
+import { scale } from 'harmonics';
 import { pickOne, dice } from './utils';
 
 /**
@@ -57,7 +57,7 @@ const getChordName = (roman: string): string => {
   }
 
   if (roman.indexOf('7') > -1) {
-    return prefix === 'M' ? 'Maj7' : 'm7';
+    return prefix === 'M' ? 'maj7' : 'm7';
   }
 
   return prefix;
@@ -83,7 +83,7 @@ export const getChordsByProgression = (
   }
 
   // Get the scale from the given note and scale/mode combination
-  const mode = getScale(noteOctaveScale);
+  const mode = scale(noteOctaveScale);
   const chordDegreesArr = chordDegress.replace(/\s*,+\s*/g, ' ').split(' ');
   // Now we have something like ['i', 'ii', 'IV']
   // Convert it to a chord family such as ['Cm', 'Dm', 'FM']
@@ -92,11 +92,11 @@ export const getChordsByProgression = (
     // get the index to be used by removing any digit or non alphabet character
     const scaleId = idxByDegree[roman.replace(/\W|\d/g, '').toLowerCase()]; // e.g. 0
     // get the note itself
-    const note = mode[scaleId] as string; // e.g. C
+    const note = mode[scaleId]; // e.g. C
     // get the octave of the note;
     const oct = note.replace(/\D+/, ''); // e.g. 4
     // now get the chord
-    return note.replace(/\d/, '') + chordName + '-' + oct;
+    return note.replace(/\d/, '') + chordName + '_' + oct;
   });
 
   return chordFamily.toString().replace(/,/g, ' ');
@@ -166,15 +166,15 @@ const m = getProgFactory({ T: ['i', 'VI'], P: ['ii', 'iv'], D: ['V'] });
  * Generate a chord progression based on basic music theory
  * where we follow tonic to optionally predominant and then dominant
  * and then randomly to predominant and continue this till we reach `count`
- * @param scale e.g. M (for major chord progression), m (for minor chord progression)
+ * @param scaleType e.g. M (for major chord progression), m (for minor chord progression)
  * @param count e.g. 4
  */
-export const progression = (scale: progressionScale, count: number = 4) => {
-  if (scale === 'major' || scale === 'M') {
+export const progression = (scaleType: progressionScale, count: number = 4) => {
+  if (scaleType === 'major' || scaleType === 'M') {
     return M(count);
   }
 
-  if (scale === 'minor' || scale === 'm') {
+  if (scaleType === 'minor' || scaleType === 'm') {
     return m(count);
   }
 };

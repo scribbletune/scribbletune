@@ -1,9 +1,5 @@
 import { isNote, shuffle, expandStr } from './utils';
-import { getChord } from './chord';
-
-/* tslint:disable:no-var-requires */
-const browserClip =
-  typeof window !== 'undefined' && require('./browserClip').browserClip;
+import { inlineChord } from 'harmonics';
 
 /**
  * Get default params for a clip, such as root note, pattern etc
@@ -60,10 +56,11 @@ const convertChordsToNotes = (el: any) => {
     return el;
   }
 
+  // At this point, this could be an inline chord e.g. Cmaj7 or Dbsus2_5
   if (!Array.isArray(el)) {
-    const chord = getChord(el);
-    if (chord && chord.length) {
-      return chord;
+    const c = inlineChord(el);
+    if (c && c.length) {
+      return c;
     }
   }
 
@@ -102,20 +99,6 @@ export const clip = (params: ClipParams) => {
     );
   }
 
-  // If the clip method is being called in the context of a Tone.js instrument or synth,
-  // then there's no need to continue
-  if (
-    params.synth ||
-    params.instrument ||
-    params.sample ||
-    params.buffer ||
-    params.player ||
-    params.samples ||
-    params.sampler
-  ) {
-    return browserClip(params);
-  }
-
   const clipNotes: NoteObject[] = [];
   let step = 0;
   /**
@@ -132,12 +115,7 @@ export const clip = (params: ClipParams) => {
   ) => {
     patternArr.forEach(char => {
       if (typeof char === 'string') {
-        let note: string | string[] | null = null;
-        // If the note is to be `on`, then it needs to be an array
-        if (char === 'x') {
-          note = params.notes[step];
-          step++;
-        }
+        let note: any = params.notes[step];
 
         if (char === 'R' && (Math.round(Math.random()) || params.randomNotes)) {
           note = params.randomNotes
@@ -145,6 +123,9 @@ export const clip = (params: ClipParams) => {
                 Math.round(Math.random() * (params.randomNotes.length - 1))
               ]
             : params.notes[step];
+        }
+
+        if (char === 'x' || char === 'R') {
           step++;
         }
 
