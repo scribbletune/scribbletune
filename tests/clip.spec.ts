@@ -7,10 +7,10 @@ describe('../src/clip', () => {
   it('allows lowercase notes', () => {
     expect(
       clip({
-        notes: ['d3'],
+        notes: ['D3'],
         pattern: 'x',
       })[0].note[0]
-    ).toBe('d3');
+    ).toBe('D3');
   });
 
   it('allows uppercase notes', () => {
@@ -86,7 +86,7 @@ describe('../src/clip', () => {
   it('extends notes in case of a longer pattern', () => {
     let longerPattern = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx';
     const c = clip({
-      notes: ['c3', 'd3'],
+      notes: ['C3', 'D3'],
       pattern: longerPattern,
     });
     expect(c.length).toBe(longerPattern.length);
@@ -94,7 +94,7 @@ describe('../src/clip', () => {
 
   it('extends notes in case of a longer pattern but retains length of pattern', () => {
     const c = clip({
-      notes: ['c3'],
+      notes: ['C3'],
       pattern: 'xxxxx',
     });
     expect(c.length).toBe(5);
@@ -120,11 +120,11 @@ describe('../src/clip', () => {
 
   it.skip('accepts arrays of notes with individual notes', () => {
     const c = clip({
-      notes: [['c4', 'e4', 'g4'], 'e3'],
+      notes: [['C4', 'E4', 'G4'], 'E3'],
       pattern: 'xx',
     });
-    expect(c[0].note.join()).toBe('c4,e4,g4');
-    expect(c[1].note.join()).toBe('e3');
+    expect(c[0].note.join()).toBe('C4,E4,G4');
+    expect(c[1].note.join()).toBe('E3');
   });
 
   it.skip('throws an error for invalid notes', () => {
@@ -138,7 +138,7 @@ describe('../src/clip', () => {
 
   it('accepts tidal format for patterns', () => {
     const c = clip({
-      notes: 'c4',
+      notes: 'C4',
       pattern: 'x[-x]x[x[xx]]',
     });
     expect(c[0].length).toBe(128);
@@ -148,7 +148,7 @@ describe('../src/clip', () => {
 
   it('accepts tidal format with underscores', () => {
     const c = clip({
-      notes: 'c4',
+      notes: 'C4',
       pattern: 'x___',
     });
     expect(c[0].length).toBe(512);
@@ -156,7 +156,7 @@ describe('../src/clip', () => {
 
   it('applies sin styled sizzle if true', () => {
     const c = clip({
-      notes: 'c4',
+      notes: 'C4',
       pattern: 'xxxx',
       sizzle: true,
     });
@@ -168,7 +168,7 @@ describe('../src/clip', () => {
 
   it('applies sin styled sizzle if sin is specified', () => {
     const c = clip({
-      notes: 'c4',
+      notes: 'C4',
       pattern: 'x'.repeat(16),
       sizzle: 'sin',
     });
@@ -180,7 +180,7 @@ describe('../src/clip', () => {
 
   it('repeats a sin styled sizzle if sin is specified with reps', () => {
     const c = clip({
-      notes: 'c4',
+      notes: 'C4',
       pattern: 'x'.repeat(16),
       sizzle: 'sin',
       sizzleReps: 4,
@@ -193,7 +193,7 @@ describe('../src/clip', () => {
 
   it('applies cos styled sizzle if cos is specified', () => {
     const c = clip({
-      notes: 'c4',
+      notes: 'C4',
       pattern: 'x'.repeat(16),
       sizzle: 'cos',
     });
@@ -205,7 +205,7 @@ describe('../src/clip', () => {
 
   it('applies rampUp styled sizzle if rampUp is specified', () => {
     const c = clip({
-      notes: 'c4',
+      notes: 'C4',
       pattern: 'x'.repeat(16),
       sizzle: 'rampUp',
     });
@@ -217,7 +217,7 @@ describe('../src/clip', () => {
 
   it('applies rampUp styled sizzle if rampUp is specified', () => {
     const c = clip({
-      notes: 'c4',
+      notes: 'C4',
       pattern: 'x'.repeat(16),
       sizzle: 'rampDown',
     });
@@ -229,7 +229,7 @@ describe('../src/clip', () => {
 
   it('adjusts sizzle according to custome amplitude', () => {
     const c = clip({
-      notes: 'c4',
+      notes: 'C4',
       pattern: 'x'.repeat(16),
       sizzle: 'rampDown',
       amp: 127,
@@ -242,7 +242,7 @@ describe('../src/clip', () => {
 
   it('accepts an accent to affect volumes in a clip', () => {
     const c = clip({
-      notes: 'c4',
+      notes: 'C4',
       pattern: 'xxxx',
       accent: 'x--x',
     });
@@ -252,7 +252,7 @@ describe('../src/clip', () => {
 
   it('allows accent volumes to be affected by a custom amplitude', () => {
     const c = clip({
-      notes: 'c4',
+      notes: 'C4',
       pattern: 'xxxx',
       accent: 'x--x',
       amp: 127,
@@ -263,7 +263,7 @@ describe('../src/clip', () => {
 
   it('allows accent volumes to be affected by a custom lower accent', () => {
     const c = clip({
-      notes: 'c4',
+      notes: 'C4',
       pattern: 'xxxx',
       accent: 'x--x',
       amp: 127,
@@ -275,7 +275,7 @@ describe('../src/clip', () => {
 
   it('extends accents according to clip length', () => {
     const c = clip({
-      notes: 'c4',
+      notes: 'C4',
       pattern: 'xxxxx',
       accent: 'x--x',
       amp: 127,
@@ -287,16 +287,16 @@ describe('../src/clip', () => {
 
   it('throws an error in case of invalid accent', () => {
     expect(function() {
-      clip({ notes: 'c4', pattern: 'x', accent: 'k' });
+      clip({ notes: 'C4', pattern: 'x', accent: 'k' });
     }).toThrow();
     expect(function() {
-      clip({ notes: 'c4', pattern: 'x', accent: 'x_' });
+      clip({ notes: 'C4', pattern: 'x', accent: 'x_' });
     }).toThrow();
   });
 
   it('sets an average of accent and sizzle if both are provided', () => {
     const c = clip({
-      notes: 'c4',
+      notes: 'C4',
       pattern: 'xxxx',
       accent: 'x--x',
       sizzle: true,
@@ -342,7 +342,7 @@ describe('../src/clip', () => {
 
   it('sets quarter note as the default subdivision', () => {
     const c = clip({
-      notes: 'c4',
+      notes: 'C4',
       pattern: 'x',
     });
     expect(c[0].length).toBe(128);
@@ -350,7 +350,7 @@ describe('../src/clip', () => {
 
   it('allows setting eighth note as the subdivision', () => {
     const c = clip({
-      notes: 'c4',
+      notes: 'C4',
       pattern: 'x',
       subdiv: '8n',
     });
@@ -359,7 +359,7 @@ describe('../src/clip', () => {
 
   it('allows setting a whole note as the subdivision', () => {
     const c = clip({
-      notes: 'c4',
+      notes: 'C4',
       pattern: 'x',
       subdiv: '1n',
     });
@@ -368,7 +368,7 @@ describe('../src/clip', () => {
 
   it('allows setting an entire measure as the subdivision', () => {
     const c = clip({
-      notes: 'c4',
+      notes: 'C4',
       pattern: 'x',
       subdiv: '1m',
     });
