@@ -50,6 +50,16 @@ describe('../src/clip', () => {
     expect(c[2].note[0]).toBe('E4');
   });
 
+   it('accepts a string of notes', () => {
+    const c = clip({
+      notes: 'C4 D4 E4',
+      pattern: 'x-x_',
+    });
+    expect(c[0].note[0]).toBe('C4');
+    expect(c[1].note).toBe(null);
+    expect(c[2].note[0]).toBe('D4');
+  });
+
   it('accepts a string of notes with chords', () => {
     const c = clip({
       notes: 'C4 DM E4',
