@@ -50,16 +50,6 @@ describe('../src/clip', () => {
     expect(c[2].note[0]).toBe('E4');
   });
 
-   it('accepts a string of notes', () => {
-    const c = clip({
-      notes: 'C4 D4 E4',
-      pattern: 'x-x_',
-    });
-    expect(c[0].note[0]).toBe('C4');
-    expect(c[1].note).toBe(null);
-    expect(c[2].note[0]).toBe('D4');
-  });
-
   it('accepts a string of notes with chords', () => {
     const c = clip({
       notes: 'C4 DM E4',
@@ -383,5 +373,75 @@ describe('../src/clip', () => {
       subdiv: '1m',
     });
     expect(c[0].length).toBe(2048);
+  });
+
+  it('sets note to null in case of hyphen in the pattern', () => {
+    const c = clip({
+      notes: 'C4 D4 E4',
+      pattern: 'x-x_',
+    });
+    expect(c[0].note[0]).toBe('C4');
+    expect(c[1].note).toBe(null);
+    expect(c[2].note[0]).toBe('D4');
+  });
+
+  it('sets note to null in case of hyphen in a nested pattern', () => {
+    const c = clip({
+      notes: 'C4 D4 E4',
+      pattern: 'x-x[x-]',
+    });
+    expect(c[0].note[0]).toBe('C4');
+    expect(c[1].note).toBe(null);
+    expect(c[2].note[0]).toBe('D4');
+    expect(c[4].note).toBe(null);
+  });
+
+  it('sets note length appropriately for a nested pattern', () => {
+    const c = clip({
+      notes: 'C4 D4 E4',
+      pattern: 'x-x[x-]',
+    });
+    expect(c[0].length).toBe(128);
+    expect(c[1].length).toBe(128);
+    expect(c[2].length).toBe(128);
+    expect(c[3].length).toBe(64);
+    expect(c[4].length).toBe(64);
+  });
+
+  it('sets note & note length appropriately for a nested pattern and custom subdiv', () => {
+    const c = clip({
+      notes: 'C4 D4 E4',
+      pattern: 'x-x[x-[x-]x]',
+      subdiv: '8n'
+    });
+    expect(c[0].length).toBe(64);
+    expect(c[1].length).toBe(64);
+    expect(c[2].length).toBe(64);
+    expect(c[3].length).toBe(16);
+    expect(c[4].length).toBe(16);
+    expect(c[4].note).toBe(null);
+    expect(c[5].length).toBe(8);
+    expect(c[6].length).toBe(8);
+    expect(c[6].note).toBe(null);
+    expect(c[7].length).toBe(16);
+  });
+
+  it('bumps note length for underscores in the pattern', () => {
+    const c = clip({
+      notes: 'C4 D4 E4',
+      pattern: 'xxx_',
+    });
+    expect(c[1].length).toBe(128);
+    expect(c[2].length).toBe(256);
+  });
+
+  it('bumps note length for underscores in a nested pattern', () => {
+    const c = clip({
+      notes: 'C4 D4 E4',
+      pattern: 'x_[x_][x[x_]]',
+    });
+    expect(c[0].length).toBe(256);
+    expect(c[1].length).toBe(128);
+    expect(c[2].length).toBe(64);
   });
 });
