@@ -111,9 +111,11 @@ export const clip = (params: ClipParams) => {
    */
   const recursivelyApplyPatternToNotes = (
     patternArr: string[],
-    length: number
+    length: number,
+    parentNoteLength: number | boolean
   ) => {
-    patternArr.forEach(char => {
+    let totalLength = 0;
+    patternArr.forEach((char, idx) => {
       if (typeof char === 'string') {
         let note: any = char === '-' ? null : params.notes[step];
 
@@ -139,11 +141,30 @@ export const clip = (params: ClipParams) => {
                 ? (params.accentLow as number)
                 : (params.amp as number),
           });
+          totalLength += length;
         }
 
         // In case of an underscore, simply extend the previous note's length
         if (char === '_' && clipNotes.length) {
           clipNotes[clipNotes.length - 1].length += length;
+          totalLength += length;
+        }
+
+        // if there were triplets in this iteration then ajust length of the last note
+        if (
+          parentNoteLength &&
+          totalLength !== parentNoteLength &&
+          idx === patternArr.length - 1
+        ) {
+          const diff: number = Math.abs(
+            (parentNoteLength as number) - totalLength
+          );
+          const lastClipNote = clipNotes[clipNotes.length - 1];
+          if (lastClipNote.length > diff) {
+            lastClipNote.length = lastClipNote.length - diff;
+          } else {
+            lastClipNote.length = lastClipNote.length + diff;
+          }
         }
 
         // If the pattern is longer than the notes, then repeat notes
@@ -151,15 +172,30 @@ export const clip = (params: ClipParams) => {
           step = 0;
         }
       }
+      // Note: The following condition is not in a else if simply because
+      // we do need to increment the totalLength in order to support triplets
       if (Array.isArray(char)) {
-        recursivelyApplyPatternToNotes(char, length / char.length);
+        let isTriplet = false;
+        // either this is a triplet or not
+        if (char.length % 2 !== 0 || length % 2 !== 0) {
+          isTriplet = true;
+        }
+        recursivelyApplyPatternToNotes(
+          char,
+          Math.round(length / char.length),
+          isTriplet && length
+        );
+        // Increment total length to support subsequent operations
+        // once we are out of the recursion
+        totalLength += length;
       }
     });
   };
 
   recursivelyApplyPatternToNotes(
     expandStr(params.pattern),
-    hdr[params.subdiv as string] || hdr['4n']
+    hdr[params.subdiv as string] || hdr['4n'],
+    false
   );
 
   // Many thanks to @R1G for the following functionality

@@ -35,7 +35,7 @@ export class Session {
     const clipDurationInSeconds: number = Tone.Time(clipDuration).toSeconds();
 
     const stopClips = (clips: any[], time: number) => {
-      clips.forEach((c) => c.stop(time));
+      clips.forEach(c => c.stop(time));
     };
 
     const startClips = (
@@ -46,8 +46,8 @@ export class Session {
       return clipIdx === '-'
         ? []
         : this.channels
-            .filter((c) => c.idx === channelIdx)
-            .map((c) => c.clips[clipIdx].start(time));
+            .filter(c => c.idx === channelIdx)
+            .map(c => c.clips[clipIdx].start(time));
     };
 
     channelPatterns.forEach(({ channelIdx, pattern }: ChannelPattern) => {

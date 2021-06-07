@@ -412,7 +412,7 @@ describe('../src/clip', () => {
     const c = clip({
       notes: 'C4 D4 E4',
       pattern: 'x-x[x-[x-]x]',
-      subdiv: '8n'
+      subdiv: '8n',
     });
     expect(c[0].length).toBe(64);
     expect(c[1].length).toBe(64);
@@ -443,5 +443,59 @@ describe('../src/clip', () => {
     expect(c[0].length).toBe(256);
     expect(c[1].length).toBe(128);
     expect(c[2].length).toBe(64);
+  });
+
+  it('accepts triplets and sets note lengths accordingly', () => {
+    const c = clip({
+      notes: 'C4',
+      pattern: '[xxx]',
+    });
+    expect(c[0].length).toBe(43);
+    expect(c[1].length).toBe(43);
+    expect(c[2].length).toBe(42);
+  });
+  it('accepts triplets in nested patterns and sets note lengths accordingly', () => {
+    const c = clip({
+      notes: 'C4',
+      pattern: '[xx[xx]]',
+    });
+    expect(c[0].length).toBe(43);
+    expect(c[1].length).toBe(43);
+    expect(c[2].length).toBe(22);
+    expect(c[3].length).toBe(21);
+  });
+
+  it('accepts triplets in between nested patterns and sets note lengths accordingly', () => {
+    const c = clip({
+      notes: 'C4',
+      pattern: '[x[xx]x]',
+    });
+    expect(c[0].length).toBe(43);
+    expect(c[1].length).toBe(22);
+    expect(c[2].length).toBe(21);
+    expect(c[3].length).toBe(42);
+  });
+
+  it('accepts triplets in complexly nested patterns and sets note lengths accordingly', () => {
+    const c = clip({
+      notes: 'C4',
+      pattern: 'x[x[xx]x]x_x-x-[x_[xxx]]',
+    });
+    expect(c[0].length).toBe(128);
+    expect(c[1].length).toBe(43);
+    expect(c[2].length).toBe(22);
+    expect(c[3].length).toBe(21);
+    expect(c[4].length).toBe(42);
+    expect(c[5].length).toBe(256);
+    expect(c[6].length).toBe(128);
+    expect(c[7].length).toBe(128);
+    expect(c[8].length).toBe(128);
+    expect(c[7].note).toBe(null);
+    expect(c[9].length).toBe(128);
+    expect(c[9].note).toBe(null);
+    expect(c[10].length).toBe(86);
+    expect(c[11].length).toBe(14);
+    expect(c[12].length).toBe(14);
+    expect(c[13].length).toBe(13);
   });
 });
