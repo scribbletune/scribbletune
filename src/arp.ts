@@ -1,5 +1,7 @@
 import { inlineChord } from 'harmonics';
 
+const DEFAULT_OCTAVE = 4;
+
 /**
  * Take an array and fill it with it s own elements in the next octave till it s of the specified `len`
  * @param  {Array} arr e.g. ['a4', 'b4']
@@ -8,8 +10,14 @@ import { inlineChord } from 'harmonics';
  */
 const fillArr = (arr: string[], len: number) => {
   const bumpOctave = (el: string): string => {
+    if (!el) {
+      throw new Error('Empty element');
+    }
     const note = el.replace(/\d/, '');
-    const oct = el.replace(/\D/g, '');
+    const oct = el.replace(/\D/g, '') || DEFAULT_OCTAVE;
+    if (!note) {
+      throw new Error('Incorrect note');
+    }
     return note + (+oct + 1);
   };
 
@@ -63,27 +71,35 @@ export const arp = (chordsOrParams: string | Params) => {
     Object.assign(params, chordsOrParams);
   }
 
-  // Chords can be passed as a string, e.g. CM_4 FM_4
+  // Chords can be passed as a string, e.g. 'CM_4 FM_4'
   // or as an array of notes arrays e.g. [['C3', 'E3', 'G3', 'B3'], ['F3', 'A3', 'C4', 'E4']]
   if (typeof params.chords === 'string') {
     const chordsArr: string[] = params.chords.split(' ');
-    for (const c of chordsArr) {
-      const filledArr = fillArr(inlineChord(c), params.count);
-      // reorder the filledArr as per params.order
-      const reorderedArr = (params.order as string)
-        .split('')
-        .map((idx: any) => filledArr[idx]);
-      finalArr = [...finalArr, ...reorderedArr];
-    }
+    chordsArr.forEach((c, i) => {
+      try {
+        const filledArr = fillArr(inlineChord(c), params.count);
+        // reorder the filledArr as per params.order
+        const reorderedArr = (params.order as string)
+          .split('')
+          .map((idx: any) => filledArr[idx]);
+        finalArr = [...finalArr, ...reorderedArr];
+      } catch (e) {
+        throw new Error(`Cannot decode chord ${i + 1} "${c}" in given "${params.chords}"`);
+      }
+    });
   } else if (Array.isArray(params.chords)) {
-    for (const c of params.chords) {
-      const filledArr = fillArr(c as string[], params.count);
-      // reorder the filledArr as per params.order
-      const reorderedArr = (params.order as string)
-        .split('')
-        .map((idx: any) => filledArr[idx]);
-      finalArr = [...finalArr, ...reorderedArr];
-    }
+    params.chords.forEach((c, i) => {
+      try {
+        const filledArr = fillArr(c as string[], params.count);
+        // reorder the filledArr as per params.order
+        const reorderedArr = (params.order as string)
+          .split('')
+          .map((idx: any) => filledArr[idx]);
+        finalArr = [...finalArr, ...reorderedArr];
+      } catch (e) {
+        throw new Error(`${e.message} chord ${i + 1} "${c}"`);
+      }
+    });
   } else {
     throw new TypeError('Invalid value for chords');
   }

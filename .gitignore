@@ -6,6 +6,7 @@ coverage
 .idea/
 .vscode/
 .npmrc
+log.*
 
 *BAK*
 /docs

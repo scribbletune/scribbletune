@@ -1,4 +1,4 @@
-import { clip } from './clip';
+import { clip } from './browser-clip';
 
 /**
  * Get the next logical position to play in the session
@@ -40,21 +40,31 @@ export class Channel {
     (this.idx = params.idx || 0), (this.activePatternIdx = -1);
     this.channelClips = [];
 
-    if (params.sample) {
-      this.player = new Tone.Player(params.sample);
-    }
-    if (params.synth) {
-      this.instrument = new Tone[params.synth]();
-    }
-    if (params.samples) {
-      this.sampler = new Tone.Sampler(params.samples);
+    try {
+      if (params.sample) {
+        this.player = new Tone.Player(params.sample);
+      }
+      if (params.synth) {
+        this.instrument = new Tone[params.synth]();
+      }
+      if (params.samples) {
+        this.sampler = new Tone.Sampler(params.samples);
+      }
+    } catch (e) {
+      throw new Error(`${e.message} in channel ${this.idx} "${params?.name}"`);
     }
 
     // Filter out unrequired params and create clip params object
     const { clips, samples, sample, synth, ...originalParamsFiltered } = params;
 
-    params.clips.forEach((c: any) => {
-      this.addClip({ ...c, ...originalParamsFiltered });
+    params.clips.forEach((c: any, i: number) => {
+      try {
+        this.addClip({ ...c, ...originalParamsFiltered });
+      } catch (e) {
+        throw new Error(
+          `${e.message} in channel ${this.idx} "${params?.name}" clip ${i + 1}`
+        );
+      }
     }, this);
   }
 
