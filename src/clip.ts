@@ -81,7 +81,7 @@ export const clip = (params: ClipParams) => {
 
   if (/[^x\-_\[\]R]/.test(params.pattern)) {
     throw new TypeError(
-      `pattern can only comprise x - _ [ ], found ${params.pattern}`
+      `pattern can only comprise x - _ [ ] R, found ${params.pattern}`
     );
   }
 

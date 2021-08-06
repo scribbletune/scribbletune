@@ -6,13 +6,34 @@ export class Session {
   constructor(arr: ChannelParams[]) {
     arr = arr || [];
     this.sessionChannels = arr.map((ch: ChannelParams, i: number) => {
+      // Make sure ch.idx is not empty and unique in this.sessionChannels
       ch.idx = ch.idx || i;
+      ch.idx = this.uniqueIdx(this.sessionChannels, ch.idx);
       return new Channel(ch);
     });
   }
 
+  // Return unique idx for given channels
+  uniqueIdx(channels: Channel[], idx: undefined | string | number = undefined): string | number {
+    // Channel idx's
+    const idxs = channels.reduce((acc: (string | number)[], c) => {
+      return (!acc.find(i => i === c.idx) && acc.concat(c.idx)) || acc;
+    }, []);
+
+    if (!idx || idxs.find(i => i === idx)) {
+      let newIdx = channels.length;
+      while (idxs.find(i => i === newIdx)) {
+        newIdx = newIdx + 1;
+      }
+      return newIdx;
+    }
+
+    return idx;
+  }
+
   createChannel(ch: ChannelParams) {
-    ch.idx = ch.idx || this.sessionChannels.length;
+    // Make sure ch.idx is unique in this.sessionChannels
+    ch.idx = this.uniqueIdx(this.sessionChannels, ch.idx);
     const newChannel = new Channel(ch);
     this.sessionChannels.push(newChannel);
     return newChannel;
