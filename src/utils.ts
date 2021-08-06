@@ -23,9 +23,10 @@ export const expandStr = (str: string): any => {
 /**
  * Basic Array randomizer
  * @param  {Array} arr
+ * @param  {boolean} fullShuffle Ensure no elements remain in old place
  * @return {Array}
  */
-export const shuffle = (arr: any[], fullShuffle = true): string[] => {
+export const shuffle = (arr: any[], fullShuffle: boolean = true): string[] => {
   const lastIndex: number = arr.length - 1;
   
   // Shuffle algorithm by Richard Durstenfeld (Donald E. Knuth), also Ronald Fisher and Frank Yates.
