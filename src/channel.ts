@@ -1,4 +1,5 @@
-import { clip } from './browser-clip';
+import { clip } from './clip';
+// ? import { clip } from './browser-clip';
 
 /**
  * Get the next logical position to play in the session
