@@ -16,12 +16,12 @@ export class Session {
   // Return unique idx for given channels
   uniqueIdx(channels: Channel[], idx: undefined | string | number = undefined): string | number {
     // Channel idx's
-    const idxs = channels.reduce((acc: (string | number)[], c) => {
+    const idxs = channels ? channels.reduce((acc: (string | number)[], c) => {
       return (!acc.find(i => i === c.idx) && acc.concat(c.idx)) || acc;
-    }, []);
+    }, []) : [];
 
     if (!idx || idxs.find(i => i === idx)) {
-      let newIdx = channels.length;
+      let newIdx = channels ? channels.length : 0;
       while (idxs.find(i => i === newIdx)) {
         newIdx = newIdx + 1;
       }
