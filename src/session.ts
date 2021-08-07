@@ -14,7 +14,7 @@ export class Session {
   }
 
   // Return unique idx for given channels
-  uniqueIdx(channels: Channel[], idx: undefined | string | number = undefined): string | number {
+  uniqueIdx(channels: Channel[], idx?: string | number): string | number {
     if (!channels) {
       return idx || 0;
     }

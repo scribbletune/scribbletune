@@ -28,7 +28,7 @@ export const expandStr = (str: string): any => {
  */
 export const shuffle = (arr: any[], fullShuffle: boolean = true): string[] => {
   const lastIndex: number = arr.length - 1;
-  
+
   // Shuffle algorithm by Richard Durstenfeld (Donald E. Knuth), also Ronald Fisher and Frank Yates.
   // "Full Shuffle" Modification to ensure no elements remain in their original place (by taking each element once
   // and swapping with any remaining elements)
@@ -40,17 +40,15 @@ export const shuffle = (arr: any[], fullShuffle: boolean = true): string[] => {
       return;
     }
     // Swap el with one of the higher elements randomly
-    let rnd
-    rnd  = fullShuffle
-      ? Math.floor(Math.random() * (lastIndex - idx) ) + 1 + idx
-      // Pick random number from idx+1 to lastIndex (Modified algorithm, (N-1)! combinations)
-      // Math.random -> [0, 1) -> [0, lastIndex-idx ) --floor-> [0, lastIndex-idx-1]
-      // rnd = [0, lastIndex-idx-1] + 1 + idx = [1 + idx, lastIndex]
-      // (Original algorithm would pick rnd = [idx, lastIndex], thus any element could arrive back into its slot)
-  
-      : Math.floor(Math.random() * (lastIndex + 1 - idx) ) + idx
-      // Pick random number from idx to lastIndex (Unmodified Richard Durstenfeld, N! combinations)
-    ;
+    let rnd;
+    rnd = fullShuffle
+      ? // Pick random number from idx+1 to lastIndex (Modified algorithm, (N-1)! combinations)
+        // Math.random -> [0, 1) -> [0, lastIndex-idx ) --floor-> [0, lastIndex-idx-1]
+        // rnd = [0, lastIndex-idx-1] + 1 + idx = [1 + idx, lastIndex]
+        // (Original algorithm would pick rnd = [idx, lastIndex], thus any element could arrive back into its slot)
+        Math.floor(Math.random() * (lastIndex - idx)) + 1 + idx
+      : // Pick random number from idx to lastIndex (Unmodified Richard Durstenfeld, N! combinations)
+        Math.floor(Math.random() * (lastIndex + 1 - idx)) + idx;
     arr[idx] = arr[rnd];
     arr[rnd] = el;
   });

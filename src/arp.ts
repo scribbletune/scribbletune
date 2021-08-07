@@ -84,7 +84,9 @@ export const arp = (chordsOrParams: string | Params) => {
           .map((idx: any) => filledArr[idx]);
         finalArr = [...finalArr, ...reorderedArr];
       } catch (e) {
-        throw new Error(`Cannot decode chord ${i + 1} "${c}" in given "${params.chords}"`);
+        throw new Error(
+          `Cannot decode chord ${i + 1} "${c}" in given "${params.chords}"`
+        );
       }
     });
   } else if (Array.isArray(params.chords)) {
