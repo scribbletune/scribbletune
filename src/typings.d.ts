@@ -167,6 +167,7 @@ interface ClipParams {
 
 interface ChannelParams extends ClipParams {
   idx?: number | string;
+  name?: string;
   clips?: any;
 }
 
