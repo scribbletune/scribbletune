@@ -84,7 +84,7 @@ describe('../src/clip', () => {
   });
 
   it('extends notes in case of a longer pattern', () => {
-    let longerPattern = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+    const longerPattern = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx';
     const c = clip({
       notes: ['C3', 'D3'],
       pattern: longerPattern,

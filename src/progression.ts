@@ -8,7 +8,7 @@ import { pickOne, dice } from './utils';
  * @param  {String} mode e.g. major
  * @return {Array} e.g.['I', 'ii', 'iii', 'IV', 'V', 'vi', 'vii°']
  */
-export const getChordDegrees = (mode: string) => {
+export const getChordDegrees = (mode: string): string[] => {
   const theRomans: NVP<string[]> = {
     ionian: ['I', 'ii', 'iii', 'IV', 'V', 'vi', 'vii°'],
     dorian: ['i', 'ii', 'III', 'IV', 'v', 'vi°', 'VII'],
@@ -87,7 +87,7 @@ export const getChordsByProgression = (
   const chordDegreesArr = chordDegress.replace(/\s*,+\s*/g, ' ').split(' ');
   // Now we have something like ['i', 'ii', 'IV']
   // Convert it to a chord family such as ['Cm', 'Dm', 'FM']
-  const chordFamily = chordDegreesArr.map((roman, idx) => {
+  const chordFamily = chordDegreesArr.map(roman => {
     const chordName = getChordName(roman); // e.g. m
     // get the index to be used by removing any digit or non alphabet character
     const scaleId = idxByDegree[roman.replace(/\W|\d/g, '').toLowerCase()]; // e.g. 0
@@ -103,7 +103,7 @@ export const getChordsByProgression = (
 };
 
 const getProgFactory = ({ T, P, D }: TPD) => {
-  return (count: number = 4) => {
+  return (count = 4) => {
     const chords = [];
 
     // Push root/tonic
@@ -123,7 +123,7 @@ const getProgFactory = ({ T, P, D }: TPD) => {
       i++;
     }
 
-    ///////// 4 or more//////////
+    // /////// 4 or more//////////
     if (i < count - 1) {
       // Pick a dominant
       chords.push(pickOne(D));
@@ -147,7 +147,7 @@ const getProgFactory = ({ T, P, D }: TPD) => {
       chords.push(pickOne(P));
       i++;
     }
-    ////////////////////////////
+    // //////////////////////////
 
     // Fill the rest with dominant
     while (i < count) {
@@ -169,7 +169,7 @@ const m = getProgFactory({ T: ['i', 'VI'], P: ['ii', 'iv'], D: ['V'] });
  * @param scaleType e.g. M (for major chord progression), m (for minor chord progression)
  * @param count e.g. 4
  */
-export const progression = (scaleType: progressionScale, count: number = 4) => {
+export const progression = (scaleType: progressionScale, count = 4): any[] => {
   if (scaleType === 'major' || scaleType === 'M') {
     return M(count);
   }
@@ -177,4 +177,6 @@ export const progression = (scaleType: progressionScale, count: number = 4) => {
   if (scaleType === 'minor' || scaleType === 'm') {
     return m(count);
   }
+
+  return [];
 };

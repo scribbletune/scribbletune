@@ -42,7 +42,7 @@ const plugins = [];
 plugins.push(new DtsBundlePlugin());
 
 module.exports = {
-  mode: 'production',
+  // mode: 'production',
   entry: getEntry(),
   output: getOutput(),
   devtool: process.env.TARGET === 'cdn' ? 'source-map' : '',

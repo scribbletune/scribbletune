@@ -23,7 +23,7 @@ interface ClipParams {
    *  - Default:  `[ 'C4' ]`
    *  - Example:  `'C4 D4 C4 D#4 C4 D4 C4 Bb3'`
    */
-  notes: string | (string | string[])[];
+  notes?: string | (string | string[])[];
   /**
    * A musical rhythm, expressed using Scribbletune's pattern language,
    * which can be adapted to output MIDI files or `Tone.js` sequences.
@@ -82,12 +82,79 @@ interface ClipParams {
    *  - Example:  `'C4 D4 C4 D#4 C4 D4 C4 Bb3'`
    */
   randomNotes?: null | string | (string | string[])[];
+
   /**
-   * The name of a synthesizer, listed in `Tone.js`.
+   * The duration of an individual sample that is used in a browser `clip`.
+   *  - Example: `'32n'`, `'1m'`, `2.3`
+   *  - See:  [Tone.js wiki ~ Time](https://github.com/Tonejs/Tone.js/wiki/Time#notation)
+   */
+  dur?: string;
+  /**
+   * Durations of notes in a browser `clip` as a number of quarter notes.
+   * Internal usage only, please use the pattern notation (`x`,`-`,`_`) instead.
+   *  - Example: `[1, 1, 0.5, 0.25]`
+   */
+  durations?: number[];
+
+  /**
+   * Boolean parameter to trigger offline rendering.
+   * If true, `scribbletune.clip` returns a `Tone.Player` with a buffer containing a pre-rendered sound of the sequence
+   * If false, it returns a `Tone.Sequence` which does live rendering.
+   * Note: The rendering needs some time to complete & be saved in the buffer, before being able to playing.
+   */
+  offlineRendering?: boolean;
+  /**
+   * Callback function triggered when offline rendering is finished. Ignored when `offlineRendering: false`.
+   */
+  offlineRenderingCallback?: any;
+}
+
+/**
+ * Definition of a synthesizer from `Tone.js`.
+ */
+interface SynthParams {
+  /**
+   *  The name of the synthesizer, listed in `Tone.js`.
    *  - Example: `'PolySynth'`.
    *  - See:  [GitHub ~ Tone.js/Tone/instrument](https://github.com/Tonejs/Tone.js/tree/dev/Tone/instrument)
    */
-  synth?: any;
+  synth: string;
+  /**
+   *  Descriptive name of the preset.
+   */
+  presetName?: string;
+  /**
+   *  Object with parameters for passing to `new Tone[synth](preset)`.
+   */
+  preset: any;
+}
+
+interface ChannelParams {
+  idx?: number | string;
+  name?: string;
+  clips?: any;
+
+  /**
+   * Audio context (e.g. Tone.getContext())
+   */
+  context?: any;
+
+  /**
+   * The default MIDI amplitube/ level/ volume of a note.
+   * Used as the upper bound for accents and sizzles (where the lower bound is `accentLow`).
+   *  - Default:  `100`
+   *  - Example:  `127`
+   */
+  amp?: number;
+
+  /**
+   * This use is depreceated: The name of a synthesizer, listed in `Tone.js`.
+   *  - Example: `'PolySynth'`.
+   *  - See:  [GitHub ~ Tone.js/Tone/instrument](https://github.com/Tonejs/Tone.js/tree/dev/Tone/instrument)
+   *
+   * New use going forward: SynthParams
+   */
+  synth?: string | SynthParams;
   /**
    * A `Tone.Instrument` instance or the name of a synthesizer, listed in `Tone.js`. Only in the browser.
    *  - Example: `'Synth'`
@@ -122,18 +189,12 @@ interface ClipParams {
    *  - See:  https://tonejs.github.io/docs/13.8.25/Player
    */
   player?: any;
+
   /**
-   * The duration of an individual sample that is used in a browser `clip`.
-   *  - Example: `'32n'`, `'1m'`, `2.3`
-   *  - See:  [Tone.js wiki ~ Time](https://github.com/Tonejs/Tone.js/wiki/Time#notation)
+   * External sound producer object / module
    */
-  dur?: string;
-  /**
-   * Durations of notes in a browser `clip` as a number of quarter notes.
-   * Internal usage only, please use the pattern notation (`x`,`-`,`_`) instead.
-   *  - Example: `[1, 1, 0.5, 0.25]`
-   */
-  durations?: number[];
+  external?: any;
+
   /**
    * Name of an effect listed in `Tone.js` or `Tone.Effect` instance. Single value or Array.
    *  - Example:  `'Chorus'`
@@ -152,23 +213,15 @@ interface ClipParams {
    *  - See:      https://tonejs.github.io/docs/13.8.25/Volume
    */
   volume?: number;
-  /**
-   * Boolean parameter to trigger offline rendering.
-   * If true, `scribbletune.clip` returns a `Tone.Player` with a buffer containing a pre-rendered sound of the sequence
-   * If false, it returns a `Tone.Sequence` which does live rendering.
-   * Note: The rendering needs some time to complete & be saved in the buffer, before being able to playing.
-   */
-  offlineRendering?: boolean;
-  /**
-   * Callback function triggered when offline rendering is finished. Ignored when `offlineRendering: false`.
-   */
-  offlineRenderingCallback?: any;
-}
 
-interface ChannelParams extends ClipParams {
-  idx?: number | string;
-  name?: string;
-  clips?: any;
+  /**
+   * Callback function triggered when a note is played.
+   */
+  eventCb?: EventFn;
+  /**
+   * Callback function triggered when a note is played.
+   */
+  playerCb?: playerObserverFnc;
 }
 
 type ChannelPattern = {
@@ -211,8 +264,21 @@ interface PlayParams {
 
 type SeqFn = (time: string, el: string) => void;
 
-declare var Tone: any;
-declare var LiveAPI: any;
-declare var require: NodeRequire;
+/**
+ * Callback function triggered when channel has a new event.
+ * @param event - one of ['loaded', 'error']
+ * @param params - object with event data
+ */
+type EventFn = (event: string, params: any) => void;
+
+/**
+ * Callback function triggered when a note is played.
+ * @param params - object with player data
+ */
+type playerObserverFnc = (params: any) => void;
+
+declare let Tone: any;
+declare let LiveAPI: any;
+declare let require: NodeRequire;
 declare module 'jsmidgen';
 declare module 'harmonics';

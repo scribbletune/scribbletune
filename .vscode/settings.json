@@ -1,0 +1,21 @@
+{
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnPaste": true,
+        "editor.formatOnSave": true,
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnPaste": true,
+        "editor.formatOnSave": true,
+    },
+    "editor.formatOnPaste": false,
+    "editor.formatOnSave": false,
+
+    "eslint.workingDirectories": [
+        "."
+    ],
+    "eslint.lintTask.enable": true,
+    "eslint.lintTask.options": "-c .eslintrc --ignore-path .eslintignore src tests",
+    "jest.jestCommandLine": "npm test --"
+}

@@ -1,5 +1,4 @@
-import { isNote, shuffle, expandStr } from './utils';
-import { inlineChord } from 'harmonics';
+import { convertChordsToNotes, randomInt, shuffle, expandStr } from './utils';
 
 /**
  * Get default params for a clip, such as root note, pattern etc
@@ -16,7 +15,6 @@ const getDefaultParams = (): ClipParams => ({
   amp: 100,
   accentLow: 70,
   randomNotes: null,
-  effects: [],
   offlineRendering: false,
 });
 
@@ -38,36 +36,7 @@ const hdr: NVP<number> = {
   '16n': 32,
 };
 
-const convertChordsToNotes = (el: any) => {
-  if (isNote(el as string)) {
-    // A note needs to be an array so that it can accomodate chords or single notes with a single interface
-    return [el];
-  }
-
-  if (Array.isArray(el)) {
-    // This could be a chord provided as an array
-    // make sure it uses valid notes
-    el.forEach(n => {
-      if (!isNote(n)) {
-        throw new TypeError('array must comprise valid notes');
-      }
-    });
-
-    return el;
-  }
-
-  // At this point, this could be an inline chord e.g. Cmaj7 or Dbsus2_5
-  if (!Array.isArray(el)) {
-    const c = inlineChord(el);
-    if (c && c.length) {
-      return c;
-    }
-  }
-
-  throw new Error(`Chord ${el} not found`);
-};
-
-export const clip = (params: ClipParams) => {
+export const clip = (params: ClipParams): any => {
   params = { ...getDefaultParams(), ...(params || {}) };
 
   // If notes is a string, split it into an array
@@ -77,9 +46,9 @@ export const clip = (params: ClipParams) => {
     params.notes = params.notes.split(' ');
   }
 
-  params.notes = params.notes.map(convertChordsToNotes);
+  params.notes = params.notes ? params.notes.map(convertChordsToNotes) : [];
 
-  if (/[^x\-_\[\]R]/.test(params.pattern)) {
+  if (/[^x\-_[\]R]/.test(params.pattern)) {
     throw new TypeError(
       `pattern can only comprise x - _ [ ] R, found ${params.pattern}`
     );
@@ -117,14 +86,19 @@ export const clip = (params: ClipParams) => {
     let totalLength = 0;
     patternArr.forEach((char, idx) => {
       if (typeof char === 'string') {
-        let note: any = char === '-' ? null : params.notes[step];
+        let note: any = null;
 
-        if (char === 'R' && (Math.round(Math.random()) || params.randomNotes)) {
-          note = params.randomNotes
-            ? params.randomNotes[
-                Math.round(Math.random() * (params.randomNotes.length - 1))
-              ]
-            : params.notes[step];
+        if (char === '-') {
+          // note = null;
+        } else if (
+          char === 'R' &&
+          randomInt() && // Use 1/2 probability for R to pick from param.notes
+          params.randomNotes &&
+          params.randomNotes.length > 0
+        ) {
+          note = params.randomNotes[randomInt(params.randomNotes.length - 1)];
+        } else if (params.notes) {
+          note = params.notes[step];
         }
 
         if (char === 'x' || char === 'R') {
@@ -168,7 +142,7 @@ export const clip = (params: ClipParams) => {
         }
 
         // If the pattern is longer than the notes, then repeat notes
-        if (step === params.notes.length) {
+        if (step === params.notes?.length) {
           step = 0;
         }
       }
@@ -243,7 +217,8 @@ export const clip = (params: ClipParams) => {
   }
 
   if (params.accent) {
-    if (/[^x\-]/.test(params.accent)) {
+    // TODO: Eslint barks at \- as useless, need to verify that JS handles - without \ properly.
+    if (/[^x-]/.test(params.accent)) {
       throw new TypeError('Accent can only have x and - characters');
     }
 
