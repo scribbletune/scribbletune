@@ -21,6 +21,7 @@
     "watch:cdn": "cross-env TARGET=cdn npx webpack --watch --mode=production",
     "watch:max": "cross-env TARGET=max npx webpack --watch --mode=production",
     "watch:node": "npx webpack --watch --mode=production",
+    "prepare": "npm run build",
     "rebuild": "rm -rf node_modules && rm package-lock.json && npm i && npm run build",
     "bump-major": "npm version major --no-git-tag-version",
     "bump-minor": "npm version minor --no-git-tag-version",
