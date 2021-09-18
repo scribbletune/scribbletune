@@ -27,7 +27,7 @@
     "bump-patch": "npm version patch --no-git-tag-version"
   },
   "dependencies": {
-    "harmonics": "^1.0.7",
+    "harmonics": "^1.0.8",
     "jsmidgen": "~0.1.5"
   },
   "devDependencies": {
