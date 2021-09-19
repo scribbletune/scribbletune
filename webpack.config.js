@@ -41,39 +41,64 @@ const getEntry = () => {
 const plugins = [];
 plugins.push(new DtsBundlePlugin());
 
-module.exports = {
-  // mode: 'production',
-  entry: getEntry(),
-  output: getOutput(),
-  devtool: process.env.TARGET === 'cdn' ? 'source-map' : '',
+// Use function to access command-line arguments:
+module.exports = (env, argv) => {
+  const isDevelopment = argv.mode === 'development';
+  const isProduction = argv.mode === 'production';
 
-  module: {
-    rules: [
-      {
-        test: /\.ts$/,
-        enforce: 'pre',
-        loader: 'tslint-loader',
-      },
-      { test: /\.ts$/, loader: 'ts-loader', exclude: /node_modules/ },
-    ],
-  },
+  return {
+    // mode: 'production',
+    entry: getEntry(),
+    output: getOutput(),
+    devtool: 'source-map', // ? process.env.TARGET === 'cdn' ? 'source-map' : '',
 
-  resolve: {
-    extensions: ['.ts', '.js', '.json'],
-  },
+    module: {
+      rules: [
+        {
+          test: /\.ts$/,
+          enforce: 'pre',
+          use: [
+            {
+              loader: 'eslint-loader',
+              options: {
+                fix: isProduction,
+                emitWarning: isDevelopment,
+                failOnWarning: isProduction,
+                configFile: '.eslintrc',
+              }
+            }
+          ]
+        },
+        {
+          test: /\.ts$/,
+          use: [
+            {
+              loader: 'ts-loader',
+              options: {},
+            }
+          ]
+        },
+      ],
+    },
 
-  plugins: plugins,
-  // node: {
-  //   fs: 'empty',
-  // },
-  externals: {
-    fs: 'fs',
-  },
+    resolve: {
+      extensions: ['.ts', '.js', '.json'],
+    },
+
+    plugins: plugins,
+    // node: {
+    //   fs: 'empty',
+    // },
+    externals: {
+      fs: 'fs',
+    },
+  };
 };
 
 function DtsBundlePlugin() {}
 DtsBundlePlugin.prototype.apply = function(compiler) {
-  compiler.plugin('done', function() {
+  // compiler.plugin('done', function() { // webpack v4
+  compiler.hooks.done.tap('DtsBundlePlugin', function() { // webpack v5
     var dts = require('dts-bundle');
 
     dts.bundle({

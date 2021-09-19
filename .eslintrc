@@ -9,8 +9,8 @@
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
-    "prettier"
+    "prettier",
+    "plugin:prettier/recommended"
   ],
   "rules": {
     "prettier/prettier": 1,
@@ -40,7 +40,7 @@
     }
   },
   "overrides": [{
-    "files": ["jest.config.js"],
+    "files": ["jest.config.js", "webpack.config.js", "prettier.config.js"],
     "parserOptions": {
       "sourceType": "script"
     }

@@ -468,9 +468,9 @@ export class Channel {
             .init(context.rawContext)
             .then(() => {
               console.log(
-                `Loaded external output module for channel idx ${
-                  this.idx
-                } "${this.name ?? '(no name)'}"`
+                `Loaded external output module for channel idx ${this.idx} "${
+                  this.name ?? '(no name)'
+                }"`
               );
               resolve();
             })

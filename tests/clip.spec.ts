@@ -23,19 +23,19 @@ describe('../src/clip', () => {
   });
 
   it('throws an error in case of invalid notes', () => {
-    expect(function() {
+    expect(function () {
       clip({ notes: ['k1'], pattern: 'x' });
     }).toThrow();
   });
 
   it('throws an error in case of invalid pattern', () => {
-    expect(function() {
+    expect(function () {
       clip({ notes: ['C4'], pattern: 'jjdk' });
     }).toThrow();
   });
 
   it('accepts R to denote a note to be added randomly', () => {
-    expect(function() {
+    expect(function () {
       clip({ notes: ['C4'], pattern: 'xxRx' });
     }).not.toThrow();
   });
@@ -286,10 +286,10 @@ describe('../src/clip', () => {
   });
 
   it('throws an error in case of invalid accent', () => {
-    expect(function() {
+    expect(function () {
       clip({ notes: 'C4', pattern: 'x', accent: 'k' });
     }).toThrow();
-    expect(function() {
+    expect(function () {
       clip({ notes: 'C4', pattern: 'x', accent: 'x_' });
     }).toThrow();
   });
@@ -306,7 +306,7 @@ describe('../src/clip', () => {
   });
 
   it('accepts array of arrays', () => {
-    expect(function() {
+    expect(function () {
       clip({
         notes: [
           ['c4', 'e4'],
@@ -332,7 +332,7 @@ describe('../src/clip', () => {
   });
 
   it('accepts array of arrays but throws an error for incorrect input', () => {
-    expect(function() {
+    expect(function () {
       clip({
         notes: [['c4', 'e4'], ['k4']],
         pattern: 'xxxx',
