@@ -65,9 +65,9 @@ module.exports = (env, argv) => {
                 emitWarning: isDevelopment,
                 failOnWarning: isProduction,
                 configFile: '.eslintrc',
-              }
-            }
-          ]
+              },
+            },
+          ],
         },
         {
           test: /\.ts$/,
@@ -75,8 +75,8 @@ module.exports = (env, argv) => {
             {
               loader: 'ts-loader',
               options: {},
-            }
-          ]
+            },
+          ],
         },
       ],
     },
@@ -96,9 +96,10 @@ module.exports = (env, argv) => {
 };
 
 function DtsBundlePlugin() {}
-DtsBundlePlugin.prototype.apply = function(compiler) {
+DtsBundlePlugin.prototype.apply = function (compiler) {
   // compiler.plugin('done', function() { // webpack v4
-  compiler.hooks.done.tap('DtsBundlePlugin', function() { // webpack v5
+  compiler.hooks.done.tap('DtsBundlePlugin', function () {
+    // webpack v5
     var dts = require('dts-bundle');
 
     dts.bundle({

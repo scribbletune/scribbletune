@@ -13,7 +13,22 @@
     "plugin:prettier/recommended"
   ],
   "rules": {
-    "prettier/prettier": 1,
+    "prettier/prettier": [
+      "error",
+      {
+        "trailingComma": "es5",
+        "singleQuote": true,
+        "printWidth": 80,
+        "arrowParens": "avoid",
+        "htmlWhitespaceSensitivity": "strict",
+        "bracketSpacing": true,
+        "jsxBracketSameLine": false,
+        "proseWrap": "always",
+        "semi": true,
+        "tabWidth": 2,
+        "useTabs": false
+      }
+    ],
     "eqeqeq": 2,
     "eol-last": 0,
     "no-nested-ternary": 1,
