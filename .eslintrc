@@ -22,7 +22,7 @@
         "arrowParens": "avoid",
         "htmlWhitespaceSensitivity": "strict",
         "bracketSpacing": true,
-        "jsxBracketSameLine": false,
+        // "jsxBracketSameLine": false,
         "proseWrap": "always",
         "semi": true,
         "tabWidth": 2,

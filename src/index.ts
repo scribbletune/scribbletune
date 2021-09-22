@@ -8,11 +8,13 @@ import {
 import { arp } from './arp';
 import { midi } from './midi';
 
-export {
+const mode = scale;
+const modes = scales;
+export default {
   scale,
-  scale as mode,
+  mode,
   scales,
-  scales as modes,
+  modes,
   chord,
   chords,
   clip,

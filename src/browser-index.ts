@@ -9,11 +9,13 @@ import { arp } from './arp';
 import { midi } from './midi';
 import { Session } from './session';
 
-export {
+const mode = scale;
+const modes = scales;
+export default {
   scale,
-  scale as mode,
+  mode,
   scales,
-  scales as modes,
+  modes,
   chord,
   chords,
   clip,
