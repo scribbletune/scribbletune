@@ -9,6 +9,7 @@
     "editor.formatOnSave": true
   },
   "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features",
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true
   },

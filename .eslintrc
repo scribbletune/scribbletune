@@ -22,7 +22,6 @@
         "arrowParens": "avoid",
         "htmlWhitespaceSensitivity": "strict",
         "bracketSpacing": true,
-        // "jsxBracketSameLine": false,
         "proseWrap": "always",
         "semi": true,
         "tabWidth": 2,
@@ -54,10 +53,16 @@
       "experimentalObjectRestSpread": true
     }
   },
-  "overrides": [{
-    "files": ["jest.config.js", "webpack.config.js", "prettier.config.js"],
-    "parserOptions": {
-      "sourceType": "script"
+  "overrides": [
+    {
+      "files": [
+        "jest.config.js",
+        "webpack.config.js",
+        "prettier.config.js"
+      ],
+      "parserOptions": {
+        "sourceType": "script"
+      }
     }
-  }]
+  ]
 }

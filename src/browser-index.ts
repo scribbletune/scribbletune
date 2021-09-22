@@ -11,7 +11,7 @@ import { Session } from './session';
 
 const mode = scale;
 const modes = scales;
-export default {
+const scribbletune = {
   scale,
   mode,
   scales,
@@ -26,3 +26,5 @@ export default {
   midi,
   Session,
 };
+
+export default scribbletune;
