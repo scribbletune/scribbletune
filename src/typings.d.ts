@@ -45,10 +45,16 @@ interface ClipParams {
   /**
    * Sub-division — each `x` is a quarter note by default.
    *  - Default: `'4n'`
-   *  - Example: `'1m '`
+   *  - Example: `'1m'`
    *  - See:  [Tone.js wiki ~ Time](https://github.com/Tonejs/Tone.js/wiki/Time#notation)
    */
   subdiv?: string;
+  /**
+   * Align start of clip playing to specific time grid.
+   *  - Default: `'1m'`
+   *  - Example: `'4m'` will align the clip to every 4 measures
+   */
+  align?: string;
   /**
    * The default MIDI amplitube/ level/ volume of a note.
    * Used as the upper bound for accents and sizzles (where the lower bound is `accentLow`).

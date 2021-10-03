@@ -23,6 +23,7 @@ const getDefaultParams = (): ClipParams => ({
   sizzleReps: 1,
   arpegiate: false,
   subdiv: '4n',
+  align: '1m',
   amp: 100,
   accentLow: 70,
   randomNotes: null,

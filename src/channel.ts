@@ -6,14 +6,24 @@ import { errorHasMessage } from './utils';
  * Tone has a build-in method `Tone.Transport.nextSubdivision('4n')`
  * but I think it s better to round off as follows for live performance
  */
-const getNextPos = (): number | string => {
+const getNextPos = (clip: null | { align?: string }): number | string => {
+  // TODO: (soon) convert to using transportPosTicks (fewer computations)
   const arr = Tone.Transport.position.split(':');
   // If we are still around 0:0:0x, then set start position to 0
   if (arr[0] === '0' && arr[1] === '0') {
     return 0;
   }
+
   // Else set it to the next bar
-  return +arr[0] + 1 + ':0:0';
+  const transportPosTicks = Tone.Transport.ticks;
+  const align = clip?.align || '1m';
+  const alignTicks: number = Tone.Ticks(align).toTicks();
+  const nextPosTicks = Tone.Ticks(
+    Math.floor(transportPosTicks / alignTicks + 1) * alignTicks
+  );
+  // const nextPosBBS = nextPosTicks.toBarsBeatsSixteenths();
+  // return nextPosBBS; // Extraneous computations
+  return nextPosTicks;
 };
 
 /**
@@ -42,7 +52,7 @@ export class Channel {
   hasFailed: boolean | Error;
   private eventCbFn: EventFn | undefined;
   private playerCbFn: playerObserverFnc | undefined;
-
+  private counterResetTask: number | undefined;
   constructor(params: ChannelParams) {
     this.idx = params.idx || 0;
     this.name = params.name || 'ch ' + params.idx;
@@ -157,22 +167,33 @@ export class Channel {
   }
 
   startClip(idx: number, position?: number | string): void {
-    position = position || (position === 0 ? 0 : getNextPos());
+    const clip = this.channelClips[idx];
+    position = position || (position === 0 ? 0 : getNextPos(clip));
     // Stop any other currently running clip
     if (this.activePatternIdx > -1 && this.activePatternIdx !== idx) {
       this.stopClip(this.activePatternIdx, position);
     }
 
-    if (this.channelClips[idx] && this.channelClips[idx].state !== 'started') {
-      this.clipNoteCount = 0;
+    if (clip && clip.state !== 'started') {
+      // We need to schedule that for just before when clip?.start(position) events start coming.
+      this.counterResetTask = Tone.Transport.scheduleOnce(
+        (/* time: Tone.Seconds */) => {
+          this.clipNoteCount = 0;
+        },
+        position
+      );
+
       this.activePatternIdx = idx;
-      this.channelClips[idx]?.start(position);
+      // clip?.stop(position); // DEBUG: trying to clear out start/stop events
+      // clip?.clear(position); // DEBUG: trying to clear out events
+      clip?.start(position);
     }
   }
 
   stopClip(idx: number, position?: number | string): void {
-    position = position || (position === 0 ? 0 : getNextPos());
-    this.channelClips[idx]?.stop(position);
+    const clip = this.channelClips[idx];
+    position = position || (position === 0 ? 0 : getNextPos(clip));
+    clip?.stop(position);
     if (idx === this.activePatternIdx) {
       this.activePatternIdx = -1;
     }
@@ -187,6 +208,10 @@ export class Channel {
         },
         this
       );
+      if (clipParams.align) {
+        this.channelClips[idx as number].align = clipParams.align;
+        // Pass clipParams.align into getNextPos()
+      }
     } else {
       // Allow creation of empty clips
       this.channelClips[idx as number] = null;
