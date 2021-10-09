@@ -1,6 +1,13 @@
 import { chord, inlineChord } from 'harmonics';
 
 /**
+ * Helper for bracket notation object property access
+ */
+export interface IIndexable<T = any> {
+  [key: string]: T;
+}
+
+/**
  * Take a string input and check if it s a note name or not
  * @param  {String} str Note name e.g. c4
  * @return {Boolean} Return true for c4 or return false for something like CM

@@ -24,6 +24,7 @@ const getDefaultParams = (): ClipParams => ({
   arpegiate: false,
   subdiv: '4n',
   align: '1m',
+  alignOffset: '0',
   amp: 100,
   accentLow: 70,
   randomNotes: null,

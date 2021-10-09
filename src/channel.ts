@@ -1,12 +1,14 @@
 import { clip, getNote, getDuration } from './browser-clip';
-import { errorHasMessage } from './utils';
+import { errorHasMessage, IIndexable } from './utils';
 
 /**
  * Get the next logical position to play in the session
  * Tone has a build-in method `Tone.Transport.nextSubdivision('4n')`
  * but I think it s better to round off as follows for live performance
  */
-const getNextPos = (clip: null | { align?: string }): number | string => {
+const getNextPos = (
+  clip: null | { align?: string; alignOffset?: string }
+): number | string => {
   // TODO: (soon) convert to using transportPosTicks (fewer computations)
   const arr = Tone.Transport.position.split(':');
   // If we are still around 0:0:0x, then set start position to 0
@@ -17,9 +19,12 @@ const getNextPos = (clip: null | { align?: string }): number | string => {
   // Else set it to the next bar
   const transportPosTicks = Tone.Transport.ticks;
   const align = clip?.align || '1m';
+  const alignOffset = clip?.alignOffset || '0';
   const alignTicks: number = Tone.Ticks(align).toTicks();
+  const alignOffsetTicks: number = Tone.Ticks(alignOffset).toTicks();
   const nextPosTicks = Tone.Ticks(
-    Math.floor(transportPosTicks / alignTicks + 1) * alignTicks
+    Math.floor(transportPosTicks / alignTicks + 1) * alignTicks +
+      alignOffsetTicks
   );
   // const nextPosBBS = nextPosTicks.toBarsBeatsSixteenths();
   // return nextPosBBS; // Extraneous computations
@@ -205,10 +210,14 @@ export class Channel {
         },
         this
       );
-      if (clipParams.align) {
-        this.channelClips[idx as number].align = clipParams.align;
-        // Pass clipParams.align into getNextPos()
-      }
+      // Pass certain clipParams into getNextPos()
+      ['align', 'alignOffset'].forEach(key => {
+        if ((clipParams as IIndexable)[key]) {
+          this.channelClips[idx as number][key] = (clipParams as IIndexable)[
+            key
+          ];
+        }
+      });
     } else {
       // Allow creation of empty clips
       this.channelClips[idx as number] = null;

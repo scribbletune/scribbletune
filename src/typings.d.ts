@@ -56,6 +56,13 @@ interface ClipParams {
    */
   align?: string;
   /**
+   * Offset start of clip playing from the time grid defined by `align` parameter.
+   *  - Default: `'0'`
+   *  - Example: `'0.75m'` will offset the clip to start at 3rd beat of 4:4 measure
+   * well, `'0.75m'` won't really work... Tone.js@14.8.0 does not support fractional measures (for no good reason). Will be sending a PR to Tone.js.
+   */
+  alignOffset?: string;
+  /**
    * The default MIDI amplitube/ level/ volume of a note.
    * Used as the upper bound for accents and sizzles (where the lower bound is `accentLow`).
    *  - Default:  `100`

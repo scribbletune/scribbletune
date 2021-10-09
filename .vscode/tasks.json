@@ -66,6 +66,13 @@
       "problemMatcher": [],
       "label": "npm: test",
       "detail": "test coverage"
+    },
+    {
+      "type": "npm",
+      "script": "clean",
+      "problemMatcher": [],
+      "label": "npm: clean",
+      "detail": "clean"
     }
   ]
 }
