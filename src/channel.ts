@@ -118,9 +118,6 @@ export class Channel {
       })
       .catch(e => {
         this.hasFailed = e;
-        console.error(
-          `${e.message} in channel ${this.idx} "${this.name ?? '(no name)'}"`
-        );
         this.eventCb('error', { e }); // Report async errors.
       });
   }
@@ -232,7 +229,11 @@ export class Channel {
             const duration = getDuration(params, counter);
             const durSeconds = Tone.Time(duration).toSeconds();
             this.playerCb({ note, duration, time, counter });
-            this.external.triggerAttackRelease?.(note, durSeconds, time);
+            try {
+              this.external.triggerAttackRelease?.(note, durSeconds, time);
+            } catch (e) {
+              this.eventCb('error', { e }); // Report play errors.
+            }
           }
           this.clipNoteCount++;
         }
@@ -243,7 +244,11 @@ export class Channel {
           const counter = this.clipNoteCount;
           if (this.hasLoaded) {
             this.playerCb({ note: '', duration: '', time, counter });
-            this.instrument.start(time);
+            try {
+              this.instrument.start(time);
+            } catch (e) {
+              this.eventCb('error', { e }); // Report play errors.
+            }
           }
           this.clipNoteCount++;
         }
@@ -259,7 +264,11 @@ export class Channel {
             const note = getNote(el, params, counter);
             const duration = getDuration(params, counter);
             this.playerCb({ note, duration, time, counter });
-            this.instrument.triggerAttackRelease(note, duration, time);
+            try {
+              this.instrument.triggerAttackRelease(note, duration, time);
+            } catch (e) {
+              this.eventCb('error', { e }); // Report play errors.
+            }
           }
           this.clipNoteCount++;
         }
@@ -271,7 +280,11 @@ export class Channel {
           if (this.hasLoaded) {
             const duration = getDuration(params, counter);
             this.playerCb({ note: '', duration, time, counter });
-            this.instrument.triggerAttackRelease(duration, time);
+            try {
+              this.instrument.triggerAttackRelease(duration, time);
+            } catch (e) {
+              this.eventCb('error', { e }); // Report play errors.
+            }
           }
           this.clipNoteCount++;
         }
@@ -284,7 +297,11 @@ export class Channel {
             const note = getNote(el, params, counter)[0];
             const duration = getDuration(params, counter);
             this.playerCb({ note, duration, time, counter });
-            this.instrument.triggerAttackRelease(note, duration, time);
+            try {
+              this.instrument.triggerAttackRelease(note, duration, time);
+            } catch (e) {
+              this.eventCb('error', { e }); // Report play errors.
+            }
           }
           this.clipNoteCount++;
         }
@@ -492,11 +509,6 @@ export class Channel {
           return params.external
             .init(context.rawContext)
             .then(() => {
-              console.log(
-                `Loaded external output module for channel idx ${this.idx} "${
-                  this.name ?? '(no name)'
-                }"`
-              );
               resolve();
             })
             .catch((e: any) => {
