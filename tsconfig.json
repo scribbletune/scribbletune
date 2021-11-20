@@ -61,7 +61,7 @@
     "skipLibCheck": true
   },
   "include": [
-    "./src",
+    "src/**/*",
     "node_modules/@types"
   ], /* Concatenate and emit output to single file. */
 }

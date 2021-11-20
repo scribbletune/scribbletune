@@ -7,10 +7,19 @@ coverage
 .vscode/
 .npmrc
 log.*
+*.log
 
 *BAK*
+/dist
 /docs
 /jsdoc
+/lib
 jsdoc-config.json
 typedoc-out.json
 /src/ClipParams.ts
+
+/browser.js
+*.js.map
+/index.d.ts
+/index.js
+/max.js

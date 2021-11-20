@@ -8,11 +8,13 @@ import {
 import { arp } from './arp';
 import { midi } from './midi';
 
-export {
+const mode = scale;
+const modes = scales;
+const scribbletune = {
   scale,
-  scale as mode,
+  mode,
   scales,
-  scales as modes,
+  modes,
   chord,
   chords,
   clip,
@@ -22,3 +24,5 @@ export {
   arp,
   midi,
 };
+
+export default scribbletune;

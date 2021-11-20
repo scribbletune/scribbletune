@@ -1,4 +1,5 @@
-import { shuffle, expandStr, sizzleMap, isNote } from '../src/utils';
+// import { shuffle, expandStr, sizzleMap, isNote } from '../src/utils';
+import { expandStr, sizzleMap, isNote } from '../src/utils';
 
 describe('../src/utils', () => {
   // it('shuffles as expected', () => {

@@ -1,0 +1,78 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+    {
+      "type": "npm",
+      "script": "build",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "npm:build",
+      "detail": "build all targets"
+    },
+    {
+      "type": "npm",
+      "script": "watch:browser",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "npm: watch:browser",
+      "detail": "continuous development for browser"
+    },
+    {
+      "type": "npm",
+      "script": "lint",
+      "problemMatcher": {
+        "owner": "eslint",
+        "fileLocation": "absolute",
+        "pattern": [
+          {
+            "regexp": "^([^\\s].*)$",
+            "file": 1
+          },
+          {
+            "regexp": "^\\s+(\\d+):(\\d+)\\s+(error|warning|info)\\s+(.*)\\s\\s+(.*)$",
+            "line": 1,
+            "column": 2,
+            "severity": 3,
+            "message": 4,
+            "code": 5,
+            "loop": true
+          }
+        ]
+      },
+      "label": "npm: lint",
+      "detail": "lint check"
+    },
+    {
+      "type": "npm",
+      "script": "lint:fix",
+      "problemMatcher": [
+        "$eslint-stylish"
+      ],
+      "label": "npm: lint:fix",
+      "detail": "lint fix"
+    },
+    {
+      "type": "npm",
+      "script": "test:watch",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "npm: test:watch",
+      "detail": "test watch"
+    },
+    {
+      "type": "npm",
+      "script": "test",
+      "group": "test",
+      "problemMatcher": [],
+      "label": "npm: test",
+      "detail": "test coverage"
+    },
+    {
+      "type": "npm",
+      "script": "clean",
+      "problemMatcher": [],
+      "label": "npm: clean",
+      "detail": "clean"
+    }
+  ]
+}

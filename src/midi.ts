@@ -1,4 +1,4 @@
-/*global LiveAPI:true*/
+// global LiveAPI:true
 
 import fs from 'fs';
 import * as jsmidgen from 'jsmidgen';

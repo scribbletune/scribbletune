@@ -6,8 +6,8 @@ import { Util } from 'jsmidgen';
  */
 export const max = (
   notes: NoteObject[],
-  liveClip: string = 'live_set view highlighted_clip_slot clip'
-) => {
+  liveClip = 'live_set view highlighted_clip_slot clip'
+): void => {
   const liveObject = new LiveAPI(liveClip);
   const totalLength = notes.reduce((a, b) => {
     return a + b.length;

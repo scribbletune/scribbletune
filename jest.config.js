@@ -1,9 +1,9 @@
 module.exports = {
-  roots: ['<rootDir>'],
+  roots: ['<rootDir>/tests'],
   transform: {
     '^.+\\.ts$': 'ts-jest',
   },
-  testRegex: './tests/.*.spec.ts',
+  testRegex: 'tests/.*\\.spec\\.ts',
   moduleFileExtensions: ['ts', 'js', 'json', 'node'],
   coverageThreshold: {
     global: {
@@ -11,6 +11,11 @@ module.exports = {
       branches: 25,
       functions: 46,
       lines: 50,
+    },
+  },
+  globals: {
+    'ts-jest': {
+      tsconfig: 'tsconfig.json',
     },
   },
 };

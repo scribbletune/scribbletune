@@ -1,46 +1,58 @@
 {
   "name": "scribbletune",
-  "version": "4.1.1",
+  "version": "5.0.0-alpha.0",
   "description": "Create music with JavaScript and Node.js!",
   "main": "./index.js",
   "types": "index.d.ts",
   "scripts": {
+    "clean": "rm -rf dist && rm -rf docs && rm -rf lib && rm -f browser.js* index.d.ts index.js* max.js* typedoc-out.json",
     "doc": "npx typedoc --out docs src/ src/typings.d.ts",
     "doc:json": "npx typedoc --json typedoc-out.json src",
-    "test": "jest --coverage",
-    "test:watch": "jest --watch",
-    "build:node": "npx webpack",
-    "build:browser": "cross-env TARGET=browser npx webpack",
-    "build:cdn": "cross-env TARGET=cdn npx webpack",
-    "build:max": "cross-env TARGET=max npx webpack",
-    "build": "npm t && npm run build:node && npm run build:browser && npm run build:cdn && npm run build:max",
+    "lint": "eslint src tests -c .eslintrc --ext .ts",
+    "lint:fix": "eslint src tests -c .eslintrc --ext .ts --fix",
+    "test": "jest --config ./jest.config.js",
+    "test:coverage": "jest --config ./jest.config.js --coverage",
+    "test:watch": "jest --config ./jest.config.js --watch",
+    "build:node": "npx webpack --mode=production",
+    "build:browser": "cross-env TARGET=browser npx webpack --mode=production",
+    "build:cdn": "cross-env TARGET=cdn npx webpack --mode=production",
+    "build:max": "cross-env TARGET=max npx webpack --mode=production",
+    "build": "npm run build:node && npm run build:browser && npm run build:cdn && npm run build:max",
     "watch:browser": "cross-env TARGET=browser npx webpack --watch --mode=development",
-    "watch:cdn": "cross-env TARGET=cdn npx webpack --watch",
-    "watch:max": "cross-env TARGET=max npx webpack --watch",
-    "watch:node": "npx webpack --watch",
-    "rebuild": "rm -rf node_modules; rm package-lock.json; npm i; npm run build"
+    "watch:cdn": "cross-env TARGET=cdn npx webpack --watch --mode=production",
+    "watch:max": "cross-env TARGET=max npx webpack --watch --mode=production",
+    "watch:node": "npx webpack --watch --mode=production",
+    "prepare": "npm run build",
+    "package": "npm t && npm run build && npm pack",
+    "rebuild": "rm -rf node_modules && rm package-lock.json && npm i && npm run build",
+    "bump-major": "npm version major --no-git-tag-version",
+    "bump-minor": "npm version minor --no-git-tag-version",
+    "bump-patch": "npm version patch --no-git-tag-version"
   },
   "dependencies": {
-    "harmonics": "^1.0.7",
+    "harmonics": "^1.0.8",
     "jsmidgen": "~0.1.5"
   },
   "devDependencies": {
-    "@types/jest": "^24.9.1",
+    "@types/jest": "^27.0.1",
     "@types/node": "^12.19.15",
+    "@typescript-eslint/eslint-plugin": "^4.31.1",
+    "@typescript-eslint/parser": "^4.31.1",
     "cross-env": "^7.0.3",
     "dts-bundle": "^0.7.3",
-    "jest": "^26.6.3",
-    "prettier": "1.19.1",
-    "ts-jest": "^26.4.4",
-    "ts-loader": "^6.2.2",
-    "tslint": "^5.20.1",
-    "tslint-config-prettier": "^1.18.0",
-    "tslint-eslint-rules": "^5.4.0",
-    "tslint-loader": "^3.5.4",
-    "tslint-plugin-prettier": "^2.3.0",
-    "typescript": "^3.9.7",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^3.3.12"
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^27.2.0",
+    "prettier": "^2.4.0",
+    "ts-jest": "^27.0.5",
+    "ts-loader": "^9.2.5",
+    "ts-node": "^10.2.0",
+    "typedoc": "^0.21.5",
+    "typescript": "^4.4.3",
+    "webpack": "^5.53.0",
+    "webpack-cli": "^4.8.0"
   },
   "repository": {
     "type": "git",
@@ -54,7 +66,8 @@
     "web audio api",
     "jsmidgen",
     "tone.js",
-    "tonal"
+    "tonal",
+    "harmonics"
   ],
   "author": "Walmik Deshpande",
   "license": "MIT",
@@ -67,5 +80,8 @@
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
+  },
+  "eslintConfig": {
+    "extends": ".eslintrc"
   }
 }

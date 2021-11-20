@@ -22,7 +22,7 @@ describe('../src/midi', () => {
       pattern: 'x[-x]',
       notes: scale('C4 major') as string | (string | string[])[],
     });
-    expect(midi(scribbleClip, null)!.toString()).toBe(
+    expect(midi(scribbleClip, null)?.toString()).toBe(
       'MThd\x00\x00\x00\x06\x00\x00\x00\x01\x00MTrk\x00\x00\x00\r\x00<\x00<Z\x00ÿ/\x00'
     );
   });
