@@ -1,4 +1,5 @@
 import { inlineChord } from 'harmonics';
+import type { ArpParams } from './types';
 import { errorHasMessage } from './utils';
 
 const DEFAULT_OCTAVE = 4;
@@ -9,7 +10,7 @@ const DEFAULT_OCTAVE = 4;
  * @param  {Number} e.g. len 4
  * @return {Array} e.g. ['a4', 'b4', 'a5', 'b5']
  */
-const fillArr = (arr: string[], len: number) => {
+const fillArr = (arr: string[], len: number): string[] => {
   const bumpOctave = (el: string): string => {
     if (!el) {
       throw new Error('Empty element');
@@ -32,12 +33,6 @@ const fillArr = (arr: string[], len: number) => {
   return finalArr.slice(0, len);
 };
 
-type Params = {
-  count: number;
-  order?: string;
-  chords: string | any[];
-};
-
 /**
  *
  * @param chordsOrParams a string that denotes space (comma?) separated chords to be used or an object with additional properties
@@ -46,9 +41,9 @@ type Params = {
  * You can even provide Params as an object.
  * For e.g. arp({count: 8, order: '10325476', chords: 'FM_4 Gm7b5_4 AbM_4 Bbm_4 Cm_5 DbM_5 EbM_5})
  */
-export const arp = (chordsOrParams: string | Params): any[] => {
+export const arp = (chordsOrParams: string | ArpParams): string[] => {
   let finalArr: any[] = [];
-  const params: Params = {
+  const params: ArpParams = {
     count: 4,
     order: '0123',
     chords: '',

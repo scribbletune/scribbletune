@@ -1,5 +1,7 @@
 import { Channel } from './channel';
+import type { ClipParams } from './types';
 import { convertChordsToNotes, randomInt, shuffle, expandStr } from './utils';
+
 // import { window } from './window';
 
 // if (!(window as any).Tone) {

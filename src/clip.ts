@@ -1,3 +1,4 @@
+import type { ClipParams, NVP, NoteObject, SizzleStyle } from './types';
 import { convertChordsToNotes, randomInt, shuffle, expandStr } from './utils';
 
 /**
@@ -36,7 +37,7 @@ const hdr: NVP<number> = {
   '16n': 32,
 };
 
-export const clip = (params: ClipParams): any => {
+export const clip = (params: ClipParams): NoteObject[] => {
   params = { ...getDefaultParams(), ...(params || {}) };
 
   // If notes is a string, split it into an array

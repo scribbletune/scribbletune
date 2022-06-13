@@ -1,8 +1,9 @@
 import { Util } from 'jsmidgen';
+import type { NoteObject } from './types';
 
 /**
  * Take an array of note objects to populate a clip selected in Ableton Live via Max4Live
- * @param  {<Array>NoteObject} notes    Notes are in the format: {note: ['c3'], level: 127, length: 64}
+ * @param  {NoteObject[]} notes    Notes are in the format: {note: ['c3'], level: 127, length: 64}
  */
 export const max = (
   notes: NoteObject[],

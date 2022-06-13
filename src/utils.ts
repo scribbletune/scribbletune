@@ -101,7 +101,7 @@ export const sizzleMap = (maxLevel = 127): number[] => {
  * Pick one item randomly from an array and return it
  * @param arr
  */
-export const pickOne = (arr: any[]): any =>
+export const pickOne = <T = any>(arr: T[]): T =>
   arr.length > 1 ? arr[Math.round(Math.random())] : arr[0];
 
 /**

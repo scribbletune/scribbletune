@@ -1,4 +1,5 @@
 import { scale } from 'harmonics';
+import type { NVP, TPD, ProgressionScale } from './types';
 import { pickOne, dice } from './utils';
 
 /**
@@ -169,7 +170,7 @@ const m = getProgFactory({ T: ['i', 'VI'], P: ['ii', 'iv'], D: ['V'] });
  * @param scaleType e.g. M (for major chord progression), m (for minor chord progression)
  * @param count e.g. 4
  */
-export const progression = (scaleType: progressionScale, count = 4): any[] => {
+export const progression = (scaleType: ProgressionScale, count = 4): any[] => {
   if (scaleType === 'major' || scaleType === 'M') {
     return M(count);
   }
