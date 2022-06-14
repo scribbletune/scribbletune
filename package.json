@@ -4,6 +4,9 @@
   "description": "Create music with JavaScript and Node.js!",
   "main": "./index.js",
   "types": "index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "clean": "rm -rf dist && rm -rf docs && rm -rf lib && rm -f browser.js* index.d.ts index.js* max.js* typedoc-out.json",
     "doc": "npx typedoc --out docs src/ src/typings.d.ts",
