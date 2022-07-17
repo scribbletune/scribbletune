@@ -1,4 +1,5 @@
 import { Channel } from './channel';
+import type { ChannelParams, ChannelPattern, PlayParams } from './types';
 
 export class Session {
   sessionChannels: Channel[];

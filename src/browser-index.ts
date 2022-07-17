@@ -9,6 +9,7 @@ import { arp } from './arp';
 import { midi } from './midi';
 import { Session } from './session';
 
+export * from './types';
 export {
   scale,
   scale as mode,

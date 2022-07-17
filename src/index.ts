@@ -8,6 +8,7 @@ import {
 import { arp } from './arp';
 import { midi } from './midi';
 
+export * from './types';
 export {
   scale,
   scale as mode,

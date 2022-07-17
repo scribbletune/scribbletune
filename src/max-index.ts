@@ -8,6 +8,7 @@ import {
 import { arp } from './arp';
 import { max } from './max';
 
+export * from './types';
 export {
   scale,
   scale as mode,

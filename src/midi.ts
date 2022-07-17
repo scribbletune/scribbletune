@@ -2,10 +2,11 @@
 
 import fs from 'fs';
 import * as jsmidgen from 'jsmidgen';
+import type { NoteObject } from './types';
 
 /**
  * Take an array of note objects to generate a MIDI file in the same location as this method is called
- * @param  {<Array>NoteObject} notes    Notes are in the format: {note: ['c3'], level: 127, length: 64}
+ * @param  {NoteObject[]} notes    Notes are in the format: {note: ['c3'], level: 127, length: 64}
  * @param  {String | null} fileName If a filename is not provided, then `music.mid` is used by default
  * If `null` is passed for `fileName`, bytes are returned instead of creating a file
  * If this method is called from a browser then it will return a HTML link that you can append in your page

@@ -3,7 +3,7 @@ const path = require('path');
 const getOutput = () => {
   const output = {
     filename: 'index.js',
-    path: __dirname,
+    path: path.resolve(__dirname, './dist'),
     libraryTarget: 'commonjs',
   };
 
@@ -13,7 +13,6 @@ const getOutput = () => {
 
   if (process.env.TARGET === 'cdn') {
     output.filename = 'scribbletune.js';
-    output.path = path.resolve(__dirname, './dist');
     output.library = 'scribble';
     output.libraryTarget = 'umd';
   }
@@ -105,7 +104,7 @@ DtsBundlePlugin.prototype.apply = function (compiler) {
     dts.bundle({
       name: 'scribbletune',
       main: 'lib/index.d.ts',
-      out: '../index.d.ts',
+      out: '../dist/index.d.ts',
       removeSource: true,
       outputAsModuleFolder: true, // to use npm in-package typings
     });

@@ -1,4 +1,12 @@
 import { clip, getNote, getDuration } from './browser-clip';
+import type {
+  EventFn,
+  PlayerObserverFn,
+  ChannelParams,
+  ClipParams,
+  SeqFn,
+  SynthParams,
+} from './types';
 import { errorHasMessage, IIndexable } from './utils';
 
 /**
@@ -56,7 +64,7 @@ export class Channel {
   hasLoaded: boolean; // if (!this.hasLoaded) - don't play this channel. Either still loading, or (initOutputProducer() rejected,
   hasFailed: boolean | Error;
   private eventCbFn: EventFn | undefined;
-  private playerCbFn: playerObserverFnc | undefined;
+  private playerCbFn: PlayerObserverFn | undefined;
   private counterResetTask: number | undefined;
   constructor(params: ChannelParams) {
     this.idx = params.idx || 0;
