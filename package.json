@@ -1,6 +1,6 @@
 {
   "name": "scribbletune",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Create music with JavaScript and Node.js!",
   "main": "./index.js",
   "types": "index.d.ts",
