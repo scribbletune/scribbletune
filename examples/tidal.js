@@ -1,6 +1,6 @@
 'use strict';
 
-const scribble = require('../');
+const scribble = require('../dist');
 
 const gMelMn = scribble.scale('G4 melodic minor').slice(0, 5);
 const bFlatMelMn = scribble.scale('Bb3 melodic minor').slice(0, 7);

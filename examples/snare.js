@@ -1,6 +1,6 @@
 'use strict';
 
-const scribble = require('../');
+const scribble = require('../dist');
 let clip = scribble.clip({
   notes: 'c4',
   pattern: '-[xR]-[x[-R]]'.repeat(4),

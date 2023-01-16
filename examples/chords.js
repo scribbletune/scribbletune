@@ -1,6 +1,6 @@
 'use strict';
 
-const scribble = require('../');
+const scribble = require('../dist');
 
 const clip = scribble.clip({
   notes: 'F#m C#m DM Bm EM AM DM C#m AM',

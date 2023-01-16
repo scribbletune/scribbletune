@@ -1,8 +1,8 @@
 'use strict';
 
-const scribble = require('../');
+const scribble = require('../dist');
 
-const getRandomPattern = function(count) {
+const getRandomPattern = function (count) {
   let str = '';
   for (let i = 0; i < (count || 8); i++) {
     str += Math.round(Math.random()) ? 'x-' : '-x';

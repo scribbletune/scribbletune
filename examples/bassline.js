@@ -1,6 +1,6 @@
 'use strict';
 
-const scribble = require('../');
+const scribble = require('../dist');
 
 const pattern = '[-xRx][-xRx][-xRx][-xRR]'.repeat(4);
 

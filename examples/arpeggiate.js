@@ -1,6 +1,6 @@
 'use strict';
 
-const scribble = require('../');
+const scribble = require('../dist');
 const theChords = scribble.getChordsByProgression('G minor', 'i III v VI');
 
 const notesArr = scribble.arp({
@@ -30,7 +30,7 @@ scribble.midi(
 ); // This will create a file called pad.mid in the same location as you run this script
 
 // Generate a melody to go along with the arp and the pad
-const getRandomPattern = function(count) {
+const getRandomPattern = function (count) {
   let str = '';
   for (let i = 0; i < (count || 8); i++) {
     str += Math.round(Math.random()) ? 'x-' : '-x';

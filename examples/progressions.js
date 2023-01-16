@@ -1,6 +1,6 @@
 'use strict';
 
-const scribble = require('../');
+const scribble = require('../dist');
 const minorChordProgression = scribble.progression('m').join(' ');
 const c = scribble.clip({
   notes: 'D3',

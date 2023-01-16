@@ -10,7 +10,7 @@
 
 'use strict';
 
-const scribble = require('../');
+const scribble = require('../dist');
 
 // kick
 const kick = scribble.clip({
