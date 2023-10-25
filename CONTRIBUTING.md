@@ -8,7 +8,7 @@ Identified a reproducible problem in Scribbletune? We're listening! Here are som
 
 ### Look For an Existing Issue
 
-Before you create a new issue, please do a search in [open issues](https://github.com/scribbletune/scribbletune/issues) to see if the issue or feature request has already been filed.
+Before you create a new issue, please search in [open issues](https://github.com/scribbletune/scribbletune/issues) to see if the issue or feature request has already been filed.
 
 If you find your issue already exists, make relevant comments and add your [reaction](https://github.com/blog/2119-add-reactions-to-pull-requests-issues-and-comments). Use a reaction in place of a "+1" comment:
 
@@ -21,9 +21,9 @@ If you cannot find an existing issue that describes your bug or feature, create 
 
 File a single issue per problem and feature request. Do not enumerate multiple bugs or feature requests in the same issue.
 
-Do not add your issue as a comment to an existing issue unless it's for the identical input. Many issues look similar, but have different causes.
+Do not add your issue as a comment to an existing issue unless the input causing your issue is identical to the input cited in the existing request. Many issues look similar, but have different causes.
 
-The more information you can provide, the more likely someone will be successful at reproducing the issue and finding a fix.
+The more information you can provide, the more likely it is someone will successfully reproduce and resolve your issue.
 
 Please include the following with each issue if possible:
 
@@ -53,20 +53,20 @@ Don't feel bad if developers can't reproduce the issue right away. They will sim
 
 ## Contributing Fixes
 
-If you are interested in writing code to fix issues then read on for information on how we'd like you to contribute!
+If you are interested in writing code to fix issues then read on for more information on how we'd like you to contribute!
 
 ### Unit Tests
 
-It's important that all new code is covered by unit tests. It is also important that these tests are properly testing the new behaviour.
+It is important that all new code is covered by unit tests. It is also important that these tests are properly testing the new behaviour.
 
 Tests are written using jest and should be named in the following way:
 A unit test that tests the class 'newClass.ts' should be named 'newClass.spec.ts'.
 
-If the piece of work that you are adding is large then integration tests are welcomed as long as they are succinct and performant.
+If the piece of work that you are adding is large, then integration tests are welcomed as long as they are succinct and performant.
 
 ### Browser Support & Functional Testing
 
-Scribbletune can be used both offline via Node.js as well as in the browser, via Tone.js. It is important that any new functionality is compatible with both of these.
+Scribbletune can be used both offline via Node.js as well as in the browser via Tone.js. It is important that any new functionality is compatible with both of these.
 
 In exceptional cases where this is not possible you should clearly state this, with some reasoning, in the pull request.
 
@@ -74,11 +74,11 @@ For features available in the browser, some functional tests are available in `d
 
 ### Meeting the Issue Criteria
 
-It's good to ask yourself "does this achieve what is being suggested in the issue?". If it's a bug fix then is the bug truly fixed? If it's some new functionality then have you delivered what is being asked?
+When submitting a pull request, it's good to ask yourself "does this achieve what is being suggested in the issue?". If it's a bug fix, then is the bug truly fixed? If it's some new functionality, then have you delivered what is being asked?
 
 ## Don't Be Afraid!
 
-No issue or contribution will be met with any negativity. If you're thinking about getting involved then go for it! No one will be mad if you don't do it perfectly.
+No issue or contribution will be met with any negativity. If you're thinking about getting involved, then go for it! No one will be mad if you don't do it perfectly.
 
 # Thank You!
 
