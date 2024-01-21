@@ -17,7 +17,7 @@
   "editor.formatOnPaste": false,
   "editor.formatOnSave": false,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   },
   "editor.bracketPairColorization.enabled": true,
   "eslint.alwaysShowStatus": true,

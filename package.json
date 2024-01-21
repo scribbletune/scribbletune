@@ -84,7 +84,7 @@
     "url": "https://github.com/scribbletune/scribbletune/issues"
   },
   "engines": {
-    "node": ">8.x.x"
+    "node": ">16.x.x"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
