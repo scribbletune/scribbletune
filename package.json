@@ -9,11 +9,10 @@
   ],
   "exports": {
     ".": "./dist/index.js",
-    "./max": "./dist/max.js",
     "./browser": "./dist/browser.js"
   },
   "scripts": {
-    "clean": "rm -rf dist && rm -rf docs && rm -rf lib && rm -f browser.js* index.d.ts index.js* max.js* typedoc-out.json",
+    "clean": "rm -rf dist && rm -rf docs && rm -rf lib && rm -f browser.js* index.d.ts index.js* typedoc-out.json",
     "doc": "npx typedoc --out docs src/ src/typings.d.ts",
     "doc:json": "npx typedoc --json typedoc-out.json src",
     "lint": "eslint src tests -c .eslintrc --ext .ts",
@@ -24,11 +23,9 @@
     "build:node": "npx webpack --mode=production",
     "build:browser": "cross-env TARGET=browser npx webpack --mode=production",
     "build:cdn": "cross-env TARGET=cdn npx webpack --mode=production",
-    "build:max": "cross-env TARGET=max npx webpack --mode=production",
-    "build": "npm run build:node && npm run build:browser && npm run build:cdn && npm run build:max",
+    "build": "npm run build:node && npm run build:browser && npm run build:cdn",
     "watch:browser": "cross-env TARGET=browser npx webpack --watch --mode=development",
     "watch:cdn": "cross-env TARGET=cdn npx webpack --watch --mode=production",
-    "watch:max": "cross-env TARGET=max npx webpack --watch --mode=production",
     "watch:node": "npx webpack --watch --mode=production",
     "prepare": "npm run build",
     "package": "npm t && npm run build && npm pack",

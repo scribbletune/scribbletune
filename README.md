@@ -38,11 +38,4 @@ const scribble = require('scribbletune/browser');
 ```
 This will provide the same API but augment it a bit to support browser based functionality.
 
-Similarly, you can use the Scribbletune API for Max for Live development by doing
-```javascript
-const scribble = require('scribbletune/max');
-```
-Just like the `browser` version this too will enable the same API but with some added bells and whistles for Max for Live.
-
-
 Visit [scribbletune.com](https://scribbletune.com) for documentation, tutorials and examples! Listen to music generated with Scribbletune on [Soundcloud](https://soundcloud.com/scribbletune).

@@ -22,4 +22,3 @@ typedoc-out.json
 *.js.map
 /index.d.ts
 /index.js
-/max.js
