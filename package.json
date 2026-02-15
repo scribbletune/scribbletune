@@ -1,6 +1,6 @@
 {
   "name": "scribbletune",
-  "version": "5.1.2",
+  "version": "5.2.0",
   "description": "Create music with JavaScript and Node.js!",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -35,17 +35,17 @@
     "bump-patch": "npm version patch --no-git-tag-version"
   },
   "dependencies": {
-    "harmonics": "^1.1.2",
-    "jsmidgen": "~0.1.5"
+    "@scribbletune/midi": "^1.0.0",
+    "harmonics": "^1.1.2"
   },
   "devDependencies": {
     "@types/jest": "^27.0.1",
     "@types/node": "^12.19.15",
-    "@typescript-eslint/eslint-plugin": "^4.31.1",
-    "@typescript-eslint/parser": "^4.31.1",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
     "cross-env": "^7.0.3",
     "dts-bundle": "^0.7.3",
-    "eslint": "^7.32.0",
+    "eslint": "^8.57.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-loader": "^4.0.2",
     "eslint-plugin-prettier": "^4.0.0",
@@ -55,7 +55,7 @@
     "ts-loader": "^9.2.5",
     "ts-node": "^10.2.0",
     "typedoc": "^0.21.5",
-    "typescript": "^4.4.3",
+    "typescript": "^5.9.3",
     "webpack": "^5.53.0",
     "webpack-cli": "^4.8.0"
   },
@@ -64,12 +64,10 @@
     "url": "git://github.com/scribbletune/scribbletune.git"
   },
   "keywords": [
-    "javascript",
     "music",
     "music theory",
     "midi",
     "web audio api",
-    "jsmidgen",
     "tone.js",
     "tonal",
     "harmonics"

@@ -48,21 +48,6 @@ module.exports = (env, argv) => {
       rules: [
         {
           test: /\.ts$/,
-          enforce: 'pre',
-          use: [
-            {
-              loader: 'eslint-loader',
-              options: {
-                fix: isProduction,
-                emitWarning: isDevelopment,
-                failOnWarning: isProduction,
-                configFile: '.eslintrc',
-              },
-            },
-          ],
-        },
-        {
-          test: /\.ts$/,
           use: [
             {
               loader: 'ts-loader',

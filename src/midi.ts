@@ -1,7 +1,7 @@
 // global LiveAPI:true
 
 import fs from 'fs';
-import * as jsmidgen from 'jsmidgen';
+import { File, Track } from '@scribbletune/midi';
 import type { NoteObject } from './types';
 
 /**
@@ -32,7 +32,7 @@ export const midi = (
   if (
     typeof window !== 'undefined' &&
     window.URL &&
-    window.URL.createObjectURL
+    typeof window.URL.createObjectURL === 'function'
   ) {
     return createDownloadLink(bytes, fileName);
   }
@@ -74,8 +74,8 @@ const createDownloadLink = (b: string, fileName: string): HTMLAnchorElement => {
 };
 
 const createFileFromNotes = (notes: NoteObject[], bpm?: number) => {
-  const file = new jsmidgen.File();
-  const track = new jsmidgen.Track();
+  const file = new File();
+  const track = new Track();
 
   // set the track's bpm if it is provided
   if (typeof bpm === 'number') {
