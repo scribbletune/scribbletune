@@ -1,13 +1,13 @@
-import { clip, getNote, getDuration } from './browser-clip';
+import { clip, getDuration, getNote } from './browser-clip';
 import type {
-  EventFn,
-  PlayerObserverFn,
   ChannelParams,
   ClipParams,
+  EventFn,
+  PlayerObserverFn,
   SeqFn,
   SynthParams,
 } from './types';
-import { errorHasMessage, IIndexable } from './utils';
+import { errorHasMessage, type IIndexable } from './utils';
 
 /**
  * Get the next logical position to play in the session
@@ -65,22 +65,21 @@ export class Channel {
   hasFailed: boolean | Error;
   private eventCbFn: EventFn | undefined;
   private playerCbFn: PlayerObserverFn | undefined;
-  private counterResetTask: number | undefined;
   constructor(params: ChannelParams) {
     this.idx = params.idx || 0;
-    this.name = params.name || 'ch ' + params.idx;
+    this.name = params.name || `ch ${params.idx}`;
     this.activePatternIdx = -1;
     this.channelClips = [];
     this.clipNoteCount = 0;
 
     // Filter out unrequired params and create clip params object
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
     const { clips, samples, sample, synth, ...params1 } = params;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
     const { external, sampler, buffer, ...params2 } = params1;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
     const { player, instrument, volume, ...params3 } = params2;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
     const { eventCb, playerCb, effects, ...params4 } = params3;
     const { context = Tone.getContext(), ...originalParamsFiltered } = params4;
 
@@ -352,7 +351,6 @@ export class Channel {
   private checkToneObjLoaded(toneObject: any, resolve: () => void) {
     const skipRecursion = toneObject instanceof Tone.Sampler; // Sampler has a Map of ToneAudioBuffer, and our method to find inner .onload() does not work since there is no single one.
 
-    // eslint-disable-next-line no-prototype-builtins
     if ('loaded' in toneObject) {
       if (toneObject.loaded) {
         resolve();
@@ -405,8 +403,8 @@ export class Channel {
     context: any
   ): Promise<any> {
     context = context || Tone.getContext();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    return new Promise<any>((resolve, reject) => {
+
+    return new Promise<any>((resolve, _reject) => {
       // Tone.PolySynth | Tone.Player | Tone.Sampler | Tone['' | '']
       if (toneObject instanceof Tone.PolySynth) {
         const newObj = Tone.PolySynth(Tone[toneObject._dummyVoice.name], {
@@ -562,8 +560,8 @@ export class Channel {
       );
     } else {
       // Nothing to do
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      return new Promise<void>((resolve, reject) => {
+
+      return new Promise<void>((resolve, _reject) => {
         resolve();
       });
     }
@@ -571,8 +569,8 @@ export class Channel {
 
   private adjustInstrument(context: any, params: ChannelParams): Promise<void> {
     context = context || Tone.getContext();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    return new Promise<void>((resolve, reject) => {
+
+    return new Promise<void>((resolve, _reject) => {
       if (params.volume) {
         // this.instrument.volume.value = params.volume;
         this.setVolume(params.volume);
@@ -585,8 +583,7 @@ export class Channel {
     context = context || Tone.getContext();
 
     const createEffect = (effect: any): Promise<any> => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      return new Promise<any>((resolve, reject) => {
+      return new Promise<any>((resolve, _reject) => {
         if (typeof effect === 'string') {
           resolve(new Tone[effect]({ context }));
         } else if (effect.context !== context) {

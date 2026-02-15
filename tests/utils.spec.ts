@@ -1,15 +1,16 @@
+import { describe, expect, it } from 'vitest';
 import {
-  expandStr,
-  sizzleMap,
-  isNote,
-  shuffle,
-  pickOne,
-  dice,
-  flat,
-  errorHasMessage,
-  convertChordToNotes,
   convertChordsToNotes,
+  convertChordToNotes,
+  dice,
+  errorHasMessage,
+  expandStr,
+  flat,
+  isNote,
+  pickOne,
   randomInt,
+  shuffle,
+  sizzleMap,
 } from '../src/utils';
 
 describe('../src/utils', () => {
@@ -80,7 +81,12 @@ describe('../src/utils', () => {
   });
 
   it('flat flattens nested arrays', () => {
-    expect(flat([['a', 'b'], ['c', 'd']])).toEqual(['a', 'b', 'c', 'd']);
+    expect(
+      flat([
+        ['a', 'b'],
+        ['c', 'd'],
+      ])
+    ).toEqual(['a', 'b', 'c', 'd']);
     expect(flat([['1'], ['2', '3']])).toEqual(['1', '2', '3']);
   });
 

@@ -1,12 +1,12 @@
-import { scales, chords, scale, chord } from 'harmonics';
+import { chord, chords, scale, scales } from 'harmonics';
+import { arp } from './arp';
 import { clip } from './clip';
+import { midi } from './midi';
 import {
   getChordDegrees,
   getChordsByProgression,
   progression,
 } from './progression';
-import { arp } from './arp';
-import { midi } from './midi';
 
 export * from './types';
 export {

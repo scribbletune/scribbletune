@@ -115,7 +115,6 @@ export const dice = (): boolean => !!Math.round(Math.random());
 export const flat = (arr: any[][]): any[] =>
   arr.reduce((acc, val) => acc.concat(val), []);
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const errorHasMessage = (x: any): x is { message: string } => {
   return typeof x.message === 'string';
 };
@@ -126,10 +125,10 @@ export const errorHasMessage = (x: any): x is { message: string } => {
  */
 export const convertChordToNotes = (el: string): string[] => {
   // Try both inlineChord() and chord()
-  let c1;
-  let c2;
-  let e1;
-  let e2;
+  let c1: string[] | undefined;
+  let c2: string[] | undefined;
+  let e1: unknown;
+  let e2: unknown;
   try {
     c1 = inlineChord(el);
   } catch (e) {
@@ -192,7 +191,7 @@ export const convertChordsToNotes = (
 
   if (!Array.isArray(el)) {
     const c = convertChordToNotes(el);
-    if (c && c.length) {
+    if (c?.length) {
       return c;
     }
   }

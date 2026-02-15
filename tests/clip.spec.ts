@@ -1,7 +1,8 @@
 // global.window = true;
 
-import { clip } from '../src/clip';
 import { scale } from 'harmonics';
+import { describe, expect, it } from 'vitest';
+import { clip } from '../src/clip';
 
 describe('../src/clip', () => {
   it('allows lowercase notes', () => {
@@ -23,19 +24,19 @@ describe('../src/clip', () => {
   });
 
   it('throws an error in case of invalid notes', () => {
-    expect(function () {
+    expect(() => {
       clip({ notes: ['k1'], pattern: 'x' });
     }).toThrow();
   });
 
   it('throws an error in case of invalid pattern', () => {
-    expect(function () {
+    expect(() => {
       clip({ notes: ['C4'], pattern: 'jjdk' });
     }).toThrow();
   });
 
   it('accepts R to denote a note to be added randomly', () => {
-    expect(function () {
+    expect(() => {
       clip({ notes: ['C4'], pattern: 'xxRx' });
     }).not.toThrow();
   });
@@ -286,10 +287,10 @@ describe('../src/clip', () => {
   });
 
   it('throws an error in case of invalid accent', () => {
-    expect(function () {
+    expect(() => {
       clip({ notes: 'C4', pattern: 'x', accent: 'k' });
     }).toThrow();
-    expect(function () {
+    expect(() => {
       clip({ notes: 'C4', pattern: 'x', accent: 'x_' });
     }).toThrow();
   });
@@ -306,7 +307,7 @@ describe('../src/clip', () => {
   });
 
   it('accepts array of arrays', () => {
-    expect(function () {
+    expect(() => {
       clip({
         notes: [
           ['c4', 'e4'],
@@ -332,7 +333,7 @@ describe('../src/clip', () => {
   });
 
   it('accepts array of arrays but throws an error for incorrect input', () => {
-    expect(function () {
+    expect(() => {
       clip({
         notes: [['c4', 'e4'], ['k4']],
         pattern: 'xxxx',

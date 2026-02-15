@@ -1,6 +1,6 @@
-import { Channel } from './channel';
+import type { Channel } from './channel';
 import type { ClipParams } from './types';
-import { convertChordsToNotes, randomInt, shuffle, expandStr } from './utils';
+import { convertChordsToNotes, expandStr, randomInt, shuffle } from './utils';
 
 // import { window } from './window';
 

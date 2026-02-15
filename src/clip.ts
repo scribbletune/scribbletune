@@ -1,5 +1,5 @@
-import type { ClipParams, NVP, NoteObject, SizzleStyle } from './types';
-import { convertChordsToNotes, randomInt, shuffle, expandStr } from './utils';
+import type { ClipParams, NoteObject, NVP, SizzleStyle } from './types';
+import { convertChordsToNotes, expandStr, randomInt, shuffle } from './utils';
 
 /**
  * Get default params for a clip, such as root note, pattern etc

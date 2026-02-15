@@ -1,4 +1,9 @@
-import { getChordsByProgression, getChordDegrees, progression } from '../src/progression';
+import { describe, expect, it } from 'vitest';
+import {
+  getChordDegrees,
+  getChordsByProgression,
+  progression,
+} from '../src/progression';
 
 describe('../src/progression', () => {
   it('gets correct chords for a given progression', () => {
@@ -30,8 +35,12 @@ describe('../src/progression', () => {
   });
 
   it('returns correct degrees for melodic minor and harmonic minor modes', () => {
-    expect(getChordDegrees('melodic minor').join(',')).toBe('i,ii,III+,IV,V,vi°,vii°');
-    expect(getChordDegrees('harmonic minor').join(',')).toBe('i,ii°,III+,iv,V,VI,vii°');
+    expect(getChordDegrees('melodic minor').join(',')).toBe(
+      'i,ii,III+,IV,V,vi°,vii°'
+    );
+    expect(getChordDegrees('harmonic minor').join(',')).toBe(
+      'i,ii°,III+,iv,V,VI,vii°'
+    );
   });
 
   it('returns empty array for unknown modes', () => {
@@ -50,7 +59,9 @@ describe('../src/progression', () => {
     const prog = progression('major', 4);
     expect(prog).toHaveLength(4);
     expect(prog.every(chord => typeof chord === 'string')).toBe(true);
-    expect(['I', 'vi'].some(c => prog[0].toLowerCase().startsWith(c.toLowerCase()))).toBe(true);
+    expect(
+      ['I', 'vi'].some(c => prog[0].toLowerCase().startsWith(c.toLowerCase()))
+    ).toBe(true);
   });
 
   it('generates minor chord progressions', () => {

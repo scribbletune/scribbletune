@@ -1,7 +1,7 @@
 interface ArpParams {
-    count: number;
-    order?: string;
-    chords: string | any[];
-};
+  count: number;
+  order?: string;
+  chords: string | any[];
+}
 
 export type { ArpParams };

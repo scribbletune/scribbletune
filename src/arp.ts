@@ -52,7 +52,7 @@ export const arp = (chordsOrParams: string | ArpParams): string[] => {
   if (typeof chordsOrParams === 'string') {
     params.chords = chordsOrParams;
   } else {
-    if (chordsOrParams.order && chordsOrParams.order.match(/\D/g)) {
+    if (chordsOrParams.order?.match(/\D/g)) {
       throw new TypeError('Invalid value for order');
     }
 
@@ -79,7 +79,7 @@ export const arp = (chordsOrParams: string | ArpParams): string[] => {
           .split('')
           .map((idx: any) => filledArr[idx]);
         finalArr = [...finalArr, ...reorderedArr];
-      } catch (e) {
+      } catch (_e) {
         throw new Error(
           `Cannot decode chord ${i + 1} "${c}" in given "${params.chords}"`
         );

@@ -1,6 +1,6 @@
 // global LiveAPI:true
 
-import fs from 'fs';
+import fs from 'node:fs';
 import { File, Track } from '@scribbletune/midi';
 import type { NoteObject } from './types';
 
@@ -26,7 +26,7 @@ export const midi = (
   }
 
   if (!fileName.endsWith('.mid')) {
-    fileName = fileName + '.mid';
+    fileName = `${fileName}.mid`;
   }
 
   if (

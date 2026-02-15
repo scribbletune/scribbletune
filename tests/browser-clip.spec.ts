@@ -1,4 +1,5 @@
 // global.window = true;
+import { describe, expect, it } from 'vitest';
 import {
   recursivelyApplyPatternToDurations,
   totalPatternDuration,

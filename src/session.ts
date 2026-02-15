@@ -72,7 +72,9 @@ export class Session {
     const clipDurationInSeconds: number = Tone.Time(clipDuration).toSeconds();
 
     const stopClips = (clips: any[], time: number) => {
-      clips.forEach(c => c.stop(time));
+      clips.forEach(c => {
+        c.stop(time);
+      });
     };
 
     const startClips = (

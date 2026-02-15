@@ -1,12 +1,19 @@
-import * as fs from 'fs';
+import * as fs from 'node:fs';
+import { scale } from 'harmonics';
+import { afterEach, describe, expect, it } from 'vitest';
 import { clip } from '../src/clip';
 import { midi } from '../src/midi';
-import { scale } from 'harmonics';
 
 describe('../src/midi', () => {
   afterEach(() => {
     // Clean up any generated midi files
-    const files = ['music.mid', 'music.mid.mid', 'test.mid', 'test.mid.mid', 'custom_name.mid'];
+    const files = [
+      'music.mid',
+      'music.mid.mid',
+      'test.mid',
+      'test.mid.mid',
+      'custom_name.mid',
+    ];
     files.forEach(file => {
       if (fs.existsSync(`./${file}`)) {
         fs.unlinkSync(`./${file}`);
