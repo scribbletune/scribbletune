@@ -165,6 +165,11 @@ interface ClipParams {
    * Callback function triggered when offline rendering is finished. Ignored when `offlineRendering: false`.
    */
   offlineRenderingCallback?: () => void;
+  /**
+   * URL of an audio sample for standalone clip usage (without Channel).
+   *  - Example: `'https://scribbletune.com/sounds/kick.wav'`
+   */
+  sample?: string;
 }
 
 interface ChannelParams {

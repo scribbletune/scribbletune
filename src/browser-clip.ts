@@ -1,6 +1,11 @@
 import type { Channel } from './channel';
+import { checkToneObjLoaded } from './channel/instrument-factory';
+import {
+  buildSequenceCallback,
+  type SequenceHost,
+} from './channel/sequence-builder';
 import { preprocessClipParams } from './clip-utils';
-import type { ClipParams, PatternElement } from './types';
+import type { ClipParams, PatternElement, SeqFn } from './types';
 import { expandStr, randomInt } from './utils';
 
 const defaultSubdiv = '4n';
@@ -56,10 +61,14 @@ export const recursivelyApplyPatternToDurations = (
   return durations;
 };
 
-/** Create a Tone.Sequence from clip parameters for live browser playback. */
+/**
+ * Create a Tone.Sequence from clip parameters for live browser playback.
+ * When a Channel is provided, uses its instrument. When omitted, creates a
+ * standalone Tone.Player from `params.sample`.
+ */
 const generateSequence = (
   params: ClipParams,
-  channel: Channel,
+  channel?: Channel,
   context?: ToneAudioContext
 ): ToneSequence => {
   context = context || Tone.getContext();
@@ -75,8 +84,37 @@ const generateSequence = (
     );
   }
 
+  let callback: SeqFn;
+
+  if (channel) {
+    // Channel-based path (existing behavior)
+    callback = channel.getSeqFn(params);
+  } else if (params.sample) {
+    // Standalone sample-based path
+    const player = new Tone.Player({ url: params.sample, context });
+    player.toDestination();
+    player.sync();
+
+    const host: SequenceHost = {
+      instrument: player,
+      hasLoaded: false,
+      clipNoteCount: 0,
+    };
+
+    checkToneObjLoaded(player as ToneLoadable, () => {
+      host.hasLoaded = true;
+    });
+
+    const noop = () => {};
+    callback = buildSequenceCallback(params, host, noop, noop);
+  } else {
+    throw new Error(
+      'Either a Channel or a sample URL must be provided to create a clip.'
+    );
+  }
+
   return new Tone.Sequence({
-    callback: channel.getSeqFn(params),
+    callback,
     events: expandStr(params.pattern),
     subdivision: params.subdiv || defaultSubdiv,
     context,
@@ -165,7 +203,7 @@ const offlineRenderClip = (params: ClipParams, duration: number) => {
  */
 export const clip = (
   params: ClipParams,
-  channel: Channel
+  channel?: Channel
 ): ToneSequence | ToneInstrument => {
   params = preprocessClipParams(params, { align: '1m', alignOffset: '0' });
 
