@@ -15,6 +15,7 @@ const defaultParams: ClipParams = {
   offlineRendering: false,
 };
 
+/** Throw if the pattern string contains characters outside `x - _ [ ] R`. */
 export const validatePattern = (pattern: string): void => {
   if (/[^x\-_[\]R]/.test(pattern)) {
     throw new TypeError(
@@ -23,6 +24,10 @@ export const validatePattern = (pattern: string): void => {
   }
 };
 
+/**
+ * Merge defaults into clip params, normalize notes/randomNotes from strings
+ * to arrays, validate the pattern, and optionally shuffle notes.
+ */
 export const preprocessClipParams = (
   params: ClipParams,
   extraDefaults?: Partial<ClipParams>

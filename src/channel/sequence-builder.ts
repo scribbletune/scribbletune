@@ -1,6 +1,7 @@
 import { getDuration, getNote } from '../browser-clip';
 import type { ClipParams, SeqFn } from '../types';
 
+/** Subset of Channel properties needed by the sequence callback. */
 export interface SequenceHost {
   instrument: ToneInstrument;
   external?: ExternalOutput;
@@ -8,6 +9,10 @@ export interface SequenceHost {
   clipNoteCount: number;
 }
 
+/**
+ * Build the callback function for a Tone.Sequence based on the instrument type.
+ * Returns a function that triggers notes/samples at each step of the sequence.
+ */
 export function buildSequenceCallback(
   params: ClipParams,
   host: SequenceHost,

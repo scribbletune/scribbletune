@@ -70,6 +70,7 @@ export const pickOne = <T = unknown>(arr: T[]): T =>
  */
 export const dice = (): boolean => !!Math.round(Math.random());
 
+/** Type guard: check if a caught value has a string `message` property. */
 export const errorHasMessage = (x: unknown): x is { message: string } => {
   return (
     typeof x === 'object' &&
@@ -118,6 +119,10 @@ export const convertChordToNotes = (el: string): string[] => {
   return chord(el);
 };
 
+/**
+ * Normalize a note, chord name, or array of notes into a string array.
+ * Single notes become `['C4']`, chord names are expanded via harmonics.
+ */
 export const convertChordsToNotes = (
   el: string | (string | string[])[]
 ): string[] => {
@@ -159,4 +164,5 @@ export const convertChordsToNotes = (
   throw new Error(`Chord ${el} not found`);
 };
 
+/** Return a random integer from 0 to `num` (inclusive). */
 export const randomInt = (num = 1): number => Math.round(Math.random() * num);

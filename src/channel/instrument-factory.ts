@@ -61,6 +61,7 @@ export function checkToneObjLoaded(
   }
 }
 
+/** Clone a Tone instrument into a different audio context, waiting for it to load. */
 export function recreateToneObjectInContext(
   toneObject: ToneInstrument,
   context: ToneAudioContext

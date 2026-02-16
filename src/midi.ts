@@ -71,6 +71,7 @@ const createDownloadLink = (b: string, fileName: string): HTMLAnchorElement => {
   return link;
 };
 
+/** Build a MIDI File with a single track from the given note objects. */
 const createFileFromNotes = (notes: NoteObject[], bpm?: number) => {
   const file = new File();
   const track = new Track();

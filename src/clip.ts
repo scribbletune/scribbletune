@@ -26,6 +26,10 @@ const hdr: NVP<number> = {
   '16n': 32,
 };
 
+/**
+ * Generate an array of note objects from clip parameters (for MIDI export).
+ * Applies the pattern to notes, then optionally adds sizzle and accent dynamics.
+ */
 export const clip = (params: ClipParams): NoteObject[] => {
   params = preprocessClipParams(params);
 

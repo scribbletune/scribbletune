@@ -1,6 +1,7 @@
 import type { ChannelParams } from '../types';
 import { recreateToneObjectInContext } from './instrument-factory';
 
+/** Create effects from channel params and chain them onto the instrument. */
 export function initEffects(
   instrument: ToneInstrument,
   context: ToneAudioContext,

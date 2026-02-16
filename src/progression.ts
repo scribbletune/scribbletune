@@ -103,6 +103,7 @@ export const getChordsByProgression = (
   return chordFamily.toString().replace(/,/g, ' ');
 };
 
+/** Create a progression generator that follows tonic -> predominant -> dominant flow. */
 const getProgFactory = ({ T, P, D }: TPD) => {
   return (count = 4) => {
     const chords = [];

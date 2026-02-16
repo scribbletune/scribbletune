@@ -6,6 +6,7 @@ import { expandStr, randomInt } from './utils';
 const defaultSubdiv = '4n';
 const defaultDur = '8n';
 
+/** Get the note(s) for the current step, cycling through the notes array. */
 export const getNote = (
   el: string,
   params: ClipParams,
@@ -20,6 +21,7 @@ export const getNote = (
   return '';
 };
 
+/** Get the duration for the current step, cycling through the durations array. */
 export const getDuration = (
   params: ClipParams,
   counter: number
@@ -29,6 +31,10 @@ export const getDuration = (
     : params.dur || params.subdiv || defaultDur;
 };
 
+/**
+ * Walk a nested pattern array and compute a flat list of note durations (in seconds).
+ * Underscores (`_`) extend the previous note's duration.
+ */
 export const recursivelyApplyPatternToDurations = (
   patternArr: PatternElement[],
   length: number,
@@ -50,6 +56,7 @@ export const recursivelyApplyPatternToDurations = (
   return durations;
 };
 
+/** Create a Tone.Sequence from clip parameters for live browser playback. */
 const generateSequence = (
   params: ClipParams,
   channel: Channel,
@@ -76,6 +83,7 @@ const generateSequence = (
   });
 };
 
+/** Calculate total duration (in seconds) of a pattern at the given subdivision. */
 export const totalPatternDuration = (
   pattern: string,
   subdivOrLength: string | number
@@ -85,6 +93,7 @@ export const totalPatternDuration = (
     : Tone.Ticks(subdivOrLength).toSeconds() * expandStr(pattern).length;
 };
 
+/** Compute the least common multiple of two positive integers. */
 const leastCommonMultiple = (n1: number, n2: number): number => {
   const [smallest, largest] = n1 < n2 ? [n1, n2] : [n2, n1];
   let i = largest;
@@ -94,6 +103,10 @@ const leastCommonMultiple = (n1: number, n2: number): number => {
   return i;
 };
 
+/**
+ * Calculate the minimum duration (in seconds) needed to offline-render a clip
+ * so that all notes cycle through completely.
+ */
 export const renderingDuration = (
   pattern: string,
   subdivOrLength: string | number,
@@ -119,6 +132,7 @@ export const renderingDuration = (
 let ongoingRenderingCounter = 0;
 let originalContext: ToneAudioContext | undefined;
 
+/** Render a clip offline into a Tone.Player buffer for later playback. */
 const offlineRenderClip = (params: ClipParams, duration: number) => {
   if (!originalContext) {
     originalContext = Tone.getContext();

@@ -136,15 +136,21 @@ export class Channel {
       });
   }
 
+  /** Set the global transport tempo in BPM. */
   static setTransportTempo(valueBpm: number): void {
     Tone.Transport.bpm.value = valueBpm;
   }
 
+  /** Resume the audio context and start the global transport. */
   static startTransport(): void {
     Tone.start();
     Tone.Transport.start();
   }
 
+  /**
+   * Stop the global transport.
+   * @param deleteEvents - If true (default), cancels all scheduled transport events.
+   */
   static stopTransport(deleteEvents = true): void {
     Tone.Transport.stop();
     if (deleteEvents) {
@@ -153,6 +159,7 @@ export class Channel {
     }
   }
 
+  /** Set the volume (in dB) of this channel's instrument and external output. */
   setVolume(volume: number): void {
     if (this.instrument) {
       this.instrument.volume.value = volume;
@@ -163,6 +170,11 @@ export class Channel {
     }
   }
 
+  /**
+   * Start the clip at the given index, stopping any other active clip first.
+   * @param idx - Clip index in this channel
+   * @param position - Transport time to start at; defaults to the next aligned position
+   */
   startClip(idx: number, position?: number | string | ToneTicksValue): void {
     const clip = this.channelClips[idx];
     position = position || (position === 0 ? 0 : getNextPos(clip));
@@ -185,6 +197,11 @@ export class Channel {
     }
   }
 
+  /**
+   * Stop the clip at the given index.
+   * @param idx - Clip index in this channel
+   * @param position - Transport time to stop at; defaults to the next aligned position
+   */
   stopClip(idx: number, position?: number | string | ToneTicksValue): void {
     const clip = this.channelClips[idx];
     position = position || (position === 0 ? 0 : getNextPos(clip));
@@ -194,6 +211,12 @@ export class Channel {
     }
   }
 
+  /**
+   * Add a clip to this channel. If the clip has a pattern, a Tone.Sequence is
+   * created; otherwise an empty (null) slot is reserved.
+   * @param clipParams - Clip configuration
+   * @param idx - Slot index; defaults to the next available position
+   */
   addClip(clipParams: ClipParams, idx?: number): void {
     idx = idx || this.channelClips.length;
     if (clipParams.pattern) {
@@ -227,6 +250,7 @@ export class Channel {
     );
   }
 
+  /** Invoke the user-provided event callback, if set. */
   private eventCb(event: string, params: Record<string, unknown>): void {
     if (typeof this.eventCbFn === 'function') {
       params.channel = this;
@@ -234,6 +258,7 @@ export class Channel {
     }
   }
 
+  /** Invoke the user-provided player observer callback, if set. */
   private playerCb(params: Record<string, unknown>): void {
     if (typeof this.playerCbFn === 'function') {
       params.channel = this;
@@ -241,10 +266,12 @@ export class Channel {
     }
   }
 
+  /** All clips (sequences) belonging to this channel. */
   get clips(): (ToneSequence | null)[] {
     return this.channelClips;
   }
 
+  /** Index of the currently playing clip, or -1 if none. */
   get activeClipIdx(): number {
     return this.activePatternIdx;
   }
