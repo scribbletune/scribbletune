@@ -1,6 +1,4 @@
-'use strict';
-
-const scribble = require('../dist');
+import * as scribble from '../dist/index.js';
 const minorChordProgression = scribble.progression('m').join(' ');
 const c = scribble.clip({
   notes: 'D3',

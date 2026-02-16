@@ -1,6 +1,4 @@
-'use strict';
-
-const scribble = require('../dist');
+import * as scribble from '../dist/index.js';
 
 const getRandomPattern = function (count) {
   let str = '';

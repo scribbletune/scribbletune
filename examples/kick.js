@@ -1,6 +1,4 @@
-'use strict';
-
-const scribble = require('../dist');
+import * as scribble from '../dist/index.js';
 let clip = scribble.clip({
   notes: 'c4',
   pattern: 'xxxxxxx[x[RR]]'.repeat(4),

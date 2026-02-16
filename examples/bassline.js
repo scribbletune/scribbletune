@@ -1,6 +1,4 @@
-'use strict';
-
-const scribble = require('../dist');
+import * as scribble from '../dist/index.js';
 
 const pattern = '[-xRx][-xRx][-xRx][-xRR]'.repeat(4);
 

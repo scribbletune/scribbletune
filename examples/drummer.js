@@ -8,9 +8,7 @@
  * play it in your DAW.
  */
 
-'use strict';
-
-const scribble = require('../dist');
+import * as scribble from '../dist/index.js';
 
 // kick
 const kick = scribble.clip({

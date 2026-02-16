@@ -1,6 +1,4 @@
-'use strict';
-
-const scribble = require('../dist');
+import * as scribble from '../dist/index.js';
 
 const clip = scribble.clip({
   notes: 'F#m C#m DM Bm EM AM DM C#m AM',

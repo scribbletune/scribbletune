@@ -1,6 +1,4 @@
-'use strict';
-
-const scribble = require('../dist');
+import * as scribble from '../dist/index.js';
 const theChords = scribble.getChordsByProgression('G minor', 'i III v VI');
 
 const notesArr = scribble.arp({
