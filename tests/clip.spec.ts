@@ -3,6 +3,7 @@
 import { scale } from 'harmonics';
 import { describe, expect, it } from 'vitest';
 import { clip } from '../src/clip';
+import type { NoteObject } from '../src/types';
 
 describe('../src/clip', () => {
   it('allows lowercase notes', () => {
@@ -210,7 +211,7 @@ describe('../src/clip', () => {
       pattern: 'x'.repeat(16),
       sizzle: 'rampUp',
     });
-    const volArr = c.map((c: any) => c.level);
+    const volArr = c.map((c: NoteObject) => c.level);
     expect(volArr.join(',')).toBe(
       '1,6,13,19,25,31,38,44,50,56,63,69,75,81,88,94'
     );
@@ -222,7 +223,7 @@ describe('../src/clip', () => {
       pattern: 'x'.repeat(16),
       sizzle: 'rampDown',
     });
-    const volArr = c.map((c: any) => c.level);
+    const volArr = c.map((c: NoteObject) => c.level);
     expect(volArr.join(',')).toBe(
       '100,94,88,81,75,69,63,56,50,44,38,31,25,19,13,6'
     );
@@ -235,7 +236,7 @@ describe('../src/clip', () => {
       sizzle: 'rampDown',
       amp: 127,
     });
-    const volArr = c.map((c: any) => c.level);
+    const volArr = c.map((c: NoteObject) => c.level);
     expect(volArr.join(',')).toBe(
       '127,119,111,103,95,87,79,71,64,56,48,40,32,24,16,8'
     );
@@ -247,7 +248,7 @@ describe('../src/clip', () => {
       pattern: 'xxxx',
       accent: 'x--x',
     });
-    const volArr = c.map((c: any) => c.level);
+    const volArr = c.map((c: NoteObject) => c.level);
     expect(volArr.join(',')).toBe('100,70,70,100');
   });
 
@@ -258,7 +259,7 @@ describe('../src/clip', () => {
       accent: 'x--x',
       amp: 127,
     });
-    const volArr = c.map((c: any) => c.level);
+    const volArr = c.map((c: NoteObject) => c.level);
     expect(volArr.join(',')).toBe('127,70,70,127');
   });
 
@@ -270,7 +271,7 @@ describe('../src/clip', () => {
       amp: 127,
       accentLow: 23,
     });
-    const volArr = c.map((c: any) => c.level);
+    const volArr = c.map((c: NoteObject) => c.level);
     expect(volArr.join(',')).toBe('127,23,23,127');
   });
 
@@ -282,7 +283,7 @@ describe('../src/clip', () => {
       amp: 127,
       accentLow: 23,
     });
-    const volArr = c.map((c: any) => c.level);
+    const volArr = c.map((c: NoteObject) => c.level);
     expect(volArr.join(',')).toBe('127,23,23,127,127');
   });
 
@@ -302,7 +303,7 @@ describe('../src/clip', () => {
       accent: 'x--x',
       sizzle: true,
     });
-    const volArr = c.map((c: any) => c.level);
+    const volArr = c.map((c: NoteObject) => c.level);
     expect(volArr.join(',')).toBe('51,71,85,86');
   });
 

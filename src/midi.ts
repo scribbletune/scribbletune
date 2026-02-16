@@ -1,5 +1,3 @@
-// global LiveAPI:true
-
 import fs from 'node:fs';
 import { File, Track } from '@scribbletune/midi';
 import type { NoteObject } from './types';

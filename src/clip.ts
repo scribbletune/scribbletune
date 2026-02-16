@@ -1,23 +1,12 @@
-import type { ClipParams, NoteObject, NVP, SizzleStyle } from './types';
-import { convertChordsToNotes, expandStr, randomInt, shuffle } from './utils';
-
-/**
- * Get default params for a clip, such as root note, pattern etc
- * @return {Object}
- */
-const getDefaultParams = (): ClipParams => ({
-  notes: ['C4'],
-  pattern: 'x',
-  shuffle: false,
-  sizzle: false,
-  sizzleReps: 1,
-  arpegiate: false,
-  subdiv: '4n',
-  amp: 100,
-  accentLow: 70,
-  randomNotes: null,
-  offlineRendering: false,
-});
+import { preprocessClipParams } from './clip-utils';
+import type {
+  ClipParams,
+  NoteObject,
+  NVP,
+  PatternElement,
+  SizzleStyle,
+} from './types';
+import { expandStr, randomInt } from './utils';
 
 /**
  * HDR speed is denoted by the number of ticks per note
@@ -38,36 +27,7 @@ const hdr: NVP<number> = {
 };
 
 export const clip = (params: ClipParams): NoteObject[] => {
-  params = { ...getDefaultParams(), ...(params || {}) };
-
-  // If notes is a string, split it into an array
-  if (typeof params.notes === 'string') {
-    // Remove any accidental double spaces
-    params.notes = params.notes.replace(/\s{2,}/g, ' ');
-    params.notes = params.notes.split(' ');
-  }
-
-  params.notes = params.notes ? params.notes.map(convertChordsToNotes) : [];
-
-  if (/[^x\-_[\]R]/.test(params.pattern)) {
-    throw new TypeError(
-      `pattern can only comprise x - _ [ ] R, found ${params.pattern}`
-    );
-  }
-
-  if (params.shuffle) {
-    params.notes = shuffle(params.notes);
-  }
-
-  if (params.randomNotes && typeof params.randomNotes === 'string') {
-    params.randomNotes = params.randomNotes.replace(/\s{2,}/g, ' ').split(/\s/);
-  }
-
-  if (params.randomNotes) {
-    params.randomNotes = (params.randomNotes as string[]).map(
-      convertChordsToNotes
-    );
-  }
+  params = preprocessClipParams(params);
 
   const clipNotes: NoteObject[] = [];
   let step = 0;
@@ -80,14 +40,14 @@ export const clip = (params: ClipParams): NoteObject[] => {
    * the length of the inner array and then call the recursive function on that inner array
    */
   const recursivelyApplyPatternToNotes = (
-    patternArr: string[],
+    patternArr: PatternElement[],
     length: number,
     parentNoteLength: number | boolean
   ) => {
     let totalLength = 0;
     patternArr.forEach((char, idx) => {
       if (typeof char === 'string') {
-        let note: any = null;
+        let note: string[] | null = null;
 
         if (char === '-') {
           // note = null;
@@ -97,9 +57,11 @@ export const clip = (params: ClipParams): NoteObject[] => {
           params.randomNotes &&
           params.randomNotes.length > 0
         ) {
-          note = params.randomNotes[randomInt(params.randomNotes.length - 1)];
+          note = params.randomNotes[
+            randomInt(params.randomNotes.length - 1)
+          ] as string[];
         } else if (params.notes) {
-          note = params.notes[step];
+          note = params.notes[step] as string[];
         }
 
         if (char === 'x' || char === 'R') {

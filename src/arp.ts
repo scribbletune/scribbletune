@@ -42,7 +42,7 @@ const fillArr = (arr: string[], len: number): string[] => {
  * For e.g. arp({count: 8, order: '10325476', chords: 'FM_4 Gm7b5_4 AbM_4 Bbm_4 Cm_5 DbM_5 EbM_5})
  */
 export const arp = (chordsOrParams: string | ArpParams): string[] => {
-  let finalArr: any[] = [];
+  let finalArr: string[] = [];
   const params: ArpParams = {
     count: 4,
     order: '0123',
@@ -77,7 +77,7 @@ export const arp = (chordsOrParams: string | ArpParams): string[] => {
         // reorder the filledArr as per params.order
         const reorderedArr = (params.order as string)
           .split('')
-          .map((idx: any) => filledArr[idx]);
+          .map((idx: string) => filledArr[Number(idx)]);
         finalArr = [...finalArr, ...reorderedArr];
       } catch (_e) {
         throw new Error(
@@ -92,7 +92,7 @@ export const arp = (chordsOrParams: string | ArpParams): string[] => {
         // reorder the filledArr as per params.order
         const reorderedArr = (params.order as string)
           .split('')
-          .map((idx: any) => filledArr[idx]);
+          .map((idx: string) => filledArr[Number(idx)]);
         finalArr = [...finalArr, ...reorderedArr];
       } catch (e) {
         throw new Error(

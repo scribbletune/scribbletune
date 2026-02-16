@@ -4,6 +4,7 @@ import {
   getChordsByProgression,
   progression,
 } from '../src/progression';
+import type { ProgressionScale } from '../src/types';
 
 describe('../src/progression', () => {
   it('gets correct chords for a given progression', () => {
@@ -83,7 +84,7 @@ describe('../src/progression', () => {
   });
 
   it('returns empty array for invalid scale type', () => {
-    const prog = progression('unknown' as any);
+    const prog = progression('unknown' as unknown as ProgressionScale);
     expect(prog).toEqual([]);
   });
 

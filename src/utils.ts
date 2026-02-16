@@ -1,11 +1,5 @@
 import { chord, inlineChord } from 'harmonics';
-
-/**
- * Helper for bracket notation object property access
- */
-export interface IIndexable<T = any> {
-  [key: string]: T;
-}
+import type { PatternElement } from './types';
 
 /**
  * Take a string input and check if it s a note name or not
@@ -21,7 +15,7 @@ export const isNote = (str: string): boolean =>
  * @param  {String} str
  * @return {Array}
  */
-export const expandStr = (str: string): any => {
+export const expandStr = (str: string): PatternElement[] => {
   str = JSON.stringify(str.split(''));
   str = str.replace(/,"\[",/g, ', [');
   str = str.replace(/"\[",/g, '[');
@@ -35,7 +29,7 @@ export const expandStr = (str: string): any => {
  * @param  {boolean} fullShuffle Ensure no elements remain in old place
  * @return {Array}
  */
-export const shuffle = (arr: any[], fullShuffle = true): string[] => {
+export const shuffle = <T>(arr: T[], fullShuffle = true): T[] => {
   const lastIndex: number = arr.length - 1;
 
   // Shuffle algorithm by Richard Durstenfeld (Donald E. Knuth), also Ronald Fisher and Frank Yates.
@@ -65,58 +59,24 @@ export const shuffle = (arr: any[], fullShuffle = true): string[] => {
 };
 
 /**
- * Return an array of numbers relative to maxLevel || 127 ordered in a Sine wave format
- * This is used by the `sizzle` param of the `clip` method to add a rudimentary variation to the accent of each note
- * @param {Number} maxLevel A number between not more than 127
- * @return {Array}  Example output [63, 90, 110, 127, 110, 90, 63, 0, 63, 90, 110, 127, 110, 90, 63, 0]
- */
-export const sizzleMap = (maxLevel = 127): number[] => {
-  const pi = Math.PI;
-  const piArr: number[] = [
-    pi / 6,
-    pi / 4,
-    pi / 3,
-    pi / 2,
-    (2 * pi) / 3,
-    (3 * pi) / 4,
-    (5 * pi) / 6,
-    pi,
-  ];
-  const piArrRev: number[] = [
-    0,
-    pi / 6,
-    pi / 4,
-    pi / 3,
-    pi / 2,
-    (2 * pi) / 3,
-    (3 * pi) / 4,
-    (5 * pi) / 6,
-  ];
-  piArrRev.reverse();
-  const arr: number[] = piArr.concat(piArrRev);
-  return arr.map(element => Math.round(Math.sin(element) * maxLevel));
-};
-
-/**
  * Pick one item randomly from an array and return it
  * @param arr
  */
-export const pickOne = <T = any>(arr: T[]): T =>
-  arr.length > 1 ? arr[Math.round(Math.random())] : arr[0];
+export const pickOne = <T = unknown>(arr: T[]): T =>
+  arr[Math.floor(Math.random() * arr.length)];
 
 /**
  * Boolean generator
  */
 export const dice = (): boolean => !!Math.round(Math.random());
 
-/**
- * Polyfill for Array.prototype.flat
- */
-export const flat = (arr: any[][]): any[] =>
-  arr.reduce((acc, val) => acc.concat(val), []);
-
-export const errorHasMessage = (x: any): x is { message: string } => {
-  return typeof x.message === 'string';
+export const errorHasMessage = (x: unknown): x is { message: string } => {
+  return (
+    typeof x === 'object' &&
+    x !== null &&
+    'message' in x &&
+    typeof (x as { message: unknown }).message === 'string'
+  );
 };
 
 /**
@@ -142,16 +102,16 @@ export const convertChordToNotes = (el: string): string[] => {
 
   if (!e1 && !e2) {
     // Both inlineChord() and chord() have result
-    if (c1.toString() !== c2.toString()) {
+    if (c1!.toString() !== c2!.toString()) {
       throw new Error(`Chord ${el} cannot decode, guessing ${c1} or ${c2}`);
     }
-    return c1;
+    return c1!;
   } // else
   if (!e1) {
-    return c1;
+    return c1!;
   } // else
   if (!e2) {
-    return c2;
+    return c2!;
   } // else
 
   // Give up, last try:

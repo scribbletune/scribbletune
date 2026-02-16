@@ -170,7 +170,10 @@ const m = getProgFactory({ T: ['i', 'VI'], P: ['ii', 'iv'], D: ['V'] });
  * @param scaleType e.g. M (for major chord progression), m (for minor chord progression)
  * @param count e.g. 4
  */
-export const progression = (scaleType: ProgressionScale, count = 4): any[] => {
+export const progression = (
+  scaleType: ProgressionScale,
+  count = 4
+): string[] => {
   if (scaleType === 'major' || scaleType === 'M') {
     return M(count);
   }

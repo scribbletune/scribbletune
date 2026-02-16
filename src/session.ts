@@ -61,7 +61,7 @@ export class Session {
 
   // Start the clips at a specific index in all the channels
   startRow(idx: number): void {
-    this.sessionChannels.forEach((ch: any) => {
+    this.sessionChannels.forEach((ch: Channel) => {
       ch.startClip(idx);
     });
   }
@@ -71,7 +71,7 @@ export class Session {
     const clipDuration = params.clipDuration || '4:0:0';
     const clipDurationInSeconds: number = Tone.Time(clipDuration).toSeconds();
 
-    const stopClips = (clips: any[], time: number) => {
+    const stopClips = (clips: ToneSequence[], time: number) => {
       clips.forEach(c => {
         c.stop(time);
       });
@@ -81,16 +81,18 @@ export class Session {
       channelIdx: string | number,
       clipIdx: string,
       time: number
-    ): any[] => {
-      return clipIdx === '-'
-        ? []
-        : this.channels
-            .filter(c => c.idx === channelIdx)
-            .map(c => c.clips[clipIdx as keyof Channel['clips']]?.start(time));
+    ): ToneSequence[] => {
+      if (clipIdx === '-') return [];
+      const clips = this.channels
+        .filter(c => c.idx === channelIdx)
+        .map(c => c.clips[Number(clipIdx)])
+        .filter((c): c is ToneSequence => c != null);
+      for (const c of clips) c.start(time);
+      return clips;
     };
 
     channelPatterns.forEach(({ channelIdx, pattern }: ChannelPattern) => {
-      let clips: any[] = [];
+      let clips: ToneSequence[] = [];
       let time = 0;
       let prevClipIdx = '-';
       pattern.split('').forEach((clipIdx: string) => {
