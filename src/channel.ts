@@ -18,7 +18,7 @@ import { errorHasMessage } from './utils';
  */
 const getNextPos = (
   clip: null | { align?: string; alignOffset?: string }
-): number | string => {
+): number | ToneTicksValue => {
   // TODO: (soon) convert to using transportPosTicks (fewer computations)
   const arr = Tone.Transport.position.split(':');
   // If we are still around 0:0:0x, then set start position to 0
@@ -34,9 +34,10 @@ const getNextPos = (
   const alignOffsetTicks: number = Tone.Ticks(alignOffset).toTicks();
   const nextPosTicks = Tone.Ticks(
     Math.floor(transportPosTicks / alignTicks + 1) * alignTicks +
-      alignOffsetTicks
+    alignOffsetTicks
   );
-  return nextPosTicks.toTicks();
+  // return nextPosTicks.toTicks();
+  return nextPosTicks;
 };
 
 /**
