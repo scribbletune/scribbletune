@@ -16,7 +16,10 @@ interface ToneTransportInstance {
   start(): void;
   stop(): void;
   cancel(): void;
-  scheduleOnce(cb: (time: number) => void, time: number | string): number;
+  scheduleOnce(
+    cb: (time: number) => void,
+    time: number | string | ToneTicksValue
+  ): number;
 }
 
 interface ToneTimeValue {
@@ -56,8 +59,8 @@ interface ToneNode {
 
 interface ToneSequence {
   state: string;
-  start(time?: number | string): void;
-  stop(time?: number | string): void;
+  start(time?: number | string | ToneTicksValue): void;
+  stop(time?: number | string | ToneTicksValue): void;
   clear(): void;
   /** Custom properties set by Channel.addClip */
   align?: string;

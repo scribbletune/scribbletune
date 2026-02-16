@@ -19,15 +19,13 @@ import { errorHasMessage } from './utils';
 const getNextPos = (
   clip: null | { align?: string; alignOffset?: string }
 ): number | ToneTicksValue => {
-  // TODO: (soon) convert to using transportPosTicks (fewer computations)
-  const arr = Tone.Transport.position.split(':');
-  // If we are still around 0:0:0x, then set start position to 0
-  if (arr[0] === '0' && arr[1] === '0') {
+  const transportPosTicks = Tone.Transport.ticks;
+  // If we are still in the first beat (bar 0, beat 0), start immediately
+  if (transportPosTicks < Tone.Ticks('4n').toTicks()) {
     return 0;
   }
 
-  // Else set it to the next bar
-  const transportPosTicks = Tone.Transport.ticks;
+  // Else set it to the next aligned position
   const align = clip?.align || '1m';
   const alignOffset = clip?.alignOffset || '0';
   const alignTicks: number = Tone.Ticks(align).toTicks();
@@ -36,7 +34,6 @@ const getNextPos = (
     Math.floor(transportPosTicks / alignTicks + 1) * alignTicks +
     alignOffsetTicks
   );
-  // return nextPosTicks.toTicks();
   return nextPosTicks;
 };
 
@@ -166,7 +163,7 @@ export class Channel {
     }
   }
 
-  startClip(idx: number, position?: number | string): void {
+  startClip(idx: number, position?: number | string | ToneTicksValue): void {
     const clip = this.channelClips[idx];
     position = position || (position === 0 ? 0 : getNextPos(clip));
     // Stop any other currently running clip
@@ -188,7 +185,7 @@ export class Channel {
     }
   }
 
-  stopClip(idx: number, position?: number | string): void {
+  stopClip(idx: number, position?: number | string | ToneTicksValue): void {
     const clip = this.channelClips[idx];
     position = position || (position === 0 ? 0 : getNextPos(clip));
     clip?.stop(position);
