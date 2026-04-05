@@ -344,10 +344,11 @@ describe('../src/cli', () => {
     const out = vi.fn();
     const err = vi.fn();
 
-    const code = runCli(
-      ['--chord', 'C3', 'major', 'xxxx', '1m', 'I IV vi V'],
-      { stdout: out, stderr: err, writeMidi }
-    );
+    const code = runCli(['--chord', 'C3', 'major', 'xxxx', '1m', 'I IV vi V'], {
+      stdout: out,
+      stderr: err,
+      writeMidi,
+    });
 
     expect(code).toBe(0);
     const notes = writeMidi.mock.calls[0][0] as NoteObject[];
@@ -360,10 +361,11 @@ describe('../src/cli', () => {
     const out = vi.fn();
     const err = vi.fn();
 
-    const code = runCli(
-      ['--chord', 'C3', 'major', 'xxxx', '1m', 'I,IV,vi,V'],
-      { stdout: out, stderr: err, writeMidi }
-    );
+    const code = runCli(['--chord', 'C3', 'major', 'xxxx', '1m', 'I,IV,vi,V'], {
+      stdout: out,
+      stderr: err,
+      writeMidi,
+    });
 
     expect(code).toBe(0);
     const notes = writeMidi.mock.calls[0][0] as NoteObject[];
@@ -376,10 +378,11 @@ describe('../src/cli', () => {
     const out = vi.fn();
     const err = vi.fn();
 
-    const code = runCli(
-      ['--chord', 'C3', 'major', 'xxxx', '1m', 'random'],
-      { stdout: out, stderr: err, writeMidi }
-    );
+    const code = runCli(['--chord', 'C3', 'major', 'xxxx', '1m', 'random'], {
+      stdout: out,
+      stderr: err,
+      writeMidi,
+    });
 
     expect(code).toBe(0);
     const notes = writeMidi.mock.calls[0][0] as NoteObject[];
@@ -408,10 +411,11 @@ describe('../src/cli', () => {
     const out = vi.fn();
     const err = vi.fn();
 
-    const code = runCli(
-      ['--arp', 'C3', 'major', 'xxxx', '1m', 'CM-FM-Am-GM'],
-      { stdout: out, stderr: err, writeMidi }
-    );
+    const code = runCli(['--arp', 'C3', 'major', 'xxxx', '1m', 'CM-FM-Am-GM'], {
+      stdout: out,
+      stderr: err,
+      writeMidi,
+    });
 
     expect(code).toBe(0);
     const notes = writeMidi.mock.calls[0][0] as NoteObject[];
@@ -666,7 +670,11 @@ describe('../src/cli', () => {
     const out = vi.fn();
     const err = vi.fn();
 
-    const code = runCli(['--riff', 'C3'], { stdout: out, stderr: err, writeMidi });
+    const code = runCli(['--riff', 'C3'], {
+      stdout: out,
+      stderr: err,
+      writeMidi,
+    });
 
     expect(code).toBe(1);
     expect(err).toHaveBeenCalled();
