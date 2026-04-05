@@ -313,13 +313,16 @@ const parseCliArgs = (argv: string[]): ParsedOptions | null => {
 };
 
 const baseClipParams = (parsed: ParsedOptions): Partial<ClipParams> => {
-  return {
+  const raw: Record<string, unknown> = {
     sizzle: parsed.sizzle,
     sizzleReps: parsed.sizzleReps,
     amp: parsed.amp,
     accent: parsed.accent,
     accentLow: parsed.accentLow,
   };
+  return Object.fromEntries(
+    Object.entries(raw).filter(([, v]) => v !== undefined)
+  ) as Partial<ClipParams>;
 };
 
 const makeRiff = (parsed: ParsedOptions): NoteObject[] => {
